@@ -1,0 +1,33 @@
+@font-face {
+  font-family: 'GeneralSans';
+  src: local('GeneralSans'), url('./assets/fonts/GeneralSans-Semibold.otf') format('opentype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'GeneralSans';
+  src: local('GeneralSans'), url('./assets/fonts/GeneralSans-Medium.otf') format('opentype');
+  font-weight: lighter;
+}
+
+:root {
+  font-family: var(--font-family), Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  color-scheme: light dark;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  --font-family: 'GeneralSans';
+}
+
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
