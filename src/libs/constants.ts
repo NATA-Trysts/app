@@ -1,4 +1,4 @@
-import { CustomColor } from '../layouts/common'
+import { CustomColor } from '@/layouts/common'
 
 export type ColorListObject = {
   [key in CustomColor]: string
@@ -11,3 +11,4 @@ const COLOR_PICKER_LIST: ColorListObject = {
 }
 
 export { COLOR_PICKER_LIST }
+

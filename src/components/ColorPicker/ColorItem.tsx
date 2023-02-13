@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { CustomColor } from '../../layouts/common'
-import { COLOR_PICKER_LIST } from '../../libs/constants'
+import { CustomColor } from '@/layouts/common'
+import { COLOR_PICKER_LIST } from '@/libs/constants'
 
 const Container = styled.div`
   width: 70px;
@@ -45,3 +45,4 @@ export const ColorItem = ({ colorName, onChangeColor }: { colorName: CustomColor
     </Container>
   )
 }
+

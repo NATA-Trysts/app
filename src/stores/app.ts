@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { CustomColor } from '../layouts/common'
+import { CustomColor } from '@/layouts/common'
 
 type AppState = {
   customColor: CustomColor
@@ -19,3 +19,4 @@ export const useAppStore = create<AppState>()(
     }
   )
 )
+

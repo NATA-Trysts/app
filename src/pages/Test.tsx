@@ -1,10 +1,10 @@
 import { HMSRoomProvider } from '@100mslive/react-sdk'
 import styled from 'styled-components'
 
-import { ColorPicker } from '../components/ColorPicker'
-import { VideoCall } from '../components/VideoCall'
-import { CustomableContainer } from '../layouts/common'
-import { useAppStore } from '../store/app'
+import { ColorPicker } from '@/components/ColorPicker'
+import { VideoCall } from '@/components/VideoCall'
+import { CustomableContainer } from '@/layouts/common'
+import { useAppStore } from '@/stores/app'
 
 //#region Styles
 const Container = styled(CustomableContainer)`
@@ -42,3 +42,4 @@ const Test = () => {
 }
 
 export default Test
+

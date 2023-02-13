@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { CustomColor } from '../../layouts/common'
-import { COLOR_PICKER_LIST } from '../../libs/constants'
-import { useAppStore } from '../../store/app'
+import { CustomColor } from '@/layouts/common'
+import { COLOR_PICKER_LIST } from '@/libs/constants'
+import { useAppStore } from '@/stores/app'
+
 import { ColorItem } from './ColorItem'
 
 const Container = styled.div`
@@ -28,3 +29,4 @@ export const ColorPicker = () => {
     </Container>
   )
 }
+
