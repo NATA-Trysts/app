@@ -5,12 +5,17 @@ import './assets/fonts/GeneralSans-Medium.otf'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
+import { Dev } from './pages/Dev'
 import Test from './pages/Test'
 
 const router = createBrowserRouter([
   {
     path: '/space/:spaceId',
     element: <Test />,
+  },
+  {
+    path: '/dev',
+    element: <Dev />,
   },
 ])
 
