@@ -5,12 +5,17 @@ import './assets/fonts/GeneralSans-Medium.otf'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
+import { Icon } from './components/Commons'
 import Test from './pages/Test'
 
 const router = createBrowserRouter([
   {
     path: '/space/:spaceId',
     element: <Test />,
+  },
+  {
+    path: '/icon',
+    element: <Icon name="shop" />,
   },
 ])
 
