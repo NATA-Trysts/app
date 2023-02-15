@@ -11,4 +11,3 @@ const COLOR_PICKER_LIST: ColorListObject = {
 }
 
 export { COLOR_PICKER_LIST }
-

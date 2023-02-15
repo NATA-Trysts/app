@@ -45,4 +45,3 @@ export const ColorItem = ({ colorName, onChangeColor }: { colorName: CustomColor
     </Container>
   )
 }
-
