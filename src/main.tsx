@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Icon } from './components/Commons'
 import Multitab from './pages/Multitab'
 import Test from './pages/Test'
+import TestNotification from './pages/TestNotification'
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,10 @@ const router = createBrowserRouter([
     path: '/icon',
     element: <Icon name="shop" />,
   },
+  {
+    path: 'test/noti-stack',
+    element: <TestNotification />,
+  },
 ])
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<RouterProvider router={router} />)
-
