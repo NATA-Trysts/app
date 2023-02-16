@@ -1,6 +1,6 @@
 import { IconContainer } from '../icon.style'
 
-export default function ShopIcon({ size = 18, color = 'black' }: { size?: number; color?: string }) {
+export const ShopIcon = ({ size = 18, color = 'black' }: { size?: number; color?: string }) => {
   return (
     <IconContainer>
       <svg fill="none" height={size} viewBox="0 0 18 18" width={size} xmlns="http://www.w3.org/2000/svg">

@@ -2,11 +2,11 @@ import { useState } from 'react'
 import styled from 'styled-components'
 
 import { Button, GradientButton } from '@/components/button'
-import ShopIcon from '@/components/icon/shop-icon/shop-icon.component'
+import { Header } from '@/components/header'
+import { ShopIcon } from '@/components/icon'
 
 const DevContainer = styled.div`
   height: 100vh;
-  background-color: #212225;
   display: flex;
   place-items: center;
   justify-content: center;
@@ -21,34 +21,37 @@ export const Dev = () => {
   }
 
   return (
-    <DevContainer>
+    <div style={{ backgroundColor: '#212225' }}>
+      <Header></Header>
       <DevContainer>
-        <Button disabled handleClick={handleClick}>
-          <ShopIcon color="#696969" />
-          Shop
-        </Button>
-        <GradientButton disabled handleClick={handleClick}>
-          Create Space
-        </GradientButton>
+        <DevContainer>
+          <Button disabled handleClick={handleClick}>
+            <ShopIcon color="#696969" />
+            Shop
+          </Button>
+          <GradientButton disabled handleClick={handleClick}>
+            Create Space
+          </GradientButton>
+        </DevContainer>
+        <DevContainer>
+          <Button handleClick={handleClick}>
+            <ShopIcon color="#696969" />
+            Shop
+          </Button>
+          <GradientButton handleClick={handleClick}>Create Space</GradientButton>
+        </DevContainer>
+        <div
+          style={{
+            color: '#FFFFFF',
+            fontWeight: 600,
+            height: '20px',
+            width: '20px',
+            textAlign: 'center',
+          }}
+        >
+          <span>{count}</span>
+        </div>
       </DevContainer>
-      <DevContainer>
-        <Button handleClick={handleClick}>
-          <ShopIcon color="#696969" />
-          Shop
-        </Button>
-        <GradientButton handleClick={handleClick}>Create Space</GradientButton>
-      </DevContainer>
-      <div
-        style={{
-          color: '#FFFFFF',
-          fontWeight: 600,
-          height: '20px',
-          width: '20px',
-          textAlign: 'center',
-        }}
-      >
-        <span>{count}</span>
-      </div>
-    </DevContainer>
+    </div>
   )
 }
