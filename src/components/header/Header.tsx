@@ -1,11 +1,10 @@
 import './header.style.scss'
 
-import { Button, GradientButton } from '@/components/button'
+import { Button, GradientButton } from '@/components/Buttons'
 
-import { ShopIcon } from '../icon'
-import { TrystsIcon } from '../icon/tryst-icon/trysts-icon.component'
-import { HeaderButtons, HeaderContainer, HeaderIcon } from './header.style'
-import { SearchBar } from './searchbar/searchbar.component'
+import { ShopIcon, TrystsIcon } from '../Icons'
+import { HeaderButtons, HeaderContainer, HeaderIcon } from './HeaderItem'
+import { SearchBar } from './SearchBar/SearchBar'
 
 export const Header = () => {
   return (

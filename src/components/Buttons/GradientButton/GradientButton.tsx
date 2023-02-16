@@ -1,11 +1,11 @@
 import { ThemeProvider } from 'styled-components'
 
 import { ButtonProps } from '../../../models/ButtonProps'
-import { basicButtonThemes, ButtonContainer, ButtonContent } from '../button.style'
+import { ButtonContainer, ButtonContent, gradientButtonThemes } from '../ButtonItem'
 
-export const Button = ({ color = 'dark', children, disabled = false, handleClick }: ButtonProps) => {
+export const GradientButton = ({ color = 'purple', children, disabled = false, handleClick }: ButtonProps) => {
   return (
-    <ThemeProvider theme={basicButtonThemes[color]}>
+    <ThemeProvider theme={gradientButtonThemes[color]}>
       <ButtonContainer disabled={disabled} onClick={handleClick}>
         <ButtonContent>{children}</ButtonContent>
       </ButtonContainer>

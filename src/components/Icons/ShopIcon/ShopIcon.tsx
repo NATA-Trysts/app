@@ -1,4 +1,4 @@
-import { IconContainer } from '../icon.style'
+import { IconContainer } from '../IconStyle'
 
 export const ShopIcon = ({ size = 18, color = 'black' }: { size?: number; color?: string }) => {
   return (

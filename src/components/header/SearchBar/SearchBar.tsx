@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { SearchIcon } from '../../icon/search-icon/search-icon.component'
-import { SearchBarContainer, SearchIconContainer, SearchInput } from './searchbar.style'
+import { SearchIcon } from '../../Icons/SearchIcon/SearchIcon'
+import { SearchBarContainer, SearchIconContainer, SearchInput } from './SearchBarItem'
 
 export const SearchBar = (prop: React.HTMLAttributes<HTMLDivElement>) => {
   const [isInputFillState, SetInputFillState] = useState(false)

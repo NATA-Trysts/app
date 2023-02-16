@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 
-import { Button, GradientButton } from '@/components/button'
-import { Header } from '@/components/header'
-import { ShopIcon } from '@/components/icon'
+import { Button, GradientButton } from '@/components/Buttons'
+import { Header } from '@/components/Header'
+import { ShopIcon } from '@/components/Icons'
 
 const DevContainer = styled.div`
   height: 100vh;
