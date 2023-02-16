@@ -1,17 +1,23 @@
 import styled from 'styled-components'
 
-export const basicButtonThemes: any = {
-  dark: {
-    background: '#191A1D',
-    color: '#696969',
-  },
+type ButtonTheme = {
+  background: string
+  color: string
 }
 
-export const gradientButtonThemes: any = {
-  purple: {
-    background:
-      'linear-gradient(90deg,rgba(166, 123, 194, 1) 0%,rgba(199, 145, 221, 1) 50%,rgba(233, 168, 250, 1) 100%);',
-    color: '#FFFFFF',
+export const ButtonThemes: { [key: string]: { [key: string]: ButtonTheme } } = {
+  basic: {
+    dark: {
+      background: '#191A1D',
+      color: '#696969',
+    },
+  },
+  gradient: {
+    purple: {
+      background:
+        'linear-gradient(90deg,rgba(166, 123, 194, 1) 0%,rgba(199, 145, 221, 1) 50%,rgba(233, 168, 250, 1) 100%);',
+      color: '#FFFFFF',
+    },
   },
 }
 
@@ -24,6 +30,7 @@ export const ButtonContainer = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 
   &:focus,
   &:focus-visible {

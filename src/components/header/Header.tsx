@@ -1,6 +1,6 @@
 import './header.style.scss'
 
-import { Button, GradientButton } from '@/components/Buttons'
+import { BasicButton, GradientButton } from '@/components/Buttons'
 
 import { ShopIcon, TrystsIcon } from '../Icons'
 import { HeaderButtons, HeaderContainer, HeaderIcon } from './HeaderItem'
@@ -17,10 +17,10 @@ export const Header = () => {
         </HeaderIcon>
         <SearchBar className="search-bar" />
         <HeaderButtons>
-          <Button>
+          <BasicButton>
             <ShopIcon color="#696969" />
             Shop
-          </Button>
+          </BasicButton>
           <GradientButton>Create Space</GradientButton>
         </HeaderButtons>
       </HeaderContainer>

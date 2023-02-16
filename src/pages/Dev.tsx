@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 
-import { Button, GradientButton } from '@/components/Buttons'
+import { BasicButton, GradientButton } from '@/components/Buttons'
 import { Header } from '@/components/Header'
 import { ShopIcon } from '@/components/Icons'
 
@@ -25,20 +25,20 @@ export const Dev = () => {
       <Header></Header>
       <DevContainer>
         <DevContainer>
-          <Button disabled handleClick={handleClick}>
+          <BasicButton disabled onClick={handleClick}>
             <ShopIcon color="#696969" />
             Shop
-          </Button>
-          <GradientButton disabled handleClick={handleClick}>
+          </BasicButton>
+          <GradientButton disabled onClick={handleClick}>
             Create Space
           </GradientButton>
         </DevContainer>
         <DevContainer>
-          <Button handleClick={handleClick}>
+          <BasicButton color="hello" onClick={handleClick}>
             <ShopIcon color="#696969" />
             Shop
-          </Button>
-          <GradientButton handleClick={handleClick}>Create Space</GradientButton>
+          </BasicButton>
+          <GradientButton onClick={handleClick}>Create Space</GradientButton>
         </DevContainer>
         <div
           style={{

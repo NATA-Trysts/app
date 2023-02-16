@@ -1,14 +1,6 @@
-import { ThemeProvider } from 'styled-components'
+import { StyledButtonProps } from '../../../models/ButtonProps'
+import { Button } from '../Button'
 
-import { ButtonProps } from '../../../models/ButtonProps'
-import { basicButtonThemes, ButtonContainer, ButtonContent } from '../ButtonItem'
-
-export const Button = ({ color = 'dark', children, disabled = false, handleClick }: ButtonProps) => {
-  return (
-    <ThemeProvider theme={basicButtonThemes[color]}>
-      <ButtonContainer disabled={disabled} onClick={handleClick}>
-        <ButtonContent>{children}</ButtonContent>
-      </ButtonContainer>
-    </ThemeProvider>
-  )
+export const BasicButton = ({ color = 'dark', ...otherProps }: StyledButtonProps) => {
+  return <Button color={color} colorStyle="basic" {...otherProps}></Button>
 }
