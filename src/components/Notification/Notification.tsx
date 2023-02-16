@@ -35,19 +35,25 @@ const NotificationMessage = styled.div`
   text-overflow: ellipsis;
 `
 
-const CloseIcon = styled.img<{ type: NotificationType }>`
+const CloseButton = styled.button<{ backgroundType: NotificationType }>`
   position: absolute;
   top: 12px;
   right: 12px;
   border-radius: 8px;
   background-color: transparent;
-  padding: 2px;
+  padding: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+  border: none;
   transition: all 0.3s ease;
   :hover {
-    background-color: ${({ type }) => NOTIFICATION_CLOSE_COLOR[type]};
+    background-color: ${({ backgroundType }) => NOTIFICATION_CLOSE_COLOR[backgroundType]};
   }
 `
+
+const CloseIcon = styled.img``
 
 type NotificationProps = {
   type: NotificationType
@@ -66,7 +72,7 @@ export const Notification: React.FC<NotificationProps> = ({ type, message, onRem
 
       return () => clearTimeout(timeout)
     }
-  }, [isDisplayed])
+  }, [isDisplayed, onRemove])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -84,7 +90,9 @@ export const Notification: React.FC<NotificationProps> = ({ type, message, onRem
             <NotificationIcon alt="Info" src={Info} />
             <NotificationMessage>{message}</NotificationMessage>
           </NotificationContent>
-          <CloseIcon alt="Close" src={Close} type={type} onClick={onRemove} />
+          <CloseButton backgroundType={type} onClick={onRemove}>
+            <CloseIcon alt="Close" loading="lazy" src={Close} />
+          </CloseButton>
         </NotificationContainer>
       )}
     </>
