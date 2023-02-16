@@ -16,6 +16,7 @@ const NotificationContainer = styled.div<{ type: NotificationType }>`
   z-index: 99;
   position: absolute;
   transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
 `
 
 const NotificationContent = styled.div`

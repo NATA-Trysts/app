@@ -21,9 +21,9 @@ const COLOR_PICKER_LIST: ColorListObject = {
 }
 
 const NOTIFICATION_COLOR: NotificationColor = {
-  notification: 'hsla(205.43, 65%, 54%, 0.9)',
-  warning: 'hsla(54.089, 81%, 51%, 0.9)',
-  error: 'hsla(0, 55%, 43%, 0.9)',
+  notification: 'hsla(205.43, 65%, 54%, 0.7)',
+  warning: 'hsla(54.089, 81%, 51%, 0.7)',
+  error: 'hsla(0, 55%, 43%, 0.7)',
 }
 
 const NOTIFICATION_CLOSE_COLOR: NotificationCloseColor = {
