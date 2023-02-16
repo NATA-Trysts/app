@@ -12,7 +12,11 @@ export const Icon = ({ name, width = 16, height = 16 }: IconProps) => {
   return (
     <>
       {SvgIcon && (
-        <div>
+        <div
+          style={{
+            display: 'flex',
+          }}
+        >
           <SvgIcon height={height} width={width} />
         </div>
       )}
