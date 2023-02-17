@@ -72,7 +72,7 @@ export const Notification: React.FC<NotificationProps> = ({ id, type, message, o
     if (!isDisplayed) {
       const timeout = setTimeout(() => {
         onRemove()
-      }, 300)
+      }, 100)
 
       return () => clearTimeout(timeout)
     }

@@ -1,21 +1,21 @@
 import { NotificationStack } from '@/components/Notification'
-import { useAddNotification } from '@/hooks/useNotification'
+import { useNotification } from '@/hooks/useNotification'
 
 const TestNotification = () => {
-  const handleAddNotification = useAddNotification()
+  const { addNotification } = useNotification()
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', margin: '400px' }}>
       <button
         style={{ margin: '20px', padding: '10px' }}
-        onClick={() => handleAddNotification('notification', 'Notification')}
+        onClick={() => addNotification('notification', 'Notification')}
       >
         Notification
       </button>
-      <button style={{ margin: '20px', padding: '10px' }} onClick={() => handleAddNotification('warning', 'Warning')}>
+      <button style={{ margin: '20px', padding: '10px' }} onClick={() => addNotification('warning', 'Warning')}>
         Warning
       </button>
-      <button style={{ margin: '20px', padding: '10px' }} onClick={() => handleAddNotification('error', 'Error')}>
+      <button style={{ margin: '20px', padding: '10px' }} onClick={() => addNotification('error', 'Error')}>
         Error
       </button>
       <NotificationStack />

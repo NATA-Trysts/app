@@ -1,7 +1,7 @@
 import { NotificationType } from '@/libs/constants'
 import { useNotificationStore } from '@/stores/notification'
 
-const useAddNotification = () => {
+const useNotification = () => {
   const [notifications, setNotifications] = useNotificationStore((state) => [
     state.notifications,
     state.setNotifications,
@@ -9,17 +9,15 @@ const useAddNotification = () => {
 
   const addNotification = (type: NotificationType, message: string) => {
     const newNotifications = new Map(notifications)
-    const id = Math.random()
+    const id = window.crypto.getRandomValues(new Uint32Array(1))[0]
     const timestamp = Date.now()
 
     newNotifications.set(id, { id, type, message, timestamp })
-    if (newNotifications.size > 3) {
-      newNotifications.delete(newNotifications.keys().next().value)
-    }
+
     setNotifications(newNotifications)
   }
 
-  return addNotification
+  return { addNotification }
 }
 
-export { useAddNotification }
+export { useNotification }

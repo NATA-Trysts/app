@@ -44,7 +44,7 @@ export const NotificationStack = () => {
 
   return createPortal(
     <NotificationStackContainer>
-      {[...notifications.values()].map((notification) => (
+      {[...notifications.values()].slice(0, 3).map((notification) => (
         <Notification
           key={notification.id}
           id={notification.id}
