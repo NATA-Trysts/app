@@ -1,8 +1,7 @@
 import { ThemeProvider } from 'styled-components'
 
-import { BaseButtonProps } from '@/components/Commons/Button/models/ButtonProps'
-
 import { ButtonContainer, ButtonContent, ButtonThemes } from './ButtonItem'
+import { BaseButtonProps } from './models/ButtonProps'
 
 export const Button = ({
   colorStyle = 'gradient',
