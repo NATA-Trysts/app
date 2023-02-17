@@ -34,6 +34,7 @@ export const ButtonContainer = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.25s ease 0s;
 
   &:focus,
   &:focus-visible {

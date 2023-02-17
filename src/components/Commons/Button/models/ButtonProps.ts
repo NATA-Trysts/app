@@ -1,12 +1,12 @@
 import { MouseEventHandler, ReactNode } from 'react'
 
-export type BaseButtonProps = IButtonProps & {
+export type BaseButtonProps = ButtonProps & {
   colorStyle?: string
 }
 
-export type StyledButtonProps = IButtonProps
+export type StyledButtonProps = ButtonProps
 
-type IButtonProps = {
+type ButtonProps = {
   color?: string
   children?: ReactNode
   disabled?: boolean
