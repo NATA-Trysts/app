@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import Close from '@/assets/close-icon.svg'
 import Info from '@/assets/info-icon.svg'
 import { NOTIFICATION_CLOSE_COLOR, NOTIFICATION_COLOR, NotificationType } from '@/libs/constants'
+import { useNotificationStore } from '@/stores/notification'
 
 const NotificationContainer = styled.div<{ type: NotificationType }>`
   width: 200px;
@@ -57,12 +58,14 @@ const CloseButton = styled.button<{ backgroundType: NotificationType }>`
 const CloseIcon = styled.img``
 
 type NotificationProps = {
+  id: number
   type: NotificationType
   message: string
   onRemove: () => void
 }
 
-export const Notification: React.FC<NotificationProps> = ({ type, message, onRemove }) => {
+export const Notification: React.FC<NotificationProps> = ({ id, type, message, onRemove }) => {
+  const notifications = useNotificationStore((state) => state.notifications)
   const [isDisplayed, setIsDisplayed] = useState(true)
 
   useEffect(() => {
@@ -75,13 +78,21 @@ export const Notification: React.FC<NotificationProps> = ({ type, message, onRem
     }
   }, [isDisplayed, onRemove])
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsDisplayed(false)
-    }, 5000)
+  const isFirstNotification = useMemo(() => {
+    const firstNotification = notifications.get(notifications.keys().next().value)
 
-    return () => clearTimeout(timeout)
-  }, [])
+    return firstNotification?.id === id
+  }, [id, notifications])
+
+  useEffect(() => {
+    if (isFirstNotification) {
+      const timeout = setTimeout(() => {
+        setIsDisplayed(false)
+      }, 5000)
+
+      return () => clearTimeout(timeout)
+    }
+  }, [isFirstNotification])
 
   return (
     <>

@@ -10,8 +10,9 @@ const useAddNotification = () => {
   const addNotification = (type: NotificationType, message: string) => {
     const newNotifications = new Map(notifications)
     const id = Math.random()
+    const timestamp = Date.now()
 
-    newNotifications.set(id, { id, type, message })
+    newNotifications.set(id, { id, type, message, timestamp })
     if (newNotifications.size > 3) {
       newNotifications.delete(newNotifications.keys().next().value)
     }
