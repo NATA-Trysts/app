@@ -18,16 +18,16 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier","simple-import-sort"],
+  "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier", "simple-import-sort"],
   "ignorePatterns": ["**/*.js"],
   "rules": {
     "no-unused-vars": "off",
     "camelcase": "error",
     "no-duplicate-imports": "error",
     "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/no-explicit-any":"off",
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],
-    "react/react-in-jsx-scope":"off",
+    "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
@@ -50,9 +50,9 @@
     "react/display-name": 0,
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "@typescript-eslint/no-empty-function":"off",
-    "react/no-unknown-property":"off",
-    "react/no-unescaped-entities ":"off",
+    "@typescript-eslint/no-empty-function": "off",
+    "react/no-unknown-property": "off",
+    "react/no-unescaped-entities ": "off",
     "padding-line-between-statements": [
       "error",
       {
@@ -62,25 +62,13 @@
       },
       {
         "blankLine": "always",
-        "prev": [
-          "const",
-          "let",
-          "var"
-        ],
+        "prev": ["const", "let", "var"],
         "next": "*"
       },
       {
         "blankLine": "any",
-        "prev": [
-          "const",
-          "let",
-          "var"
-        ],
-        "next": [
-          "const",
-          "let",
-          "var"
-        ]
+        "prev": ["const", "let", "var"],
+        "next": ["const", "let", "var"]
       }
     ],
     "react/jsx-sort-props": [
@@ -96,6 +84,9 @@
   "settings": {
     "import/resolver": {
       "typescript": {}
+    },
+    "react": {
+      "version": "detect"
     }
   }
 }
