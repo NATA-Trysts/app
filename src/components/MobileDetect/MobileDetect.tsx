@@ -1,15 +1,16 @@
-import { useEffect } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
-import { MobileDetectProps } from './models/mobile-detect.model'
+import { MobileOrSmallVersion } from './MobileOrSmallVersion'
 
-export const MobileDetect = ({
-  isMobile,
-  isSmallWidth,
-  setIsMobile,
-  setIsSmallWidth,
-  children,
-  fallback,
-}: MobileDetectProps) => {
+type MobileDetectProps = {
+  children: ReactNode
+}
+
+export const MobileDetect = ({ children }: MobileDetectProps) => {
+  const [isMobile, setIsMobile] = useState(false)
+  const [isSmallWidth, setIsSmallWidth] = useState(false)
+  const [message, setMessage] = useState('We are not in mobile yet!')
+
   const handleResize = () => {
     const userAgent = typeof navigator === 'undefined' ? '' : navigator.userAgent
     const mobile = Boolean(userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i))
@@ -26,5 +27,11 @@ export const MobileDetect = ({
     return () => window.removeEventListener('resize', handleResize)
   })
 
-  return <>{isMobile || isSmallWidth ? fallback : children}</>
+  useEffect(() => {
+    if (isSmallWidth && !isMobile) setMessage('Make screen wider to continue experience Trysts')
+    else if (isMobile || isSmallWidth) setMessage('We are not in mobile yet!')
+    else setMessage('We are not in mobile yet!')
+  }, [isMobile, isSmallWidth])
+
+  return <>{isMobile || isSmallWidth ? <MobileOrSmallVersion message={message} /> : children}</>
 }
