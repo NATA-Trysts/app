@@ -7,6 +7,7 @@ import { Icon } from './components/Commons'
 import Multitab from './pages/Multitab'
 import NotFound from './pages/NotFound'
 import Test from './pages/Test'
+import TestNotification from './pages/TestNotification'
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: '/icon',
     element: <Icon name="shop" />,
+  },
+  {
+    path: 'test/noti-stack',
+    element: <TestNotification />,
   },
   {
     path: '*',
