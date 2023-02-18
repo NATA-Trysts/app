@@ -7,6 +7,12 @@ const NotFoundPage = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: #090118; // constant
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `
 
 const NotFoundHeader = styled.header`
@@ -27,7 +33,7 @@ const LogoImage = styled.img`
 const NotFoundContainer = styled.div`
   position: absolute;
   left: 50%;
-  top: 300px;
+  top: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
@@ -45,13 +51,7 @@ const NotFound404 = styled.h1`
   text-fill-color: transparent;
   text-shadow: 0 0 0 transparent, 0 0 0 transparent, 0 0 0 transparent, 0 0 0 transparent, 0 0 0 transparent,
     0 0 0 transparent;
-  transition: all 0.3s ease-in-out;
-
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  transition: all 0.3s ease;
 
   :hover {
     text-shadow: 0px 34px 133px rgba(216, 35, 35, 0.16), 0px 22.037px 88.0509px rgba(216, 35, 35, 0.123704),
@@ -64,7 +64,7 @@ const NotFoundText = styled.p`
   font-size: 24px;
   color: #dbd6e4;
   margin: 24px 0;
-  font-weight: lighter;
+  font-weight: normal;
 `
 
 const NotFoundButton = styled.button`
