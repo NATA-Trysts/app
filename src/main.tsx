@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Icon } from './components/Commons'
 import Multitab from './pages/Multitab'
+import NotFound from './pages/NotFound'
 import Test from './pages/Test'
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: '/icon',
     element: <Icon name="shop" />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ])
 
