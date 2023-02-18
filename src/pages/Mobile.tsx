@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import LogoImg from '@/assets/logo.png'
+import { ReactComponent as LogoIcon } from '@/assets/icons/logo.svg'
 import MobileBackground from '@/assets/mobile-background.png'
 import { MobileDetect } from '@/components/MobileDetect'
 import { Text } from '@/layouts/common'
@@ -23,11 +24,6 @@ const Container = styled.div`
   justify-content: center;
 `
 
-const LogoImage = styled.img`
-  width: 91.08px;
-  height: auto;
-`
-
 const MobileBackgroundImage = styled.img`
   position: absolute;
   top: 0;
@@ -37,28 +33,14 @@ const MobileBackgroundImage = styled.img`
   object-fit: cover;
 `
 
-const MobileVersion = () => {
+const MobileOrSmallVersion = ({ message }: { message: string }) => {
   return (
     <MobilePage>
       <MobileBackgroundImage alt="Mobile background" src={MobileBackground} />
       <Container>
-        <LogoImage alt="Logo" src={LogoImg} />
+        <LogoIcon />
         <Text size="medium" weight="lighter">
-          We are not in mobile yet!
-        </Text>
-      </Container>
-    </MobilePage>
-  )
-}
-
-const SmallWidthVersion = () => {
-  return (
-    <MobilePage>
-      <MobileBackgroundImage alt="Mobile background" src={MobileBackground} />
-      <Container>
-        <LogoImage alt="Logo" src={LogoImg} />
-        <Text size="medium" weight="lighter">
-          Make screen wider to continue experience Trysts
+          {message}
         </Text>
       </Container>
     </MobilePage>
@@ -66,8 +48,24 @@ const SmallWidthVersion = () => {
 }
 
 const Mobile = () => {
+  const [isMobile, setIsMobile] = useState(false)
+  const [isSmallWidth, setIsSmallWidth] = useState(false)
+  const [message, setMessage] = useState('We are not in mobile yet!')
+
+  useEffect(() => {
+    if (isSmallWidth && !isMobile) setMessage('Make screen wider to continue experience Trysts')
+    else if (isMobile || isSmallWidth) setMessage('We are not in mobile yet!')
+    else setMessage('We are not in mobile yet!')
+  }, [isMobile, isSmallWidth])
+
   return (
-    <MobileDetect fallback={<MobileVersion />} fallbackSmallWidth={<SmallWidthVersion />}>
+    <MobileDetect
+      fallback={<MobileOrSmallVersion message={message} />}
+      isMobile={isMobile}
+      isSmallWidth={isSmallWidth}
+      setIsMobile={setIsMobile}
+      setIsSmallWidth={setIsSmallWidth}
+    >
       <MobilePage>
         <h1>Desktop version</h1>
       </MobilePage>

@@ -1,15 +1,15 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
-type MobileDetectProps = {
-  children: ReactNode
-  fallback: ReactNode
-  fallbackSmallWidth: ReactNode
-}
+import { MobileDetectProps } from './models/mobile-detect.model'
 
-export const MobileDetect = ({ children, fallback, fallbackSmallWidth }: MobileDetectProps) => {
-  const [isMobile, setIsMobile] = useState(false)
-  const [isSmallWidth, setIsSmallWidth] = useState(false)
-
+export const MobileDetect = ({
+  isMobile,
+  isSmallWidth,
+  setIsMobile,
+  setIsSmallWidth,
+  children,
+  fallback,
+}: MobileDetectProps) => {
   const handleResize = () => {
     const userAgent = typeof navigator === 'undefined' ? '' : navigator.userAgent
     const mobile = Boolean(userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i))
@@ -26,5 +26,5 @@ export const MobileDetect = ({ children, fallback, fallbackSmallWidth }: MobileD
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  return <>{isSmallWidth && !isMobile ? fallbackSmallWidth : isMobile || isSmallWidth ? fallback : children}</>
+  return <>{isMobile || isSmallWidth ? fallback : children}</>
 }
