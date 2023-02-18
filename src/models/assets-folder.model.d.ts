@@ -1,0 +1,1 @@
+type AssetsFolder = 'icons'
