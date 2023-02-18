@@ -6,7 +6,7 @@ const Container = styled.div`
 `
 
 type TextSize = 'small' | 'medium' | 'large'
-type TextWeight = 'normal' | 'lighter'
+type TextWeight = 'lighter' | 'normal' | 'bold'
 
 const textSizeMapping = {
   small: '12px',
@@ -14,12 +14,19 @@ const textSizeMapping = {
   large: '20px',
 }
 
+const textWeightMapping = {
+  lighter: 500,
+  normal: 600,
+  bold: 700,
+}
+
 const handleTextSize = (size: TextSize) => textSizeMapping[size]
+const handleTextWeight = (size: TextWeight) => textWeightMapping[size]
 
 const Text = styled.span<{ size: TextSize; weight: TextWeight }>`
   font-family: var(--font-family);
   font-size: ${(props) => handleTextSize(props.size)};
-  font-weight: ${(props) => props.weight};
+  font-weight: ${(props) => handleTextWeight(props.weight)};
   letter-spacing: 0.025em;
 `
 

@@ -26,13 +26,13 @@
   },
   "dependencies": {
     "@100mslive/react-sdk": "^0.6.3",
-    "@react-three/drei": "^9.56.19",
-    "@react-three/fiber": "^8.11.0",
+    "@react-three/drei": "^9.45.0",
+    "@react-three/fiber": "^8.9.1",
+    "@react-three/rapier": "^0.13.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
     "styled-components": "^5.3.6",
-    "three": "^0.149.0",
     "vite-plugin-svgr": "^2.4.0",
     "zustand": "^4.3.2"
   },

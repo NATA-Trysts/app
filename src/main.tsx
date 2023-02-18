@@ -1,7 +1,4 @@
 import './index.css'
-import './assets/fonts/GeneralSans-Semibold.otf'
-import './assets/fonts/GeneralSans-Medium.otf'
-import './assets/fonts/GeneralSans-Bold.otf'
 
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
