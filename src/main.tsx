@@ -1,12 +1,11 @@
 import './index.css'
-import './assets/fonts/GeneralSans-Semibold.otf'
-import './assets/fonts/GeneralSans-Medium.otf'
 
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Icon } from './components/Commons'
 import Multitab from './pages/Multitab'
+import NotFound from './pages/NotFound'
 import Test from './pages/Test'
 import TestNotification from './pages/TestNotification'
 
@@ -26,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: 'test/noti-stack',
     element: <TestNotification />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ])
 
