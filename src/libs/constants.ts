@@ -32,6 +32,7 @@ const NOTIFICATION_CLOSE_COLOR: NotificationCloseColor = {
   error: 'hsla(205.091, 45%, 24%, 0.8)', // TODO: update right color
 }
 
-export { COLOR_PICKER_LIST, NOTIFICATION_CLOSE_COLOR, NOTIFICATION_COLOR }
-export type { NotificationType }
+const apiUrl = 'https://pokeapi.co/api/v2'
 
+export { apiUrl, COLOR_PICKER_LIST, NOTIFICATION_CLOSE_COLOR, NOTIFICATION_COLOR }
+export type { NotificationType }

@@ -19,4 +19,3 @@ export const useAppStore = create<AppState>()(
     },
   ),
 )
-
