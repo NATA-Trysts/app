@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 export function useDynamicSvgImport(iconName: IconName) {
   const importedIconRef = useRef<React.FC<React.SVGProps<SVGElement>>>()
-  const [, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setLoading(true)
@@ -22,5 +22,8 @@ export function useDynamicSvgImport(iconName: IconName) {
     importSvgIcon()
   }, [iconName])
 
-  return importedIconRef.current
+  return {
+    loading,
+    iconRef: importedIconRef.current,
+  }
 }
