@@ -5,7 +5,7 @@ import { Text } from '@/layouts/common'
 
 const Container = styled.section`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 52px - 6px);
   background: var(--color-6);
   border-radius: 16px;
   padding: 12px;

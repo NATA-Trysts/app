@@ -1,11 +1,10 @@
-import React from 'react'
+import ReactTextareaAutosize from 'react-textarea-autosize'
 import styled from 'styled-components'
 
 import { ReactComponent as ArrowUp } from '@/assets/icons/arrow-up.svg'
 import { ReactComponent as Camera } from '@/assets/icons/camera.svg'
 import { ReactComponent as Chat } from '@/assets/icons/chat.svg'
 import { ReactComponent as Emoji } from '@/assets/icons/emoji.svg'
-import { ReactComponent as FullLogo } from '@/assets/icons/full-logo.svg'
 import { ReactComponent as Logout } from '@/assets/icons/logout.svg'
 import { ReactComponent as Micro } from '@/assets/icons/micro.svg'
 import { ReactComponent as People } from '@/assets/icons/people.svg'
@@ -16,6 +15,7 @@ import { ChatMessage } from '@/components/ChatMessage'
 import { ColorPicker } from '@/components/ColorPicker'
 // import { ColorPicker } from '@/components/ColorPicker'
 import { Icon } from '@/components/Commons'
+import { Logo } from '@/components/Commons/Logo'
 import { UtilitySection } from '@/components/UtilitySection'
 // import { Scene } from '@/components/Scene'
 import { CustomableContainer, Text } from '@/layouts/common'
@@ -118,6 +118,7 @@ const ToolbarContainer = styled.div`
   padding: 8px;
   justify-content: space-between;
   align-items: center;
+  height: 48px;
 `
 
 const ToolbarItem = styled.div`
@@ -126,11 +127,6 @@ const ToolbarItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
-
-const ToolbarGroup = styled.div`
-  display: flex;
-  gap: 8px;
 `
 
 const Clickable = styled.button`
@@ -240,22 +236,70 @@ const ChatMessageContainer = styled.div`
   flex-direction: column;
   overflow: auto;
   height: 100%;
-  background: red;
+  width: 100%;
+  border-radius: 8px;
   gap: 8px;
 `
 
 const ChatContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 42px);
+  /* height: 100%; */
+  /* max-height: 100%; */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: pink;
 `
 
 const ChatInputContainer = styled.div`
   width: 100%;
-  padding: 8px;
-  background: blue;
+`
+
+const InputForm = styled.form`
+  height: 100%;
+  position: relative;
+`
+
+const MessageInputContainer = styled.div`
+  padding: 14px 48px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  /* width: 100%; */
+  flex-grow: 1;
+  background: var(--color-4);
+  border-radius: 8px;
+  height: auto;
+  align-items: center;
+`
+
+const MessageInput = styled(ReactTextareaAutosize)`
+  border: none;
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  resize: none;
+  display: flex;
+  background: transparent;
+  width: 100%;
+`
+
+const EmojiContainer = styled.div`
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
 `
 
 //#endregion
+
+const SAMPLE_DATA = {
+  author: ' sonhaaa',
+  avatarUri: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
+  isMine: true,
+  message: 'This is the first time I try Trysts. I love it! This is the first time I try Trysts.',
+  time: '12:34 pm',
+}
 
 const VirtualSpace = () => {
   const customColor = useAppStore((state) => state.customColor)
@@ -267,7 +311,7 @@ const VirtualSpace = () => {
         <HeaderContainer>
           <ColorPicker />
           <LogoContainer>
-            <FullLogo />
+            <Logo />
           </LogoContainer>
           <SpaceNameContainer>
             <SpaceName>
@@ -346,93 +390,58 @@ const VirtualSpace = () => {
             <UtilitySection name="Chat">
               <ChatContainer>
                 <ChatMessageContainer>
-                  <ChatMessage
-                    author=" sonhaaa"
-                    avatarUri="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
-                    isMine={false}
-                    message="This is the first time I try Trysts. I love it! This is the first time I try Trysts."
-                    time="12:34 pm"
-                  />
-                  <ChatMessage
-                    author=" sonhaaa"
-                    avatarUri="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
-                    isMine={true}
-                    message="This is the first time I try Trysts. I love it! This is the first time I try Trysts."
-                    time="12:34 pm"
-                  />
-                  <ChatMessage
-                    author=" sonhaaa"
-                    avatarUri="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
-                    isMine={false}
-                    message="This is the first time I try Trysts. I love it! This is the first time I try Trysts."
-                    time="12:34 pm"
-                  />
-                  <ChatMessage
-                    author=" sonhaaa"
-                    avatarUri="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
-                    isMine={true}
-                    message="This is the first time I try Trysts. I love it! This is the first time I try Trysts."
-                    time="12:34 pm"
-                  />
-                  <ChatMessage
-                    author=" sonhaaa"
-                    avatarUri="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
-                    isMine={false}
-                    message="This is the first time I try Trysts. I love it! This is the first time I try Trysts."
-                    time="12:34 pm"
-                  />
-                  <ChatMessage
-                    author=" sonhaaa"
-                    avatarUri="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
-                    isMine={true}
-                    message="This is the first time I try Trysts. I love it! This is the first time I try Trysts."
-                    time="12:34 pm"
-                  />
-                  <ChatMessage
-                    author=" sonhaaa"
-                    avatarUri="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
-                    isMine={false}
-                    message="This is the first time I try Trysts. I love it! This is the first time I try Trysts."
-                    time="12:34 pm"
-                  />
-                  <ChatMessage
-                    author=" sonhaaa"
-                    avatarUri="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
-                    isMine={true}
-                    message="This is the first time I try Trysts. I love it! This is the first time I try Trysts."
-                    time="12:34 pm"
-                  />
+                  {Array(3)
+                    .fill(SAMPLE_DATA)
+                    .map((message, index) => (
+                      <ChatMessage
+                        key={index}
+                        author={message.author}
+                        avatarUri={message.avatarUri}
+                        isMine={message.isMine}
+                        message={message.message}
+                        time={message.time}
+                      />
+                    ))}
                 </ChatMessageContainer>
-                <ChatInputContainer></ChatInputContainer>
+                <ChatInputContainer>
+                  <InputForm>
+                    <MessageInputContainer>
+                      <MessageInput maxRows={3} minRows={1} placeholder="Type something" />
+                    </MessageInputContainer>
+                    <EmojiContainer>
+                      <Clickable>
+                        <Emoji />
+                      </Clickable>
+                    </EmojiContainer>
+                  </InputForm>
+                </ChatInputContainer>
               </ChatContainer>
             </UtilitySection>
 
-            <ToolbarContainer>
-              <ToolbarGroup>
-                <ToolbarItem>
-                  <Clickable>
-                    <Chat />
-                  </Clickable>
-                </ToolbarItem>
-                <ToolbarItem>
-                  <Clickable>
-                    <People />
-                    <Text size="medium" weight="normal">
-                      999
-                    </Text>
-                  </Clickable>
-                </ToolbarItem>
-                <ToolbarItem>
-                  <Clickable>
-                    <Settingc />
-                  </Clickable>
-                </ToolbarItem>
-                <ToolbarItem>
-                  <Clickable>
-                    <Logout />
-                  </Clickable>
-                </ToolbarItem>
-              </ToolbarGroup>
+            <ToolbarContainer id="right-toolbar">
+              <ToolbarItem>
+                <Clickable>
+                  <Chat />
+                </Clickable>
+              </ToolbarItem>
+              <ToolbarItem>
+                <Clickable>
+                  <People />
+                  <Text size="medium" style={{ width: 20, height: 16 }} weight="normal">
+                    88
+                  </Text>
+                </Clickable>
+              </ToolbarItem>
+              <ToolbarItem>
+                <Clickable>
+                  <Settingc />
+                </Clickable>
+              </ToolbarItem>
+              <ToolbarItem>
+                <Clickable>
+                  <Logout />
+                </Clickable>
+              </ToolbarItem>
               <Seprator />
               <ToolbarItem>
                 <Clickable>

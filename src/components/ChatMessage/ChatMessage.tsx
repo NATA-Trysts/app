@@ -6,7 +6,7 @@ import { Text } from '@/layouts/common'
 const Container = styled.div<{ isMine: boolean }>`
   width: 100%;
   display: grid;
-  grid-template-columns: ${(props) => (props.isMine ? '1fr 32px' : '32px 1fr')};
+  grid-template-columns: ${(props) => (props.isMine ? '172px 32px' : '32px 172px')};
   gap: 6px;
 `
 const AvatarContainer = styled.div`

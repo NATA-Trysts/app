@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 
-export function useDynamicSvgImport(iconName: IconName) {
+export function useDynamicSvgImport(
+  name: string,
+  assetsFolder: AssetsFolder,
+): React.FC<React.SVGProps<SVGElement>> | undefined {
   const importedIconRef = useRef<React.FC<React.SVGProps<SVGElement>>>()
-  const [loading, setLoading] = useState(false)
+  const [, setLoading] = useState(false)
 
   useEffect(() => {
     setLoading(true)
 
     const importSvgIcon = async (): Promise<void> => {
       try {
-        const path = `/src/assets/icons/${iconName}.svg`
+        const path = `/src/assets/${assetsFolder}/${name}.svg`
 
         importedIconRef.current = (await import(/* @vite-ignore */ path)).ReactComponent
       } catch (err) {
@@ -20,10 +23,7 @@ export function useDynamicSvgImport(iconName: IconName) {
     }
 
     importSvgIcon()
-  }, [iconName])
+  }, [name])
 
-  return {
-    loading,
-    iconRef: importedIconRef.current,
-  }
+  return importedIconRef.current
 }
