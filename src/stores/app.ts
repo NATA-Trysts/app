@@ -11,7 +11,7 @@ type AppState = {
 export const useAppStore = create<AppState>()(
   persist(
     (set) => ({
-      customColor: 'purple',
+      customColor: 'blue',
       setCustomColor: (customColor: CustomColor) => set(() => ({ customColor })),
     }),
     {

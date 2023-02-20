@@ -1,21 +1,39 @@
-import './assets/fonts/GeneralSans-Medium.otf'
-import './assets/fonts/GeneralSans-Semibold.otf'
 import './index.css'
 
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Icon } from './components/Commons'
+import { Button } from './pages/Button'
+import Multitab from './pages/Multitab'
+import NotFound from './pages/NotFound'
+import TestNotification from './pages/TestNotification'
 import VirtualSpace from './pages/VirtualSpace'
 
 const router = createBrowserRouter([
+  {
+    path: '/space/:spaceId',
+    element: <VirtualSpace />,
+  },
+  {
+    path: '/multitab',
+    element: <Multitab />,
+  },
   {
     path: '/icon',
     element: <Icon name="shop" />,
   },
   {
-    path: '/space/:spaceId',
-    element: <VirtualSpace />,
+    path: 'test/noti-stack',
+    element: <TestNotification />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
+  },
+  {
+    path: '/button',
+    element: <Button />,
   },
 ])
 
