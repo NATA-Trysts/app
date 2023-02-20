@@ -117,7 +117,7 @@ const NotFoundButton = styled.button`
 
 const NotFound = () => {
   const handleBack = () => {
-    console.log('Back')
+    // console.log('Back')
   }
 
   return (
