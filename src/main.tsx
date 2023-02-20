@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Icon } from './components/Commons'
 import { Button } from './pages/Button'
+import Mobile from './pages/Mobile'
 import Multitab from './pages/Multitab'
 import NotFound from './pages/NotFound'
 import Test from './pages/Test'
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: 'test/noti-stack',
     element: <TestNotification />,
+  },
+  {
+    path: '/mobile',
+    element: <Mobile />,
   },
   {
     path: '*',
