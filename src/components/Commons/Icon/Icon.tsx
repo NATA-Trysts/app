@@ -1,21 +1,14 @@
-import { useDynamicSvgImport } from './hooks/useDynamicSvgImport'
+import { useIconSvgImport } from './hooks/useIconSvgImport'
 
 type IconProps = {
+  color?: string
   height?: number
   name: IconName
   width?: number
 }
 
-export const Icon = ({ name, width = 16, height = 16 }: IconProps) => {
-  const SvgIcon = useDynamicSvgImport(name)
+export const Icon = ({ name, width = 18, height = 18, color = '#696969' }: IconProps) => {
+  const SvgIcon = useIconSvgImport(name)
 
-  return (
-    <>
-      {SvgIcon && (
-        <div>
-          <SvgIcon height={height} width={width} />
-        </div>
-      )}
-    </>
-  )
+  return <>{SvgIcon && <SvgIcon height={height} stroke={color} width={width} />}</>
 }
