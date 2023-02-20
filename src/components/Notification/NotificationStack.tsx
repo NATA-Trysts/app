@@ -54,6 +54,6 @@ export const NotificationStack = () => {
         />
       ))}
     </NotificationStackContainer>,
-    container
+    container,
   )
 }

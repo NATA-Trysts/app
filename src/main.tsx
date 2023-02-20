@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Icon } from './components/Commons'
+import { Button } from './pages/Button'
+import Mobile from './pages/Mobile'
 import Multitab from './pages/Multitab'
 import NotFound from './pages/NotFound'
 import Test from './pages/Test'
@@ -27,8 +29,16 @@ const router = createBrowserRouter([
     element: <TestNotification />,
   },
   {
+    path: '/mobile',
+    element: <Mobile />,
+  },
+  {
     path: '*',
     element: <NotFound />,
+  },
+  {
+    path: '/button',
+    element: <Button />,
   },
 ])
 
