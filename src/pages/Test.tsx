@@ -2,6 +2,7 @@ import { HMSRoomProvider } from '@100mslive/react-sdk'
 import styled from 'styled-components'
 
 import { ColorPicker } from '@/components/ColorPicker'
+import { Logo } from '@/components/Commons/Logo'
 import { VideoCall } from '@/components/VideoCall'
 import { CustomableContainer } from '@/layouts/common'
 import { useAppStore } from '@/stores/app'
@@ -36,10 +37,13 @@ const Test = () => {
           <VideoCall />
           <ColorPicker />
         </InteractSection>
+        <Logo width={25}></Logo>
+        <Logo></Logo>
+        <Logo width={100}></Logo>
+        <Logo width={200}></Logo>
       </Container>
     </HMSRoomProvider>
   )
 }
 
 export default Test
-

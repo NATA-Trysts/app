@@ -34,4 +34,3 @@ const NOTIFICATION_CLOSE_COLOR: NotificationCloseColor = {
 
 export { COLOR_PICKER_LIST, NOTIFICATION_CLOSE_COLOR, NOTIFICATION_COLOR }
 export type { NotificationType }
-
