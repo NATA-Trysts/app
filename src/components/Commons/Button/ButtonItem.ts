@@ -1,17 +1,21 @@
 import styled from 'styled-components'
 
 type ButtonTheme = {
-  background: string
+  background?: string
   backgroundHover?: string
-  color: string
+  color?: string
   colorHover?: string
   boxShadowHover?: string
 }
 
 export const ButtonThemes: { [key: string]: { [key: string]: ButtonTheme } } = {
+  default: {
+    default: {},
+  },
   basic: {
     dark: {
       background: '#191A1D',
+      backgroundHover: '#270E56',
       color: '#696969',
       colorHover: '#FFFFFF',
     },
@@ -51,7 +55,7 @@ export const ButtonContainer = styled.button`
   }
 
   &:hover:not(:disabled) .button-content {
-    color: #ffffff;
+    color: ${(props) => props.theme.colorHover};
   }
 
   &:disabled {

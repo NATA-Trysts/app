@@ -1,7 +1,7 @@
 import { MouseEventHandler, ReactNode } from 'react'
 
 export type BaseButtonProps = ButtonProps & {
-  colorStyle?: string
+  colorStyle?: 'default' | 'gradient' | 'basic'
 }
 
 export type StyledButtonProps = ButtonProps
