@@ -15,7 +15,7 @@ export const Button = ({
 
   return (
     <ThemeProvider theme={ButtonThemes[colorStyle][color]}>
-      <ButtonContainer disabled={disabled} onClick={otherProps.onClick}>
+      <ButtonContainer className={otherProps.className} disabled={disabled} onClick={otherProps.onClick}>
         <ButtonContent className="button-content">{otherProps.children}</ButtonContent>
       </ButtonContainer>
     </ThemeProvider>
