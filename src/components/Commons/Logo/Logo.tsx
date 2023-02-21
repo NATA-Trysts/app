@@ -4,11 +4,11 @@ import styled from 'styled-components'
 
 import { ReactComponent as LogoSvg } from '@/assets/icons/logo.svg'
 
-const LogoContainer = styled.div<{ width: number }>`
+const LogoContainer = styled.div<{ width: number; aspectRatio: string }>`
   width: ${(props) => `${props.width}px`};
   display: flex;
   position: relative;
-  aspect-ratio: 66/21;
+  aspect-ratio: ${(props) => props.aspectRatio};
 
   &:before {
     content: '';
@@ -28,8 +28,8 @@ const LogoContainer = styled.div<{ width: number }>`
 const StyleLogo = styled(LogoSvg)``
 
 export const Logo = ({
-  width = 66,
-  aspectRatio = { x: 66, y: 21 },
+  width = 65,
+  aspectRatio = { x: 65, y: 19 },
 }: {
   width?: number
   aspectRatio?: { x: number; y: number }
@@ -37,7 +37,8 @@ export const Logo = ({
   const svgSize = { width: width, height: (width * aspectRatio.y) / aspectRatio.x }
 
   return (
-    <LogoContainer width={width}>
+    <LogoContainer aspectRatio={`${aspectRatio.x}/${aspectRatio.y}`} width={width}>
+      {/* <StyleLogo /> */}
       <StyleLogo height={svgSize.height} viewBox={`0 0 ${aspectRatio.x} ${aspectRatio.y}`} width={svgSize.width} />
     </LogoContainer>
   )
