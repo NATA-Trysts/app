@@ -2,6 +2,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 
 import { GradientButton } from '@/components/Button'
+import { BasicButton } from '@/components/Button/BasicButton/BasicButton'
 
 const ButtonContainer = styled.div`
   height: 100vh;
@@ -25,6 +26,10 @@ export const Button = () => {
           Create Space
         </GradientButton>
         <GradientButton onClick={handleClick}>Create Space</GradientButton>
+        <BasicButton disabled onClick={handleClick}>
+          Create Space
+        </BasicButton>
+        <BasicButton onClick={handleClick}>Create Space</BasicButton>
         <div
           style={{
             color: '#FFFFFF',

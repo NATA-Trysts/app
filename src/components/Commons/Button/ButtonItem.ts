@@ -1,16 +1,21 @@
 import styled from 'styled-components'
 
 type ButtonTheme = {
-  background: string
+  background?: string
   backgroundHover?: string
-  color: string
+  color?: string
   colorHover?: string
+  boxShadowHover?: string
 }
 
 export const ButtonThemes: { [key: string]: { [key: string]: ButtonTheme } } = {
+  default: {
+    default: {},
+  },
   basic: {
     dark: {
       background: '#191A1D',
+      backgroundHover: '#270E56',
       color: '#696969',
       colorHover: '#FFFFFF',
     },
@@ -20,6 +25,9 @@ export const ButtonThemes: { [key: string]: { [key: string]: ButtonTheme } } = {
       background: 'linear-gradient(85.46deg, #A67BC2 0%, #C771E1 50.52%, #E9A8FA 100%);',
       backgroundHover: 'linear-gradient(85.46deg, #B481D5 0%, #CE67ED 50.52%, #E88FFF 100%);',
       color: '#FFFFFF',
+      boxShadowHover: `0px 41px 89px rgba(234, 42, 210, 0.44),
+      0px 15.7926px 28.3481px rgba(234, 42, 210, 0.267259),
+      0px 3.34074px 7.25185px rgba(234, 42, 210, 0.172741);`,
     },
   },
 }
@@ -43,12 +51,11 @@ export const ButtonContainer = styled.button`
 
   &:hover:not(:disabled) {
     background: ${(props) => props.theme.backgroundHover};
-    box-shadow: 0px 41px 89px rgba(234, 42, 210, 0.44), 0px 15.7926px 28.3481px rgba(234, 42, 210, 0.267259),
-      0px 3.34074px 7.25185px rgba(234, 42, 210, 0.172741);
+    box-shadow: ${(props) => props.theme.boxShadowHover};
   }
 
   &:hover:not(:disabled) .button-content {
-    color: #ffffff;
+    color: ${(props) => props.theme.colorHover};
   }
 
   &:disabled {
