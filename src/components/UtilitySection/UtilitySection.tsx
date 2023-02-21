@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import { ReactComponent as Close } from '@/assets/icons/close.svg'
 import { SVGClickable, Text } from '@/layouts/common'
 
-const Container = styled.section`
-  width: 80%;
+const Container = styled.section<{ width: string }>`
+  width: ${(props) => props.width};
   height: 100%;
   background: var(--color-6);
   border-radius: 16px;
@@ -48,11 +48,12 @@ const CustomClickable = styled(SVGClickable)`
 type UtilitySectionProps = {
   children: ReactNode
   name: string
+  width: string
 }
 
-export const UtilitySection: FC<UtilitySectionProps> = ({ children, name }) => {
+export const UtilitySection: FC<UtilitySectionProps> = ({ children, name, width }) => {
   return (
-    <Container>
+    <Container width={width}>
       <CustomClickable>
         <Close />
       </CustomClickable>

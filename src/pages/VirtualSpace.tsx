@@ -1,21 +1,12 @@
 import styled from 'styled-components'
 
-import { ReactComponent as ArrowUp } from '@/assets/icons/arrow-up.svg'
-import { ReactComponent as Camera } from '@/assets/icons/camera.svg'
-import { ReactComponent as Chat } from '@/assets/icons/chat.svg'
-import { ReactComponent as Emoji } from '@/assets/icons/emoji.svg'
-import { ReactComponent as Info } from '@/assets/icons/info.svg'
-import { ReactComponent as Logout } from '@/assets/icons/logout.svg'
-import { ReactComponent as Micro } from '@/assets/icons/micro.svg'
-import { ReactComponent as People } from '@/assets/icons/people.svg'
-import { ReactComponent as Settingc } from '@/assets/icons/setting-c.svg'
-import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
-import { ReactComponent as Whiteboard } from '@/assets/icons/whiteboard.svg'
 import { ChatInput } from '@/components/ChatInput'
 import { ChatMessage } from '@/components/ChatMessage'
 import { Icon } from '@/components/Commons'
 import { Logo } from '@/components/Commons/Logo'
+import { MemberCard } from '@/components/MemberCard'
 import { UtilitySection } from '@/components/UtilitySection'
+import { ToolbarMiddle, ToolbarRight } from '@/components/VirtualSpace'
 import { CustomableContainer, SVGClickable, Text } from '@/layouts/common'
 import { truncateText } from '@/libs'
 import { useAppStore } from '@/stores/app'
@@ -108,32 +99,6 @@ const MyInformationCard = styled.div`
   background: var(--color-5);
 `
 
-const ToolbarContainer = styled.div`
-  display: flex;
-  gap: 8px;
-  border-radius: 16px;
-  background: var(--color-5);
-  padding: 8px;
-  justify-content: space-between;
-  align-items: center;
-  height: 48px;
-`
-
-const ToolbarItem = styled.div`
-  background: var(--color-4);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const Seprator = styled.div`
-  width: 1.25px;
-  height: 16px;
-  background: var(--color-2);
-  border-radius: 1px;
-`
-
 const LogoContainer = styled.div`
   padding: 14px 16px;
   border-radius: 16px;
@@ -198,31 +163,39 @@ const ChatContainer = styled.div`
   justify-content: flex-end;
 `
 
+const MemberContainer = styled(ChatContainer)`
+  overflow: auto;
+  justify-content: flex-start;
+`
+
 const FullLogo = styled(Logo)`
-  /* margin-top: 2px; */
   aspect-ratio: unset;
 `
 
 //#endregion
 
-const SAMPLE_DATA = {
-  author: ' sonhaaa',
+const SAMPLE_MESSAGE_DATA = {
+  author: 'sonhaaa',
   avatarUri: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
   isMine: true,
   message: 'This is the first time I try Trysts. I love it! This is the first time I try Trysts.',
   time: '12:34 pm',
 }
 
+const SAMPLE_MEMBER_DATA = {
+  handler: 'sonhaaa#1234',
+  avatarUri: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
+  name: 'Nguyen Son Ha',
+}
+
 const VirtualSpace = () => {
   const customColor = useAppStore((state) => state.customColor)
-  const a = [true, false]
 
   return (
     <Container customColor={customColor}>
       {/* <Scene /> */}
       <OverlayContainer>
         <HeaderContainer>
-          {/* <ColorPicker /> */}
           <LogoContainer>
             <FullLogo />
           </LogoContainer>
@@ -262,54 +235,20 @@ const VirtualSpace = () => {
           </MyInformationCardContainer>
         </LeftSideContainer>
         <MiddleSideContainer>
-          <ToolbarContainer>
-            <ToolbarItem>
-              <SVGClickable>
-                <Micro />
-              </SVGClickable>
-              <Seprator />
-              <SVGClickable>
-                <ArrowUp />
-              </SVGClickable>
-            </ToolbarItem>
-            <ToolbarItem>
-              <SVGClickable>
-                <Camera />
-              </SVGClickable>
-              <Seprator />
-              <SVGClickable>
-                <ArrowUp />
-              </SVGClickable>
-            </ToolbarItem>
-            <ToolbarItem>
-              <SVGClickable>
-                <ShareScreen />
-              </SVGClickable>
-            </ToolbarItem>
-            <ToolbarItem>
-              <SVGClickable>
-                <Whiteboard />
-              </SVGClickable>
-            </ToolbarItem>
-            <ToolbarItem>
-              <SVGClickable>
-                <Emoji />
-              </SVGClickable>
-            </ToolbarItem>
-          </ToolbarContainer>
+          <ToolbarMiddle />
         </MiddleSideContainer>
         <RightSideContainer>
-          <UtilitySection name="Chat">
+          <UtilitySection name="Chat" width="70%">
             <ChatContainer>
               <ChatMessageContainer>
                 {Array(10)
-                  .fill(SAMPLE_DATA)
-                  .map((message, index) => (
+                  .fill(SAMPLE_MESSAGE_DATA)
+                  .map((message: typeof SAMPLE_MESSAGE_DATA, index) => (
                     <ChatMessage
                       key={index}
-                      author={message.author}
+                      author={truncateText(message.author, 15)}
                       avatarUri={message.avatarUri}
-                      isMine={a[Math.floor(Math.random() * a.length)]}
+                      isMine={false}
                       message={message.message}
                       time={message.time}
                     />
@@ -318,38 +257,16 @@ const VirtualSpace = () => {
               <ChatInput />
             </ChatContainer>
           </UtilitySection>
-
-          <ToolbarContainer id="right-toolbar">
-            <ToolbarItem>
-              <SVGClickable>
-                <Chat />
-              </SVGClickable>
-            </ToolbarItem>
-            <ToolbarItem>
-              <SVGClickable>
-                <People />
-                <Text size="medium" style={{ height: 16, lineHeight: '16px' }} weight="normal">
-                  888
-                </Text>
-              </SVGClickable>
-            </ToolbarItem>
-            <ToolbarItem>
-              <SVGClickable>
-                <Settingc />
-              </SVGClickable>
-            </ToolbarItem>
-            <ToolbarItem>
-              <SVGClickable>
-                <Info />
-              </SVGClickable>
-            </ToolbarItem>
-            <Seprator />
-            <ToolbarItem>
-              <SVGClickable>
-                <Logout />
-              </SVGClickable>
-            </ToolbarItem>
-          </ToolbarContainer>
+          <UtilitySection name="Member" width="60%">
+            <MemberContainer>
+              {Array(20)
+                .fill(SAMPLE_MEMBER_DATA)
+                .map((member: typeof SAMPLE_MEMBER_DATA, index) => (
+                  <MemberCard key={index} avatar={member.avatarUri} handler={member.handler} name={member.name} />
+                ))}
+            </MemberContainer>
+          </UtilitySection>
+          <ToolbarRight />
         </RightSideContainer>
       </OverlayContainer>
     </Container>
