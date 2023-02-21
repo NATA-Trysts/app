@@ -17,8 +17,8 @@ const Description = styled.div`
 `
 
 type ItemDescriptionProps = {
-  name: string
-  description: string
+  name?: string
+  description?: string
 }
 
 export const ItemDescription = ({ name, description }: ItemDescriptionProps) => {

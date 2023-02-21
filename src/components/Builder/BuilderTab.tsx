@@ -1,7 +1,9 @@
+import { useEffect } from 'react'
 import styled from 'styled-components'
 
+import { useBuilderStore } from '@/stores/builder'
+
 import { BuilderHelp } from './BuilderHelp'
-import { Category as CategoryType } from './BuilderPanel'
 import { CategoryItem } from './CategoryItem'
 
 const BuilderTabContainer = styled.div`
@@ -25,12 +27,36 @@ const Dash = styled.div`
   margin-top: 4px;
 `
 
-type BuilderTabProps = {
-  categories: CategoryType[]
-  handleClickTab: (id: number) => void
-}
+export const BuilderTab = () => {
+  const [categories, setCategories] = useBuilderStore((state) => [state.categories, state.setCategories])
+  const setSelectedCategory = useBuilderStore((state) => state.setSelectedCategory)
 
-export const BuilderTab = ({ categories, handleClickTab }: BuilderTabProps) => {
+  const handleClickTab = (id: number) => {
+    const newCategories = categories.map((category) => {
+      if (category.id === id) {
+        return {
+          ...category,
+          isActive: true,
+        }
+      } else {
+        return {
+          ...category,
+          isActive: false,
+        }
+      }
+    })
+
+    setCategories(newCategories)
+  }
+
+  useEffect(() => {
+    const newSelectedCategory = categories.find((category) => category.isActive === true)
+
+    if (newSelectedCategory) {
+      setSelectedCategory(newSelectedCategory.name)
+    }
+  }, [categories, setSelectedCategory])
+
   return (
     <BuilderTabContainer>
       <CategoryList>

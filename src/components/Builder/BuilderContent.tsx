@@ -3,15 +3,17 @@ import styled from 'styled-components'
 import { SubCategoryItem, useBuilderStore } from '@/stores/builder'
 
 import { BuilderSubCategory } from './BuilderSubCategory'
+import { useBuilder } from './hooks/useBuilder'
 import { ItemDescription } from './ItemDescription'
 
-const BuilderContentContainer = styled.div`
+const BuilderContentContainer = styled.div<{ isLoading: boolean }>`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: opacity 0.1s ease;
+  opacity: ${({ isLoading }) => (isLoading ? 0 : 1)};
+  transition: opacity 0.2s ease;
 `
 
 const Preview = styled.div`
@@ -29,26 +31,32 @@ const PreviewImg = styled.img`
   object-fit: cover;
 `
 
-export const BuilderContent = () => {
+type BuilderContentProps = {
+  isLoading: boolean
+}
+
+export const BuilderContent = ({ isLoading }: BuilderContentProps) => {
   const subCategoryItems = useBuilderStore((state) => state.subCategoryItems)
-  const [selectedSubCategoryItem, setSelectedSubCategoryItem] = useBuilderStore((state) => [
-    state.selectedSubCategoryItem,
-    state.setSelectedSubCategoryItem,
-  ])
+  const selectedCategoryName = useBuilderStore((state) => state.selectedCategoryName)
+  const selectedSubCategoryItems = useBuilderStore((state) => state.selectedSubCategoryItems)
+  const { clickSubCategory } = useBuilder()
 
   const handleSelectSubCategory = (item: SubCategoryItem) => {
-    setSelectedSubCategoryItem(item)
+    clickSubCategory(item)
   }
 
   return (
-    <BuilderContentContainer>
+    <BuilderContentContainer isLoading={isLoading}>
       <Preview>
-        <PreviewImg alt="Preview" loading="lazy" src={selectedSubCategoryItem.img} />
+        <PreviewImg alt="Preview" loading="lazy" src={selectedSubCategoryItems.get(selectedCategoryName)?.img} />
       </Preview>
-      <ItemDescription description={selectedSubCategoryItem.description} name={selectedSubCategoryItem.name} />
+      <ItemDescription
+        description={selectedSubCategoryItems.get(selectedCategoryName)?.description}
+        name={selectedSubCategoryItems.get(selectedCategoryName)?.name}
+      />
       <BuilderSubCategory
-        list={subCategoryItems}
-        selectedId={selectedSubCategoryItem.id}
+        list={subCategoryItems.get(selectedCategoryName)}
+        selectedId={selectedSubCategoryItems.get(selectedCategoryName)?.id}
         onClickItem={handleSelectSubCategory}
       />
     </BuilderContentContainer>
