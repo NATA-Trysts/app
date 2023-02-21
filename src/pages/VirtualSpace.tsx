@@ -1,24 +1,22 @@
-import ReactTextareaAutosize from 'react-textarea-autosize'
 import styled from 'styled-components'
 
 import { ReactComponent as ArrowUp } from '@/assets/icons/arrow-up.svg'
 import { ReactComponent as Camera } from '@/assets/icons/camera.svg'
 import { ReactComponent as Chat } from '@/assets/icons/chat.svg'
 import { ReactComponent as Emoji } from '@/assets/icons/emoji.svg'
+import { ReactComponent as Info } from '@/assets/icons/info.svg'
 import { ReactComponent as Logout } from '@/assets/icons/logout.svg'
 import { ReactComponent as Micro } from '@/assets/icons/micro.svg'
 import { ReactComponent as People } from '@/assets/icons/people.svg'
 import { ReactComponent as Settingc } from '@/assets/icons/setting-c.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
 import { ReactComponent as Whiteboard } from '@/assets/icons/whiteboard.svg'
+import { ChatInput } from '@/components/ChatInput'
 import { ChatMessage } from '@/components/ChatMessage'
-import { ColorPicker } from '@/components/ColorPicker'
-// import { ColorPicker } from '@/components/ColorPicker'
 import { Icon } from '@/components/Commons'
 import { Logo } from '@/components/Commons/Logo'
 import { UtilitySection } from '@/components/UtilitySection'
-// import { Scene } from '@/components/Scene'
-import { CustomableContainer, Text } from '@/layouts/common'
+import { CustomableContainer, SVGClickable, Text } from '@/layouts/common'
 import { truncateText } from '@/libs'
 import { useAppStore } from '@/stores/app'
 
@@ -129,49 +127,6 @@ const ToolbarItem = styled.div`
   justify-content: center;
 `
 
-const Clickable = styled.button`
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  background: var(--color-4);
-  pointer-events: auto;
-  display: flex;
-  gap: 8px;
-  /* transition: all 0.25s ease;
-  will-change: all; */
-
-  svg {
-    path {
-      stroke: var(--color-3);
-    }
-    rect {
-      stroke: var(--color-3);
-    }
-
-    ellipse {
-      stroke: var(--color-3);
-    }
-  }
-
-  :hover {
-    svg {
-      path {
-        stroke: #fff;
-      }
-      rect {
-        stroke: #fff;
-      }
-
-      ellipse {
-        stroke: #fff;
-      }
-    }
-
-    background: var(--color-3);
-  }
-`
-
 const Seprator = styled.div`
   width: 1.25px;
   height: 16px;
@@ -223,14 +178,6 @@ const MyHandler = styled(Text)`
   color: var(--color-3);
 `
 
-const RightSideWrapper = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 6px;
-`
-
 const ChatMessageContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -243,52 +190,17 @@ const ChatMessageContainer = styled.div`
 
 const ChatContainer = styled.div`
   width: 100%;
-  height: calc(100% - 42px);
-  /* height: 100%; */
-  /* max-height: 100%; */
+  height: 100%;
+  max-height: calc(100vh - 16px * 2 - 48px - 6px - 16px - 52px);
   display: flex;
   flex-direction: column;
   gap: 8px;
-  background: pink;
+  justify-content: flex-end;
 `
 
-const ChatInputContainer = styled.div`
-  width: 100%;
-`
-
-const InputForm = styled.form`
-  height: 100%;
-  position: relative;
-`
-
-const MessageInputContainer = styled.div`
-  padding: 14px 48px 14px 12px;
-  display: flex;
-  flex-direction: column;
-  /* width: 100%; */
-  flex-grow: 1;
-  background: var(--color-4);
-  border-radius: 8px;
-  height: auto;
-  align-items: center;
-`
-
-const MessageInput = styled(ReactTextareaAutosize)`
-  border: none;
-  font-family: var(--font-family);
-  font-size: 14px;
-  font-weight: 500;
-  outline: none;
-  resize: none;
-  display: flex;
-  background: transparent;
-  width: 100%;
-`
-
-const EmojiContainer = styled.div`
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
+const FullLogo = styled(Logo)`
+  /* margin-top: 2px; */
+  aspect-ratio: unset;
 `
 
 //#endregion
@@ -303,15 +215,16 @@ const SAMPLE_DATA = {
 
 const VirtualSpace = () => {
   const customColor = useAppStore((state) => state.customColor)
+  const a = [true, false]
 
   return (
     <Container customColor={customColor}>
       {/* <Scene /> */}
       <OverlayContainer>
         <HeaderContainer>
-          <ColorPicker />
+          {/* <ColorPicker /> */}
           <LogoContainer>
-            <Logo />
+            <FullLogo />
           </LogoContainer>
           <SpaceNameContainer>
             <SpaceName>
@@ -323,9 +236,9 @@ const VirtualSpace = () => {
                 {truncateText('Son Ha Wedding Son Ha Wedding', 20)}
               </Text>
             </SpaceName>
-            <Clickable>
+            <SVGClickable>
               <Icon name="copy" />
-            </Clickable>
+            </SVGClickable>
           </SpaceNameContainer>
         </HeaderContainer>
         <LeftSideContainer>
@@ -351,105 +264,92 @@ const VirtualSpace = () => {
         <MiddleSideContainer>
           <ToolbarContainer>
             <ToolbarItem>
-              <Clickable>
+              <SVGClickable>
                 <Micro />
-              </Clickable>
+              </SVGClickable>
               <Seprator />
-              <Clickable>
+              <SVGClickable>
                 <ArrowUp />
-              </Clickable>
+              </SVGClickable>
             </ToolbarItem>
             <ToolbarItem>
-              <Clickable>
+              <SVGClickable>
                 <Camera />
-              </Clickable>
+              </SVGClickable>
               <Seprator />
-              <Clickable>
+              <SVGClickable>
                 <ArrowUp />
-              </Clickable>
+              </SVGClickable>
             </ToolbarItem>
             <ToolbarItem>
-              <Clickable>
+              <SVGClickable>
                 <ShareScreen />
-              </Clickable>
+              </SVGClickable>
             </ToolbarItem>
             <ToolbarItem>
-              <Clickable>
+              <SVGClickable>
                 <Whiteboard />
-              </Clickable>
+              </SVGClickable>
             </ToolbarItem>
             <ToolbarItem>
-              <Clickable>
+              <SVGClickable>
                 <Emoji />
-              </Clickable>
+              </SVGClickable>
             </ToolbarItem>
           </ToolbarContainer>
         </MiddleSideContainer>
         <RightSideContainer>
-          <RightSideWrapper>
-            <UtilitySection name="Chat">
-              <ChatContainer>
-                <ChatMessageContainer>
-                  {Array(3)
-                    .fill(SAMPLE_DATA)
-                    .map((message, index) => (
-                      <ChatMessage
-                        key={index}
-                        author={message.author}
-                        avatarUri={message.avatarUri}
-                        isMine={message.isMine}
-                        message={message.message}
-                        time={message.time}
-                      />
-                    ))}
-                </ChatMessageContainer>
-                <ChatInputContainer>
-                  <InputForm>
-                    <MessageInputContainer>
-                      <MessageInput maxRows={3} minRows={1} placeholder="Type something" />
-                    </MessageInputContainer>
-                    <EmojiContainer>
-                      <Clickable>
-                        <Emoji />
-                      </Clickable>
-                    </EmojiContainer>
-                  </InputForm>
-                </ChatInputContainer>
-              </ChatContainer>
-            </UtilitySection>
+          <UtilitySection name="Chat">
+            <ChatContainer>
+              <ChatMessageContainer>
+                {Array(10)
+                  .fill(SAMPLE_DATA)
+                  .map((message, index) => (
+                    <ChatMessage
+                      key={index}
+                      author={message.author}
+                      avatarUri={message.avatarUri}
+                      isMine={a[Math.floor(Math.random() * a.length)]}
+                      message={message.message}
+                      time={message.time}
+                    />
+                  ))}
+              </ChatMessageContainer>
+              <ChatInput />
+            </ChatContainer>
+          </UtilitySection>
 
-            <ToolbarContainer id="right-toolbar">
-              <ToolbarItem>
-                <Clickable>
-                  <Chat />
-                </Clickable>
-              </ToolbarItem>
-              <ToolbarItem>
-                <Clickable>
-                  <People />
-                  <Text size="medium" style={{ width: 20, height: 16 }} weight="normal">
-                    88
-                  </Text>
-                </Clickable>
-              </ToolbarItem>
-              <ToolbarItem>
-                <Clickable>
-                  <Settingc />
-                </Clickable>
-              </ToolbarItem>
-              <ToolbarItem>
-                <Clickable>
-                  <Logout />
-                </Clickable>
-              </ToolbarItem>
-              <Seprator />
-              <ToolbarItem>
-                <Clickable>
-                  <Logout />
-                </Clickable>
-              </ToolbarItem>
-            </ToolbarContainer>
-          </RightSideWrapper>
+          <ToolbarContainer id="right-toolbar">
+            <ToolbarItem>
+              <SVGClickable>
+                <Chat />
+              </SVGClickable>
+            </ToolbarItem>
+            <ToolbarItem>
+              <SVGClickable>
+                <People />
+                <Text size="medium" style={{ height: 16, lineHeight: '16px' }} weight="normal">
+                  888
+                </Text>
+              </SVGClickable>
+            </ToolbarItem>
+            <ToolbarItem>
+              <SVGClickable>
+                <Settingc />
+              </SVGClickable>
+            </ToolbarItem>
+            <ToolbarItem>
+              <SVGClickable>
+                <Info />
+              </SVGClickable>
+            </ToolbarItem>
+            <Seprator />
+            <ToolbarItem>
+              <SVGClickable>
+                <Logout />
+              </SVGClickable>
+            </ToolbarItem>
+          </ToolbarContainer>
         </RightSideContainer>
       </OverlayContainer>
     </Container>

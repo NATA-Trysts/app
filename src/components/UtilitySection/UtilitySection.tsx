@@ -1,15 +1,17 @@
 import React, { FC, ReactNode } from 'react'
 import styled from 'styled-components'
 
-import { Text } from '@/layouts/common'
+import { ReactComponent as Close } from '@/assets/icons/close.svg'
+import { SVGClickable, Text } from '@/layouts/common'
 
 const Container = styled.section`
-  width: 100%;
-  height: calc(100% - 52px - 6px);
+  width: 80%;
+  height: 100%;
   background: var(--color-6);
   border-radius: 16px;
   padding: 12px;
   pointer-events: auto;
+  position: relative;
 `
 
 const Wrapper = styled.div`
@@ -34,6 +36,15 @@ const Content = styled.section`
   gap: 8px;
 `
 
+const CustomClickable = styled(SVGClickable)`
+  position: absolute;
+  padding: 2px;
+  border-radius: 8px;
+  gap: 8px;
+  right: 8px;
+  top: 8px;
+`
+
 type UtilitySectionProps = {
   children: ReactNode
   name: string
@@ -42,6 +53,9 @@ type UtilitySectionProps = {
 export const UtilitySection: FC<UtilitySectionProps> = ({ children, name }) => {
   return (
     <Container>
+      <CustomClickable>
+        <Close />
+      </CustomClickable>
       <Wrapper>
         <Header>
           <Text size="large" weight="bold">

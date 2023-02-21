@@ -55,5 +55,46 @@ const CustomableContainer = styled.div<{ customColor: CustomColor }>`
   will-change: background;
 `
 
-export { Container, CustomableContainer, Text }
+const SVGClickable = styled.button`
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  background: var(--color-4);
+  pointer-events: auto;
+  display: flex;
+  gap: 8px;
+
+  svg {
+    path {
+      stroke: var(--color-3);
+    }
+    rect {
+      stroke: var(--color-3);
+    }
+
+    ellipse {
+      stroke: var(--color-3);
+    }
+  }
+
+  :hover {
+    svg {
+      path {
+        stroke: #fff;
+      }
+      rect {
+        stroke: #fff;
+      }
+
+      ellipse {
+        stroke: #fff;
+      }
+    }
+
+    background: var(--color-3);
+  }
+`
+
+export { Container, CustomableContainer, SVGClickable, Text }
 export type { CustomColor }
