@@ -1,7 +1,7 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
-import { SubCategoryItem as SubCategoryItemType, useBuilderStore } from '@/stores/builder'
+import { SubCategoryItem as SubCategoryItemType } from '@/stores/builder'
 
 const BuilderSubCategoryContainer = styled.div`
   width: 218px;
@@ -56,28 +56,29 @@ type SubCategoryItemProps = {
 }
 
 export const BuilderSubCategory = ({ list, selectedId, onClickItem }: SubCategoryItemProps) => {
-  const selectedCategoryName = useBuilderStore((state) => state.selectedCategoryName)
-  const [scrollPosition, setScrollPosition] = useBuilderStore((state) => [
-    state.scrollPosition,
-    state.setScrollPosition,
-  ])
   const subCategoryListRef = useRef<HTMLDivElement>(null)
 
-  const handleScroll = (e: any) => {
-    setScrollPosition({ ...scrollPosition, [selectedCategoryName]: e.target.scrollTop })
-  }
+  useEffect(() => {
+    if (selectedId) {
+      const subCategoryList = subCategoryListRef.current
+      const selectedElement = subCategoryList?.querySelector<HTMLElement>(`#sub-category-${selectedId}`)
 
-  // useEffect(() => {
-  //   if (subCategoryListRef.current) {
-  //     subCategoryListRef.current.scrollTop = scrollPosition[selectedCategoryName] || 0
-  //   }
-  // }, [scrollPosition, selectedCategoryName])
+      if (selectedElement && subCategoryList) {
+        subCategoryList.scrollTop = selectedElement.offsetTop - subCategoryList.offsetTop
+      }
+    }
+  }, [list])
 
   return (
     <BuilderSubCategoryContainer>
-      <SubCategoryList ref={subCategoryListRef} onScroll={handleScroll}>
+      <SubCategoryList ref={subCategoryListRef}>
         {list?.map((item) => (
-          <SubCategoryItem key={item.id} active={selectedId === item.id} onClick={() => onClickItem(item)}>
+          <SubCategoryItem
+            key={item.id}
+            active={selectedId === item.id}
+            id={'sub-category-' + item.id.toString()}
+            onClick={() => onClickItem(item)}
+          >
             <SubCategoryImg alt={item.name} loading="lazy" src={item.img} />
           </SubCategoryItem>
         ))}

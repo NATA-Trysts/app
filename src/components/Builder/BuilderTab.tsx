@@ -1,7 +1,9 @@
-import { useEffect } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { useBuilderStore } from '@/stores/builder'
+import { ReactComponent as AllIcon } from '@/assets/icons/all-application.svg'
+import { ReactComponent as SmileFaceIcon } from '@/assets/icons/smile-face.svg'
+import { CategoryType, useBuilderStore } from '@/stores/builder'
 
 import { BuilderHelp } from './BuilderHelp'
 import { CategoryItem } from './CategoryItem'
@@ -27,8 +29,28 @@ const Dash = styled.div`
   margin-top: 4px;
 `
 
+type Category = {
+  id: number
+  icon: ReactNode
+  name: CategoryType
+  isActive: boolean
+}
+
 export const BuilderTab = () => {
-  const [categories, setCategories] = useBuilderStore((state) => [state.categories, state.setCategories])
+  const [categories, setCategories] = useState<Category[]>([
+    {
+      id: 1,
+      icon: <AllIcon />,
+      name: 'Animal', // temp
+      isActive: true,
+    },
+    {
+      id: 2,
+      icon: <SmileFaceIcon />,
+      name: 'ThreeJS', // temp
+      isActive: false,
+    },
+  ])
   const setSelectedCategory = useBuilderStore((state) => state.setSelectedCategory)
 
   const handleClickTab = (id: number) => {

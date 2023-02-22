@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react'
+import { ReactNode } from 'react'
 import styled from 'styled-components'
 
 import { TAB_CATEGORY_COLOR } from '@/libs/constants'
@@ -30,7 +30,7 @@ const CategoryItemContainer = styled.li<{ isActive: boolean }>`
 `
 
 type CategoryItemProps = {
-  icon: FunctionComponent
+  icon: ReactNode
   isActive: boolean
   onClick: () => void
 }
@@ -38,7 +38,7 @@ type CategoryItemProps = {
 export const CategoryItem = ({ icon, onClick, isActive }: CategoryItemProps) => {
   return (
     <CategoryItemContainer isActive={isActive} onClick={onClick}>
-      {icon({})}
+      {icon}
     </CategoryItemContainer>
   )
 }

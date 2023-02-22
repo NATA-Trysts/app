@@ -12,7 +12,7 @@ const BuilderContentContainer = styled.div<{ isLoading: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  opacity: ${({ isLoading }) => (isLoading ? 0 : 1)};
+  opacity: ${({ isLoading }) => (isLoading ? 0 : 1)}; // temp
   transition: opacity 0.2s ease;
 `
 

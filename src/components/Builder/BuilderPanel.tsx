@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { subCategoryList } from '@/stores/builder'
-
 import { BuilderContent } from './BuilderContent'
 import { BuilderTab } from './BuilderTab'
+import { subCategoryList } from './dummyData'
 import { useBuilder } from './hooks/useBuilder'
 
 const BuilderPanelContainer = styled.div`
