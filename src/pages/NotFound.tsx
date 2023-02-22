@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 import LogoImg from '@/assets/logo.png'
 import NotfoundTextImage from '@/assets/notfound-text-image.png'
+import { Text } from '@/layouts/common'
 
 const NotFoundPage = styled.div`
   width: 100vw;
@@ -42,6 +43,7 @@ const NotFoundContainer = styled.div`
 
 const NotFound404 = styled.h1`
   font-size: 96px;
+  margin-bottom: 24px;
   font-weight: bold;
   color: transparent;
   background-image: url(${NotfoundTextImage});
@@ -60,13 +62,6 @@ const NotFound404 = styled.h1`
   }
 `
 
-const NotFoundText = styled.p`
-  font-size: 24px;
-  color: #dbd6e4;
-  margin: 24px 0;
-  font-weight: normal;
-`
-
 const NotFoundButton = styled.button`
   --glow-color: rgb(217, 176, 255);
   --glow-spread-color: rgba(191, 123, 255, 0.781);
@@ -74,6 +69,7 @@ const NotFoundButton = styled.button`
   --btn-color: rgb(100, 61, 136);
   border: 0.25em solid var(--glow-color);
   padding: 1em 3em;
+  margin-top: 24px;
   font-family: var(--font-family);
   color: var(--glow-color);
   font-size: 16px;
@@ -127,7 +123,9 @@ const NotFound = () => {
       </NotFoundHeader>
       <NotFoundContainer>
         <NotFound404>404</NotFound404>
-        <NotFoundText>Seem you get lost!</NotFoundText>
+        <Text size="large" weight="lighter">
+          Seem you get lost!
+        </Text>
         <NotFoundButton onClick={handleBack}>Bring me back</NotFoundButton>
       </NotFoundContainer>
     </NotFoundPage>
