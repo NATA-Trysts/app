@@ -1,49 +1,62 @@
-import React from 'react'
-
 import { ReactComponent as ArrowUp } from '@/assets/icons/arrow-up.svg'
 import { ReactComponent as Camera } from '@/assets/icons/camera.svg'
 import { ReactComponent as Emoji } from '@/assets/icons/emoji.svg'
 import { ReactComponent as Micro } from '@/assets/icons/micro.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
 import { ReactComponent as Whiteboard } from '@/assets/icons/whiteboard.svg'
-import { Seprator, ToolbarContainer, ToolbarItem } from '@/components/Toolbar'
-import { SVGClickable } from '@/layouts/common'
+import { ToolbarContainer, ToolbarItem, WithTooltip } from '@/components/Toolbar'
 
 export const ToolbarMiddle = () => {
+  // const tooltip = [
+  //   {
+  //     id: 1,
+  //     icon: <ArrowUp />,
+  //   },
+  //   {
+  //     id: 2,
+  //     icon: <Camera />,
+  //   },
+  // ]
+
   return (
     <ToolbarContainer>
       <ToolbarItem>
-        <SVGClickable>
+        <WithTooltip content="Mute" id="micro">
           <Micro />
-        </SVGClickable>
-        <Seprator />
-        <SVGClickable>
+        </WithTooltip>
+        <WithTooltip content="Mic setting" id="micro-setting">
           <ArrowUp />
-        </SVGClickable>
+        </WithTooltip>
       </ToolbarItem>
       <ToolbarItem>
-        <SVGClickable>
+        <WithTooltip content="Off camera" id="camera">
           <Camera />
-        </SVGClickable>
-        <Seprator />
-        <SVGClickable>
+        </WithTooltip>
+        <WithTooltip content="Camera setting" id="camera-setting">
           <ArrowUp />
-        </SVGClickable>
+        </WithTooltip>
       </ToolbarItem>
       <ToolbarItem>
-        <SVGClickable>
+        <WithTooltip content="Share screen" id="share-screen">
           <ShareScreen />
-        </SVGClickable>
+        </WithTooltip>
       </ToolbarItem>
       <ToolbarItem>
-        <SVGClickable>
+        <WithTooltip content="Whiteboard" id="whiteboard">
           <Whiteboard />
-        </SVGClickable>
+        </WithTooltip>
       </ToolbarItem>
+      {/* {tooltip.map((tool) => (
+        <ToolbarItem key={tool.id}>
+          <WithTooltip content="Emoji" id="emoji">
+            {tool.icon}
+          </WithTooltip>
+        </ToolbarItem>
+      ))} */}
       <ToolbarItem>
-        <SVGClickable>
+        <WithTooltip content="Emoji" id="emoji">
           <Emoji />
-        </SVGClickable>
+        </WithTooltip>
       </ToolbarItem>
     </ToolbarContainer>
   )

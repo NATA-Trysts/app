@@ -1,10 +1,13 @@
-import React, { FC, ReactNode } from 'react'
+import { motion } from 'framer-motion'
+import { FC, ReactNode } from 'react'
 import styled from 'styled-components'
 
-import { ReactComponent as Close } from '@/assets/icons/close.svg'
-import { SVGClickable, Text } from '@/layouts/common'
+import { Text } from '@/layouts/common'
+import { useVirtualSpaceStore } from '@/stores/virtualSpace'
 
-const Container = styled.section<{ width: string }>`
+import { Close } from './Close'
+
+const Container = styled(motion.section)<{ width: string }>`
   width: ${(props) => props.width};
   height: 100%;
   background: var(--color-6);
@@ -36,15 +39,6 @@ const Content = styled.section`
   gap: 8px;
 `
 
-const CustomClickable = styled(SVGClickable)`
-  position: absolute;
-  padding: 2px;
-  border-radius: 8px;
-  gap: 8px;
-  right: 8px;
-  top: 8px;
-`
-
 type UtilitySectionProps = {
   children: ReactNode
   name: string
@@ -52,11 +46,11 @@ type UtilitySectionProps = {
 }
 
 export const UtilitySection: FC<UtilitySectionProps> = ({ children, name, width }) => {
+  const setSelectedUltility = useVirtualSpaceStore((state) => state.setSelectedUltility)
+
   return (
-    <Container width={width}>
-      <CustomClickable>
-        <Close />
-      </CustomClickable>
+    <Container animate={{ width: width }} width={width}>
+      <Close onClick={() => setSelectedUltility(null)} />
       <Wrapper>
         <Header>
           <Text size="large" weight="bold">

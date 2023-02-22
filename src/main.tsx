@@ -1,4 +1,5 @@
 import './index.css'
+import 'react-tooltip/dist/react-tooltip.css'
 
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'

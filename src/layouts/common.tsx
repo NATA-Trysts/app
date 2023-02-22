@@ -55,26 +55,26 @@ const CustomableContainer = styled.div<{ customColor: CustomColor }>`
   will-change: background;
 `
 
-const SVGClickable = styled.button`
+const SVGClickable = styled.button<{ customHoverColor?: string; active?: boolean }>`
   border: none;
   cursor: pointer;
   padding: 8px;
   border-radius: 8px;
-  background: var(--color-4);
+  background: ${(props) => (props.active ? 'var(--color-3)' : 'var(--color-4)')};
   pointer-events: auto;
   display: flex;
   gap: 8px;
 
   svg {
     path {
-      stroke: var(--color-3);
+      stroke: ${(props) => (props.active ? '#fff' : 'var(--color-3)')};
     }
     rect {
-      stroke: var(--color-3);
+      stroke: ${(props) => (props.active ? '#fff' : 'var(--color-3)')};
     }
 
     ellipse {
-      stroke: var(--color-3);
+      stroke: ${(props) => (props.active ? '#fff' : 'var(--color-3)')};
     }
   }
 
@@ -92,7 +92,7 @@ const SVGClickable = styled.button`
       }
     }
 
-    background: var(--color-3);
+    background: ${(props) => (props.customHoverColor ? props.customHoverColor : `var(--color-3)`)};
   }
 `
 
