@@ -11,6 +11,7 @@ import Multitab from './pages/Multitab'
 import NotFound from './pages/NotFound'
 import Test from './pages/Test'
 import TestNotification from './pages/TestNotification'
+import { HeaderPage } from './pages/HeaderPage'
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
   {
     path: '/builder',
     element: <Builder />,
+   },
+   {
+    path: '/header',
+    element: <HeaderPage />,
   },
 ])
 
