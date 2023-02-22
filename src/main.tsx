@@ -4,14 +4,13 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Icon } from './components/Commons'
-import Builder from './pages/Builder'
 import { Button } from './pages/Button'
+import { Dev } from './pages/Dev'
 import Mobile from './pages/Mobile'
 import Multitab from './pages/Multitab'
 import NotFound from './pages/NotFound'
 import Test from './pages/Test'
 import TestNotification from './pages/TestNotification'
-import { HeaderPage } from './pages/HeaderPage'
 
 const router = createBrowserRouter([
   {
@@ -43,12 +42,8 @@ const router = createBrowserRouter([
     element: <Button />,
   },
   {
-    path: '/builder',
-    element: <Builder />,
-   },
-   {
-    path: '/header',
-    element: <HeaderPage />,
+    path: '/dev',
+    element: <Dev />,
   },
 ])
 
