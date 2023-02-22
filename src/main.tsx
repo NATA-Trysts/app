@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Icon } from './components/Commons'
 import Builder from './pages/Builder'
 import { Button } from './pages/Button'
+import { HeaderPage } from './pages/HeaderPage'
 import Mobile from './pages/Mobile'
 import Multitab from './pages/Multitab'
 import NotFound from './pages/NotFound'
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
   {
     path: '/builder',
     element: <Builder />,
+  },
+  {
+    path: '/header',
+    element: <HeaderPage />,
   },
 ])
 
