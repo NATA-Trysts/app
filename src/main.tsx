@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Icon } from './components/Commons'
+import Builder from './pages/Builder'
 import { Button } from './pages/Button'
 import Mobile from './pages/Mobile'
 import Multitab from './pages/Multitab'
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
     element: <Button />,
   },
   {
+    path: '/builder',
+    element: <Builder />,
+   },
+   {
     path: '/header',
     element: <HeaderPage />,
   },
