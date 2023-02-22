@@ -1,22 +1,22 @@
 import './index.css'
-import 'react-tooltip/dist/react-tooltip.css'
 
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Icon } from './components/Commons'
+import Builder from './pages/Builder'
 import { Button } from './pages/Button'
 import Mobile from './pages/Mobile'
 import Multitab from './pages/Multitab'
 import NotFound from './pages/NotFound'
-// import Test from './pages/Test'
+import Test from './pages/Test'
 import TestNotification from './pages/TestNotification'
-import VirtualSpace from './pages/VirtualSpace'
+import { HeaderPage } from './pages/HeaderPage'
 
 const router = createBrowserRouter([
   {
     path: '/space/:spaceId',
-    element: <VirtualSpace />,
+    element: <Test />,
   },
   {
     path: '/multitab',
@@ -41,6 +41,14 @@ const router = createBrowserRouter([
   {
     path: '/button',
     element: <Button />,
+  },
+  {
+    path: '/builder',
+    element: <Builder />,
+   },
+   {
+    path: '/header',
+    element: <HeaderPage />,
   },
 ])
 
