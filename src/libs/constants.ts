@@ -19,6 +19,10 @@ type TabCategoryColor = {
   [key in TabCategoryProperty]: string
 }
 
+type InputStatusColor = {
+  [key in 'valid' | 'invalid' | 'empty']: string
+}
+
 const COLOR_PICKER_LIST: ColorListObject = {
   purple: 'hsla(286, 65%, 66%, 1)',
   green: 'hsla(137, 65%, 66%, 1)',
@@ -43,5 +47,25 @@ const TAB_CATEGORY_COLOR: TabCategoryColor = {
     'drop-shadow(0px 0px 48px rgba(230, 101, 101, 0.14)) drop-shadow(0px 0px 25.0368px rgba(230, 101, 101, 0.101248)) drop-shadow(0px 0px 11.7504px rgba(230, 101, 101, 0.078624)) drop-shadow(0px 0px 5.1456px rgba(230, 101, 101, 0.061376)) drop-shadow(0px 0px 2.2272px rgba(230, 101, 101, 0.038752))',
 }
 
-export { COLOR_PICKER_LIST, NOTIFICATION_CLOSE_COLOR, NOTIFICATION_COLOR, TAB_CATEGORY_COLOR }
+const INPUT_DROP_SHADOW: InputStatusColor = {
+  empty: 'none',
+  invalid:
+    'drop-shadow(0px 10px 41px rgba(218, 33, 33, 0.49)) drop-shadow(0px 5.0625px 17.8734px rgba(218, 33, 33, 0.33075)) drop-shadow(0px 2px 6.6625px rgba(218, 33, 33, 0.245)) drop-shadow(0px 0.4375px 2.37031px rgba(218, 33, 33, 0.15925))',
+  valid: 'drop-shadow(0px 5px 36px rgba(87, 130, 187, 0.51)) drop-shadow(0px 1px 5.85px rgba(87, 130, 187, 0.255));',
+}
+
+const INPUT_BORDER: InputStatusColor = {
+  empty: 'transparent',
+  valid: '#3B79D5',
+  invalid: '#DA2121',
+}
+
+export {
+  COLOR_PICKER_LIST,
+  INPUT_BORDER,
+  INPUT_DROP_SHADOW,
+  NOTIFICATION_CLOSE_COLOR,
+  NOTIFICATION_COLOR,
+  TAB_CATEGORY_COLOR,
+}
 export type { NotificationType }
