@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { ComponentPropsWithoutRef, FC, forwardRef } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
@@ -65,28 +65,35 @@ type MemberCardProps = {
   handler: string
   maxNameCharacter?: number
   maxHandlerCharacter?: number
-}
+  onClick?: () => void
+} & ComponentPropsWithoutRef<'button'>
 
-export const MemberCard: FC<MemberCardProps> = ({
-  avatar,
-  name,
-  handler,
-  maxNameCharacter = 20,
-  maxHandlerCharacter = 20,
-}) => {
-  return (
-    <Container>
-      <AvatarContainer>
-        <Avatar src={avatar} />
-      </AvatarContainer>
-      <InformationContainer>
-        <Name size="medium" weight="normal">
-          {truncateText(name, maxNameCharacter)}
-        </Name>
-        <Handler size="small" weight="lighter">
-          {truncateText(handler, maxHandlerCharacter)}
-        </Handler>
-      </InformationContainer>
-    </Container>
-  )
-}
+// interface CustomComponentProps extends React.ComponentPropsWithoutRef<'div'> {
+//   onClick(): void;
+// }
+
+// const CustomComponent = React.forwardRef<HTMLDivElement, CustomComponentProps>(({onClick}, ref) => (
+//   <div ref={ref} onClick={onClick}>
+//     {props.children}
+//   </div>
+// ));
+
+export const MemberCard: FC<MemberCardProps> = forwardRef<HTMLButtonElement, MemberCardProps>(
+  ({ avatar, name, handler, onClick, maxNameCharacter = 20, maxHandlerCharacter = 20 }, ref) => {
+    return (
+      <Container ref={ref} onClick={onClick}>
+        <AvatarContainer>
+          <Avatar src={avatar} />
+        </AvatarContainer>
+        <InformationContainer>
+          <Name size="medium" weight="normal">
+            {truncateText(name, maxNameCharacter)}
+          </Name>
+          <Handler size="small" weight="lighter">
+            {truncateText(handler, maxHandlerCharacter)}
+          </Handler>
+        </InformationContainer>
+      </Container>
+    )
+  },
+)

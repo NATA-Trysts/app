@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactTextareaAutosize from 'react-textarea-autosize'
 import styled from 'styled-components'
 
@@ -51,7 +50,7 @@ export const ChatInput = () => {
     <Container>
       <InputForm>
         <MessageInputContainer>
-          <MessageInput maxRows={3} minRows={1} placeholder="Type something" />
+          <MessageInput maxRows={3} minRows={1} placeholder="Type something" onFocus={(e) => e.stopPropagation()} />
         </MessageInputContainer>
         <EmojiContainer>
           <SVGClickable>
