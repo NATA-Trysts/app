@@ -1,26 +1,26 @@
 import { useState } from 'react'
 
-import { MultitabDetect } from '@/components/MultitabDetect'
+import { MultitabDetect, MultiTabWarning } from '@/components/MultitabDetect'
+import { CustomableContainer } from '@/layouts/common'
+import { useAppStore } from '@/stores'
 
 const Warning = () => {
-  return (
-    <div>
-      <h1>Multitab detect</h1>
-      <button onClick={() => window.location.reload()}>Refresh</button>
-    </div>
-  )
+  return <MultiTabWarning></MultiTabWarning>
 }
 
 const Multitab = () => {
   const [counter, setCounter] = useState(0)
+  const customColor = useAppStore((state) => state.customColor)
 
   return (
-    <MultitabDetect fallback={<Warning />}>
-      <div>
-        <h1>New tab</h1>
-        <button onClick={() => setCounter(counter + 1)}>Increase {counter}</button>
-      </div>
-    </MultitabDetect>
+    <CustomableContainer customColor={customColor}>
+      <MultitabDetect fallback={<Warning />}>
+        <div>
+          <h1>New tab</h1>
+          <button onClick={() => setCounter(counter + 1)}>Increase {counter}</button>
+        </div>
+      </MultitabDetect>
+    </CustomableContainer>
   )
 }
 
