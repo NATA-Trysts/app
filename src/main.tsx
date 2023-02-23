@@ -9,6 +9,7 @@ import { Button } from './pages/Button'
 import { HeaderPage } from './pages/HeaderPage'
 import Mobile from './pages/Mobile'
 import Multitab from './pages/Multitab'
+import { MultiTogglePage } from './pages/MultiTogglePage'
 import Navigation from './pages/Navigation'
 import NotFound from './pages/NotFound'
 import SpacePreview from './pages/SpacePreview'
@@ -53,12 +54,16 @@ const router = createBrowserRouter([
     element: <HeaderPage />,
   },
   {
-    path: '/preview',
-    element: <SpacePreview />,
-  },
-  {
     path: '/navigation',
     element: <Navigation />,
+  },
+  {
+    path: '/multi-toggle',
+    element: <MultiTogglePage />,
+  },
+  {
+    path: '/preview',
+    element: <SpacePreview />,
   },
 ])
 
