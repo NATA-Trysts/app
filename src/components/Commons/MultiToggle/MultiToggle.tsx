@@ -39,8 +39,8 @@ export const MultiToggle = ({ name = 'radio-button', ...props }: MultiToggleProp
 
     if (typeof option === 'string') {
       return option === selectedOption
-    } else if ('value' in selectedOption) {
-      return option.value === selectedOption.value
+    } else if ('value' in option) {
+      return option.value === (typeof selectedOption === 'string' ? selectedOption : selectedOption.value)
     } else return false
   }
 
