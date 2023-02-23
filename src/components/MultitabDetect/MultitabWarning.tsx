@@ -3,13 +3,11 @@ import styled from 'styled-components'
 import { ReactComponent as MultitabSvg } from '@/assets/icons/multitab.svg'
 
 import { BasicButton } from '../Button'
-import { ColorPicker } from '../ColorPicker'
 import { ButtonContent } from '../Commons/Button/ButtonItem'
 
 export const MultiTabWarning = () => {
   return (
     <WarningContainer>
-      <ColorPicker />
       <StyledMultitabSvg></StyledMultitabSvg>
       <WarningHeader>Many tabs!</WarningHeader>
       <WarningDescription>
