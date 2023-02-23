@@ -9,6 +9,7 @@ import { Button } from './pages/Button'
 import { HeaderPage } from './pages/HeaderPage'
 import Mobile from './pages/Mobile'
 import Multitab from './pages/Multitab'
+import Navigation from './pages/Navigation'
 import NotFound from './pages/NotFound'
 import Test from './pages/Test'
 import TestNotification from './pages/TestNotification'
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
   {
     path: '/header',
     element: <HeaderPage />,
+  },
+  {
+    path: '/navigation',
+    element: <Navigation />,
   },
 ])
 
