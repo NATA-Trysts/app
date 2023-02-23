@@ -9,6 +9,7 @@ import { Button } from './pages/Button'
 import { HeaderPage } from './pages/HeaderPage'
 import Mobile from './pages/Mobile'
 import Multitab from './pages/Multitab'
+import Navigation from './pages/Navigation'
 import NotFound from './pages/NotFound'
 import SpacePreview from './pages/SpacePreview'
 import Test from './pages/Test'
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: '/preview',
     element: <SpacePreview />,
+  },
+  {
+    path: '/navigation',
+    element: <Navigation />,
   },
 ])
 
