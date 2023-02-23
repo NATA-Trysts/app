@@ -10,9 +10,11 @@ import { Button } from './pages/Button'
 import { HeaderPage } from './pages/HeaderPage'
 import Mobile from './pages/Mobile'
 import Multitab from './pages/Multitab'
+import { MultiTogglePage } from './pages/MultiTogglePage'
+import Navigation from './pages/Navigation'
 import NotFound from './pages/NotFound'
 import PopoverTest from './pages/PopoverTest'
-// import Test from './pages/Test'
+import SpacePreview from './pages/SpacePreview'
 import TestNotification from './pages/TestNotification'
 import VirtualSpace from './pages/VirtualSpace'
 
@@ -56,6 +58,18 @@ const router = createBrowserRouter([
   {
     path: '/popover',
     element: <PopoverTest />,
+  },
+  {
+    path: '/navigation',
+    element: <Navigation />,
+  },
+  {
+    path: '/multi-toggle',
+    element: <MultiTogglePage />,
+  },
+  {
+    path: '/preview',
+    element: <SpacePreview />,
   },
 ])
 
