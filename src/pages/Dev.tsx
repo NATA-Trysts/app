@@ -24,6 +24,15 @@ export const Dev = () => {
           { value: 'type-1', display: 'Type 1' },
           { value: 'type-2', display: 'Type 2' },
         ]}
+      ></MultiToggle>
+      <br />
+      <MultiToggle
+        handleSelectedChange={handleChange}
+        options={[
+          { value: 'all', display: 'All' },
+          { value: 'type-1', display: 'Type 1' },
+          { value: 'type-2', display: 'Type 2' },
+        ]}
         selected="all"
       ></MultiToggle>
       <br />

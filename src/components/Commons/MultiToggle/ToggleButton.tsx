@@ -4,10 +4,17 @@ export type ToggleButtonProps = {
   optionvalue: any
   onChangeValue: (value: any) => void
   className?: string
+  multiSelect?: boolean
 }
 
-export const ToggleButton = ({ onChangeValue, ...props }: ToggleButtonProps) => {
+export const ToggleButton = ({ multiSelect = false, onChangeValue, ...props }: ToggleButtonProps) => {
   //   console.log(props)
 
-  return <input type="radio" onChange={() => onChangeValue(props.optionvalue)} {...props} />
+  return (
+    <input
+      type={`${multiSelect ? 'radio' : 'checkbox'}`}
+      onChange={() => onChangeValue(props.optionvalue)}
+      {...props}
+    />
+  )
 }
