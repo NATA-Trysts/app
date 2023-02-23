@@ -4,10 +4,15 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Icon } from './components/Commons'
+import Builder from './pages/Builder'
 import { Button } from './pages/Button'
+import { HeaderPage } from './pages/HeaderPage'
 import Mobile from './pages/Mobile'
 import Multitab from './pages/Multitab'
+import { MultiTogglePage } from './pages/MultiTogglePage'
+import Navigation from './pages/Navigation'
 import NotFound from './pages/NotFound'
+import SpacePreview from './pages/SpacePreview'
 import Test from './pages/Test'
 import TestNotification from './pages/TestNotification'
 
@@ -39,6 +44,26 @@ const router = createBrowserRouter([
   {
     path: '/button',
     element: <Button />,
+  },
+  {
+    path: '/builder',
+    element: <Builder />,
+  },
+  {
+    path: '/header',
+    element: <HeaderPage />,
+  },
+  {
+    path: '/navigation',
+    element: <Navigation />,
+  },
+  {
+    path: '/multi-toggle',
+    element: <MultiTogglePage />,
+  },
+  {
+    path: '/preview',
+    element: <SpacePreview />,
   },
 ])
 
