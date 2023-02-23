@@ -12,6 +12,7 @@ import Multitab from './pages/Multitab'
 import { MultiTogglePage } from './pages/MultiTogglePage'
 import Navigation from './pages/Navigation'
 import NotFound from './pages/NotFound'
+import SpacePreview from './pages/SpacePreview'
 import Test from './pages/Test'
 import TestNotification from './pages/TestNotification'
 
@@ -60,7 +61,10 @@ const router = createBrowserRouter([
     path: '/multi-toggle',
     element: <MultiTogglePage />,
   },
+  {
+    path: '/preview',
+    element: <SpacePreview />,
+  },
 ])
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<RouterProvider router={router} />)
-
