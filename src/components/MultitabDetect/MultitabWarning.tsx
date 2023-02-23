@@ -14,7 +14,7 @@ export const MultiTabWarning = () => {
         Trysts supports only one active tab with the app.
         <br /> Please reload this page to continue using this tab or close it.
       </WarningDescription>
-      <ReloadButton>Reload</ReloadButton>
+      <ReloadButton onClick={() => location.reload()}>Reload</ReloadButton>
     </WarningContainer>
   )
 }
