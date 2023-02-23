@@ -5,9 +5,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Icon } from './components/Commons'
 import { Button } from './pages/Button'
-import { Dev } from './pages/Dev'
 import Mobile from './pages/Mobile'
 import Multitab from './pages/Multitab'
+import { MultiTogglePage } from './pages/MultiTogglePage'
 import NotFound from './pages/NotFound'
 import Test from './pages/Test'
 import TestNotification from './pages/TestNotification'
@@ -42,8 +42,8 @@ const router = createBrowserRouter([
     element: <Button />,
   },
   {
-    path: '/dev',
-    element: <Dev />,
+    path: '/multi-toggle',
+    element: <MultiTogglePage />,
   },
 ])
 

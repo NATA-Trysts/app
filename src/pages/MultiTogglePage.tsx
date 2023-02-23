@@ -14,7 +14,7 @@ const DevContainer = styled.div`
 
 const handleChange = (data: any) => console.log(data)
 
-export const Dev = () => {
+export const MultiTogglePage = () => {
   return (
     <DevContainer>
       <MultiToggle
