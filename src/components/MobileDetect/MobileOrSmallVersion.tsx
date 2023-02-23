@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
-import { ReactComponent as LogoIcon } from '@/assets/icons/logo.svg'
 import { Text } from '@/layouts/common'
+
+import { Logo } from '../Commons/Logo'
 
 const MobilePage = styled.div`
   width: 100vw;
@@ -15,10 +16,11 @@ const Container = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  height: 84px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 `
 
 const MobileBackgroundImage = styled.div`
@@ -37,7 +39,7 @@ export const MobileOrSmallVersion = ({ message }: { message: string }) => {
     <MobilePage>
       <MobileBackgroundImage />
       <Container>
-        <LogoIcon />
+        <Logo width={92} />
         <Text size="medium" weight="lighter">
           {message}
         </Text>
