@@ -7,7 +7,7 @@ import { GradientButton } from '../Button'
 import { Input } from '../Commons/Input'
 import { useLogin } from './hooks/useLogin'
 
-const LoginInputContainer = styled.div`
+const LoginEmailInputContainer = styled.div`
   position: absolute;
   left: 50%;
   top: 50%;
@@ -35,7 +35,7 @@ const SendButton = styled(GradientButton)`
   width: 100%;
 `
 
-export const LoginInput = () => {
+export const LoginEmailInput = () => {
   const [email, setEmail] = useLoginStore((state) => [state.email, state.setEmail])
   const emailInputStatus = useLoginStore((state) => state.emailInputStatus)
   const { validateEmail, submitEmail } = useLogin()
@@ -58,7 +58,7 @@ export const LoginInput = () => {
   }
 
   return (
-    <LoginInputContainer>
+    <LoginEmailInputContainer>
       <Wrapper>
         <Input
           placeholder="myemail@example.com"
@@ -73,6 +73,6 @@ export const LoginInput = () => {
           Sign in with email
         </SendButton>
       </Wrapper>
-    </LoginInputContainer>
+    </LoginEmailInputContainer>
   )
 }

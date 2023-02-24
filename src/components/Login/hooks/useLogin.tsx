@@ -1,11 +1,12 @@
 import { useLoginStore } from '@/stores/login'
 
 const useLogin = () => {
-  const email = useLoginStore((state) => state.email)
+  // const email = useLoginStore((state) => state.email)
   const [emailInputStatus, setEmailInputStatus] = useLoginStore((state) => [
     state.emailInputStatus,
     state.setEmailInputStatus,
   ])
+  const setStep = useLoginStore((state) => state.setStep)
 
   const validateEmail = (emailFromInput: string) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -21,7 +22,7 @@ const useLogin = () => {
 
   const submitEmail = () => {
     if (emailInputStatus === 'valid') {
-      console.log(email)
+      setStep(2)
     }
   }
 

@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import styled from 'styled-components'
 
 import { INPUT_BORDER, INPUT_DROP_SHADOW } from '@/libs/constants'
+import { EmailInputStatusType } from '@/stores/login'
 
 const InputContainer = styled.div`
   width: 100%;
@@ -9,7 +10,7 @@ const InputContainer = styled.div`
   border-radius: 12px;
 `
 
-const InputField = styled.input<{ status: 'valid' | 'invalid' | 'empty' }>`
+const InputField = styled.input<{ status: EmailInputStatusType }>`
   width: 100%;
   height: 100%;
   border-radius: 12px;
@@ -40,7 +41,7 @@ type InputProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   onEnterDown: () => void
   onOutFocus: () => void
-  status: 'valid' | 'invalid' | 'empty'
+  status: EmailInputStatusType
 }
 
 export const Input = ({ placeholder, type, value, status, onChange, onEnterDown, onOutFocus }: InputProps) => {
@@ -58,15 +59,14 @@ export const Input = ({ placeholder, type, value, status, onChange, onEnterDown,
   return (
     <InputContainer>
       <InputField
+        ref={inputRef}
         placeholder={placeholder}
+        status={status}
         type={type}
         value={value}
         onBlur={onOutFocus}
         onChange={onChange}
         onKeyDown={handleEnterKeyDown}
-        ref={inputRef}
-        // isValid={isValid}
-        status={status}
       />
     </InputContainer>
   )

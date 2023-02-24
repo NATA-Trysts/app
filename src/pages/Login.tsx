@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { LoginInput, LoginTitle } from '@/components/Login'
+import { LoginCodeInput, LoginEmailInput, LoginTitle } from '@/components/Login'
 import { useLogin } from '@/components/Login/hooks/useLogin'
 import { NotificationStack } from '@/components/Notification'
+import { useLoginStore } from '@/stores/login'
 
 const LoginPage = styled.div`
   width: 100vw;
@@ -15,7 +16,7 @@ const LoginPage = styled.div`
 const LoginForm = styled.form``
 
 const Login = () => {
-  const loginPageRef = useRef<HTMLDivElement>(null)
+  const [email, step] = useLoginStore((state) => [state.email, state.step])
   const { submitEmail } = useLogin()
 
   useEffect(() => {
@@ -34,10 +35,10 @@ const Login = () => {
   }, [submitEmail])
 
   return (
-    <LoginPage ref={loginPageRef}>
+    <LoginPage>
       <LoginForm>
         <LoginTitle />
-        <LoginInput />
+        {email && step === 2 ? <LoginCodeInput /> : <LoginEmailInput />}
       </LoginForm>
       <NotificationStack />
     </LoginPage>

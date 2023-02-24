@@ -1,4 +1,5 @@
 import { CustomColor } from '@/layouts/common'
+import { EmailInputStatusType } from '@/stores/login'
 
 export type ColorListObject = {
   [key in CustomColor]: string
@@ -20,7 +21,7 @@ type TabCategoryColor = {
 }
 
 type InputStatusColor = {
-  [key in 'valid' | 'invalid' | 'empty']: string
+  [key in EmailInputStatusType]: string
 }
 
 const COLOR_PICKER_LIST: ColorListObject = {
@@ -52,12 +53,15 @@ const INPUT_DROP_SHADOW: InputStatusColor = {
   invalid:
     'drop-shadow(0px 10px 41px rgba(218, 33, 33, 0.49)) drop-shadow(0px 5.0625px 17.8734px rgba(218, 33, 33, 0.33075)) drop-shadow(0px 2px 6.6625px rgba(218, 33, 33, 0.245)) drop-shadow(0px 0.4375px 2.37031px rgba(218, 33, 33, 0.15925))',
   valid: 'drop-shadow(0px 5px 36px rgba(87, 130, 187, 0.51)) drop-shadow(0px 1px 5.85px rgba(87, 130, 187, 0.255));',
+  errorPending:
+    'drop-shadow(0px 10px 41px rgba(218, 33, 33, 0.49)) drop-shadow(0px 5.0625px 17.8734px rgba(218, 33, 33, 0.33075)) drop-shadow(0px 2px 6.6625px rgba(218, 33, 33, 0.245)) drop-shadow(0px 0.4375px 2.37031px rgba(218, 33, 33, 0.15925))',
 }
 
 const INPUT_BORDER: InputStatusColor = {
   empty: 'transparent',
   valid: '#3B79D5',
   invalid: '#DA2121',
+  errorPending: '#DA2121',
 }
 
 export {
