@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as ThreeDot } from '@/assets/icons/three-dot.svg'
+import { Option, Popover } from '@/components/Popover'
 import { Text } from '@/layouts/common'
 
 const CardContentContainer = styled.div<{ isActive: boolean; isDisplayed: boolean }>`
@@ -74,15 +75,30 @@ const CardBodyText = styled.div`
   }
 `
 
+const MemberContainer = styled.div`
+  padding: 8px;
+  border-radius: 12px;
+  background: #212225;
+  width: 164px;
+`
+
 type PreviewCardContentProps = {
   isActive: boolean
   isHovered: boolean
   title: string
   subtitle: string
   imageUrl: string
+  onClickThreeDots: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
-export const PreviewCardContent = ({ isActive, isHovered, title, subtitle, imageUrl }: PreviewCardContentProps) => {
+export const PreviewCardContent = ({
+  isActive,
+  isHovered,
+  title,
+  subtitle,
+  imageUrl,
+  onClickThreeDots,
+}: PreviewCardContentProps) => {
   const [isDisplayed, setIsDisplayed] = useState(false)
 
   // delay 100ms to prevent flickering
@@ -112,7 +128,23 @@ export const PreviewCardContent = ({ isActive, isHovered, title, subtitle, image
             {subtitle}
           </Text>
         </CardBodyText>
-        <ThreeDot />
+        <Popover
+          align="center"
+          content={
+            <MemberContainer>
+              <Option customHoverBackgroundColor="#C771E1" title="Open in new tab" onClick={() => {}} />
+              <Option customHoverBackgroundColor="#C771E1" title="Edit space" onClick={() => {}} />
+              <Option customHoverBackgroundColor="#C771E1" title="Copy URL" onClick={() => {}} />
+              <Option customHoverBackgroundColor="#FC677B" title="Delete space" onClick={() => {}} />
+            </MemberContainer>
+          }
+          side="right"
+          sideOffset={28}
+        >
+          <div onClick={(e) => onClickThreeDots(e)}>
+            <ThreeDot />
+          </div>
+        </Popover>
       </CardBody>
     </CardContentContainer>
   )

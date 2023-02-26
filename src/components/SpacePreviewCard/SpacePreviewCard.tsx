@@ -33,6 +33,10 @@ export const SpacePreviewCard = ({ imageUrl, title, subtitle }: SpacePreviewCard
         isHovered={isHovered}
         subtitle={subtitle}
         title={title}
+        onClickThreeDots={(e) => {
+          e.stopPropagation()
+          setIsActive(true)
+        }}
       />
       <CardBackgroundShadow isActive={isActive} isHovered={isHovered} />
     </SpacePreviewCardContainer>
