@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
 import { INPUT_BORDER, INPUT_DROP_SHADOW } from '@/libs/constants'
@@ -35,6 +35,7 @@ const InputField = styled.input<{ status: EmailInputStatusType }>`
 `
 
 type InputProps = {
+  autoFocus?: boolean
   placeholder: string
   type: string
   value: string
@@ -44,7 +45,16 @@ type InputProps = {
   status: EmailInputStatusType
 }
 
-export const Input = ({ placeholder, type, value, status, onChange, onEnterDown, onOutFocus }: InputProps) => {
+export const Input = ({
+  autoFocus,
+  placeholder,
+  type,
+  value,
+  status,
+  onChange,
+  onEnterDown,
+  onOutFocus,
+}: InputProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   // out focus when enter key is pressed
@@ -55,6 +65,13 @@ export const Input = ({ placeholder, type, value, status, onChange, onEnterDown,
       inputRef.current?.blur()
     }
   }
+
+  // auto focus when component is mounted
+  useEffect(() => {
+    if (autoFocus) {
+      inputRef.current?.focus()
+    }
+  }, [autoFocus])
 
   return (
     <InputContainer>

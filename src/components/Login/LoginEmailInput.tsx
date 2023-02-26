@@ -61,6 +61,7 @@ export const LoginEmailInput = () => {
     <LoginEmailInputContainer>
       <Wrapper>
         <Input
+          autoFocus
           placeholder="myemail@example.com"
           status={emailInputStatus}
           type="text"
