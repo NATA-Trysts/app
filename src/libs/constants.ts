@@ -64,6 +64,8 @@ const INPUT_BORDER: InputStatusColor = {
   errorPending: '#DA2121',
 }
 
+const TRYSTS_EMAIL_LOGIN = 'login@trysts.io'
+
 export {
   COLOR_PICKER_LIST,
   INPUT_BORDER,
@@ -71,5 +73,6 @@ export {
   NOTIFICATION_CLOSE_COLOR,
   NOTIFICATION_COLOR,
   TAB_CATEGORY_COLOR,
+  TRYSTS_EMAIL_LOGIN,
 }
 export type { NotificationType }

@@ -26,8 +26,23 @@ const Email = styled.span`
   color: #7fc9ef;
 `
 
+const ResendCode = styled.span`
+  text-align: center;
+  color: #7fc9ef;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration-color: #7fc9ef;
+  }
+`
+
 export const LoginTitle = () => {
   const [email, step] = useLoginStore((state) => [state.email, state.step])
+
+  const handleResendCode = () => {}
 
   return (
     <LoginTitleContainer isSecondStep={step === 2}>
@@ -35,7 +50,7 @@ export const LoginTitle = () => {
       {email && step === 2 ? (
         <TitleContent size="large" weight="lighter">
           We just emailed <Email>{email}</Email> with a 6-digit code. <br /> If you don&#39;t see it, please check your
-          spam folder or resend code.
+          spam folder or <ResendCode onClick={handleResendCode}>resend code</ResendCode>.
         </TitleContent>
       ) : (
         <TitleContent size="large" weight="lighter">

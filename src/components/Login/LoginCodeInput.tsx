@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as GmailIcon } from '@/assets/icons/gmail.svg'
 import { ReactComponent as OutlookIcon } from '@/assets/icons/outlook.svg'
 import { Text } from '@/layouts/common'
+import { TRYSTS_EMAIL_LOGIN } from '@/libs/constants'
 import { useLoginStore } from '@/stores/login'
 
 import { CodeField } from './CodeField'
@@ -73,21 +74,31 @@ const CancelButton = styled.button`
   }
 `
 
+type DirectLink = {
+  app: string
+  icon: ReactNode
+  title: string
+  status: 'hovered' | 'notHovered' | 'normal'
+  directTo: string
+}
+
 export const LoginCodeInput = () => {
-  // fixed
-  const directLinks = [
+  const [directLinks, setDirectLinks] = useState<DirectLink[]>([
     {
       app: 'Gmail',
       icon: <GmailIcon />,
       title: 'Open Gmail',
+      status: 'normal',
+      directTo: `https://mail.google.com/mail/u/0/#search/from:${TRYSTS_EMAIL_LOGIN}`,
     },
     {
       app: 'Outlook',
       icon: <OutlookIcon />,
       title: 'Open Outlook',
+      status: 'normal',
+      directTo: `https://outlook.office.com/mail/search/from:${TRYSTS_EMAIL_LOGIN}/newmessage`,
     },
-  ]
-
+  ])
   const [isCompleted, setIsCompleted] = useState(false)
   const setStep = useLoginStore((state) => state.setStep)
 
@@ -95,11 +106,40 @@ export const LoginCodeInput = () => {
     setStep(1)
   }
 
+  const handleHoverDirectLink = (app: string) => {
+    const newDirectLinks: DirectLink[] = directLinks.map((link) => {
+      if (link.app === app) {
+        return { ...link, status: 'hovered' }
+      }
+
+      return { ...link, status: 'notHovered' }
+    })
+
+    setDirectLinks(newDirectLinks)
+  }
+
+  const handleLeaveDirectLink = () => {
+    const newDirectLinks: DirectLink[] = directLinks.map((link) => {
+      return { ...link, status: 'normal' }
+    })
+
+    setDirectLinks(newDirectLinks)
+  }
+
   return (
     <LoginCodeInputContainer>
       <DirectLinks>
         {directLinks.map((link) => (
-          <MailDirect key={link.app} app={link.app} icon={link.icon} title={link.title} />
+          <MailDirect
+            key={link.app}
+            app={link.app}
+            directLink={link.directTo}
+            icon={link.icon}
+            status={link.status}
+            title={link.title}
+            onMouseEnter={handleHoverDirectLink}
+            onMouseLeave={handleLeaveDirectLink}
+          />
         ))}
       </DirectLinks>
       <CodeSection isCompleted={isCompleted}>
