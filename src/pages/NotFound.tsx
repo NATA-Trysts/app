@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import LogoImg from '@/assets/logo.png'
 import NotfoundTextImage from '@/assets/notfound-text-image.png'
+import { Logo } from '@/components/Commons/Logo'
 import { Text } from '@/layouts/common'
 
 const NotFoundPage = styled.div`
@@ -14,6 +15,11 @@ const NotFoundPage = styled.div`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 `
 
 const NotFoundHeader = styled.header`
@@ -22,13 +28,14 @@ const NotFoundHeader = styled.header`
   background-color: rgba(9, 1, 24, 0.1);
   backdrop-filter: blur(15px);
   position: relative;
-`
 
-const LogoImage = styled.img`
-  position: absolute;
-  top: 50%;
-  left: 52px;
-  transform: translate(0, -50%);
+  // Logo position
+  > div {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 52px;
+  }
 `
 
 const NotFoundContainer = styled.div`
@@ -112,21 +119,19 @@ const NotFoundButton = styled.button`
 `
 
 const NotFound = () => {
-  const handleBack = () => {
-    // console.log('Back')
-  }
-
   return (
     <NotFoundPage>
       <NotFoundHeader>
-        <LogoImage alt="Logo" src={LogoImg} />
+        <Logo width={96} />
       </NotFoundHeader>
       <NotFoundContainer>
         <NotFound404>404</NotFound404>
         <Text size="large" weight="lighter">
           Seem you get lost!
         </Text>
-        <NotFoundButton onClick={handleBack}>Bring me back</NotFoundButton>
+        <Link to="/">
+          <NotFoundButton>Bring me back</NotFoundButton>
+        </Link>
       </NotFoundContainer>
     </NotFoundPage>
   )

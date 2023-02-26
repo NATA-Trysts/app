@@ -1,7 +1,8 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as Copy } from '@/assets/icons/copy.svg'
+import { useCopyToClipboard } from '@/hooks'
 import { Text } from '@/layouts/common'
 import { truncateText } from '@/libs'
 
@@ -33,17 +34,7 @@ type VirtualSpaceNameCardProps = {
 }
 
 export const VirtualSpaceNameCard: FC<VirtualSpaceNameCardProps> = ({ spaceId, name, maxNameLength = 20 }) => {
-  const [copy, setCopy] = useState(false)
-
-  const copyVirtualSpaceURL = async () => {
-    setCopy(false)
-    try {
-      await navigator.clipboard.writeText(`https://app.abc.io/space/${spaceId}`)
-      setCopy(true)
-    } catch (error) {
-      setCopy(false)
-    }
-  }
+  const { copy, isCopy, setIsCopy } = useCopyToClipboard()
 
   return (
     <Container>
@@ -57,11 +48,11 @@ export const VirtualSpaceNameCard: FC<VirtualSpaceNameCardProps> = ({ spaceId, n
         </Text>
       </SpaceName>
       <WithTooltip
-        content={`${copy ? 'Copied!' : 'Copy'}`}
+        content={`${isCopy ? 'Copied!' : 'Copy'}`}
         delayShow={0}
         id="copy"
-        onClick={copyVirtualSpaceURL}
-        onMouseEnter={() => setCopy(false)}
+        onClick={() => copy(`https://app.abc.io/space/${spaceId}`)}
+        onMouseEnter={() => setIsCopy(false)}
       >
         <Copy />
       </WithTooltip>

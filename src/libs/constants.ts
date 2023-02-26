@@ -48,6 +48,9 @@ const TAB_CATEGORY_COLOR: TabCategoryColor = {
     'drop-shadow(0px 0px 48px rgba(230, 101, 101, 0.14)) drop-shadow(0px 0px 25.0368px rgba(230, 101, 101, 0.101248)) drop-shadow(0px 0px 11.7504px rgba(230, 101, 101, 0.078624)) drop-shadow(0px 0px 5.1456px rgba(230, 101, 101, 0.061376)) drop-shadow(0px 0px 2.2272px rgba(230, 101, 101, 0.038752))',
 }
 
+const FILTER_ICON_TO_WHITE =
+  'brightness(0) saturate(100%) invert(100%) sepia(13%) saturate(7481%) hue-rotate(291deg) brightness(116%) contrast(112%)'
+
 const INPUT_DROP_SHADOW: InputStatusColor = {
   empty: 'none',
   invalid:
@@ -68,6 +71,7 @@ const TRYSTS_EMAIL_LOGIN = 'login@trysts.io'
 
 export {
   COLOR_PICKER_LIST,
+  FILTER_ICON_TO_WHITE,
   INPUT_BORDER,
   INPUT_DROP_SHADOW,
   NOTIFICATION_CLOSE_COLOR,

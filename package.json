@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@100mslive/react-sdk": "^0.6.3",
+    "@radix-ui/react-popover": "^1.0.3",
     "@react-three/drei": "^9.45.0",
     "@react-three/fiber": "^8.9.1",
     "@react-three/rapier": "^0.13.2",
