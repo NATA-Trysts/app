@@ -9,7 +9,8 @@ const useLogin = () => {
   const setStep = useLoginStore((state) => state.setStep)
 
   const validateEmail = (emailFromInput: string) => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const emailPattern =
+      /^[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.(-?[a-zA-Z0-9])+$/
 
     if (emailFromInput === '') {
       setEmailInputStatus('empty')
