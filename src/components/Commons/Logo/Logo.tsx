@@ -1,5 +1,3 @@
-import './logo.style.scss'
-
 import styled from 'styled-components'
 
 import { ReactComponent as LogoSvg } from '@/assets/icons/logo.svg'
