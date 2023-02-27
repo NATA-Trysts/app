@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
+import { Space as SpaceType, useDashboardStore } from '@/stores/dashboard'
 
 import { SpacePreviewCard } from '../SpacePreviewCard'
 
@@ -23,37 +24,38 @@ const List = styled.div`
   margin: 8px 0;
 `
 
-type Space = {
-  id: string
-  title: string
-  subtitle: string
-  imageUrl: string
-  isActive: boolean
-}
+export const Recents = () => {
+  const [mySpaces, selectedSpacePreview, setSelectedSpacePreview] = useDashboardStore((state) => [
+    state.mySpaces,
+    state.selectedSpacePreview,
+    state.setSelectedSpacePreview,
+  ])
 
-type RecentProps = {
-  list: Space[]
-  onClickCard: (id: string) => void
-}
+  const handleClick = (space: SpaceType) => {
+    if (space.id === selectedSpacePreview?.id) {
+      setSelectedSpacePreview(null)
+    } else {
+      setSelectedSpacePreview(space)
+    }
+  }
 
-export const Recents = ({ list, onClickCard }: RecentProps) => {
   return (
     <>
-      {list.length !== 0 ? (
+      {mySpaces.length !== 0 ? (
         <RecentContainer>
           <Wrapper>
             <Text size="large" weight="normal">
               Recents
             </Text>
             <List>
-              {list.map((item) => (
+              {mySpaces.map((item) => (
                 <SpacePreviewCard
                   key={item.id}
                   imageUrl={item.imageUrl}
-                  isActive={item.isActive}
+                  isActive={item.id === selectedSpacePreview?.id}
                   subtitle={item.subtitle}
                   title={item.title}
-                  onClick={() => onClickCard(item.id)}
+                  onClick={() => handleClick(item)}
                 />
               ))}
             </List>

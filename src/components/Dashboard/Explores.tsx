@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
+import { Space as SpaceType, useDashboardStore } from '@/stores/dashboard'
 
 import { SpacePreviewCard } from '../SpacePreviewCard'
 
@@ -21,20 +22,21 @@ const List = styled.div`
   margin: 8px 0;
 `
 
-type Space = {
-  id: string
-  title: string
-  subtitle: string
-  imageUrl: string
-  isActive: boolean
-}
+export const Explores = () => {
+  const [exploreSpaces, selectedSpacePreview, setSelectedSpacePreview] = useDashboardStore((state) => [
+    state.exploreSpaces,
+    state.selectedSpacePreview,
+    state.setSelectedSpacePreview,
+  ])
 
-type ExploreProps = {
-  list: Space[]
-  onClickCard: (id: string) => void
-}
+  const handleClick = (space: SpaceType) => {
+    if (space.id === selectedSpacePreview?.id) {
+      setSelectedSpacePreview(null)
+    } else {
+      setSelectedSpacePreview(space)
+    }
+  }
 
-export const Explores = ({ list, onClickCard }: ExploreProps) => {
   return (
     <ExploreContainer>
       <Wrapper>
@@ -42,14 +44,14 @@ export const Explores = ({ list, onClickCard }: ExploreProps) => {
           Explores
         </Text>
         <List>
-          {list.map((item) => (
+          {exploreSpaces.map((item) => (
             <SpacePreviewCard
               key={item.id}
               imageUrl={item.imageUrl}
-              isActive={item.isActive}
+              isActive={item.id === selectedSpacePreview?.id}
               subtitle={item.subtitle}
               title={item.title}
-              onClick={() => onClickCard(item.id)}
+              onClick={() => handleClick(item)}
             />
           ))}
         </List>
