@@ -3,8 +3,11 @@ import { Physics, RigidBody } from '@react-three/rapier'
 import { CharacterControl } from '@sonhaaa/3d-playground'
 
 import { Container } from '@/layouts/common'
+import { useVirtualSpaceStore } from '@/stores'
 
 export const Scene = () => {
+  const canControlCharacter = useVirtualSpaceStore((state) => state.canControlCharacter)
+
   return (
     <Container>
       <Canvas>
@@ -15,7 +18,12 @@ export const Scene = () => {
               <meshStandardMaterial color="pink" />
             </mesh>
           </RigidBody>
-          <CharacterControl cameraPosition={[17, 6, 17]} initialPosition={[4, 5, 1]} polarAngle={[0.5, Math.PI / 2]}>
+          <CharacterControl
+            cameraPosition={[17, 6, 17]}
+            canControl={canControlCharacter}
+            initialPosition={[4, 5, 1]}
+            polarAngle={[0.5, Math.PI / 2]}
+          >
             <mesh>
               <boxGeometry args={[2, 4, 2]} />
               <meshNormalMaterial />
