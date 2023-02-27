@@ -6,7 +6,6 @@ import { PreviewCardContent } from './PreviewCardContent'
 
 const SpacePreviewCardContainer = styled.div`
   position: relative;
-  width: 261px;
   cursor: pointer;
   transition: all 0.2s ease;
 `
@@ -15,18 +14,20 @@ type SpacePreviewCardProps = {
   imageUrl: string
   title: string
   subtitle: string
+  isActive: boolean
+  onClick: () => void
 }
 
-export const SpacePreviewCard = ({ imageUrl, title, subtitle }: SpacePreviewCardProps) => {
+export const SpacePreviewCard = ({ imageUrl, title, subtitle, isActive, onClick }: SpacePreviewCardProps) => {
   const [isHovered, setIsHovered] = useState(false)
-  const [isActive, setIsActive] = useState(false)
 
   return (
     <SpacePreviewCardContainer
-      onClick={() => setIsActive((prev) => !prev)}
+      onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      <CardBackgroundShadow isActive={isActive} isHovered={isHovered} />
       <PreviewCardContent
         imageUrl={imageUrl}
         isActive={isActive}
@@ -35,10 +36,8 @@ export const SpacePreviewCard = ({ imageUrl, title, subtitle }: SpacePreviewCard
         title={title}
         onClickThreeDots={(e) => {
           e.stopPropagation()
-          setIsActive(true)
         }}
       />
-      <CardBackgroundShadow isActive={isActive} isHovered={isHovered} />
     </SpacePreviewCardContainer>
   )
 }

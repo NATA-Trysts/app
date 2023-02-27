@@ -7,12 +7,10 @@ import { Text } from '@/layouts/common'
 
 const CardContentContainer = styled.div<{ isActive: boolean; isDisplayed: boolean }>`
   position: relative;
-  width: 261px;
   background-color: ${({ isDisplayed }) => (isDisplayed ? '#212225' : 'transparent')};
   border-radius: 12px;
   overflow: hidden;
   padding: 1px;
-  z-index: 2;
   transition: all 0.2s ease;
 
   ${({ isActive }) =>
@@ -42,12 +40,13 @@ const CardContentContainer = styled.div<{ isActive: boolean; isDisplayed: boolea
 `
 
 const CardImageContainer = styled.div`
-  width: 245px;
-  height: 165px;
+  width: 94%;
+  height: 90%;
   margin: 8px;
   border-radius: 8px;
   overflow: hidden;
   z-index: 2;
+  transition: width, height 0.2s ease;
 `
 
 const CardImage = styled.img<{ isDisplayed: boolean }>`

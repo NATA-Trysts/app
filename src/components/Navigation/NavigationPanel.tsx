@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { useNavigationPanelStore } from '@/stores/navigationPanel'
+import { useDashboardStore } from '@/stores/dashboard'
 
 import { NavigationArrow } from './NavigationArrow'
 import { NavigationHelp } from './NavigationHelp'
@@ -36,7 +36,7 @@ const UpperSection = styled.div``
 const LowerSection = styled.div``
 
 export const NavigationPanel = () => {
-  const isExpanded = useNavigationPanelStore((state) => state.isExpanded)
+  const isExpanded = useDashboardStore((state) => state.isExpanded)
 
   return (
     <NavigationPanelContainer isExpanded={isExpanded}>
