@@ -8,6 +8,7 @@ import { Icon } from './components/Commons'
 import Builder from './pages/Builder'
 import { Button } from './pages/Button'
 import { HeaderPage } from './pages/HeaderPage'
+import Login from './pages/Login'
 import Mobile from './pages/Mobile'
 import Multitab from './pages/Multitab'
 import { MultiTogglePage } from './pages/MultiTogglePage'
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: '/header',
     element: <HeaderPage />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
   },
   {
     path: '/popover',
