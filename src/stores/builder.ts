@@ -23,6 +23,9 @@ type BuilderState = {
 
   scrollPosition: Map<CategoryType, number>
   setScrollPosition: (scrollPosition: Map<CategoryType, number>) => void
+
+  zoom: number
+  setZoom: (zoom: number) => void
 }
 
 export const useBuilderStore = create<BuilderState>((set) => ({
@@ -49,4 +52,7 @@ export const useBuilderStore = create<BuilderState>((set) => ({
     ['ThreeJS', 0],
   ]),
   setScrollPosition: (scrollPosition: Map<CategoryType, number>) => set(() => ({ scrollPosition })),
+
+  zoom: 50,
+  setZoom: (zoom: number) => set(() => ({ zoom })),
 }))

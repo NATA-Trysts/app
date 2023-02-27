@@ -21,7 +21,7 @@ import VirtualSpace from './pages/VirtualSpace'
 
 const router = createBrowserRouter([
   {
-    path: '/space/:spaceId',
+    path: '/:spaceId',
     element: <VirtualSpace />,
   },
   {
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
     element: <Button />,
   },
   {
-    path: '/builder',
+    path: '/file/:fileId',
     element: <Builder />,
   },
   {
