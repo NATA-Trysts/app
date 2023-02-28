@@ -3,7 +3,7 @@ import { Logo } from '@/components/Commons/Logo'
 
 import { BasicButton } from '../Button/BasicButton/BasicButton'
 import { GradientButton } from '../Button/GradientButton/GradientButton'
-import { HeaderButtons, HeaderContainer, HeaderIcon, HeaderSearchBar } from './HeaderItem'
+import { HeaderButtons, HeaderContainer, HeaderIcon, HeaderSearchBar, StyledHeader } from './HeaderItem'
 
 export const Header = () => {
   const handleSearch = (search: string) => {
@@ -11,7 +11,7 @@ export const Header = () => {
   }
 
   return (
-    <header>
+    <StyledHeader>
       <HeaderContainer>
         <HeaderIcon>
           <a href="/">
@@ -20,13 +20,13 @@ export const Header = () => {
         </HeaderIcon>
         <HeaderSearchBar onSearch={handleSearch} />
         <HeaderButtons>
-          <BasicButton>
+          <BasicButton color="dark">
             <ShopIcon stroke="#696969" />
             Shop
           </BasicButton>
           <GradientButton>Create Space</GradientButton>
         </HeaderButtons>
       </HeaderContainer>
-    </header>
+    </StyledHeader>
   )
 }

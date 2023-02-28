@@ -24,3 +24,9 @@ export const HeaderIcon = styled.div`
 export const HeaderSearchBar = styled(SearchBar)`
   margin-left: 257px;
 `
+
+export const StyledHeader = styled.header`
+  position: fixed;
+  width: 100vw;
+  z-index: 99;
+`

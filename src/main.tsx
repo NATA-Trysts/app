@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Icon } from './components/Commons'
 import Builder from './pages/Builder'
 import { Button } from './pages/Button'
+import { Create } from './pages/Create'
 import { HeaderPage } from './pages/HeaderPage'
 import Mobile from './pages/Mobile'
 import Multitab from './pages/Multitab'
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
   {
     path: '/preview',
     element: <SpacePreview />,
+  },
+  {
+    path: '/create',
+    element: <Create />,
   },
 ])
 

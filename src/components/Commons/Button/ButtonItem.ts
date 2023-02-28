@@ -13,6 +13,11 @@ export const ButtonThemes: { [key: string]: { [key: string]: ButtonTheme } } = {
     default: {},
   },
   basic: {
+    default: {
+      background: 'transparent',
+      backgroundHover: '#270E56',
+      color: '#FFFFFF',
+    },
     dark: {
       background: '#191A1D',
       backgroundHover: '#270E56',
