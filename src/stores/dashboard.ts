@@ -9,6 +9,9 @@ export type Space = {
   timeStamp: string
 }
 
+// 1 for home, 2 for files, and 3 for libraries
+export type DashboardOption = 1 | 2 | 3
+
 type DashboardState = {
   isExpanded: boolean
   setIsExpanded: (isExpanded: boolean) => void
@@ -21,6 +24,9 @@ type DashboardState = {
 
   selectedSpacePreview: Space | null
   setSelectedSpacePreview: (selectedSpacePreview: Space | null) => void
+
+  dashboardOption: DashboardOption
+  setDashboardOption: (dashboardOption: DashboardOption) => void
 }
 
 export const useDashboardStore = create<DashboardState>()(
@@ -37,6 +43,9 @@ export const useDashboardStore = create<DashboardState>()(
 
       selectedSpacePreview: null,
       setSelectedSpacePreview: (selectedSpacePreview: Space | null) => set(() => ({ selectedSpacePreview })),
+
+      dashboardOption: 1,
+      setDashboardOption: (dashboardOption: DashboardOption) => set(() => ({ dashboardOption })),
     }),
     {
       name: 'dashboard-storage',

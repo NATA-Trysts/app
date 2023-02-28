@@ -1,33 +1,39 @@
 import styled from 'styled-components'
 
-import { Text } from '@/layouts/common'
 import { Space as SpaceType, useDashboardStore } from '@/stores/dashboard'
 
 import { SpacePreviewCard } from '../SpacePreviewCard'
+import { SubCategoryToggle } from '../SubcategoryToggle'
 
-const ExploreContainer = styled.section`
+const LibrariesContainer = styled.div`
   width: 100%;
   height: auto;
-  padding: 16px 20px 50px 20px;
 `
 
 const Wrapper = styled.div`
   width: 100%;
+  padding-top: 4px;
+  padding-left: 4px;
 `
 
 const List = styled.div`
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
   margin: 8px 0;
 `
 
-export const Explores = () => {
-  const [exploreSpaces, selectedSpacePreview, setSelectedSpacePreview] = useDashboardStore((state) => [
-    state.exploreSpaces,
+export const Libraries = () => {
+  const [mySpaces, selectedSpacePreview, setSelectedSpacePreview] = useDashboardStore((state) => [
+    state.mySpaces,
     state.selectedSpacePreview,
     state.setSelectedSpacePreview,
   ])
+
+  const handleChange = (data: any) => {
+    console.log(data)
+  }
 
   const handleClick = (space: SpaceType) => {
     if (space.id === selectedSpacePreview?.id) {
@@ -38,13 +44,19 @@ export const Explores = () => {
   }
 
   return (
-    <ExploreContainer>
+    <LibrariesContainer>
       <Wrapper>
-        <Text size="large" weight="normal">
-          Explores
-        </Text>
+        <SubCategoryToggle
+          handleSelectedChange={handleChange}
+          options={[
+            { value: 'all', display: 'All' },
+            { value: 'offices', display: 'Offices' },
+            { value: 'families', display: 'Families' },
+          ]}
+          selected="families"
+        ></SubCategoryToggle>
         <List>
-          {exploreSpaces.map((item) => (
+          {mySpaces.map((item) => (
             <SpacePreviewCard
               key={item.id}
               imageUrl={item.imageUrl}
@@ -57,6 +69,6 @@ export const Explores = () => {
           ))}
         </List>
       </Wrapper>
-    </ExploreContainer>
+    </LibrariesContainer>
   )
 }

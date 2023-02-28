@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 
+import { Space as SpaceType, useDashboardStore } from '@/stores/dashboard'
+
 import { CardBackgroundShadow } from './CardBackgroundShadow'
 import { PreviewCardContent } from './PreviewCardContent'
 
@@ -11,6 +13,7 @@ const SpacePreviewCardContainer = styled.div`
 `
 
 type SpacePreviewCardProps = {
+  item: SpaceType
   imageUrl: string
   title: string
   subtitle: string
@@ -18,7 +21,8 @@ type SpacePreviewCardProps = {
   onClick: () => void
 }
 
-export const SpacePreviewCard = ({ imageUrl, title, subtitle, isActive, onClick }: SpacePreviewCardProps) => {
+export const SpacePreviewCard = ({ item, imageUrl, title, subtitle, isActive, onClick }: SpacePreviewCardProps) => {
+  const setSelectedSpacePreview = useDashboardStore((state) => state.setSelectedSpacePreview)
   const [isHovered, setIsHovered] = useState(false)
 
   return (
@@ -36,6 +40,7 @@ export const SpacePreviewCard = ({ imageUrl, title, subtitle, isActive, onClick 
         title={title}
         onClickThreeDots={(e) => {
           e.stopPropagation()
+          setSelectedSpacePreview(item)
         }}
       />
     </SpacePreviewCardContainer>

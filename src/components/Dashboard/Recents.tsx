@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
@@ -30,6 +31,17 @@ export const Recents = () => {
     state.selectedSpacePreview,
     state.setSelectedSpacePreview,
   ])
+  const [recentSpaces, setRecentSpaces] = useState<SpaceType[]>([])
+
+  useEffect(() => {
+    const recentSpaces = mySpaces
+      .sort((a, b) => {
+        return new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime()
+      })
+      .slice(0, 4)
+
+    setRecentSpaces(recentSpaces)
+  }, [mySpaces])
 
   const handleClick = (space: SpaceType) => {
     if (space.id === selectedSpacePreview?.id) {
@@ -41,18 +53,19 @@ export const Recents = () => {
 
   return (
     <>
-      {mySpaces.length !== 0 ? (
+      {recentSpaces.length !== 0 ? (
         <RecentContainer>
           <Wrapper>
             <Text size="large" weight="normal">
               Recents
             </Text>
             <List>
-              {mySpaces.map((item) => (
+              {recentSpaces.map((item) => (
                 <SpacePreviewCard
                   key={item.id}
                   imageUrl={item.imageUrl}
                   isActive={item.id === selectedSpacePreview?.id}
+                  item={item}
                   subtitle={item.subtitle}
                   title={item.title}
                   onClick={() => handleClick(item)}
