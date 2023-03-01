@@ -6,15 +6,7 @@ export type Space = {
   title: string
   subtitle: string
   imageUrl: string
-  timeStamp: string
-}
-
-export type TestSpace = {
-  id: string
-  title: string
-  subtitle: string
-  imageUrl: string
-  timeStamp: string
+  timeStamp: number
   author: string
   category: string
 }
@@ -38,8 +30,8 @@ type DashboardState = {
   dashboardOption: DashboardOption
   setDashboardOption: (dashboardOption: DashboardOption) => void
 
-  librarySpaces: Map<string, TestSpace[]>
-  setLibrarySpaces: (librarySpacesFromApi: TestSpace[]) => void
+  librarySpaces: Map<string, Space[]>
+  setLibrarySpaces: (librarySpacesFromApi: Space[]) => void
 }
 
 export const useDashboardStore = create<DashboardState>()(
@@ -61,8 +53,8 @@ export const useDashboardStore = create<DashboardState>()(
       setDashboardOption: (dashboardOption: DashboardOption) => set(() => ({ dashboardOption })),
 
       librarySpaces: new Map(),
-      setLibrarySpaces: (librarySpacesFromApi: TestSpace[]) => {
-        const librarySpaces = new Map<string, TestSpace[]>()
+      setLibrarySpaces: (librarySpacesFromApi: Space[]) => {
+        const librarySpaces = new Map<string, Space[]>()
 
         librarySpacesFromApi.forEach((space) => {
           if (librarySpaces.has(space.category)) {
