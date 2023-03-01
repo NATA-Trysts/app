@@ -74,14 +74,18 @@ type Item = {
 }
 
 export const NavigationItems = () => {
-  const [isExpanded, setDashboardOption] = useDashboardStore((state) => [state.isExpanded, state.setDashboardOption])
+  const [isExpanded, dashboardOption, setDashboardOption] = useDashboardStore((state) => [
+    state.isExpanded,
+    state.dashboardOption,
+    state.setDashboardOption,
+  ])
   const [isDisplayed, setIsDisplayed] = useState(isExpanded)
   const [listItems, setListItems] = useState<Item[]>([
     {
       id: 1,
       title: 'Home',
       icon: <HomeIcon />,
-      isActive: true,
+      isActive: false,
     },
     {
       id: 2,
@@ -107,18 +111,10 @@ export const NavigationItems = () => {
   }, [isExpanded])
 
   useEffect(() => {
-    // check which item is active, and set its id to dashboard store
-    const activeItem = listItems.find((item) => item.isActive)
-
-    if (activeItem) {
-      setDashboardOption(activeItem.id)
-    }
-  }, [listItems, setDashboardOption])
-
-  const handleItemClick = (id: number) => {
+    // check the current dashboard option and set the active item
     setListItems((prev) =>
       prev.map((item) => {
-        if (item.id === id) {
+        if (item.id === dashboardOption) {
           return {
             ...item,
             isActive: true,
@@ -131,6 +127,10 @@ export const NavigationItems = () => {
         }
       }),
     )
+  }, [dashboardOption])
+
+  const handleItemClick = (id: DashboardOptionType) => {
+    setDashboardOption(id)
   }
 
   return (

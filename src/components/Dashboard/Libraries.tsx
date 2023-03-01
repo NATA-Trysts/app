@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { TestSpace as TestSpaceType, useDashboardStore } from '@/stores/dashboard'
+import { Space as SpaceType, useDashboardStore } from '@/stores/dashboard'
 
 import { SpacePreviewCard } from '../SpacePreviewCard'
 import { SubCategoryToggle } from '../SubcategoryToggle'
@@ -26,17 +26,18 @@ const List = styled.div`
 `
 
 export const Libraries = () => {
-  const librarySpaces: Map<string, TestSpaceType[]> = useDashboardStore((state) => state.librarySpaces)
+  const librarySpaces: Map<string, SpaceType[]> = useDashboardStore((state) => state.librarySpaces)
 
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  const [listLibrarySpaces, setListLibrarySpaces] = useState<TestSpaceType[]>([])
+  const [listLibrarySpaces, setListLibrarySpaces] = useState<SpaceType[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const handleChange = (data: any) => {
     setSelectedCategory(data)
   }
 
   useEffect(() => {
-    if (librarySpaces.size === 0) return
+    if (isLoading) return
 
     const myArray = Array.from(librarySpaces.values())
 
@@ -45,7 +46,13 @@ export const Libraries = () => {
     } else {
       setListLibrarySpaces(librarySpaces.get(selectedCategory) || [])
     }
-  }, [selectedCategory, librarySpaces])
+  }, [selectedCategory, librarySpaces, isLoading])
+
+  useEffect(() => {
+    if (librarySpaces.size > 0) {
+      setIsLoading(false)
+    }
+  }, [librarySpaces])
 
   return (
     <LibrariesContainer>
