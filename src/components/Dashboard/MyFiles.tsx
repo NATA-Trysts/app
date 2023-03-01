@@ -18,19 +18,7 @@ const List = styled.div`
 `
 
 export const MyFiles = () => {
-  const [mySpaces, selectedSpacePreview, setSelectedSpacePreview] = useDashboardStore((state) => [
-    state.mySpaces,
-    state.selectedSpacePreview,
-    state.setSelectedSpacePreview,
-  ])
-
-  const handleClick = (space: SpaceType) => {
-    if (space.id === selectedSpacePreview?.id) {
-      setSelectedSpacePreview(null)
-    } else {
-      setSelectedSpacePreview(space)
-    }
-  }
+  const mySpaces: SpaceType[] = useDashboardStore((state) => state.mySpaces)
 
   return (
     <MyFilesContainer>
@@ -39,11 +27,9 @@ export const MyFiles = () => {
           <SpacePreviewCard
             key={item.id}
             imageUrl={item.imageUrl}
-            isActive={item.id === selectedSpacePreview?.id}
             item={item}
             subtitle={item.subtitle}
             title={item.title}
-            onClick={() => handleClick(item)}
           />
         ))}
       </List>

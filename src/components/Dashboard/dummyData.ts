@@ -1,4 +1,4 @@
-import { Space as SpaceType } from '@/stores/dashboard'
+import { Space as SpaceType, TestSpace as TestSpaceType } from '@/stores/dashboard'
 
 export const mySpacesFromApi: SpaceType[] = [
   {
@@ -33,7 +33,7 @@ export const mySpacesFromApi: SpaceType[] = [
     id: '13',
     title: 'Nguyen Son Ha Wedding',
     subtitle: 'Edited 14 hours ago',
-    imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
+    imageUrl: 'https://www.boredpanda.com/blog/wp-content/uploads/2022/09/cat-memes-catslovecatnip-cover_800.png',
     timeStamp: '2021-03-05T00:00:00.000Z',
   },
 ]
@@ -94,5 +94,62 @@ export const exploreSpacesFromApi: SpaceType[] = [
     subtitle: 'Edited 14 hours ago',
     imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     timeStamp: '2021-03-01T00:00:00.000Z',
+  },
+]
+
+export const librariesSpacesFromApi: TestSpaceType[] = [
+  {
+    id: '14',
+    title: 'Nguyen Son Ha Wedding',
+    subtitle: 'Edited 14 hours ago',
+    imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
+    timeStamp: '2021-03-01T00:00:00.000Z',
+    author: 'Son Ha',
+    category: 'offices',
+  },
+  {
+    id: '15',
+    title: 'Tien Thinh Home',
+    subtitle: 'Edited 14 hours ago',
+    imageUrl: 'https://www.boredpanda.com/blog/wp-content/uploads/2022/09/cat-memes-catslovecatnip-cover_800.png',
+    timeStamp: '2021-03-01T00:00:00.000Z',
+    author: 'Tien Thinh',
+    category: 'families',
+  },
+  {
+    id: '16',
+    title: 'Tien Thinh Home',
+    subtitle: 'Edited 14 hours ago',
+    imageUrl: 'https://www.boredpanda.com/blog/wp-content/uploads/2022/09/cat-memes-catslovecatnip-cover_800.png',
+    timeStamp: '2021-03-01T00:00:00.000Z',
+    author: 'Tien Thinh',
+    category: 'families',
+  },
+  {
+    id: '17',
+    title: 'Tien Thinh Home',
+    subtitle: 'Edited 14 hours ago',
+    imageUrl: 'https://www.boredpanda.com/blog/wp-content/uploads/2022/09/cat-memes-catslovecatnip-cover_800.png',
+    timeStamp: '2021-03-01T00:00:00.000Z',
+    author: 'Tien Thinh',
+    category: 'families',
+  },
+  {
+    id: '18',
+    title: 'Tien Thinh Home',
+    subtitle: 'Edited 14 hours ago',
+    imageUrl: 'https://www.boredpanda.com/blog/wp-content/uploads/2022/09/cat-memes-catslovecatnip-cover_800.png',
+    timeStamp: '2021-03-01T00:00:00.000Z',
+    author: 'Tien Thinh',
+    category: 'families',
+  },
+  {
+    id: '19',
+    title: 'Tien Thinh Home',
+    subtitle: 'Edited 14 hours ago',
+    imageUrl: 'https://www.boredpanda.com/blog/wp-content/uploads/2022/09/cat-memes-catslovecatnip-cover_800.png',
+    timeStamp: '2021-03-01T00:00:00.000Z',
+    author: 'Tien Thinh',
+    category: 'families',
   },
 ]

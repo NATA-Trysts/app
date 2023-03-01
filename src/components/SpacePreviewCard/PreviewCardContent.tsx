@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { ReactComponent as ThreeDot } from '@/assets/icons/three-dot.svg'
 import { Option, Popover } from '@/components/Popover'
 import { Text } from '@/layouts/common'
+import { useDashboardStore } from '@/stores/dashboard'
 
 const CardContentContainer = styled.div<{ isActive: boolean; isDisplayed: boolean }>`
   position: relative;
@@ -49,11 +50,11 @@ const CardImageContainer = styled.div`
   transition: width, height 0.2s ease;
 `
 
-const CardImage = styled.img<{ isDisplayed: boolean }>`
+const CardImage = styled.img<{ isExpanded: boolean }>`
   width: 100%;
-  height: 100%;
+  height: 168px;
   object-fit: cover;
-  transform: ${({ isDisplayed }) => (isDisplayed ? 'scale(1)' : 'scale(1.1)')};
+  transform: ${({ isExpanded }) => (isExpanded ? 'scale(1)' : 'scale(1.1)')};
   transition: all 0.4s ease;
 `
 
@@ -99,6 +100,7 @@ export const PreviewCardContent = ({
   onClickThreeDots,
 }: PreviewCardContentProps) => {
   const [isDisplayed, setIsDisplayed] = useState(false)
+  const isExpanded = useDashboardStore((state) => state.isExpanded)
 
   // delay 100ms to prevent flickering
   useEffect(() => {
@@ -116,7 +118,7 @@ export const PreviewCardContent = ({
   return (
     <CardContentContainer isActive={isActive} isDisplayed={isDisplayed}>
       <CardImageContainer>
-        <CardImage alt="Preview" isDisplayed={isDisplayed} loading="lazy" src={imageUrl} />
+        <CardImage alt="Preview" isExpanded={isExpanded} loading="lazy" src={imageUrl} />
       </CardImageContainer>
       <CardBody>
         <CardBodyText>

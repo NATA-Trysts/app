@@ -23,19 +23,7 @@ const List = styled.div`
 `
 
 export const Explores = () => {
-  const [exploreSpaces, selectedSpacePreview, setSelectedSpacePreview] = useDashboardStore((state) => [
-    state.exploreSpaces,
-    state.selectedSpacePreview,
-    state.setSelectedSpacePreview,
-  ])
-
-  const handleClick = (space: SpaceType) => {
-    if (space.id === selectedSpacePreview?.id) {
-      setSelectedSpacePreview(null)
-    } else {
-      setSelectedSpacePreview(space)
-    }
-  }
+  const exploreSpaces: SpaceType[] = useDashboardStore((state) => state.exploreSpaces)
 
   return (
     <ExploreContainer>
@@ -48,11 +36,9 @@ export const Explores = () => {
             <SpacePreviewCard
               key={item.id}
               imageUrl={item.imageUrl}
-              isActive={item.id === selectedSpacePreview?.id}
               item={item}
               subtitle={item.subtitle}
               title={item.title}
-              onClick={() => handleClick(item)}
             />
           ))}
         </List>

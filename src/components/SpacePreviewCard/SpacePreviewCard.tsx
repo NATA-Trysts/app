@@ -17,24 +17,35 @@ type SpacePreviewCardProps = {
   imageUrl: string
   title: string
   subtitle: string
-  isActive: boolean
-  onClick: () => void
+  isActive?: boolean
+  onClick?: () => void
 }
 
-export const SpacePreviewCard = ({ item, imageUrl, title, subtitle, isActive, onClick }: SpacePreviewCardProps) => {
-  const setSelectedSpacePreview = useDashboardStore((state) => state.setSelectedSpacePreview)
+export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePreviewCardProps) => {
+  const [selectedSpacePreview, setSelectedSpacePreview] = useDashboardStore((state) => [
+    state.selectedSpacePreview,
+    state.setSelectedSpacePreview,
+  ])
   const [isHovered, setIsHovered] = useState(false)
+
+  const handleClick = () => {
+    if (item.id === selectedSpacePreview?.id) {
+      setSelectedSpacePreview(null)
+    } else {
+      setSelectedSpacePreview(item)
+    }
+  }
 
   return (
     <SpacePreviewCardContainer
-      onClick={onClick}
+      onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <CardBackgroundShadow isActive={isActive} isHovered={isHovered} />
+      <CardBackgroundShadow isActive={item.id === selectedSpacePreview?.id} isHovered={isHovered} />
       <PreviewCardContent
         imageUrl={imageUrl}
-        isActive={isActive}
+        isActive={item.id === selectedSpacePreview?.id}
         isHovered={isHovered}
         subtitle={subtitle}
         title={title}

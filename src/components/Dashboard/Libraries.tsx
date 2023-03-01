@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { Space as SpaceType, useDashboardStore } from '@/stores/dashboard'
+import { TestSpace as TestSpaceType, useDashboardStore } from '@/stores/dashboard'
 
 import { SpacePreviewCard } from '../SpacePreviewCard'
 import { SubCategoryToggle } from '../SubcategoryToggle'
@@ -25,23 +26,26 @@ const List = styled.div`
 `
 
 export const Libraries = () => {
-  const [mySpaces, selectedSpacePreview, setSelectedSpacePreview] = useDashboardStore((state) => [
-    state.mySpaces,
-    state.selectedSpacePreview,
-    state.setSelectedSpacePreview,
-  ])
+  const librarySpaces: Map<string, TestSpaceType[]> = useDashboardStore((state) => state.librarySpaces)
+
+  const [selectedCategory, setSelectedCategory] = useState<string>('all')
+  const [listLibrarySpaces, setListLibrarySpaces] = useState<TestSpaceType[]>([])
 
   const handleChange = (data: any) => {
-    console.log(data)
+    setSelectedCategory(data)
   }
 
-  const handleClick = (space: SpaceType) => {
-    if (space.id === selectedSpacePreview?.id) {
-      setSelectedSpacePreview(null)
+  useEffect(() => {
+    if (librarySpaces.size === 0) return
+
+    const myArray = Array.from(librarySpaces.values())
+
+    if (selectedCategory === 'all') {
+      setListLibrarySpaces(myArray.flat())
     } else {
-      setSelectedSpacePreview(space)
+      setListLibrarySpaces(librarySpaces.get(selectedCategory) || [])
     }
-  }
+  }, [selectedCategory, librarySpaces])
 
   return (
     <LibrariesContainer>
@@ -53,18 +57,16 @@ export const Libraries = () => {
             { value: 'offices', display: 'Offices' },
             { value: 'families', display: 'Families' },
           ]}
-          selected="families"
+          selected={selectedCategory}
         ></SubCategoryToggle>
         <List>
-          {mySpaces.map((item) => (
+          {listLibrarySpaces.map((item) => (
             <SpacePreviewCard
               key={item.id}
               imageUrl={item.imageUrl}
-              isActive={item.id === selectedSpacePreview?.id}
               item={item}
-              subtitle={item.subtitle}
+              subtitle={`Created by ${item.author}`}
               title={item.title}
-              onClick={() => handleClick(item)}
             />
           ))}
         </List>

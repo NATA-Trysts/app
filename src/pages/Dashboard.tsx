@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { exploreSpacesFromApi, mySpacesFromApi, SpaceSection } from '@/components/Dashboard'
+import { exploreSpacesFromApi, librariesSpacesFromApi, mySpacesFromApi, SpaceSection } from '@/components/Dashboard'
 import { Header } from '@/components/Header'
 import { NavigationPanel } from '@/components/Navigation'
 import { useDashboardStore } from '@/stores/dashboard'
@@ -21,12 +21,17 @@ const Body = styled.div`
 `
 
 const Dashboard = () => {
-  const [setMySpaces, setExploreSpaces] = useDashboardStore((state) => [state.setMySpaces, state.setExploreSpaces])
+  const [setMySpaces, setExploreSpaces, setLibrarySpaces] = useDashboardStore((state) => [
+    state.setMySpaces,
+    state.setExploreSpaces,
+    state.setLibrarySpaces,
+  ])
 
   useEffect(() => {
     setMySpaces(mySpacesFromApi)
     setExploreSpaces(exploreSpacesFromApi)
-  }, [setMySpaces, setExploreSpaces])
+    setLibrarySpaces(librariesSpacesFromApi)
+  }, [setMySpaces, setExploreSpaces, setLibrarySpaces])
 
   return (
     <DashboardPage>

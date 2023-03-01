@@ -26,11 +26,7 @@ const List = styled.div`
 `
 
 export const Recents = () => {
-  const [mySpaces, selectedSpacePreview, setSelectedSpacePreview] = useDashboardStore((state) => [
-    state.mySpaces,
-    state.selectedSpacePreview,
-    state.setSelectedSpacePreview,
-  ])
+  const mySpaces: SpaceType[] = useDashboardStore((state) => state.mySpaces)
   const [recentSpaces, setRecentSpaces] = useState<SpaceType[]>([])
 
   useEffect(() => {
@@ -42,14 +38,6 @@ export const Recents = () => {
 
     setRecentSpaces(recentSpaces)
   }, [mySpaces])
-
-  const handleClick = (space: SpaceType) => {
-    if (space.id === selectedSpacePreview?.id) {
-      setSelectedSpacePreview(null)
-    } else {
-      setSelectedSpacePreview(space)
-    }
-  }
 
   return (
     <>
@@ -64,11 +52,9 @@ export const Recents = () => {
                 <SpacePreviewCard
                   key={item.id}
                   imageUrl={item.imageUrl}
-                  isActive={item.id === selectedSpacePreview?.id}
                   item={item}
                   subtitle={item.subtitle}
                   title={item.title}
-                  onClick={() => handleClick(item)}
                 />
               ))}
             </List>
