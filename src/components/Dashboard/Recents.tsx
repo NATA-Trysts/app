@@ -5,6 +5,7 @@ import { Text } from '@/layouts/common'
 import { Space as SpaceType, useDashboardStore } from '@/stores/dashboard'
 
 import { SpacePreviewCard } from '../SpacePreviewCard'
+import { useDashboard } from './hooks/useDashboard'
 
 const RecentContainer = styled.section`
   width: 100%;
@@ -28,6 +29,8 @@ const List = styled.div`
 export const Recents = () => {
   const mySpaces: SpaceType[] = useDashboardStore((state) => state.mySpaces)
   const [recentSpaces, setRecentSpaces] = useState<SpaceType[]>([])
+
+  const { calculateTimeAgo } = useDashboard()
 
   useEffect(() => {
     const recentSpaces = mySpaces
@@ -53,7 +56,7 @@ export const Recents = () => {
                   key={item.id}
                   imageUrl={item.imageUrl}
                   item={item}
-                  subtitle={item.subtitle}
+                  subtitle={`Edited ${calculateTimeAgo(item.timeStamp)}`}
                   title={item.title}
                 />
               ))}

@@ -4,6 +4,7 @@ import { Text } from '@/layouts/common'
 import { Space as SpaceType, useDashboardStore } from '@/stores/dashboard'
 
 import { SpacePreviewCard } from '../SpacePreviewCard'
+import { useDashboard } from './hooks/useDashboard'
 
 const ExploreContainer = styled.section`
   width: 100%;
@@ -25,6 +26,8 @@ const List = styled.div`
 export const Explores = () => {
   const exploreSpaces: SpaceType[] = useDashboardStore((state) => state.exploreSpaces)
 
+  const { calculateTimeAgo } = useDashboard()
+
   return (
     <ExploreContainer>
       <Wrapper>
@@ -37,7 +40,7 @@ export const Explores = () => {
               key={item.id}
               imageUrl={item.imageUrl}
               item={item}
-              subtitle={item.subtitle}
+              subtitle={`Edited ${calculateTimeAgo(item.timeStamp)}`}
               title={item.title}
             />
           ))}
