@@ -8,6 +8,7 @@ export const mySpacesFromApi: SpaceType[] = [
     imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     timeStamp: 1677675600000,
     author: 'Tien Thinh',
+    authorId: '1234',
     category: 'families',
   },
   {
@@ -17,6 +18,7 @@ export const mySpacesFromApi: SpaceType[] = [
     imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     timeStamp: 1677639600000,
     author: 'Tien Thinh',
+    authorId: '1234',
     category: 'families',
   },
   {
@@ -26,6 +28,7 @@ export const mySpacesFromApi: SpaceType[] = [
     imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     timeStamp: 1672542000000,
     author: 'Tien Thinh',
+    authorId: '1234',
     category: 'families',
   },
   {
@@ -35,6 +38,7 @@ export const mySpacesFromApi: SpaceType[] = [
     imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     timeStamp: 1675220400000,
     author: 'Tien Thinh',
+    authorId: '1234',
     category: 'families',
   },
   {
@@ -44,6 +48,7 @@ export const mySpacesFromApi: SpaceType[] = [
     imageUrl: 'https://www.boredpanda.com/blog/wp-content/uploads/2022/09/cat-memes-catslovecatnip-cover_800.png',
     timeStamp: 1677679680000,
     author: 'Tien Thinh',
+    authorId: '1234',
     category: 'families',
   },
 ]
@@ -55,7 +60,8 @@ export const exploreSpacesFromApi: SpaceType[] = [
     subtitle: 'Edited 14 hours ago',
     imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     timeStamp: 1672628400000,
-    author: 'Tien Thinh',
+    author: 'Son Ha',
+    authorId: '5678',
     category: 'families',
   },
   {
@@ -64,7 +70,8 @@ export const exploreSpacesFromApi: SpaceType[] = [
     subtitle: 'Edited 14 hours ago',
     imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     timeStamp: 1672714800000,
-    author: 'Tien Thinh',
+    author: 'Son Ha',
+    authorId: '5678',
     category: 'families',
   },
   {
@@ -73,7 +80,8 @@ export const exploreSpacesFromApi: SpaceType[] = [
     subtitle: 'Edited 14 hours ago',
     imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     timeStamp: 1672887600000,
-    author: 'Tien Thinh',
+    author: 'Son Ha',
+    authorId: '5678',
     category: 'families',
   },
   {
@@ -82,7 +90,8 @@ export const exploreSpacesFromApi: SpaceType[] = [
     subtitle: 'Edited 14 hours ago',
     imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     timeStamp: 1675566000000,
-    author: 'Tien Thinh',
+    author: 'Son Ha',
+    authorId: '5678',
     category: 'families',
   },
   {
@@ -91,7 +100,8 @@ export const exploreSpacesFromApi: SpaceType[] = [
     subtitle: 'Edited 14 hours ago',
     imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     timeStamp: 1675998000000,
-    author: 'Tien Thinh',
+    author: 'Son Ha',
+    authorId: '5678',
     category: 'families',
   },
   {
@@ -100,7 +110,8 @@ export const exploreSpacesFromApi: SpaceType[] = [
     subtitle: 'Edited 14 hours ago',
     imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     timeStamp: 1614556800000,
-    author: 'Tien Thinh',
+    author: 'Son Ha',
+    authorId: '5678',
     category: 'families',
   },
   {
@@ -109,7 +120,8 @@ export const exploreSpacesFromApi: SpaceType[] = [
     subtitle: 'Edited 14 hours ago',
     imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     timeStamp: 1614556800000,
-    author: 'Tien Thinh',
+    author: 'Son Ha',
+    authorId: '5678',
     category: 'families',
   },
   {
@@ -118,7 +130,8 @@ export const exploreSpacesFromApi: SpaceType[] = [
     subtitle: 'Edited 14 hours ago',
     imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     timeStamp: 1614556800000,
-    author: 'Tien Thinh',
+    author: 'Son Ha',
+    authorId: '5678',
     category: 'families',
   },
 ]

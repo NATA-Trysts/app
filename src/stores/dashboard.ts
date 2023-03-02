@@ -8,6 +8,7 @@ export type Space = {
   imageUrl: string
   timeStamp: number
   author: string
+  authorId?: string
   category: string
 }
 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { ReactComponent as ThreeDot } from '@/assets/icons/three-dot.svg'
-import { Option, Popover } from '@/components/Popover'
 import { Text } from '@/layouts/common'
 import { useDashboardStore } from '@/stores/dashboard'
+
+import { CardOptions } from './CardOptions'
 
 const CardContentContainer = styled.div<{ isActive: boolean; isDisplayed: boolean }>`
   position: relative;
@@ -75,16 +75,11 @@ const CardBodyText = styled.div`
   }
 `
 
-const MemberContainer = styled.div`
-  padding: 8px;
-  border-radius: 12px;
-  background: #212225;
-  width: 164px;
-`
-
 type PreviewCardContentProps = {
   isActive: boolean
   isHovered: boolean
+  spaceAuthorId: string
+  spaceId: string
   title: string
   subtitle: string
   imageUrl: string
@@ -94,6 +89,8 @@ type PreviewCardContentProps = {
 export const PreviewCardContent = ({
   isActive,
   isHovered,
+  spaceAuthorId,
+  spaceId,
   title,
   subtitle,
   imageUrl,
@@ -129,23 +126,7 @@ export const PreviewCardContent = ({
             {subtitle}
           </Text>
         </CardBodyText>
-        <Popover
-          align="center"
-          content={
-            <MemberContainer>
-              <Option customHoverBackgroundColor="#C771E1" title="Open in new tab" onClick={() => {}} />
-              <Option customHoverBackgroundColor="#C771E1" title="Edit space" onClick={() => {}} />
-              <Option customHoverBackgroundColor="#C771E1" title="Copy URL" onClick={() => {}} />
-              <Option customHoverBackgroundColor="#FC677B" title="Delete space" onClick={() => {}} />
-            </MemberContainer>
-          }
-          side="right"
-          sideOffset={28}
-        >
-          <div onClick={(e) => onClickThreeDots(e)}>
-            <ThreeDot />
-          </div>
-        </Popover>
+        <CardOptions spaceAuthorId={spaceAuthorId} spaceId={spaceId} onClickThreeDots={onClickThreeDots} />
       </CardBody>
     </CardContentContainer>
   )
