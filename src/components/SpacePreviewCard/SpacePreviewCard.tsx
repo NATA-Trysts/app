@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { Space as SpaceType, useDashboardStore } from '@/stores/dashboard'
@@ -18,8 +19,10 @@ type SpacePreviewCardProps = {
   title: string
   subtitle: string
   isActive?: boolean
-  onClick?: () => void
 }
+
+// temp
+const currentUserId = '1234'
 
 export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePreviewCardProps) => {
   const [selectedSpacePreview, setSelectedSpacePreview] = useDashboardStore((state) => [
@@ -27,6 +30,8 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
     state.setSelectedSpacePreview,
   ])
   const [isHovered, setIsHovered] = useState(false)
+
+  const navigate = useNavigate()
 
   const handleClick = () => {
     if (item.id === selectedSpacePreview?.id) {
@@ -36,9 +41,18 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
     }
   }
 
+  const handleDoubleClick = () => {
+    if (item.authorId === currentUserId) {
+      navigate(`/files/${item.id}`)
+    } else {
+      navigate(`/${item.id}`)
+    }
+  }
+
   return (
     <SpacePreviewCardContainer
       onClick={handleClick}
+      onDoubleClick={handleDoubleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -47,6 +61,8 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
         imageUrl={imageUrl}
         isActive={item.id === selectedSpacePreview?.id}
         isHovered={isHovered}
+        spaceAuthorId={item.authorId || '1234'} // temp
+        spaceId={item.id}
         subtitle={subtitle}
         title={title}
         onClickThreeDots={(e) => {
