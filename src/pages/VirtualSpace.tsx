@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { ChatInput } from '@/components/ChatInput'
 import { ChatMessage } from '@/components/ChatMessage'
 import { ColorPicker } from '@/components/ColorPicker'
-// import { Scene } from '@/components/Scene'
+import { Scene } from '@/components/Scene'
 import { UtilitySection } from '@/components/UtilitySection'
 import {
   MyInformationCard,
@@ -166,7 +166,7 @@ const VirtualSpace = () => {
 
   return (
     <Container customColor={customColor}>
-      {/* <Scene /> */}
+      <Scene />
       <OverlayContainer>
         <HeaderContainer>
           <FullLogo />

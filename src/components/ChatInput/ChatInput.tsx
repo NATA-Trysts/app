@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { ReactComponent as Emoji } from '@/assets/icons/emoji.svg'
 import { SVGClickable } from '@/layouts/common'
+import { useVirtualSpaceStore } from '@/stores'
 
 const Container = styled.div`
   width: 100%;
@@ -46,11 +47,19 @@ const EmojiContainer = styled.div`
 `
 
 export const ChatInput = () => {
+  const setCanControlCharacter = useVirtualSpaceStore((state) => state.setCanControlCharacter)
+
   return (
     <Container>
       <InputForm>
         <MessageInputContainer>
-          <MessageInput maxRows={3} minRows={1} placeholder="Type something" onFocus={(e) => e.stopPropagation()} />
+          <MessageInput
+            maxRows={3}
+            minRows={1}
+            placeholder="Type something"
+            onBlur={() => setCanControlCharacter(true)}
+            onFocus={() => setCanControlCharacter(false)}
+          />
         </MessageInputContainer>
         <EmojiContainer>
           <SVGClickable>

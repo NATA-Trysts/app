@@ -6,7 +6,7 @@ import { ReactComponent as HomeIcon } from '@/assets/icons/home.svg'
 import { ReactComponent as LibraryIcon } from '@/assets/icons/library.svg'
 import { Text } from '@/layouts/common'
 import { FILTER_ICON_TO_WHITE } from '@/libs/constants'
-import { useNavigationPanelStore } from '@/stores/navigationPanel'
+import { DashboardOption as DashboardOptionType, useDashboardStore } from '@/stores/dashboard'
 
 const NavigationItemsContainer = styled.div``
 
@@ -67,21 +67,25 @@ const ItemWrapper = styled.div<{ isDisplayed: boolean }>`
 `
 
 type Item = {
-  id: number
+  id: DashboardOptionType
   title: string
   icon: ReactNode
   isActive: boolean
 }
 
 export const NavigationItems = () => {
-  const isExpanded = useNavigationPanelStore((state) => state.isExpanded)
+  const [isExpanded, dashboardOption, setDashboardOption] = useDashboardStore((state) => [
+    state.isExpanded,
+    state.dashboardOption,
+    state.setDashboardOption,
+  ])
   const [isDisplayed, setIsDisplayed] = useState(isExpanded)
   const [listItems, setListItems] = useState<Item[]>([
     {
       id: 1,
       title: 'Home',
       icon: <HomeIcon />,
-      isActive: true,
+      isActive: false,
     },
     {
       id: 2,
@@ -106,10 +110,11 @@ export const NavigationItems = () => {
     }
   }, [isExpanded])
 
-  const handleItemClick = (id: number) => {
+  useEffect(() => {
+    // check the current dashboard option and set the active item
     setListItems((prev) =>
       prev.map((item) => {
-        if (item.id === id) {
+        if (item.id === dashboardOption) {
           return {
             ...item,
             isActive: true,
@@ -122,6 +127,10 @@ export const NavigationItems = () => {
         }
       }),
     )
+  }, [dashboardOption])
+
+  const handleItemClick = (id: DashboardOptionType) => {
+    setDashboardOption(id)
   }
 
   return (

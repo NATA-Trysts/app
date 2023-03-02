@@ -11,7 +11,6 @@ const Shadow = styled.div<{ isActive: boolean; isDisplayed: boolean }>`
   background: #7b9ac8;
   filter: blur(50px);
   border-radius: 8px;
-  z-index: 1;
   opacity: ${({ isDisplayed }) => (isDisplayed ? 1 : 0)};
   transition: opacity 0.2s ease;
 
