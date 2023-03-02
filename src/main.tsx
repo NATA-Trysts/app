@@ -14,6 +14,7 @@ import VirtualSpace from './pages/VirtualSpace'
 const router = createBrowserRouter([
   {
     path: '/:spaceId',
+
     element: (
       <MobileDetect>
         <VirtualSpace />
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: '/files/:spaceId',
+    path: '/files/:fileId',
     element: (
       <MobileDetect>
         <Builder />
