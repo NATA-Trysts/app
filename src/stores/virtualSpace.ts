@@ -14,6 +14,9 @@ type VirtualSpaceState = {
   setCustomColor: (customColor: CustomColor) => void
   canControlCharacter: boolean
   setCanControlCharacter: (canControlCharacter: boolean) => void
+
+  authToken: string
+  setAuthToken: (authToken: string) => void
 }
 
 export const useVirtualSpaceStore = create<VirtualSpaceState>()(
@@ -21,12 +24,18 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()(
     (set) => ({
       spaceId: '123',
       setSpaceId: (spaceId) => set(() => ({ spaceId })),
+
       selectedUltility: 'chat',
       setSelectedUltility: (selectedUltility) => set(() => ({ selectedUltility })),
+
       customColor: 'blue',
       setCustomColor: (customColor: CustomColor) => set(() => ({ customColor })),
+
       canControlCharacter: true,
       setCanControlCharacter: (canControlCharacter: boolean) => set(() => ({ canControlCharacter })),
+
+      authToken: '',
+      setAuthToken: (authToken: string) => set({ authToken }),
     }),
     {
       name: 'virtual-space-storage',

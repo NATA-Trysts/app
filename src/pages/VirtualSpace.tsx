@@ -1,13 +1,16 @@
+import { useHMSActions } from '@100mslive/react-sdk'
+import { useEffect } from 'react'
 import styled from 'styled-components'
 
 import { ChatInput } from '@/components/ChatInput'
 import { ChatMessage } from '@/components/ChatMessage'
-import { ColorPicker } from '@/components/ColorPicker'
 import { MultitabDetect, MultiTabWarning } from '@/components/MultitabDetect'
-import { Scene } from '@/components/Scene'
 import { UtilitySection } from '@/components/UtilitySection'
 import {
   MyInformationCard,
+  MyVideo,
+  Network,
+  Scene,
   SingleMemberCard,
   ToolbarMiddle,
   ToolbarRight,
@@ -28,6 +31,9 @@ const Container = styled(CustomableContainer)`
   flex-direction: column;
   gap: 32px;
   background: white;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `
 
 const OverlayContainer = styled.div`
@@ -57,7 +63,6 @@ const LeftSideContainer = styled.section`
   grid-area: left;
   padding: 16px;
   gap: 6px;
-  pointer-events: auto;
 `
 
 const MiddleSideContainer = styled.section`
@@ -81,16 +86,6 @@ const RightSideContainer = styled.section`
   align-items: flex-end;
   justify-content: flex-end;
   gap: 6px;
-  pointer-events: auto;
-`
-
-const MyVideoContainer = styled.div`
-  width: 204px;
-  aspect-ratio: 190/128;
-  border-radius: 16px;
-  background: var(--color-4);
-  pointer-events: auto;
-  cursor: pointer;
 `
 
 const ChatMessageContainer = styled.div`
@@ -144,7 +139,7 @@ const SAMPLE_MEMBER_DATA = {
 
 const VirtualSpace = () => {
   const customColor = useAppStore((state) => state.customColor)
-  const selectedUltility = useVirtualSpaceStore((state) => state.selectedUltility)
+  const [selectedUltility] = useVirtualSpaceStore((state) => [state.selectedUltility])
 
   const ultilityMapping = {
     chat: {
@@ -165,20 +160,61 @@ const VirtualSpace = () => {
     },
   }
 
+  const hmsActions = useHMSActions()
+
+  const join = async () => {
+    const response = await fetch('https://prod-in2.100ms.live/hmsapi/shtest.app.100ms.live/api/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        // eslint-disable-next-line camelcase
+        room_id: '638968d0aee54625da649a38',
+        role: 'student',
+        // eslint-disable-next-line camelcase
+        user_id: Date.now().toString(),
+      }),
+    })
+    const a = await response.json()
+    const config = {
+      userName: 'SH',
+      authToken: a.token,
+      settings: {
+        isAudioMuted: true,
+        isVideoMuted: false,
+      },
+      metaData: JSON.stringify({ city: 'Da Nang' }),
+      rememberDeviceSelection: true,
+    }
+
+    await hmsActions.join(config)
+  }
+
+  const leave = async () => await hmsActions.leave()
+
+  useEffect(() => {
+    join()
+
+    return () => {
+      leave()
+    }
+  }, [])
+
   return (
     <CustomableContainer customColor={customColor}>
       <MultitabDetect fallback={<MultiTabWarning />}>
         <Container customColor={customColor}>
+          <Network />
           <Scene />
           <OverlayContainer>
             <HeaderContainer>
               <FullLogo />
-              <ColorPicker />
               <VirtualSpaceNameCard name="Son Ha's Wedding " spaceId="123" />
             </HeaderContainer>
             <LeftSideContainer>
               <LeftSideWrapper>
-                <MyVideoContainer></MyVideoContainer>
+                <MyVideo />
                 <MyInformationCard
                   avatar="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
                   handler="sasonhaaa#1234"

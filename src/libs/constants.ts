@@ -69,11 +69,21 @@ const INPUT_BORDER: InputStatusColor = {
 
 const TRYSTS_EMAIL_LOGIN = 'login@trysts.io'
 
+const MESSAGES = {
+  MEMBER: {
+    CREATE: 'member-create',
+    MOVE: 'member-move',
+    ACTION: 'member-action',
+  },
+  WORLD: {},
+}
+
 export {
   COLOR_PICKER_LIST,
   FILTER_ICON_TO_WHITE,
   INPUT_BORDER,
   INPUT_DROP_SHADOW,
+  MESSAGES,
   NOTIFICATION_CLOSE_COLOR,
   NOTIFICATION_COLOR,
   TAB_CATEGORY_COLOR,
