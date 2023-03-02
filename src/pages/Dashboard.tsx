@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { exploreSpacesFromApi, librariesSpacesFromApi, mySpacesFromApi, SpaceSection } from '@/components/Dashboard'
 import { Header } from '@/components/Header'
 import { NavigationPanel } from '@/components/Navigation'
+import { NotificationStack } from '@/components/Notification'
 import { useDashboardStore } from '@/stores/dashboard'
 
 const DashboardPage = styled.div`
@@ -34,13 +35,16 @@ const Dashboard = () => {
   }, [setMySpaces, setExploreSpaces, setLibrarySpaces])
 
   return (
-    <DashboardPage>
-      <Header />
-      <Body>
-        <NavigationPanel />
-        <SpaceSection />
-      </Body>
-    </DashboardPage>
+    <>
+      <DashboardPage>
+        <Header />
+        <Body>
+          <NavigationPanel />
+          <SpaceSection />
+        </Body>
+      </DashboardPage>
+      <NotificationStack />
+    </>
   )
 }
 
