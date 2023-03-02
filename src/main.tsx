@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Icon } from './components/Commons'
 import Builder from './pages/Builder'
 import { Button } from './pages/Button'
+import Dashboard from './pages/Dashboard'
 import { HeaderPage } from './pages/HeaderPage'
 import Login from './pages/Login'
 import Mobile from './pages/Mobile'
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
   {
     path: '/preview',
     element: <SpacePreview />,
+  },
+  {
+    path: '/dashboard',
+    element: <Dashboard />,
   },
 ])
 

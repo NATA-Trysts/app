@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import { ReactComponent as ArrowGray } from '@/assets/icons/arrow-gray.svg'
-import { useNavigationPanelStore } from '@/stores/navigationPanel'
+import { useDashboardStore } from '@/stores/dashboard'
 
 const ArrowContainer = styled.div<{ isExpanded: boolean }>`
   position: absolute;
@@ -30,7 +30,7 @@ const ArrowContainer = styled.div<{ isExpanded: boolean }>`
 `
 
 export const NavigationArrow = () => {
-  const [isExpanded, setIsExpanded] = useNavigationPanelStore((state) => [state.isExpanded, state.setIsExpanded])
+  const [isExpanded, setIsExpanded] = useDashboardStore((state) => [state.isExpanded, state.setIsExpanded])
 
   return (
     <ArrowContainer isExpanded={isExpanded} onClick={() => setIsExpanded(!isExpanded)}>
