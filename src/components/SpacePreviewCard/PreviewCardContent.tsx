@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { ReactComponent as ThreeDot } from '@/assets/icons/three-dot.svg'
-import { Option, Popover } from '@/components/Popover'
 import { Text } from '@/layouts/common'
+import { useDashboardStore } from '@/stores/dashboard'
+
+import { CardOptions } from './CardOptions'
 
 const CardContentContainer = styled.div<{ isActive: boolean; isDisplayed: boolean }>`
   position: relative;
-  width: 261px;
   background-color: ${({ isDisplayed }) => (isDisplayed ? '#212225' : 'transparent')};
   border-radius: 12px;
   overflow: hidden;
   padding: 1px;
-  z-index: 2;
   transition: all 0.2s ease;
 
   ${({ isActive }) =>
@@ -42,19 +41,20 @@ const CardContentContainer = styled.div<{ isActive: boolean; isDisplayed: boolea
 `
 
 const CardImageContainer = styled.div`
-  width: 245px;
-  height: 165px;
+  width: 94%;
+  height: 90%;
   margin: 8px;
   border-radius: 8px;
   overflow: hidden;
   z-index: 2;
+  transition: width, height 0.2s ease;
 `
 
-const CardImage = styled.img<{ isDisplayed: boolean }>`
+const CardImage = styled.img<{ isExpanded: boolean }>`
   width: 100%;
-  height: 100%;
+  height: 168px;
   object-fit: cover;
-  transform: ${({ isDisplayed }) => (isDisplayed ? 'scale(1)' : 'scale(1.1)')};
+  transform: ${({ isExpanded }) => (isExpanded ? 'scale(1)' : 'scale(1.1)')};
   transition: all 0.4s ease;
 `
 
@@ -75,16 +75,11 @@ const CardBodyText = styled.div`
   }
 `
 
-const MemberContainer = styled.div`
-  padding: 8px;
-  border-radius: 12px;
-  background: #212225;
-  width: 164px;
-`
-
 type PreviewCardContentProps = {
   isActive: boolean
   isHovered: boolean
+  spaceAuthorId: string
+  spaceId: string
   title: string
   subtitle: string
   imageUrl: string
@@ -94,12 +89,15 @@ type PreviewCardContentProps = {
 export const PreviewCardContent = ({
   isActive,
   isHovered,
+  spaceAuthorId,
+  spaceId,
   title,
   subtitle,
   imageUrl,
   onClickThreeDots,
 }: PreviewCardContentProps) => {
   const [isDisplayed, setIsDisplayed] = useState(false)
+  const isExpanded = useDashboardStore((state) => state.isExpanded)
 
   // delay 100ms to prevent flickering
   useEffect(() => {
@@ -117,7 +115,7 @@ export const PreviewCardContent = ({
   return (
     <CardContentContainer isActive={isActive} isDisplayed={isDisplayed}>
       <CardImageContainer>
-        <CardImage alt="Preview" isDisplayed={isDisplayed} loading="lazy" src={imageUrl} />
+        <CardImage alt="Preview" isExpanded={isExpanded} loading="lazy" src={imageUrl} />
       </CardImageContainer>
       <CardBody>
         <CardBodyText>
@@ -128,23 +126,7 @@ export const PreviewCardContent = ({
             {subtitle}
           </Text>
         </CardBodyText>
-        <Popover
-          align="center"
-          content={
-            <MemberContainer>
-              <Option customHoverBackgroundColor="#C771E1" title="Open in new tab" onClick={() => {}} />
-              <Option customHoverBackgroundColor="#C771E1" title="Edit space" onClick={() => {}} />
-              <Option customHoverBackgroundColor="#C771E1" title="Copy URL" onClick={() => {}} />
-              <Option customHoverBackgroundColor="#FC677B" title="Delete space" onClick={() => {}} />
-            </MemberContainer>
-          }
-          side="right"
-          sideOffset={28}
-        >
-          <div onClick={(e) => onClickThreeDots(e)}>
-            <ThreeDot />
-          </div>
-        </Popover>
+        <CardOptions spaceAuthorId={spaceAuthorId} spaceId={spaceId} onClickThreeDots={onClickThreeDots} />
       </CardBody>
     </CardContentContainer>
   )

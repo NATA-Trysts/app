@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { useNavigationPanelStore } from '@/stores/navigationPanel'
+import { useDashboardStore } from '@/stores/dashboard'
 
 import { MyInformationCard } from '../MyInformationCard'
 
@@ -46,7 +46,7 @@ export const NavigationProfile = () => {
     name: 'Nguyen Son Ha',
   }
 
-  const isExpanded = useNavigationPanelStore((state) => state.isExpanded)
+  const isExpanded = useDashboardStore((state) => state.isExpanded)
   const [isDisplayed, setIsDisplayed] = useState(false)
 
   // delay display of help title to prevent flickering
