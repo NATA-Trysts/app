@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { BuilderPanel } from '@/components/Builder'
+import { BuilderPanel, BuilderScene, BuilderToolbar } from '@/components/Builder'
 
 const BuilderPage = styled.div`
   position: relative;
@@ -12,6 +12,8 @@ const Builder = () => {
   return (
     <BuilderPage>
       <BuilderPanel />
+      <BuilderScene />
+      <BuilderToolbar />
     </BuilderPage>
   )
 }
