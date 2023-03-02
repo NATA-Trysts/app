@@ -4,6 +4,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
+import { MobileDetect } from './components/MobileDetect'
 import Builder from './pages/Builder'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
@@ -13,23 +14,43 @@ import VirtualSpace from './pages/VirtualSpace'
 const router = createBrowserRouter([
   {
     path: '/:spaceId',
-    element: <VirtualSpace />,
+    element: (
+      <MobileDetect>
+        <VirtualSpace />
+      </MobileDetect>
+    ),
   },
   {
     path: '/files/:spaceId',
-    element: <Builder />,
+    element: (
+      <MobileDetect>
+        <Builder />
+      </MobileDetect>
+    ),
   },
   {
     path: '/login',
-    element: <Login />,
+    element: (
+      <MobileDetect>
+        <Login />
+      </MobileDetect>
+    ),
   },
   {
     path: '/dashboard',
-    element: <Dashboard />,
+    element: (
+      <MobileDetect>
+        <Dashboard />
+      </MobileDetect>
+    ),
   },
   {
     path: '*',
-    element: <NotFound />,
+    element: (
+      <MobileDetect>
+        <NotFound />
+      </MobileDetect>
+    ),
   },
 ])
 
