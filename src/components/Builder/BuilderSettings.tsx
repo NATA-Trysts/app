@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
-import { GlobalSection } from './SettingComponent/GlobalSection'
-import { SpaceInformationSection } from './SettingComponent/SpaceInformationSection'
+// import { GlobalSection } from './SettingComponent/GlobalSection'
+// import { SpaceInformationSection } from './SettingComponent/SpaceInformationSection'
+import { ObjectSection } from './ObjectAdjusting/ObjectSection'
 
 const BuilderSettingsContainer = styled.div`
   position: fixed;
@@ -22,8 +23,9 @@ const BuilderSettingsContainer = styled.div`
 export const BuilderSettings = () => {
   return (
     <BuilderSettingsContainer>
-      <SpaceInformationSection />
-      <GlobalSection />
+      {/* <SpaceInformationSection />
+      <GlobalSection /> */}
+      <ObjectSection name="Computer" />
     </BuilderSettingsContainer>
   )
 }
