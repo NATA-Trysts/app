@@ -24,9 +24,9 @@ const router = createBrowserRouter([
   {
     path: '/files/:fileId',
     element: (
-      <MobileDetect>
-        <Builder />
-      </MobileDetect>
+      // <MobileDetect>
+      <Builder />
+      // </MobileDetect>
     ),
   },
   {
