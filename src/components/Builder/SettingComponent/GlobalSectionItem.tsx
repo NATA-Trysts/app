@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import styled from 'styled-components'
 
 import { MultiToggle } from '@/components/Commons/MultiToggle'
@@ -14,6 +15,7 @@ const Container = styled.div`
 
 const Property = styled(Text)`
   color: #727272;
+  text-transform: capitalize;
 `
 
 const Wrapper = styled.div`
@@ -25,9 +27,16 @@ const Wrapper = styled.div`
     justify-content: flex-end;
 
     label {
-      padding: 5px 20px;
+      display: block;
+      width: 58px;
+      text-align: center;
+      text-transform: capitalize;
+      padding: 4px 0;
       span {
         font-size: 12px;
+      }
+      input {
+        display: none;
       }
     }
 
@@ -43,10 +52,20 @@ const Wrapper = styled.div`
 
 type GlobalSectionItemProps = {
   property: string
+  options: { value: string | boolean; display: string }[]
+  selected: string | boolean
+  handleGlobalSettingChange: (property: string, value: string | boolean) => void
 }
 
-export const GlobalSectionItem = ({ property }: GlobalSectionItemProps) => {
-  const handleChange = () => {}
+export const GlobalSectionItem = ({
+  property,
+  options,
+  selected,
+  handleGlobalSettingChange,
+}: GlobalSectionItemProps) => {
+  const handleChange = useCallback((data: any) => {
+    handleGlobalSettingChange(property, data)
+  }, [])
 
   return (
     <Container>
@@ -54,14 +73,7 @@ export const GlobalSectionItem = ({ property }: GlobalSectionItemProps) => {
         {property}
       </Property>
       <Wrapper>
-        <MultiToggle
-          handleSelectedChange={handleChange}
-          options={[
-            { value: true, display: 'Yes' },
-            { value: false, display: 'No' },
-          ]}
-          selected={true}
-        />
+        <MultiToggle handleSelectedChange={handleChange} options={options} selected={selected} />
       </Wrapper>
     </Container>
   )

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import { Popover } from '@/components/Popover'
 import { Text } from '@/layouts/common'
+import { useBuilderStore } from '@/stores/builder'
 
 import { BuilderTextInput } from './BuilderTextInput'
 
@@ -50,8 +51,30 @@ const PickerWrapper = styled.div`
 
 const Hex = styled(BuilderTextInput)``
 
+const hexRegex = /^#[0-9A-Fa-f]{6}$/
+
 export const ColorPicker = () => {
-  const [color, setColor] = useState('#D9D9D9')
+  const [globalBackground, setGlobalBackground] = useBuilderStore((state) => [
+    state.globalBackground,
+    state.setGlobalBackground,
+  ])
+
+  const [inputColor, setInputColor] = useState(globalBackground)
+
+  const handleChangeHex = (value: string) => {
+    if (hexRegex.test(value)) {
+      setGlobalBackground(value)
+    }
+
+    if (value.length <= 7) {
+      setInputColor(value)
+    }
+  }
+
+  const handlePickColor = (colorCode: string) => {
+    setGlobalBackground(colorCode)
+    setInputColor(colorCode)
+  }
 
   return (
     <>
@@ -64,15 +87,15 @@ export const ColorPicker = () => {
             align="center"
             content={
               <PickerWrapper>
-                <HexColorPicker color={color} onChange={setColor} />
+                <HexColorPicker color={globalBackground} onChange={handlePickColor} />
               </PickerWrapper>
             }
             side="right"
             sideOffset={112}
           >
-            <Color bgColor={color} />
+            <Color bgColor={globalBackground} />
           </Popover>
-          <Hex />
+          <Hex setValue={handleChangeHex} type="text" value={inputColor} />
         </Wrapper>
       </Container>
     </>

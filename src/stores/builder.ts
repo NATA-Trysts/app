@@ -16,6 +16,16 @@ type SpaceInformationType = {
   password: string
 }
 
+// export type GlobalSettingsType = {
+//   wireframe: boolean
+//   grid: boolean
+//   gizmo: 'cube' | 'port'
+// }
+
+type GlobalSettingsType = Map<string, { values: boolean[] | string[]; selected: boolean | string }>
+
+type GlobalBackgroundType = string
+
 type BuilderState = {
   selectedCategoryName: CategoryType
   setSelectedCategory: (categoryName: CategoryType) => void
@@ -38,6 +48,12 @@ type BuilderState = {
 
   spaceInformation: SpaceInformationType
   setSpaceInformation: (spaceInformation: SpaceInformationType) => void
+
+  globalSettings: GlobalSettingsType
+  setGlobalSettings: (globalSettings: GlobalSettingsType) => void
+
+  globalBackground: GlobalBackgroundType
+  setGlobalBackground: (globalBackground: GlobalBackgroundType) => void
 }
 
 export const useBuilderStore = create<BuilderState>((set) => ({
@@ -77,4 +93,14 @@ export const useBuilderStore = create<BuilderState>((set) => ({
     password: '',
   },
   setSpaceInformation: (spaceInformation: SpaceInformationType) => set(() => ({ spaceInformation })),
+
+  globalSettings: new Map([
+    ['wireframe', { values: [true, false], selected: false }],
+    ['grid', { values: [true, false], selected: true }],
+    ['gizmo', { values: ['cube', 'port'], selected: 'cube' }],
+  ]),
+  setGlobalSettings: (globalSettings: GlobalSettingsType) => set(() => ({ globalSettings })),
+
+  globalBackground: '#D9D9D9',
+  setGlobalBackground: (globalBackground: GlobalBackgroundType) => set(() => ({ globalBackground })),
 }))

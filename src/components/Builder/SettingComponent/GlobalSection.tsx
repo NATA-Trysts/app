@@ -1,6 +1,8 @@
+import { useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
+import { useBuilderStore } from '@/stores/builder'
 
 import { ColorPicker } from './ColorPicker'
 import { GlobalSectionItem } from './GlobalSectionItem'
@@ -19,12 +21,49 @@ const Container = styled.div`
 `
 
 export const GlobalSection = () => {
+  const [globalSettings, setGlobalSettings] = useBuilderStore((state) => [
+    state.globalSettings,
+    state.setGlobalSettings,
+  ])
+
+  const handleGlobalSettingChange = useCallback((property: string, value: string | boolean) => {
+    const newGlobalSettings = new Map(globalSettings)
+
+    newGlobalSettings.set(property, {
+      values: newGlobalSettings.get(property)?.values as string[] | boolean[],
+      selected: value,
+    })
+
+    setGlobalSettings(newGlobalSettings)
+  }, [])
+
+  useEffect(() => {
+    console.log('render')
+  })
+
+  const convertValuesToOptions = (values: string[] | boolean[]) => {
+    return values.map((value) => {
+      return {
+        value,
+        display: value === true ? 'Yes' : value === false ? 'No' : value,
+      }
+    })
+  }
+
   return (
     <Container>
       <Text size="small" weight="normal">
         Global Settings
       </Text>
-      <GlobalSectionItem property="Wireframe" />
+      {Array.from(globalSettings).map(([property, { values, selected }]) => (
+        <GlobalSectionItem
+          key={property}
+          handleGlobalSettingChange={handleGlobalSettingChange}
+          options={convertValuesToOptions(values)}
+          property={property}
+          selected={selected}
+        />
+      ))}
       <ColorPicker />
     </Container>
   )
