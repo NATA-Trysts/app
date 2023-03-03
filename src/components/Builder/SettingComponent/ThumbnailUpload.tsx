@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as UploadIcon } from '@/assets/icons/thumbnail-upload.svg'
@@ -36,6 +37,16 @@ const Overlay = styled.div`
   }
 `
 
+const ImageInput = styled.input`
+  width: 208px;
+  height: 116px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
+`
+
 const ThumbnailBox = styled.div`
   width: 100%;
   height: 116px;
@@ -58,8 +69,28 @@ const ThumbnailImage = styled.img`
 `
 
 export const ThumbnailUpload = () => {
-  const imgSrc =
-    'https://s3-alpha-sig.figma.com/img/b98f/5cbc/7ee7ad86e00fc614602856b17b864095?Expires=1678665600&Signature=HbJ7HW7bpCSn15l1skRWxnso-bEHf7Pj-flEPMNlFLi-uomOqytpoa13G7h0d-WVZGcBgnGkfsgJ8lFswrbr-gDqRto1bwBK0dG36Z~F88v23yAhlAfULkikP4SvNGo7v6GJfjr06dy2lcp45emP56zViOzUVlHesUyDcKkmg3lW~aoS9wsfNsp-iTWOPUL8P7x0b2taXIZlLYOWiWyQwDVG~AjER0dHxugcPycT1QtWrpHsEEQfbxtFTpTfx5X1rxcEh0UXG22sFTlMDXLzw-z1h53ndJ5elvgsSsGjrGMnObWPtWvxCa8pwbN0qABOoO7~LRL0~BRRmMpwguOlAQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4'
+  const [image, setImage] = useState(
+    'https://s3-alpha-sig.figma.com/img/b98f/5cbc/7ee7ad86e00fc614602856b17b864095?Expires=1678665600&Signature=HbJ7HW7bpCSn15l1skRWxnso-bEHf7Pj-flEPMNlFLi-uomOqytpoa13G7h0d-WVZGcBgnGkfsgJ8lFswrbr-gDqRto1bwBK0dG36Z~F88v23yAhlAfULkikP4SvNGo7v6GJfjr06dy2lcp45emP56zViOzUVlHesUyDcKkmg3lW~aoS9wsfNsp-iTWOPUL8P7x0b2taXIZlLYOWiWyQwDVG~AjER0dHxugcPycT1QtWrpHsEEQfbxtFTpTfx5X1rxcEh0UXG22sFTlMDXLzw-z1h53ndJ5elvgsSsGjrGMnObWPtWvxCa8pwbN0qABOoO7~LRL0~BRRmMpwguOlAQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
+  )
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0]
+
+      if (file.size > 1024 * 1024 * 2) {
+        // TODO: add notification
+
+        return
+      }
+
+      const reader = new FileReader()
+
+      reader.readAsDataURL(file)
+      reader.onload = () => {
+        setImage(reader.result as string)
+      }
+    }
+  }
 
   return (
     <Container>
@@ -69,8 +100,16 @@ export const ThumbnailUpload = () => {
       <ThumbnailBox>
         <Overlay>
           <UploadIcon />
+          <ImageInput
+            accept="image/png, image/jpeg"
+            multiple={false}
+            name="file"
+            title=" "
+            type="file"
+            onChange={handleChange}
+          />
         </Overlay>
-        <ThumbnailImage src={imgSrc} />
+        <ThumbnailImage src={image} />
       </ThumbnailBox>
     </Container>
   )

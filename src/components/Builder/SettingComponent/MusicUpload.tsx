@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
@@ -48,6 +49,16 @@ const MusicUploadContainer = styled.button`
   }
 `
 
+const AudioInput = styled.input`
+  width: 208px;
+  height: 28px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
+`
+
 const Placeholder = styled(Text)`
   color: #727272;
 `
@@ -60,8 +71,23 @@ const Name = styled(Text)`
 `
 
 export const MusicUpload = () => {
-  const music = 'Funky music ABC'
+  const [music, setMusic] = useState<string | null>(null)
+
   const handleClick = () => {}
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0]
+
+      if (file.size > 1024 * 1024 * 2) {
+        // TODO: add notification
+
+        return
+      }
+
+      setMusic(file.name)
+    }
+  }
 
   return (
     <Container onClick={handleClick}>
@@ -69,6 +95,7 @@ export const MusicUpload = () => {
         Background music
       </ItemTitle>
       <MusicUploadContainer>
+        <AudioInput accept="audio/*" multiple={false} name="file" title=" " type="file" onChange={handleChange} />
         {music ? (
           <Name size="small" weight="lighter">
             {music}

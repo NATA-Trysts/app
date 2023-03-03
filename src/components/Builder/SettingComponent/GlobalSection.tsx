@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
@@ -36,10 +36,6 @@ export const GlobalSection = () => {
 
     setGlobalSettings(newGlobalSettings)
   }, [])
-
-  useEffect(() => {
-    console.log('render')
-  })
 
   const convertValuesToOptions = (values: string[] | boolean[]) => {
     return values.map((value) => {
