@@ -10,6 +10,12 @@ export type SubCategoryItem = {
   category: CategoryType
 }
 
+type SpaceInformationType = {
+  name: string
+  isProtected: boolean
+  password: string
+}
+
 type BuilderState = {
   selectedCategoryName: CategoryType
   setSelectedCategory: (categoryName: CategoryType) => void
@@ -26,6 +32,12 @@ type BuilderState = {
 
   zoom: number
   setZoom: (zoom: number) => void
+
+  settingOption: 'space' | 'object'
+  setSettingOption: (settingOption: 'space' | 'object') => void
+
+  spaceInformation: SpaceInformationType
+  setSpaceInformation: (spaceInformation: SpaceInformationType) => void
 }
 
 export const useBuilderStore = create<BuilderState>((set) => ({
@@ -55,4 +67,14 @@ export const useBuilderStore = create<BuilderState>((set) => ({
 
   zoom: 50,
   setZoom: (zoom: number) => set(() => ({ zoom })),
+
+  settingOption: 'space',
+  setSettingOption: (settingOption: 'space' | 'object') => set(() => ({ settingOption })),
+
+  spaceInformation: {
+    name: '',
+    isProtected: false,
+    password: '',
+  },
+  setSpaceInformation: (spaceInformation: SpaceInformationType) => set(() => ({ spaceInformation })),
 }))

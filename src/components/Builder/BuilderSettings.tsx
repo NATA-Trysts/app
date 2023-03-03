@@ -1,8 +1,11 @@
+import { useMemo } from 'react'
 import styled from 'styled-components'
 
-// import { GlobalSection } from './SettingComponent/GlobalSection'
-// import { SpaceInformationSection } from './SettingComponent/SpaceInformationSection'
+import { useBuilderStore } from '@/stores/builder'
+
 import { ObjectSection } from './ObjectAdjusting/ObjectSection'
+import { GlobalSection } from './SettingComponent/GlobalSection'
+import { SpaceInformationSection } from './SettingComponent/SpaceInformationSection'
 
 const BuilderSettingsContainer = styled.div`
   position: fixed;
@@ -21,13 +24,31 @@ const BuilderSettingsContainer = styled.div`
 `
 
 export const BuilderSettings = () => {
+  const [settingOption, setSettingOption] = useBuilderStore((state) => [state.settingOption, state.setSettingOption])
+
+  const components = useMemo(() => {
+    return {
+      space: (
+        <>
+          <SpaceInformationSection />
+          <GlobalSection />
+        </>
+      ),
+      object: <ObjectSection name="Computer" />,
+    }
+  }, [])
+
   return (
-    <BuilderSettingsContainer>
-      {/* <SpaceInformationSection />
-      <GlobalSection /> */}
-      <ObjectSection name="Computer" />
-    </BuilderSettingsContainer>
+    <>
+      <BuilderSettingsContainer>{components[settingOption]}</BuilderSettingsContainer>
+      {/* TEMP BUTTON TO TEST */}
+      <button
+        onClick={() => {
+          setSettingOption(settingOption === 'space' ? 'object' : 'space')
+        }}
+      >
+        Test
+      </button>
+    </>
   )
 }
-
-// react-colorful

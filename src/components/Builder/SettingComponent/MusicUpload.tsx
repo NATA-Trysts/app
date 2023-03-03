@@ -2,6 +2,20 @@ import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
 
+const Container = styled.div`
+  width: 100%;
+  margin: 8px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  cursor: pointer;
+`
+
+const ItemTitle = styled(Text)`
+  color: #727272;
+`
+
 const UploadButton = styled.div`
   width: 52px;
   height: 100%;
@@ -46,25 +60,30 @@ const Name = styled(Text)`
 `
 
 export const MusicUpload = () => {
-  const music = ''
+  const music = 'Funky music ABC'
   const handleClick = () => {}
 
   return (
-    <MusicUploadContainer onClick={handleClick}>
-      {music ? (
-        <Name size="small" weight="lighter">
-          {music}
-        </Name>
-      ) : (
-        <Placeholder size="small" weight="lighter">
-          Upload your music
-        </Placeholder>
-      )}
-      <UploadButton>
-        <Text size="small" weight="lighter">
-          Upload
-        </Text>
-      </UploadButton>
-    </MusicUploadContainer>
+    <Container onClick={handleClick}>
+      <ItemTitle size="small" weight="lighter">
+        Background music
+      </ItemTitle>
+      <MusicUploadContainer>
+        {music ? (
+          <Name size="small" weight="lighter">
+            {music}
+          </Name>
+        ) : (
+          <Placeholder size="small" weight="lighter">
+            Upload your music
+          </Placeholder>
+        )}
+        <UploadButton>
+          <Text size="small" weight="lighter">
+            Upload
+          </Text>
+        </UploadButton>
+      </MusicUploadContainer>
+    </Container>
   )
 }
