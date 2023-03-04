@@ -7,6 +7,7 @@ const Axis = styled(Text)`
   color: #727272;
   padding: 0 4px;
   margin-left: 2px;
+  text-transform: uppercase;
   cursor: ew-resize;
 
   // disable user-select
@@ -20,12 +21,13 @@ const Axis = styled(Text)`
 type DragLabelProps = {
   axisName: string
   value: number
-  setValue: (value: number) => void
+  canBeNegative?: boolean
+  setValue: (value: number, axis: string) => void
 }
 
 const SPEED_FACTOR = 0.1
 
-export const DragLabel = ({ axisName, value, setValue }: DragLabelProps) => {
+export const DragLabel = ({ axisName, canBeNegative = true, value, setValue }: DragLabelProps) => {
   const [snapshot, setSnapshot] = useState(value)
   const [startVal, setStartVal] = useState(0)
 
@@ -48,7 +50,7 @@ export const DragLabel = ({ axisName, value, setValue }: DragLabelProps) => {
         const distance = (event.clientX - startVal) * SPEED_FACTOR
         const newValue = Math.round(snapshot + distance)
 
-        setValue(newValue)
+        canBeNegative ? setValue(newValue, axisName) : setValue(Math.max(newValue, 0), axisName)
       }
     }
 
@@ -64,7 +66,7 @@ export const DragLabel = ({ axisName, value, setValue }: DragLabelProps) => {
       document.removeEventListener('mousemove', onUpdate)
       document.removeEventListener('mouseup', onEnd)
     }
-  }, [startVal, setValue, snapshot])
+  }, [startVal, setValue, snapshot, canBeNegative, axisName])
 
   return (
     <Axis size="small" weight="normal" onMouseDown={onStart} onMouseUp={onEnd}>

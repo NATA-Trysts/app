@@ -63,10 +63,24 @@ type ModifierProps = {
 }
 
 export const Modifier = ({ property }: ModifierProps) => {
-  const [value, setValue] = useState(10)
+  const [value, setValue] = useState({
+    x: 10,
+    y: 10,
+    z: 10,
+  })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(parseInt(e.target.value))
+    setValue({
+      ...value,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  const handleDrag = (value: number, axisName: string) => {
+    setValue((prev) => ({
+      ...prev,
+      [axisName]: value,
+    }))
   }
 
   return (
@@ -76,8 +90,31 @@ export const Modifier = ({ property }: ModifierProps) => {
       </PropertyName>
       <ModifierItemsContainer>
         <Item>
-          <DragLabel axisName="X" setValue={setValue} value={value} />
-          <Value type="number" value={value} onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)} />
+          <DragLabel axisName="x" canBeNegative={false} setValue={handleDrag} value={value.x} />
+          <Value
+            name="x"
+            type="number"
+            value={value.x}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+          />
+        </Item>
+        <Item>
+          <DragLabel axisName="y" setValue={handleDrag} value={value.y} />
+          <Value
+            name="y"
+            type="number"
+            value={value.y}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+          />
+        </Item>
+        <Item>
+          <DragLabel axisName="z" setValue={handleDrag} value={value.z} />
+          <Value
+            name="z"
+            type="number"
+            value={value.z}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+          />
         </Item>
       </ModifierItemsContainer>
     </Container>

@@ -1,3 +1,4 @@
+// import { useState } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
@@ -12,15 +13,42 @@ const Container = styled.div`
   background-color: transparent;
 `
 
-type ObjectSectionProps = {
-  name: string
-}
+export const ObjectSection = () => {
+  // const [objectName, setObjectName] = useState('Computer')
+  // const [properties, setProperties] = useState([
+  //   {
+  //     name: 'Scale',
+  //     values: {
+  //       x: 1,
+  //       y: 1,
+  //       z: 1,
+  //     },
+  //     canBeNegative: false,
+  //   },
+  //   {
+  //     name: 'Rotation',
+  //     values: {
+  //       x: 0,
+  //       y: 0,
+  //       z: 0,
+  //     },
+  //     canBeNegative: true,
+  //   },
+  //   {
+  //     name: 'Position',
+  //     values: {
+  //       x: 0,
+  //       y: 0,
+  //       z: 0,
+  //     },
+  //     canBeNegative: true,
+  //   },
+  // ])
 
-export const ObjectSection = ({ name }: ObjectSectionProps) => {
   return (
     <Container>
       <Text size="small" weight="normal">
-        {name}
+        Computer
       </Text>
       <Modifier property="Scale" />
     </Container>
