@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { MultiToggle } from '@/components/Commons/MultiToggle'
 import { Text } from '@/layouts/common'
+import { useBuilderStore } from '@/stores/builder'
 
 const Container = styled.div`
   width: 100%;
@@ -54,17 +55,23 @@ type GlobalSectionItemProps = {
   property: string
   options: { value: string | boolean; display: string }[]
   selected: string | boolean
-  handleGlobalSettingChange: (property: string, value: string | boolean) => void
 }
 
-export const GlobalSectionItem = ({
-  property,
-  options,
-  selected,
-  handleGlobalSettingChange,
-}: GlobalSectionItemProps) => {
+export const GlobalSectionItem = ({ property, options, selected }: GlobalSectionItemProps) => {
+  const [globalSettings, setGlobalSettings] = useBuilderStore((state) => [
+    state.globalSettings,
+    state.setGlobalSettings,
+  ])
+
   const handleChange = useCallback((data: any) => {
-    handleGlobalSettingChange(property, data)
+    const newGlobalSettings = new Map(globalSettings)
+
+    newGlobalSettings.set(property, {
+      values: newGlobalSettings.get(property)?.values as string[] | boolean[],
+      selected: data,
+    })
+
+    setGlobalSettings(newGlobalSettings)
   }, [])
 
   return (

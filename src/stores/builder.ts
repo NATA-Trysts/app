@@ -96,7 +96,7 @@ export const useBuilderStore = create<BuilderState>((set) => ({
   zoom: 50,
   setZoom: (zoom: number) => set(() => ({ zoom })),
 
-  settingOption: 'object',
+  settingOption: 'space',
   setSettingOption: (settingOption: 'space' | 'object') => set(() => ({ settingOption })),
 
   spaceInformation: {

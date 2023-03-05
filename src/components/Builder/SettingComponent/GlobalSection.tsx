@@ -1,9 +1,9 @@
-import { useCallback } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
 import { useBuilderStore } from '@/stores/builder'
 
+import { useBuilder } from '../hooks/useBuilder'
 import { ColorPicker } from './ColorPicker'
 import { GlobalSectionItem } from './GlobalSectionItem'
 
@@ -21,30 +21,9 @@ const Container = styled.div`
 `
 
 export const GlobalSection = () => {
-  const [globalSettings, setGlobalSettings] = useBuilderStore((state) => [
-    state.globalSettings,
-    state.setGlobalSettings,
-  ])
+  const globalSettings = useBuilderStore((state) => state.globalSettings)
 
-  const handleGlobalSettingChange = useCallback((property: string, value: string | boolean) => {
-    const newGlobalSettings = new Map(globalSettings)
-
-    newGlobalSettings.set(property, {
-      values: newGlobalSettings.get(property)?.values as string[] | boolean[],
-      selected: value,
-    })
-
-    setGlobalSettings(newGlobalSettings)
-  }, [])
-
-  const convertValuesToOptions = (values: string[] | boolean[]) => {
-    return values.map((value) => {
-      return {
-        value,
-        display: value === true ? 'Yes' : value === false ? 'No' : value,
-      }
-    })
-  }
+  const { convertValuesToOptions } = useBuilder()
 
   return (
     <Container>
@@ -54,7 +33,6 @@ export const GlobalSection = () => {
       {Array.from(globalSettings).map(([property, { values, selected }]) => (
         <GlobalSectionItem
           key={property}
-          handleGlobalSettingChange={handleGlobalSettingChange}
           options={convertValuesToOptions(values)}
           property={property}
           selected={selected}

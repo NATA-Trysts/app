@@ -40,7 +40,16 @@ const useBuilder = () => {
     return value
   }
 
-  return { clickSubCategory, mappingData, removeLeadingZero }
+  const convertValuesToOptions = (values: string[] | boolean[]) => {
+    return values.map((value) => {
+      return {
+        value,
+        display: value === true ? 'Yes' : value === false ? 'No' : value,
+      }
+    })
+  }
+
+  return { clickSubCategory, convertValuesToOptions, mappingData, removeLeadingZero }
 }
 
 export { useBuilder }

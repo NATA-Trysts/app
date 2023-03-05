@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styled from 'styled-components'
 
 const Input = styled.input`
@@ -27,9 +28,22 @@ type BuilderTextInputProps = {
 }
 
 export const BuilderTextInput = ({ value, setValue, type }: BuilderTextInputProps) => {
+  const [tempValue, setTempValue] = useState<string>(value)
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value)
+    setTempValue(e.target.value)
   }
 
-  return <Input type={type} value={value} onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)} />
+  const handleBlur = () => {
+    setValue(tempValue)
+  }
+
+  return (
+    <Input
+      type={type}
+      value={tempValue}
+      onBlur={handleBlur}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+    />
+  )
 }

@@ -23,8 +23,14 @@ const BuilderSettingsContainer = styled.div`
   z-index: 999;
 `
 
+type ISettingOption = {
+  space: 'space'
+  object: 'object'
+}
+
 export const BuilderSettings = () => {
-  const [settingOption, setSettingOption] = useBuilderStore((state) => [state.settingOption, state.setSettingOption])
+  // re-render cause be setSettingOption => removed
+  const settingOption = useBuilderStore((state) => state.settingOption)
 
   const components = useMemo(() => {
     return {
@@ -34,21 +40,9 @@ export const BuilderSettings = () => {
           <GlobalSection />
         </>
       ),
-      object: <ObjectSection name="Computer" />,
+      object: <ObjectSection />,
     }
   }, [])
 
-  return (
-    <>
-      <BuilderSettingsContainer>{components[settingOption]}</BuilderSettingsContainer>
-      {/* TEMP BUTTON TO TEST */}
-      <button
-        onClick={() => {
-          setSettingOption(settingOption === 'space' ? 'object' : 'space')
-        }}
-      >
-        Test
-      </button>
-    </>
-  )
+  return <BuilderSettingsContainer>{components[settingOption as keyof ISettingOption]}</BuilderSettingsContainer>
 }
