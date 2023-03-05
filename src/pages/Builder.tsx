@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import { BuilderSettings } from '@/components/Builder'
+import { NotificationStack } from '@/components/Notification'
 
 const BuilderPage = styled.div`
   position: relative;
@@ -15,6 +16,7 @@ const Builder = () => {
       {/* <BuilderScene /> */}
       {/* <BuilderToolbar /> */}
       <BuilderSettings />
+      <NotificationStack />
     </BuilderPage>
   )
 }

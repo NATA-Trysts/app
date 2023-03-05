@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 
+import { useNotification } from '@/hooks/useNotification'
 import { Text } from '@/layouts/common'
 
 const Container = styled.div`
@@ -13,8 +14,20 @@ const Container = styled.div`
   cursor: pointer;
 `
 
+const TitleWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
 const ItemTitle = styled(Text)`
   color: #727272;
+`
+
+const SizeWarning = styled(Text)`
+  color: #4d4c4c;
+  font-size: 10px;
 `
 
 const UploadButton = styled.div`
@@ -75,25 +88,30 @@ export const MusicUpload = () => {
 
   const handleClick = () => {}
 
+  const { addNotification } = useNotification()
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0]
 
       if (file.size > 1024 * 1024 * 2) {
-        // TODO: add notification
-
-        return
+        addNotification('error', 'File size is too large')
+      } else {
+        setMusic(file.name)
       }
-
-      setMusic(file.name)
     }
   }
 
   return (
     <Container onClick={handleClick}>
-      <ItemTitle size="small" weight="lighter">
-        Background music
-      </ItemTitle>
+      <TitleWrapper>
+        <ItemTitle size="small" weight="lighter">
+          Background music
+        </ItemTitle>
+        <SizeWarning size="small" weight="lighter">
+          Less than 2MB
+        </SizeWarning>
+      </TitleWrapper>
       <MusicUploadContainer>
         <AudioInput accept="audio/*" multiple={false} name="file" title=" " type="file" onChange={handleChange} />
         {music ? (
