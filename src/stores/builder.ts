@@ -16,15 +16,24 @@ type SpaceInformationType = {
   password: string
 }
 
-// export type GlobalSettingsType = {
-//   wireframe: boolean
-//   grid: boolean
-//   gizmo: 'cube' | 'port'
-// }
-
 type GlobalSettingsType = Map<string, { values: boolean[] | string[]; selected: boolean | string }>
 
 type GlobalBackgroundType = string
+
+export type ModifierValueType = {
+  x: number | string
+  y: number | string
+  z: number | string
+}
+
+type ObjectAdjustingType = {
+  name: string
+  modifiers: {
+    name: string
+    values: ModifierValueType
+    canBeNegative: boolean
+  }[]
+}
 
 type BuilderState = {
   selectedCategoryName: CategoryType
@@ -54,6 +63,9 @@ type BuilderState = {
 
   globalBackground: GlobalBackgroundType
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => void
+
+  objectAdjusting: ObjectAdjustingType
+  setObjectAdjusting: (objectAdjusting: ObjectAdjustingType) => void
 }
 
 export const useBuilderStore = create<BuilderState>((set) => ({
@@ -103,4 +115,26 @@ export const useBuilderStore = create<BuilderState>((set) => ({
 
   globalBackground: '#D9D9D9',
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => set(() => ({ globalBackground })),
+
+  objectAdjusting: {
+    name: 'Computer',
+    modifiers: [
+      {
+        name: 'position',
+        values: { x: 0, y: 0, z: 0 },
+        canBeNegative: true,
+      },
+      {
+        name: 'rotation',
+        values: { x: 0, y: 0, z: 0 },
+        canBeNegative: true,
+      },
+      {
+        name: 'scale',
+        values: { x: 1, y: 1, z: 1 },
+        canBeNegative: false,
+      },
+    ],
+  },
+  setObjectAdjusting: (objectAdjusting: ObjectAdjustingType) => set(() => ({ objectAdjusting })),
 }))

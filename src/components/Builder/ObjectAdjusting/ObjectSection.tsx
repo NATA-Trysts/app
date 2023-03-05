@@ -2,6 +2,7 @@
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
+import { useBuilderStore } from '@/stores/builder'
 
 import { Modifier } from './Modifier'
 
@@ -13,44 +14,46 @@ const Container = styled.div`
   background-color: transparent;
 `
 
+type IValues = {
+  x: 'x'
+  y: 'y'
+  z: 'z'
+}
+
 export const ObjectSection = () => {
-  // const [objectName, setObjectName] = useState('Computer')
-  // const [properties, setProperties] = useState([
-  //   {
-  //     name: 'Scale',
-  //     values: {
-  //       x: 1,
-  //       y: 1,
-  //       z: 1,
-  //     },
-  //     canBeNegative: false,
-  //   },
-  //   {
-  //     name: 'Rotation',
-  //     values: {
-  //       x: 0,
-  //       y: 0,
-  //       z: 0,
-  //     },
-  //     canBeNegative: true,
-  //   },
-  //   {
-  //     name: 'Position',
-  //     values: {
-  //       x: 0,
-  //       y: 0,
-  //       z: 0,
-  //     },
-  //     canBeNegative: true,
-  //   },
-  // ])
+  const [objectAdjusting, setObjectAdjusting] = useBuilderStore((state) => [
+    state.objectAdjusting,
+    state.setObjectAdjusting,
+  ])
+
+  const handleChange = (property: string, axis: string, value: number | string) => {
+    if (!objectAdjusting) return
+
+    const newObjectAdjusting = { ...objectAdjusting }
+
+    const modifier = newObjectAdjusting.modifiers.find((modifier) => modifier.name === property)
+
+    if (!modifier) return
+
+    modifier.values[axis as keyof IValues] = value
+
+    setObjectAdjusting(newObjectAdjusting)
+  }
 
   return (
     <Container>
       <Text size="small" weight="normal">
-        Computer
+        {objectAdjusting?.name}
       </Text>
-      <Modifier property="Scale" />
+      {objectAdjusting?.modifiers.map((modifier) => (
+        <Modifier
+          key={modifier.name}
+          canBeNegative={modifier.canBeNegative}
+          name={modifier.name}
+          values={modifier.values}
+          onChange={handleChange}
+        />
+      ))}
     </Container>
   )
 }

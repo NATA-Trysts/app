@@ -32,7 +32,15 @@ const useBuilder = () => {
     updateSelectedSubCategoryItems(item.category, item)
   }
 
-  return { clickSubCategory, mappingData }
+  const removeLeadingZero = (value: string) => {
+    if (value[0] === '0') {
+      return value.slice(1)
+    }
+
+    return value
+  }
+
+  return { clickSubCategory, mappingData, removeLeadingZero }
 }
 
 export { useBuilder }

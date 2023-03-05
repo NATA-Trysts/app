@@ -20,7 +20,7 @@ const Axis = styled(Text)`
 
 type DragLabelProps = {
   axisName: string
-  value: number
+  value: number | string
   canBeNegative?: boolean
   setValue: (value: number, axis: string) => void
 }
@@ -48,7 +48,7 @@ export const DragLabel = ({ axisName, canBeNegative = true, value, setValue }: D
     const onUpdate = (event: MouseEvent) => {
       if (startVal) {
         const distance = (event.clientX - startVal) * SPEED_FACTOR
-        const newValue = Math.round(snapshot + distance)
+        const newValue = Math.round(Number(snapshot) + distance)
 
         canBeNegative ? setValue(newValue, axisName) : setValue(Math.max(newValue, 0), axisName)
       }
