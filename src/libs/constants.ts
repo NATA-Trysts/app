@@ -1,4 +1,5 @@
 import { CustomColor } from '@/layouts/common'
+import { EmailInputStatusType } from '@/stores/login'
 
 export type ColorListObject = {
   [key in CustomColor]: string
@@ -17,6 +18,10 @@ type NotificationCloseColor = {
 
 type TabCategoryColor = {
   [key in TabCategoryProperty]: string
+}
+
+type InputStatusColor = {
+  [key in EmailInputStatusType]: string
 }
 
 const COLOR_PICKER_LIST: ColorListObject = {
@@ -46,5 +51,32 @@ const TAB_CATEGORY_COLOR: TabCategoryColor = {
 const FILTER_ICON_TO_WHITE =
   'brightness(0) saturate(100%) invert(100%) sepia(13%) saturate(7481%) hue-rotate(291deg) brightness(116%) contrast(112%)'
 
-export { COLOR_PICKER_LIST, FILTER_ICON_TO_WHITE, NOTIFICATION_CLOSE_COLOR, NOTIFICATION_COLOR, TAB_CATEGORY_COLOR }
+const INPUT_DROP_SHADOW: InputStatusColor = {
+  empty: 'none',
+  invalid:
+    'drop-shadow(0px 10px 41px rgba(218, 33, 33, 0.49)) drop-shadow(0px 5.0625px 17.8734px rgba(218, 33, 33, 0.33075)) drop-shadow(0px 2px 6.6625px rgba(218, 33, 33, 0.245)) drop-shadow(0px 0.4375px 2.37031px rgba(218, 33, 33, 0.15925))',
+  valid: 'drop-shadow(0px 5px 36px rgba(87, 130, 187, 0.51)) drop-shadow(0px 1px 5.85px rgba(87, 130, 187, 0.255));',
+  errorPending:
+    'drop-shadow(0px 10px 41px rgba(218, 33, 33, 0.49)) drop-shadow(0px 5.0625px 17.8734px rgba(218, 33, 33, 0.33075)) drop-shadow(0px 2px 6.6625px rgba(218, 33, 33, 0.245)) drop-shadow(0px 0.4375px 2.37031px rgba(218, 33, 33, 0.15925))',
+}
+
+const INPUT_BORDER: InputStatusColor = {
+  empty: 'transparent',
+  valid: '#3B79D5',
+  invalid: '#DA2121',
+  errorPending: '#DA2121',
+}
+
+const TRYSTS_EMAIL_LOGIN = 'login@trysts.io'
+
+export {
+  COLOR_PICKER_LIST,
+  FILTER_ICON_TO_WHITE,
+  INPUT_BORDER,
+  INPUT_DROP_SHADOW,
+  NOTIFICATION_CLOSE_COLOR,
+  NOTIFICATION_COLOR,
+  TAB_CATEGORY_COLOR,
+  TRYSTS_EMAIL_LOGIN,
+}
 export type { NotificationType }

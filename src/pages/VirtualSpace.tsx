@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import { ChatInput } from '@/components/ChatInput'
 import { ChatMessage } from '@/components/ChatMessage'
 import { ColorPicker } from '@/components/ColorPicker'
-// import { Scene } from '@/components/Scene'
+import { MultitabDetect, MultiTabWarning } from '@/components/MultitabDetect'
+import { Scene } from '@/components/Scene'
 import { UtilitySection } from '@/components/UtilitySection'
 import {
   MyInformationCard,
@@ -165,80 +166,84 @@ const VirtualSpace = () => {
   }
 
   return (
-    <Container customColor={customColor}>
-      {/* <Scene /> */}
-      <OverlayContainer>
-        <HeaderContainer>
-          <FullLogo />
-          <ColorPicker />
-          <VirtualSpaceNameCard name="Son Ha's Wedding " spaceId="123" />
-        </HeaderContainer>
-        <LeftSideContainer>
-          <LeftSideWrapper>
-            <MyVideoContainer></MyVideoContainer>
-            <MyInformationCard
-              avatar="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
-              handler="sasonhaaa#1234"
-              name="Hoang Tien Thinh"
-            />
-          </LeftSideWrapper>
-        </LeftSideContainer>
-        <MiddleSideContainer>
-          <ToolbarMiddle />
-        </MiddleSideContainer>
-        <RightSideContainer>
-          {selectedUltility ? (
-            <UtilitySection
-              name={ultilityMapping[selectedUltility].name}
-              width={ultilityMapping[selectedUltility].width}
-            >
-              {
-                {
-                  chat: (
-                    <ChatContainer>
-                      <ChatMessageContainer>
-                        {Array(10)
-                          .fill(SAMPLE_MESSAGE_DATA)
-                          .map((message: typeof SAMPLE_MESSAGE_DATA, index) => (
-                            <ChatMessage
-                              key={index}
-                              author={truncateText(message.author, 15)}
-                              avatarUri={message.avatarUri}
-                              isMine={false}
-                              message={message.message}
-                              time={message.time}
-                            />
-                          ))}
-                      </ChatMessageContainer>
-                      <ChatInput />
-                    </ChatContainer>
-                  ),
-                  member: (
-                    <MemberContainer>
-                      {Array(20)
-                        .fill(SAMPLE_MEMBER_DATA)
-                        .map((member: typeof SAMPLE_MEMBER_DATA, index) => (
-                          <SingleMemberCard
-                            key={index}
-                            avatar={member.avatarUri}
-                            handler={member.handler}
-                            name={member.name}
-                          />
-                        ))}
-                    </MemberContainer>
-                  ),
-                  info: <></>,
-                  setting: <></>,
-                }[selectedUltility]
-              }
-            </UtilitySection>
-          ) : (
-            <></>
-          )}
-          <ToolbarRight />
-        </RightSideContainer>
-      </OverlayContainer>
-    </Container>
+    <CustomableContainer customColor={customColor}>
+      <MultitabDetect fallback={<MultiTabWarning />}>
+        <Container customColor={customColor}>
+          <Scene />
+          <OverlayContainer>
+            <HeaderContainer>
+              <FullLogo />
+              <ColorPicker />
+              <VirtualSpaceNameCard name="Son Ha's Wedding " spaceId="123" />
+            </HeaderContainer>
+            <LeftSideContainer>
+              <LeftSideWrapper>
+                <MyVideoContainer></MyVideoContainer>
+                <MyInformationCard
+                  avatar="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
+                  handler="sasonhaaa#1234"
+                  name="Hoang Tien Thinh"
+                />
+              </LeftSideWrapper>
+            </LeftSideContainer>
+            <MiddleSideContainer>
+              <ToolbarMiddle />
+            </MiddleSideContainer>
+            <RightSideContainer>
+              {selectedUltility ? (
+                <UtilitySection
+                  name={ultilityMapping[selectedUltility].name}
+                  width={ultilityMapping[selectedUltility].width}
+                >
+                  {
+                    {
+                      chat: (
+                        <ChatContainer>
+                          <ChatMessageContainer>
+                            {Array(10)
+                              .fill(SAMPLE_MESSAGE_DATA)
+                              .map((message: typeof SAMPLE_MESSAGE_DATA, index) => (
+                                <ChatMessage
+                                  key={index}
+                                  author={truncateText(message.author, 15)}
+                                  avatarUri={message.avatarUri}
+                                  isMine={false}
+                                  message={message.message}
+                                  time={message.time}
+                                />
+                              ))}
+                          </ChatMessageContainer>
+                          <ChatInput />
+                        </ChatContainer>
+                      ),
+                      member: (
+                        <MemberContainer>
+                          {Array(20)
+                            .fill(SAMPLE_MEMBER_DATA)
+                            .map((member: typeof SAMPLE_MEMBER_DATA, index) => (
+                              <SingleMemberCard
+                                key={index}
+                                avatar={member.avatarUri}
+                                handler={member.handler}
+                                name={member.name}
+                              />
+                            ))}
+                        </MemberContainer>
+                      ),
+                      info: <></>,
+                      setting: <></>,
+                    }[selectedUltility]
+                  }
+                </UtilitySection>
+              ) : (
+                <></>
+              )}
+              <ToolbarRight />
+            </RightSideContainer>
+          </OverlayContainer>
+        </Container>
+      </MultitabDetect>
+    </CustomableContainer>
   )
 }
 

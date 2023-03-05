@@ -4,73 +4,55 @@ import 'react-tooltip/dist/react-tooltip.css'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import { Icon } from './components/Commons'
+import { MobileDetect } from './components/MobileDetect'
 import Builder from './pages/Builder'
-import { Button } from './pages/Button'
 import { Create } from './pages/Create'
-import { HeaderPage } from './pages/HeaderPage'
-import Mobile from './pages/Mobile'
-import Multitab from './pages/Multitab'
-import { MultiTogglePage } from './pages/MultiTogglePage'
-import Navigation from './pages/Navigation'
+import Dashboard from './pages/Dashboard'
+import Login from './pages/Login'
 import NotFound from './pages/NotFound'
-import PopoverTest from './pages/PopoverTest'
-import SpacePreview from './pages/SpacePreview'
-import TestNotification from './pages/TestNotification'
 import VirtualSpace from './pages/VirtualSpace'
 
 const router = createBrowserRouter([
   {
-    path: '/space/:spaceId',
-    element: <VirtualSpace />,
+    path: '/:spaceId',
+
+    element: (
+      <MobileDetect>
+        <VirtualSpace />
+      </MobileDetect>
+    ),
   },
   {
-    path: '/multitab',
-    element: <Multitab />,
+    path: '/files/:fileId',
+    element: (
+      <MobileDetect>
+        <Builder />
+      </MobileDetect>
+    ),
   },
   {
-    path: '/icon',
-    element: <Icon name="shop" />,
+    path: '/login',
+    element: (
+      <MobileDetect>
+        <Login />
+      </MobileDetect>
+    ),
   },
   {
-    path: 'test/noti-stack',
-    element: <TestNotification />,
-  },
-  {
-    path: '/mobile',
-    element: <Mobile />,
+    path: '/dashboard',
+    element: (
+      <MobileDetect>
+        <Dashboard />
+      </MobileDetect>
+    ),
   },
   {
     path: '*',
-    element: <NotFound />,
-  },
-  {
-    path: '/button',
-    element: <Button />,
-  },
-  {
-    path: '/builder',
-    element: <Builder />,
-  },
-  {
-    path: '/header',
-    element: <HeaderPage />,
-  },
-  {
-    path: '/popover',
-    element: <PopoverTest />,
-  },
-  {
-    path: '/navigation',
-    element: <Navigation />,
-  },
-  {
-    path: '/multi-toggle',
-    element: <MultiTogglePage />,
-  },
-  {
-    path: '/preview',
-    element: <SpacePreview />,
+    element: (
+      <MobileDetect>
+        <NotFound />
+      </MobileDetect>
+    ),
   },
   {
     path: '/create',

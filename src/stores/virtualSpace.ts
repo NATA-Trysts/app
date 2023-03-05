@@ -12,6 +12,8 @@ type VirtualSpaceState = {
   setSelectedUltility: (selectedUltility: UltilityType) => void
   customColor: CustomColor
   setCustomColor: (customColor: CustomColor) => void
+  canControlCharacter: boolean
+  setCanControlCharacter: (canControlCharacter: boolean) => void
 }
 
 export const useVirtualSpaceStore = create<VirtualSpaceState>()(
@@ -23,6 +25,8 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()(
       setSelectedUltility: (selectedUltility) => set(() => ({ selectedUltility })),
       customColor: 'blue',
       setCustomColor: (customColor: CustomColor) => set(() => ({ customColor })),
+      canControlCharacter: true,
+      setCanControlCharacter: (canControlCharacter: boolean) => set(() => ({ canControlCharacter })),
     }),
     {
       name: 'virtual-space-storage',

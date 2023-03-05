@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { ReactComponent as HelpIcon } from '@/assets/icons/help.svg'
 import { Text } from '@/layouts/common'
 import { FILTER_ICON_TO_WHITE } from '@/libs/constants'
-import { useNavigationPanelStore } from '@/stores/navigationPanel'
+import { useDashboardStore } from '@/stores/dashboard'
 
 const HelpTitle = styled(Text)<{ isDisplayed: boolean }>`
   display: ${({ isDisplayed }) => (isDisplayed ? 'block' : 'none')};
@@ -47,7 +47,7 @@ const HelpWrapper = styled.div<{ isDisplayed: boolean }>`
 `
 
 export const NavigationHelp = () => {
-  const isExpanded = useNavigationPanelStore((state) => state.isExpanded)
+  const isExpanded = useDashboardStore((state) => state.isExpanded)
   const [isDisplayed, setIsDisplayed] = useState(isExpanded)
 
   // delay display of help title to prevent flickering
