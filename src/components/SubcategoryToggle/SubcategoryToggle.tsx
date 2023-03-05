@@ -30,7 +30,7 @@ const SubCategoryStyledToggle = styled(MultiToggle)`
       opacity: 0;
       z-index: -1;
 
-      transition: opacity 1s ease;
+      transition: opacity 0.5s ease;
     }
 
     &.selected:before {

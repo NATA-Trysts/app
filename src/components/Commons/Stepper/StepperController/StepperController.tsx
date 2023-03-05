@@ -28,11 +28,7 @@ export const StepperController = ({
   const canSubmit = currentStep == (maxStep ?? 0) - 1
   const canPrevious = currentStep != 0
 
-  console.log('controller render ' + canNext)
-
   const handleChange = useCallback(() => {
-    console.log(`change from ${previousStep.current} to ${currentStep}`)
-
     if (currentStep != undefined) {
       onChange?.(currentStep)
       if (currentStep > (previousStep.current ?? -1)) onNext?.(currentStep)
@@ -49,14 +45,10 @@ export const StepperController = ({
   }, [])
 
   useEffect(() => {
-    console.log('handle current change')
-
     handleChange()
   }, [handleChange])
 
   useEffect(() => {
-    console.log('init controller', stepperRef.current)
-
     setCurrentStepWithPrevious(stepperRef.current?.current ?? 0)
     stepperRef.current?.subscribeChange((current) => setCurrentStepWithPrevious(current))
   }, [stepperRef, setCurrentStepWithPrevious])

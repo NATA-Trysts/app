@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { SearchBar } from '../Commons/SearchBar'
 
 export const HeaderContainer = styled.div`
+  height: 76px;
   background-color: rgba(18, 19, 22, 0.3);
   padding: 15px 35px 13px;
   display: flex;

@@ -1,15 +1,13 @@
-import { ReactComponent as ShopIcon } from '@/assets/icons/shop.svg'
+import { ReactNode } from 'react'
+
 import { Logo } from '@/components/Commons/Logo'
 
-import { BasicButton } from '../Button/BasicButton/BasicButton'
-import { GradientButton } from '../Button/GradientButton/GradientButton'
-import { HeaderButtons, HeaderContainer, HeaderIcon, HeaderSearchBar, StyledHeader } from './HeaderItem'
+import { HeaderContainer, HeaderIcon, StyledHeader } from './HeaderItem'
+export type HeaderProps = {
+  children?: ReactNode
+}
 
-export const Header = () => {
-  const handleSearch = (search: string) => {
-    console.log(search)
-  }
-
+export const Header = ({ children }: HeaderProps) => {
   return (
     <StyledHeader>
       <HeaderContainer>
@@ -18,14 +16,7 @@ export const Header = () => {
             <Logo width={90}></Logo>
           </a>
         </HeaderIcon>
-        <HeaderSearchBar onSearch={handleSearch} />
-        <HeaderButtons>
-          <BasicButton color="dark">
-            <ShopIcon stroke="#696969" />
-            Shop
-          </BasicButton>
-          <GradientButton>Create Space</GradientButton>
-        </HeaderButtons>
+        {children}
       </HeaderContainer>
     </StyledHeader>
   )

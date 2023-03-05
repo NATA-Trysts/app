@@ -1,33 +1,33 @@
-import { useMemo, useRef } from 'react'
-import styled from 'styled-components'
+import { memo, ReactNode, useCallback, useMemo, useRef, useState } from 'react'
+import styled, { keyframes } from 'styled-components'
 
+import { BasicButton, GradientButton } from '@/components/Button'
 import { Stepper, StepperDetail, StepperRef } from '@/components/Commons/Stepper'
-import { CreateStepperContent } from '@/components/CreateContent/CreateStepperContent'
-import { Header } from '@/components/Header'
-import { CustomableContainer } from '@/layouts/common'
+import { CreateContent } from '@/components/CreateContent/CreateContent'
+import { Header, HeaderButtons } from '@/components/Header'
+import { CustomableContainer, Text } from '@/layouts/common'
 import { useAppStore } from '@/stores'
 
 const stepDetails: { header: string; description: string }[] = [
   {
-    header: 'Create your Squad',
-    description:
-      'Add a profile picture for your Squad (JPEG, PNG or GIF), give it a name and add a description. Give it a name and add a description',
+    header: 'Select theme',
+    description: `We provide some prebuild themes, you can quickly start your own virtual space.
+    We aren’t confident about our design so you can build your own.`,
   },
   {
-    header: 'Create your Squad',
-    description:
-      'Add a profile picture for your Squad (JPEG, PNG or GIF), give it a name and add a description. Give it a name and add a description',
-  },
-  {
-    header: 'Create your Squad',
-    description:
-      'Add a profile picture for your Squad (JPEG, PNG or GIF), give it a name and add a description. Give it a name and add a description',
+    header: 'Space information',
+    description: `Provide some information and space password if needed.
+    Limit up to 50 members in your space, upgrade plan to increase the limit.`,
   },
 ]
+
+const ContentMemo = memo(CreateContent)
+const StepperMemo = memo(Stepper)
 
 export const Create = () => {
   const customColor = useAppStore((state) => state.customColor)
   const stepperRef = useRef<StepperRef>(null)
+  const [preImage, setPreImage] = useState<ReactNode>()
 
   const steps = useMemo(
     () =>
@@ -40,18 +40,36 @@ export const Create = () => {
     [],
   )
 
+  const handleThemeChange = useCallback((theme: ReactNode) => {
+    // const newTheme = cloneElement(theme as ReactElement, { key: Date.now() })
+
+    // setPreImage(newTheme)
+    setPreImage(theme)
+  }, [])
+
   return (
     <CreateContainer customColor={customColor}>
-      <Header></Header>
+      <Header>
+        <HeaderButtons key={'button'}>
+          <BasicButton>Sign in</BasicButton>
+          <GradientButton>Start for free</GradientButton>
+        </HeaderButtons>
+      </Header>
 
       <CreateSection>
-        <TitleArea className="title"></TitleArea>
-        <PreImageArea className="preimage"></PreImageArea>
+        <TitleArea className="title">
+          <TitleText size="x-large" weight="normal">
+            Create <strong>Virtual Space</strong> in a few clicks
+          </TitleText>
+        </TitleArea>
+        <PreImageArea className="preimage">
+          <PreImageContent>{preImage}</PreImageContent>
+        </PreImageArea>
         <StepperArea className="stepper">
-          <Stepper ref={stepperRef} steps={steps}></Stepper>
+          <StepperMemo ref={stepperRef} steps={steps}></StepperMemo>
         </StepperArea>
         <ContentArea className="content">
-          <CreateStepperContent stepperRef={stepperRef}></CreateStepperContent>
+          <ContentMemo stepperRef={stepperRef} onThemeChange={handleThemeChange}></ContentMemo>
         </ContentArea>
       </CreateSection>
     </CreateContainer>
@@ -86,21 +104,56 @@ export const CreateSection = styled.section`
   grid-column-gap: 50px;
 `
 
-export const TitleArea = styled.div`
+export const TitleArea = styled.section`
   grid-area: title;
 `
 
-export const PreImageArea = styled.div`
+export const TitleText = styled(Text)`
+  line-height: 54px;
+  letter-spacing: 0;
+  color: #ffffff;
+
+  strong {
+    background: linear-gradient(92.2deg, #65bcff 1.17%, #a4edfc 99.63%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+`
+
+export const PreImageArea = styled.section`
   grid-area: preimage;
 `
 
-export const StepperArea = styled.div`
+const appear = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`
+
+export const PreImageContent = styled.div`
+  width: 474px;
+  height: 120px;
+
+  & img {
+    width: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+    object-position: top center;
+    animation: ${appear} 1s ease;
+  }
+`
+
+export const StepperArea = styled.section`
   grid-area: stepper;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
 `
 
-export const ContentArea = styled.div`
+export const ContentArea = styled.section`
   grid-area: content;
 `

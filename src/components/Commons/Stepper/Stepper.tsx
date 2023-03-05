@@ -35,13 +35,21 @@ export type StepperRef = {
   previous: () => void
 }
 
+export type ConnectorAttribute = {
+  height: number
+  position: {
+    top: number
+  }
+}
+
 export const Stepper = forwardRef<StepperRef, StepperProps>(
   ({ currentStep: crr = 0, steps, onStepChange: handleStepChange, ...props }: StepperProps, ref) => {
     const [currentStep, setCurrentStep] = useState(crr)
     const maxStep = steps.length
     const changeObserver = useRef<onChangeAction>()
-
-    console.log(`currentStep: ${currentStep}, maxStep: ${maxStep}`)
+    const stepRefs = useRef<Array<HTMLDivElement | null>>([])
+    const stepContainerRef = useRef<HTMLDivElement>(null)
+    const [connectorSize, setConnectorSize] = useState<ConnectorAttribute | undefined>()
 
     useImperativeHandle(
       ref,
@@ -97,11 +105,15 @@ export const Stepper = forwardRef<StepperRef, StepperProps>(
       [currentStep],
     )
 
+    useEffect(() => {
+      stepRefs.current = stepRefs.current.slice(0, steps.length)
+    }, [steps])
+
     const stepsElements = useMemo(
       () =>
         steps.map((step, index) => {
           return (
-            <StepperStep key={index}>
+            <StepperStep key={index} ref={(r) => (stepRefs.current[index] = r)}>
               <StepperNodeContainer>
                 <StepperNode state={getState(index)}></StepperNode>
               </StepperNodeContainer>
@@ -114,10 +126,26 @@ export const Stepper = forwardRef<StepperRef, StepperProps>(
       [steps, getState, getDisabled, handleStepButtonClick],
     )
 
+    useEffect(() => {
+      const stepLenght = stepRefs.current.length
+
+      if (!stepLenght) return
+
+      const containerHeight = stepContainerRef.current?.clientHeight ?? 0
+      const firstItemSubtractedHeight = (stepRefs.current[0]?.clientHeight ?? 0) / 2
+      const lastItemSubtractedHeight = (stepRefs.current[stepLenght - 1]?.clientHeight ?? 0) / 2
+      const subtractedStepHeight = firstItemSubtractedHeight + lastItemSubtractedHeight
+      const connectorHeight = containerHeight - subtractedStepHeight
+
+      const connectorAtt: ConnectorAttribute = { height: connectorHeight, position: { top: firstItemSubtractedHeight } }
+
+      setConnectorSize(connectorAtt)
+    }, [stepsElements])
+
     return (
       <StepperContainer {...props}>
-        <StepperStepContainer>
-          <StepperConnector />
+        <StepperStepContainer ref={stepContainerRef}>
+          <StepperConnector style={{ height: connectorSize?.height, top: connectorSize?.position.top }} />
           {stepsElements}
         </StepperStepContainer>
       </StepperContainer>

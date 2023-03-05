@@ -17,6 +17,7 @@ export const StepperDetailDescription = styled.div<{ disbaled?: boolean }>`
   text-align: left;
 
   & ${Text} {
+    letter-spacing: 0;
     color: ${(props) => (props.disbaled ? 'hsla(0, 0%, 39%, 1)' : 'hsla(260, 25%, 70%, 1)')};
   }
 `

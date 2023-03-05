@@ -1,12 +1,15 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+import borderImage from '@/assets/stepper-border.png'
 
 import { Button, ButtonContent } from '../Button'
 
-export const StepperContainer = styled.section``
-
-export const StepperStepContainer = styled.section`
-  width: 100%;
+export const StepperContainer = styled.div`
   padding-right: 4px;
+`
+
+export const StepperStepContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -57,20 +60,39 @@ export const StepperConnector = styled.div`
   left: 0;
   width: 0;
   height: 100%;
-  border-color: red;
+  /* border-color: hsla(260, 30%, 32%, 1); */
   border-left-width: 2px;
-  border-left-style: dashed;
+  border-left-style: solid;
+  border-image: url(${borderImage}) 3 round;
 `
 
 export const StepperContent = styled.section`
   width: 474px;
   height: 408px;
-  padding: 20px 32px;
+  padding: 22px 32px;
   border-radius: 20px;
   background-color: hsla(260, 30%, 15%, 1);
 
   display: flex;
   flex-direction: column;
+`
+
+const contentAppear = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px)
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px)
+  }
+`
+
+export const StepperContentContainer = styled.div`
+  & > * {
+    animation: ${contentAppear} 0.5s ease;
+  }
 `
 
 export const StepperContentAction = styled.div`

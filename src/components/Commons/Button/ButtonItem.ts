@@ -78,4 +78,7 @@ export const ButtonContent = styled.div`
   gap: 8px;
   align-items: center;
   justify-content: center;
+
+  transition: color 0.25s ease;
+  user-select: none;
 `
