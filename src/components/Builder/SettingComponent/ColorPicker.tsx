@@ -6,8 +6,6 @@ import { Popover } from '@/components/Popover'
 import { Text } from '@/layouts/common'
 import { useBuilderStore } from '@/stores/builder'
 
-import { BuilderTextInput } from './BuilderTextInput'
-
 const Container = styled.div`
   width: 100%;
   height: 28px;
@@ -49,7 +47,25 @@ const PickerWrapper = styled.div`
   border-radius: 12px;
 `
 
-const Hex = styled(BuilderTextInput)``
+const Hex = styled.input`
+  width: 120px;
+  height: 28px;
+  padding: 0 8px;
+  background-color: #37393e;
+  border: 1px solid transparent;
+  border-radius: 6px;
+
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+
+  transition: border 0.3s ease;
+
+  :focus {
+    outline: none;
+    border: 1px solid #727272;
+  }
+`
 
 const hexRegex = /^#[0-9A-Fa-f]{6}$/
 
@@ -61,13 +77,13 @@ export const ColorPicker = () => {
 
   const [inputColor, setInputColor] = useState(globalBackground)
 
-  const handleChangeHex = (value: string) => {
-    if (hexRegex.test(value)) {
-      setGlobalBackground(value)
+  const handleChangeHex = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (hexRegex.test(e.target.value)) {
+      setGlobalBackground(e.target.value)
     }
 
-    if (value.length <= 7) {
-      setInputColor(value)
+    if (e.target.value.length <= 7) {
+      setInputColor(e.target.value)
     }
   }
 
@@ -95,7 +111,7 @@ export const ColorPicker = () => {
           >
             <Color bgColor={globalBackground} />
           </Popover>
-          <Hex setValue={handleChangeHex} type="text" value={inputColor} />
+          <Hex type="text" value={inputColor} onChange={handleChangeHex} />
         </Wrapper>
       </Container>
     </>
