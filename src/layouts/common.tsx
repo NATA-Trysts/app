@@ -5,13 +5,14 @@ const Container = styled.div`
   height: 100vh;
 `
 
-type TextSize = 'small' | 'medium' | 'large'
+type TextSize = 'small' | 'medium' | 'large' | 'x-large'
 type TextWeight = 'lighter' | 'normal' | 'bold'
 
 const textSizeMapping = {
   small: '12px',
   medium: '14px',
   large: '20px',
+  'x-large': '40px',
 }
 
 const textWeightMapping = {

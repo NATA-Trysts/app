@@ -1,10 +1,10 @@
-import { ReactElement, useEffect, useState } from 'react'
+import { forwardRef, ReactNode, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react'
 
 import { StyledToggleButton, ToggleContainer, ToggleGroup, ToggleLabel, ToggleLableContent } from './MultiToggleItem'
 
 export type MultiToggleOption = {
   value: any
-  display?: string | ReactElement
+  display?: ReactNode
 }
 
 export type MultiToggleProps = {
@@ -17,60 +17,83 @@ export type MultiToggleProps = {
   handleSelectedChange?: (seleted: any) => void
 }
 
-export const MultiToggle = ({ name = 'radio-button', handleSelectedChange, ...props }: MultiToggleProps) => {
-  const [selectedOption, setSelectedOption] = useState<MultiToggleOption>({ value: props.selected })
-
-  function getValue(option: MultiToggleOption) {
-    if (!option) return
-
-    return option.value
-  }
-
-  function getDisplayName(option: MultiToggleOption) {
-    return option.display ?? getValue(option)
-  }
-
-  function tryGetSelectedClass(option: MultiToggleOption) {
-    return checkSelected(option) ? 'selected' : ''
-  }
-
-  function checkSelected(option: MultiToggleOption) {
-    if (!selectedOption) return false
-
-    return option.value == selectedOption.value
-  }
-
-  function handleChange(value: MultiToggleOption) {
-    setSelectedOption(value)
-  }
-
-  useEffect(() => {
-    if (handleSelectedChange) handleSelectedChange(getValue(selectedOption))
-  }, [selectedOption, handleSelectedChange])
-
-  const toggles: any[] = []
-
-  if (props.options.some((o) => typeof o == 'string')) {
-    props.options = (props.options as string[]).map<MultiToggleOption>((o): MultiToggleOption => {
-      return { value: o, display: o }
-    })
-  }
-
-  ;(props.options as MultiToggleOption[]).forEach((option: MultiToggleOption, index: number) => {
-    toggles.push(
-      <ToggleContainer key={index}>
-        <ToggleLabel className={tryGetSelectedClass(option)}>
-          <ToggleLableContent>{getDisplayName(option)}</ToggleLableContent>
-          <StyledToggleButton
-            id={`${name}-${index}`}
-            name={name}
-            optionvalue={option}
-            onChangeValue={handleChange}
-          ></StyledToggleButton>
-        </ToggleLabel>
-      </ToggleContainer>,
-    )
-  })
-
-  return <ToggleGroup {...props}>{toggles}</ToggleGroup>
+export type MultiToggleRef = {
+  uncheck: () => void
 }
+
+function getValue(option: MultiToggleOption) {
+  if (!option) return
+
+  return option.value
+}
+
+function getDisplayName(option: MultiToggleOption) {
+  return option.display ?? getValue(option)
+}
+
+export const MultiToggle = forwardRef<MultiToggleRef, MultiToggleProps>(
+  ({ name = 'radio-button', handleSelectedChange, selected, options, ...props }: MultiToggleProps, ref) => {
+    const [selectedOption, setSelectedOption] = useState<MultiToggleOption>({ value: selected })
+
+    useImperativeHandle(ref, () => ({
+      uncheck: () => {
+        setSelectedOption({ value: undefined })
+      },
+    }))
+
+    const checkSelected = useCallback(
+      (option: MultiToggleOption) => {
+        if (!selectedOption) return false
+
+        return option.value == selectedOption.value
+      },
+      [selectedOption],
+    )
+
+    const tryGetSelectedClass = useCallback(
+      (option: MultiToggleOption) => {
+        return checkSelected(option) ? 'selected' : ''
+      },
+      [checkSelected],
+    )
+
+    function handleChange(value: MultiToggleOption) {
+      setSelectedOption(value)
+    }
+
+    useEffect(() => {
+      const value = getValue(selectedOption)
+
+      if (value) handleSelectedChange?.(value)
+    }, [selectedOption, handleSelectedChange])
+
+    const toggles: any[] = useMemo(() => {
+      let toogleOptions = options
+
+      if (toogleOptions.some((o) => typeof o == 'string')) {
+        toogleOptions = (toogleOptions as string[]).map<MultiToggleOption>((o): MultiToggleOption => {
+          return { value: o, display: o }
+        })
+      }
+
+      return (toogleOptions as MultiToggleOption[]).map((option: MultiToggleOption, index: number) => {
+        return (
+          <ToggleContainer key={index}>
+            <ToggleLabel className={tryGetSelectedClass(option)}>
+              <ToggleLableContent>{getDisplayName(option)}</ToggleLableContent>
+              <StyledToggleButton
+                checked={checkSelected(option)}
+                id={`${name}-${index}`}
+                name={name}
+                optionvalue={option}
+                onChangeValue={handleChange}
+              ></StyledToggleButton>
+            </ToggleLabel>
+          </ToggleContainer>
+        )
+      })
+    }, [name, options, checkSelected, tryGetSelectedClass])
+
+    return <ToggleGroup {...props}>{toggles}</ToggleGroup>
+  },
+)

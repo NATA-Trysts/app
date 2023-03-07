@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { SearchBar } from '../Commons/SearchBar'
 
 export const HeaderContainer = styled.div`
+  height: 76px;
   background-color: rgba(18, 19, 22, 0.3);
   padding: 15px 35px 13px;
   display: flex;
@@ -23,4 +24,10 @@ export const HeaderIcon = styled.div`
 
 export const HeaderSearchBar = styled(SearchBar)`
   margin-left: 257px;
+`
+
+export const StyledHeader = styled.header`
+  position: fixed;
+  width: 100vw;
+  z-index: 99;
 `

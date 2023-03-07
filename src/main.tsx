@@ -7,22 +7,17 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { MobileDetect } from './components/MobileDetect'
-// import Builder from './pages/Builder'
-// import Dashboard from './pages/Dashboard'
-// import Login from './pages/Login'
-// import NotFound from './pages/NotFound'
-// import VirtualSpace from './pages/VirtualSpace'
 
 const Builder = lazy(() => import('@/pages/Builder'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
 const Login = lazy(() => import('@/pages/Login'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 const VirtualSpace = lazy(() => import('@/pages/VirtualSpace'))
+const Create = lazy(() => import('@/pages/Create'))
 
 const router = createBrowserRouter([
   {
     path: '/:spaceId',
-
     element: (
       <HMSRoomProvider>
         <MobileDetect>
@@ -62,6 +57,10 @@ const router = createBrowserRouter([
         <NotFound />
       </MobileDetect>
     ),
+  },
+  {
+    path: '/create',
+    element: <Create />,
   },
 ])
 
