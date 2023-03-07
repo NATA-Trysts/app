@@ -96,6 +96,7 @@ git commit -m "<prefix>: <message>"
 3. `fix`: A bug fix
 4. `refactor`: A code change that neither fixes a bug nor adds a feature
 5. `perf`: A code change that improves performance
+6. `chore`: Very tiny fix, ex: typo, color
 
 _Example:_
 
