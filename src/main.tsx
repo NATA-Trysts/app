@@ -1,33 +1,37 @@
 import './index.css'
 import 'react-tooltip/dist/react-tooltip.css'
 
+import { HMSRoomProvider } from '@100mslive/react-sdk'
+import { lazy } from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { MobileDetect } from './components/MobileDetect'
-import Builder from './pages/Builder'
-import { Create } from './pages/Create'
-import Dashboard from './pages/Dashboard'
-import Login from './pages/Login'
-import NotFound from './pages/NotFound'
-import VirtualSpace from './pages/VirtualSpace'
+
+const Builder = lazy(() => import('@/pages/Builder'))
+const Dashboard = lazy(() => import('@/pages/Dashboard'))
+const Login = lazy(() => import('@/pages/Login'))
+const NotFound = lazy(() => import('@/pages/NotFound'))
+const VirtualSpace = lazy(() => import('@/pages/VirtualSpace'))
+const Create = lazy(() => import('@/pages/Create'))
 
 const router = createBrowserRouter([
   {
     path: '/:spaceId',
-
     element: (
-      <MobileDetect>
-        <VirtualSpace />
-      </MobileDetect>
+      <HMSRoomProvider>
+        <MobileDetect>
+          <VirtualSpace />
+        </MobileDetect>
+      </HMSRoomProvider>
     ),
   },
   {
     path: '/files/:fileId',
     element: (
-      // <MobileDetect>
-      <Builder />
-      // </MobileDetect>
+      <MobileDetect>
+        <Builder />
+      </MobileDetect>
     ),
   },
   {

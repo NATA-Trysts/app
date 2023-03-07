@@ -1,22 +1,17 @@
 import { HMSPeer, useVideo } from '@100mslive/react-sdk'
-import { useEffect } from 'react'
 import styled from 'styled-components'
 
 const Video = styled.video`
-  width: 320px;
-  height: 180px;
-  padding: 8px;
-  border-radius: 12px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  background: var(--color-3);
+  background: var(--color-5);
 `
 
 export const VideoTile = ({ peer }: { peer: HMSPeer }) => {
   const { videoRef } = useVideo({
-    trackId: peer.videoTrack,
+    trackId: peer?.videoTrack,
   })
-
-  useEffect(() => {}, [peer])
 
   return <Video ref={videoRef} autoPlay muted playsInline></Video>
 }

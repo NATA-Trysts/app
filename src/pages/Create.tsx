@@ -23,7 +23,7 @@ const stepDetails: { header: string; description: string }[] = [
 const ContentMemo = memo(CreateContent)
 const StepperMemo = memo(Stepper)
 
-export const Create = () => {
+const Create = () => {
   const customColor = useAppStore((state) => state.customColor)
   const stepperRef = useRef<StepperRef>(null)
   const [preImage, setPreImage] = useState<ReactNode>()
@@ -69,6 +69,8 @@ export const Create = () => {
     </CreateContainer>
   )
 }
+
+export default Create
 
 export const CreateContainer = styled(CustomableContainer)`
   position: relative;
