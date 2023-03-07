@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { MobileDetect } from './components/MobileDetect'
 import Builder from './pages/Builder'
+import { Create } from './pages/Create'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import NotFound from './pages/NotFound'
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
         <NotFound />
       </MobileDetect>
     ),
+  },
+  {
+    path: '/create',
+    element: <Create />,
   },
 ])
 
