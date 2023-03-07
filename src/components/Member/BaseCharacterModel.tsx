@@ -71,8 +71,8 @@ export const BaseCharacterModel = forwardRef<Group, BaseCharacterModelProps>((pr
   }, [props.action])
 
   return (
-    <group ref={ref} dispose={null} position={[0, -2, 0]}>
-      <group name="Armature" rotation={[0.13, 0, 0.01]}>
+    <group ref={ref} castShadow receiveShadow dispose={null} position={[0, -2, 0]}>
+      <group castShadow receiveShadow name="Armature" rotation={[0.13, 0, 0.01]}>
         <primitive object={nodes.Bone} />
         <primitive object={nodes.neutral_bone} />
         <primitive object={nodes.neutral_bone_1} />
@@ -88,42 +88,74 @@ export const BaseCharacterModel = forwardRef<Group, BaseCharacterModelProps>((pr
         <primitive object={nodes.neutral_bone_11} />
         <primitive object={nodes.neutral_bone_12} />
         <primitive object={nodes.neutral_bone_13} />
-        <skinnedMesh geometry={nodes.Body.geometry} material={nodes.Body.material} skeleton={nodes.Body.skeleton} />
+        <skinnedMesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Body.geometry}
+          material={nodes.Body.material}
+          skeleton={nodes.Body.skeleton}
+        />
 
         <skinnedMesh
+          castShadow
+          receiveShadow
           geometry={nodes.Ear004.geometry}
           material={nodes.Ear004.material}
           skeleton={nodes.Ear004.skeleton}
         />
-        <skinnedMesh geometry={nodes.Head.geometry} material={nodes.Head.material} skeleton={nodes.Head.skeleton} />
         <skinnedMesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Head.geometry}
+          material={nodes.Head.material}
+          skeleton={nodes.Head.skeleton}
+        />
+        <skinnedMesh
+          castShadow
+          receiveShadow
           geometry={nodes.Horn001.geometry}
           material={nodes.Horn001.material}
           skeleton={nodes.Horn001.skeleton}
         />
         <skinnedMesh
+          castShadow
+          receiveShadow
           geometry={nodes.khabanh.geometry}
           material={materials['Material.002']}
           skeleton={nodes.khabanh.skeleton}
         />
         <skinnedMesh
+          castShadow
+          receiveShadow
           geometry={nodes.Leg005.geometry}
           material={nodes.Leg005.material}
           skeleton={nodes.Leg005.skeleton}
         />
-        <skinnedMesh geometry={nodes.Nose.geometry} material={nodes.Nose.material} skeleton={nodes.Nose.skeleton} />
+        <skinnedMesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Nose.geometry}
+          material={nodes.Nose.material}
+          skeleton={nodes.Nose.skeleton}
+        />
 
         <skinnedMesh
+          castShadow
+          receiveShadow
           geometry={nodes.ring.geometry}
           material={materials['Material.003']}
           skeleton={nodes.ring.skeleton}
         />
         <skinnedMesh
+          castShadow
+          receiveShadow
           geometry={nodes.Ring005.geometry}
           material={materials.Material}
           skeleton={nodes.Ring005.skeleton}
         />
         <skinnedMesh
+          castShadow
+          receiveShadow
           geometry={nodes['shirt-body'].geometry}
           material={materials['Material.004']}
           skeleton={nodes['shirt-body'].skeleton}

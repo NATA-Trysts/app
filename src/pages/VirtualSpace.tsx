@@ -1,5 +1,6 @@
 import { useHMSActions } from '@100mslive/react-sdk'
 import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { ChatInput } from '@/components/ChatInput'
@@ -140,6 +141,7 @@ const SAMPLE_MEMBER_DATA = {
 const VirtualSpace = () => {
   const customColor = useAppStore((state) => state.customColor)
   const [selectedUltility] = useVirtualSpaceStore((state) => [state.selectedUltility])
+  const { spaceId } = useParams()
 
   const ultilityMapping = {
     chat: {
@@ -191,13 +193,11 @@ const VirtualSpace = () => {
     await hmsActions.join(config)
   }
 
-  const leave = async () => await hmsActions.leave()
-
   useEffect(() => {
     join()
 
     return () => {
-      leave()
+      hmsActions.leave()
     }
   }, [])
 
@@ -205,7 +205,7 @@ const VirtualSpace = () => {
     <CustomableContainer customColor={customColor}>
       <MultitabDetect fallback={<MultiTabWarning />}>
         <Container customColor={customColor}>
-          <Network />
+          <Network spaceId={spaceId} />
           <Scene />
           <OverlayContainer>
             <HeaderContainer>

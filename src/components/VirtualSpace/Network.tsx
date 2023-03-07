@@ -1,4 +1,6 @@
-import { Client } from 'colyseus.js'
+// @ts-nocheck
+
+import { Client, Room } from 'colyseus.js'
 import { useEffect } from 'react'
 
 import { Member, useMemberStore, useNetworkStore } from '@/stores'
@@ -6,7 +8,7 @@ import { Member, useMemberStore, useNetworkStore } from '@/stores'
 const MULTIPLAYER_SERVICE_ENDPOINT = import.meta.env.VITE_MULTIPLAYER_SERVICE_ENDPOINT
 const WORLD_NAME = import.meta.env.VITE_WORLD_NAME
 
-export const Network = () => {
+export const Network = (props: { spaceId: string | undefined }) => {
   const setRoomInstance = useNetworkStore((state) => state.setRoomInstance)
   const [setMainMember, addOtherMembers, removeOtherMembers, updateOtherMembers, updateActionOtherMember] =
     useMemberStore((state) => [
@@ -18,14 +20,28 @@ export const Network = () => {
     ])
 
   const handler = async () => {
+    if (!props.spaceId) return
+
     const client = new Client(MULTIPLAYER_SERVICE_ENDPOINT)
 
     if (!client) throw Error('Client not connected')
 
     try {
-      const room = await client.joinOrCreate(WORLD_NAME, {})
+      let room: typeof Room = null
 
-      console.log('Join ok 👌')
+      try {
+        room = await client.joinById(props.spaceId, {})
+      } catch (error) {
+        if (error.message === `room "${props.spaceId}" not found`) {
+          try {
+            room = await client.create(WORLD_NAME, {
+              spaceId: props.spaceId,
+            })
+          } catch (error) {
+            throw Error('Join room failed!')
+          }
+        }
+      }
 
       room.state.members.onAdd = (member: Member, sessionId: string) => {
         if (sessionId === room.sessionId) {
@@ -89,7 +105,7 @@ export const Network = () => {
 
       setRoomInstance(room)
     } catch (e) {
-      console.error('Join error', e)
+      throw Error('Join room failed!')
     }
   }
 

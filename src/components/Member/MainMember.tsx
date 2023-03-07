@@ -17,7 +17,7 @@ export const MainMember = () => {
     roomInstance?.send(MESSAGES.MEMBER.MOVE, {
       position: {
         x: character.position.x,
-        y: character.position.y,
+        y: character.position.y - 2,
         z: character.position.z,
       },
       quaternion: {
@@ -39,7 +39,8 @@ export const MainMember = () => {
     <CharacterControl
       cameraPosition={[20, 6, 20]}
       canControl={canControlCharacter}
-      initialPosition={[4, 5, 1]}
+      collider={[1.5, 2, 1.5]}
+      initialPosition={[0, 5, 0]}
       polarAngle={[0.5, Math.PI / 2]}
       onAnimationChange={dispatchAction}
       onCharacterMove={dispatchMovement}

@@ -1,4 +1,3 @@
-import { Html } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useEffect, useRef } from 'react'
 import { Group, Quaternion, Vector3 } from 'three'
@@ -35,9 +34,9 @@ export const Other = (props: OtherProps) => {
   return (
     <>
       <BaseCharacterModel ref={playerRef} action={props.action} />
-      <Html>
+      {/* <Html>
         <video />
-      </Html>
+      </Html> */}
     </>
   )
 }

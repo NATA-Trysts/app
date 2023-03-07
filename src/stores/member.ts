@@ -2,7 +2,7 @@ import produce from 'immer'
 import { omit } from 'lodash-es'
 import { create } from 'zustand'
 
-type Member = {
+export type Member = {
   id: string
   position: {
     x: number
