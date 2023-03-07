@@ -1,12 +1,16 @@
-import './index.css'
 import 'react-tooltip/dist/react-tooltip.css'
+import './index.css'
 
 import { HMSRoomProvider } from '@100mslive/react-sdk'
-import { lazy } from 'react'
+import { disableReactDevTools } from '@fvilers/disable-react-devtools'
+import { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 
+import { PersistLogin, RequireAuth } from './components/Authentication'
 import { MobileDetect } from './components/MobileDetect'
+import { AuthProvider } from './context/AuthProvider'
+import NotAuthorize from './pages/NotAuthorize'
 
 const Builder = lazy(() => import('@/pages/Builder'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
@@ -15,53 +19,90 @@ const NotFound = lazy(() => import('@/pages/NotFound'))
 const VirtualSpace = lazy(() => import('@/pages/VirtualSpace'))
 const Create = lazy(() => import('@/pages/Create'))
 
-const router = createBrowserRouter([
-  {
-    path: '/:spaceId',
-    element: (
-      <HMSRoomProvider>
-        <MobileDetect>
-          <VirtualSpace />
-        </MobileDetect>
-      </HMSRoomProvider>
-    ),
-  },
-  {
-    path: '/files/:fileId',
-    element: (
-      <MobileDetect>
-        <Builder />
-      </MobileDetect>
-    ),
-  },
-  {
-    path: '/login',
-    element: (
-      <MobileDetect>
-        <Login />
-      </MobileDetect>
-    ),
-  },
-  {
-    path: '/dashboard',
-    element: (
-      <MobileDetect>
-        <Dashboard />
-      </MobileDetect>
-    ),
-  },
-  {
-    path: '*',
-    element: (
-      <MobileDetect>
-        <NotFound />
-      </MobileDetect>
-    ),
-  },
-  {
-    path: '/create',
-    element: <Create />,
-  },
-])
+if (process.env.NODE_ENV === 'production') {
+  disableReactDevTools()
+}
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<RouterProvider router={router} />)
+const ROLES = {
+  user: 1000,
+  admin: 2000,
+}
+
+// const Layout = () => {
+//   return <Outlet />
+// }
+
+const Guard = () => {
+  return (
+    <Routes>
+      <Route element={<Outlet />} path="/">
+        <Route
+          element={
+            <Suspense fallback={<span>loading</span>}>
+              <HMSRoomProvider>
+                <MobileDetect>
+                  <VirtualSpace />
+                </MobileDetect>
+              </HMSRoomProvider>
+            </Suspense>
+          }
+          path="/:spaceId"
+        />
+        <Route
+          element={
+            <Suspense fallback={<span>loading</span>}>
+              <MobileDetect>
+                <Create />
+              </MobileDetect>
+            </Suspense>
+          }
+          path="/create"
+        />
+        <Route
+          element={
+            <MobileDetect>
+              <Login />
+            </MobileDetect>
+          }
+          path="/login"
+        />
+
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+            <Route
+              element={
+                <Suspense fallback={<span>loading</span>}>
+                  <Dashboard />
+                </Suspense>
+              }
+              path="/dashboard"
+            />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+            <Route
+              element={
+                <Suspense fallback={<span>loading</span>}>
+                  <Builder />
+                </Suspense>
+              }
+              path="/files/:fileId"
+            />
+          </Route>
+        </Route>
+
+        <Route element={<NotAuthorize />} path="/unauth" />
+        <Route element={<NotFound />} path="*" />
+      </Route>
+    </Routes>
+  )
+}
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <BrowserRouter>
+    <AuthProvider>
+      <Routes>
+        <Route element={<Guard />} path="/*" />
+      </Routes>
+    </AuthProvider>
+  </BrowserRouter>,
+)

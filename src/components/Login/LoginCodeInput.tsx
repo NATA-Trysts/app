@@ -1,8 +1,10 @@
 import { ReactNode, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { ReactComponent as GmailIcon } from '@/assets/icons/gmail.svg'
 import { ReactComponent as OutlookIcon } from '@/assets/icons/outlook.svg'
+import { useAuth } from '@/hooks'
 import { Text } from '@/layouts/common'
 import { TRYSTS_EMAIL_LOGIN } from '@/libs/constants'
 import { useLoginStore } from '@/stores/login'
@@ -126,6 +128,26 @@ export const LoginCodeInput = () => {
     setDirectLinks(newDirectLinks)
   }
 
+  // TESTING PURPOSE
+  const location = useLocation()
+  const navigate = useNavigate()
+  const from = location.state?.from.pathname || '/dashboard'
+  const { setAuth } = useAuth()
+
+  const ok = (e: { preventDefault: () => void }) => {
+    e.preventDefault()
+    // pretent that user is authenticated
+    const user = {
+      name: 'sonha',
+      email: '@gmail',
+    }
+    const roles = [1000]
+    const accessToken = '123'
+
+    setAuth({ user, roles, accessToken })
+    navigate(from, { replace: true })
+  }
+
   return (
     <LoginCodeInputContainer>
       <DirectLinks>
@@ -151,6 +173,11 @@ export const LoginCodeInput = () => {
           <CancelButton onClick={handleCancel}>
             <Text size="medium" weight="normal">
               Cancel
+            </Text>
+          </CancelButton>
+          <CancelButton onClick={ok}>
+            <Text size="medium" weight="normal">
+              Ok
             </Text>
           </CancelButton>
         </CompletedSection>
