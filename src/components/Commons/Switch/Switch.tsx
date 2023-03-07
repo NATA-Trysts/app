@@ -21,7 +21,6 @@ export const SwitchRoot = styled(RadixSwitch.Root)`
   transition: background 0.25s ease 0s;
   cursor: pointer;
 
-  &:focus,
   &:focus-visible {
     outline: 2px solid hsla(261, 22%, 65%, 1);
   }
