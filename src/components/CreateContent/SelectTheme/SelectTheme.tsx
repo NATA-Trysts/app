@@ -8,7 +8,7 @@ import { ButtonContent } from '@/components/Commons/Button'
 import { MultiToggle, MultiToggleProps, MultiToggleRef, ToggleLabel } from '@/components/Commons/MultiToggle'
 import { Text } from '@/layouts/common'
 
-import { CanNextCreateContentProps, CreateForm, CreateHeader } from '..'
+import { CanNextCreateContentProps, CreateForm, CreateFormHeader } from '..'
 import { ThemeImage, ThemeImageCard } from './ThemeImageCard'
 
 type SpaceThemeType = 'office' | 'conference' | 'event' | 'workshop' | 'custom'
@@ -109,11 +109,11 @@ export const SelectTheme = ({ onThemeSelected, onCanNext }: SelectThemeProps) =>
 
   return (
     <CreateForm>
-      <CreateHeader>
+      <CreateFormHeader>
         <Text size="large" weight="normal">
           Select Theme
         </Text>
-      </CreateHeader>
+      </CreateFormHeader>
       <ThemeImageToogle
         ref={themeToggleRef}
         handleSelectedChange={handleThemeToggleSelected}
@@ -157,7 +157,7 @@ const ThemeImageToogle = styled(MultiToggle)<MultiToggleProps>`
     border-radius: 12px;
     outline: 2px solid transparent;
 
-    transition: outline-color 0.5s ease;
+    transition: outline-color 0.25s ease;
     overflow: hidden;
 
     &.selected {
@@ -165,12 +165,12 @@ const ThemeImageToogle = styled(MultiToggle)<MultiToggleProps>`
     }
 
     & ${ThemeImage} {
-      transition: transform 0.5s ease;
+      transition: transform 0.25s ease;
       transform: scale(1);
     }
 
     &:hover ${ThemeImage} {
-      transform: scale(1.2);
+      transform: scale(1.1);
     }
   }
 `

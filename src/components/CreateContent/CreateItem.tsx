@@ -2,10 +2,14 @@ import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
 
-export const CreateFormContainer = styled.div`
+export const CreateForm = styled.div`
   & ${Text} {
     display: block;
   }
+`
+export const CreateFormHeader = styled.div`
+  color: #ffffff;
+  margin-bottom: 28px;
 `
 
 export const CreateInput = styled.input`
@@ -16,6 +20,7 @@ export const CreateInput = styled.input`
   border-radius: 12px;
   border-width: 0px;
   color: #ffffff;
+  user-select: none;
 
   font-weight: 500;
   font-size: 16px;
@@ -34,13 +39,10 @@ export const CreateField = styled.div`
 
 export const CreateLabel = styled.label`
   display: block;
+  width: fit-content;
+  user-select: none;
 
   & ${Text} {
     padding: 0 0 8px 8px;
   }
-`
-
-export const CreateHeader = styled.div`
-  color: #ffffff;
-  margin-bottom: 28px;
 `

@@ -1,10 +1,9 @@
 import { memo, ReactNode, useCallback, useMemo, useRef, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 
-import { BasicButton, GradientButton } from '@/components/Button'
 import { Stepper, StepperDetail, StepperRef } from '@/components/Commons/Stepper'
 import { CreateContent } from '@/components/CreateContent/CreateContent'
-import { Header, HeaderButtons } from '@/components/Header'
+import { CreateHeader } from '@/components/CreateContent/CreateHeader'
 import { CustomableContainer, Text } from '@/layouts/common'
 import { useAppStore } from '@/stores'
 
@@ -49,12 +48,7 @@ export const Create = () => {
 
   return (
     <CreateContainer customColor={customColor}>
-      <Header>
-        <HeaderButtons key={'button'}>
-          <BasicButton>Sign in</BasicButton>
-          <GradientButton>Start for free</GradientButton>
-        </HeaderButtons>
-      </Header>
+      <CreateHeader />
 
       <CreateSection>
         <TitleArea className="title">
@@ -76,7 +70,7 @@ export const Create = () => {
   )
 }
 
-const CreateContainer = styled(CustomableContainer)`
+export const CreateContainer = styled(CustomableContainer)`
   position: relative;
   height: 100vh;
 `
@@ -143,7 +137,7 @@ export const PreImageContent = styled.div`
     border-radius: 20px;
     object-fit: cover;
     object-position: top center;
-    animation: ${appear} 1s ease;
+    animation: ${appear} 0.5s ease;
   }
 `
 

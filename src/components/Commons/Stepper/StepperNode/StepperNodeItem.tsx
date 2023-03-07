@@ -10,6 +10,7 @@ export const stateColor = {
 
 export const StepperNodeIcon = styled(StepperNodeSvg)<{ color: string }>`
   & .outer-circle {
+    transition: stroke 0.5s ease;
     stroke: ${(props) => props.color};
   }
 `

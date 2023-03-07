@@ -2,7 +2,12 @@ import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
 
-export const ThemeImageCard = ({ name, src }: { name: string; src: string }) => {
+export type ThemeImageCardProps = {
+  name: string
+  src: string
+}
+
+export const ThemeImageCard = ({ name, src }: ThemeImageCardProps) => {
   return (
     <ImageCardContainer>
       <ThemeCardName>

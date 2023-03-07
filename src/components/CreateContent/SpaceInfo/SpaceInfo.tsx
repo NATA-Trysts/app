@@ -6,7 +6,7 @@ import { Slider } from '@/components/Commons/Slider'
 import { Switch } from '@/components/Commons/Switch'
 import { Text } from '@/layouts/common'
 
-import { CanNextCreateContentProps, CreateField, CreateFormContainer, CreateHeader, CreateInput, CreateLabel } from '..'
+import { CanNextCreateContentProps, CreateField, CreateForm, CreateFormHeader, CreateInput, CreateLabel } from '..'
 
 export type SpaceInfoProps = CanNextCreateContentProps
 
@@ -37,12 +37,12 @@ export const SpaceInfo = ({ onCanNext = () => {} }: SpaceInfoProps) => {
   register('max-member', { value: 5 })
 
   return (
-    <CreateFormContainer>
-      <CreateHeader>
+    <CreateForm>
+      <CreateFormHeader>
         <Text size="large" weight="normal">
           Your space information
         </Text>
-      </CreateHeader>
+      </CreateFormHeader>
 
       <CreateField>
         <CreateLabel htmlFor="space-name">
@@ -84,7 +84,7 @@ export const SpaceInfo = ({ onCanNext = () => {} }: SpaceInfoProps) => {
           onChangeEnd={(value) => setValue('max-member', value)}
         ></MemberSlider>
       </CreateField>
-    </CreateFormContainer>
+    </CreateForm>
   )
 }
 
@@ -127,6 +127,7 @@ const DisableChip = styled(PasswordChip)`
 `
 
 const PasswordLabel = styled(CreateLabel)`
+  width: 100%;
   display: flex;
   align-items: flex-start;
   gap: 12px;

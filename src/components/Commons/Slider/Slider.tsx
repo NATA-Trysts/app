@@ -1,12 +1,16 @@
+import { createContext } from '@chakra-ui/react-utils'
 import {
   Slider as ChakraSlider,
   SliderFilledTrack as ChakraSliderFilledTrack,
   SliderMark as ChakraSliderMark,
+  SliderMarkProps,
   SliderProps as ChakraSliderProps,
   SliderThumb as ChakraSliderThumb,
   SliderTrack as ChakraSliderTrack,
+  useSliderContext,
 } from '@chakra-ui/slider'
-import { isValidElement, ReactNode, useMemo } from 'react'
+import { forwardRef } from '@chakra-ui/system'
+import { isValidElement, ReactNode, useMemo, useState } from 'react'
 import styled, { CSSProperties } from 'styled-components'
 
 export type SliderProps = ChakraSliderProps & {
@@ -23,7 +27,25 @@ export type MarkObj = Mark & {
   value: number
 }
 
-export const Slider = ({ marks, thumbSize = 8, onChange = () => {}, ...props }: SliderProps) => {
+export type MarkContextType = {
+  marks: number[]
+}
+
+const [MarkSliderProvider, useMarkSliderContext] = createContext<MarkContextType>({
+  name: `MarkSliderContext`,
+})
+
+export const Slider = ({
+  marks,
+  thumbSize = 8,
+  onChange = () => {},
+  min = 0,
+  max = 100,
+  defaultValue = min,
+  ...props
+}: SliderProps) => {
+  const [sliderValue, setSliderValue] = useState(defaultValue)
+
   const markList = useMemo<MarkObj[]>(() => {
     const keys = Object.keys(marks || {})
 
@@ -48,23 +70,27 @@ export const Slider = ({ marks, thumbSize = 8, onChange = () => {}, ...props }: 
   }, [marks])
 
   const hanldeValueChange = (value: number) => {
+    setSliderValue(value)
     onChange(value)
   }
 
   return (
-    <StyledSlider onChange={hanldeValueChange} {...props}>
-      {markList.map(({ value, style, label }) => {
-        return (
-          <SliderMark key={value} style={style} value={value}>
-            <SliderMarkPoint />
-            <SliderMarkLabel>{label}</SliderMarkLabel>
-          </SliderMark>
-        )
-      })}
-      <SliderMainTrack>
-        <SliderFilledTrack />
-      </SliderMainTrack>
-      <SlidderThumb thumbsize={thumbSize} />
+    <StyledSlider defaultValue={defaultValue} max={max} min={min} onChange={hanldeValueChange} {...props}>
+      <MarkSliderProvider value={{ marks: markList.map((mark) => mark.value) }}>
+        {markList.map(({ value, style, label }) => {
+          return (
+            <SliderMark key={value} style={style} value={value}>
+              <SliderMarkPoint />
+              <SliderMarkPointDisplay>{label}</SliderMarkPointDisplay>
+            </SliderMark>
+          )
+        })}
+        <SliderLabel value={sliderValue}>{sliderValue}</SliderLabel>
+        <SliderMainTrack>
+          <SliderFilledTrack />
+        </SliderMainTrack>
+        <SlidderThumb thumbsize={thumbSize} />
+      </MarkSliderProvider>
     </StyledSlider>
   )
 }
@@ -82,6 +108,55 @@ export const SliderMark = styled(ChakraSliderMark)`
   z-index: 1;
 `
 
+export const SliderLabel = forwardRef<SliderMarkProps, 'div'>((props, ref) => {
+  const { getMarkerProps } = useSliderContext()
+  const { marks } = useMarkSliderContext()
+
+  const markProps = getMarkerProps(props, ref)
+
+  const labelData = {
+    'data-mark-highlighted': marks.find((mark) => mark === markProps.value) !== undefined ? '' : undefined,
+  }
+
+  return <StyledSliderLabel {...markProps} {...labelData}></StyledSliderLabel>
+})
+
+export const StyledSliderLabel = styled(ChakraSliderMark)`
+  width: 22px;
+  margin-top: 20px;
+  border-radius: 4px;
+  background-color: hsla(284, 72%, 55%, 1);
+
+  font-size: 12px;
+  text-align: center;
+  color: #ffffff;
+
+  position: relative;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+
+  opacity: 1;
+  transition: opacity 0.5s ease;
+
+  &::before {
+    position: absolute;
+    content: '';
+    display: block;
+    left: 50%;
+    top: -2px;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+
+    border-bottom: 5px solid hsla(284, 72%, 55%, 1);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+  }
+
+  &[data-mark-highlighted] {
+    opacity: 0;
+  }
+`
+
 export const SliderMarkPoint = styled.div`
   height: 8px;
   width: 8px;
@@ -89,6 +164,7 @@ export const SliderMarkPoint = styled.div`
   border-radius: 50%;
 
   position: absolute;
+  z-index: 1;
   left: 50%;
   transform: translate(-50%, -50%);
   top: 20px;
@@ -101,7 +177,7 @@ export const SliderMarkPoint = styled.div`
   }
 `
 
-export const SliderMarkLabel = styled.span`
+export const SliderMarkPointDisplay = styled.span`
   pointer-events: none;
   position: relative;
 `
@@ -111,6 +187,9 @@ export const SlidderThumb = styled(ChakraSliderThumb)<{ thumbsize: number }>`
 
   background: hsla(284, 72%, 55%, 1);
   border-radius: 50%;
+
+  z-index: 2;
+
   transform: translateY(-50%);
   transition: background 0.25s ease;
 
