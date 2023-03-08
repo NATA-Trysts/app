@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 
-import { useNotification } from '@/hooks/useNotification'
+import { useNotification } from '@/hooks'
 import { Text } from '@/layouts/common'
 
 const Container = styled.div`

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { useNotification } from '@/hooks/useNotification'
+import { useNotification } from '@/hooks'
 import { useLoginStore } from '@/stores'
 
 import { GradientButton } from '../Button'
