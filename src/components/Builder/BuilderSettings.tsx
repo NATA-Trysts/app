@@ -17,9 +17,9 @@ const BuilderSettingsContainer = styled.div`
   border-radius: 16px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  /* overflow: hidden; */
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
   z-index: 999;
 `
 

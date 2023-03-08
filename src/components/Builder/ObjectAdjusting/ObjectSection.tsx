@@ -8,10 +8,14 @@ import { Modifier } from './Modifier'
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: fit-content;
   padding: 16px;
-  border-radius: 16px;
   background-color: transparent;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #272728;
+  }
 `
 
 type IValues = {

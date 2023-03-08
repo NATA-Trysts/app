@@ -9,9 +9,8 @@ import { GlobalSectionItem } from './GlobalSectionItem'
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
-  padding: 4px 16px 16px 16px;
-  border-radius: 0 0 16px 16px;
+  height: fit-content;
+  padding: 16px;
   background-color: transparent;
   transition: background-color 0.2s ease;
 
