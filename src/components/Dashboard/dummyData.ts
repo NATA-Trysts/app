@@ -1,4 +1,4 @@
-import { Space as SpaceType } from '@/stores/dashboard'
+import { Space as SpaceType } from '@/stores'
 
 export const mySpacesFromApi: SpaceType[] = [
   {

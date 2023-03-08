@@ -1,6 +1,6 @@
 import { selectIsConnectedToRoom, useHMSStore } from '@100mslive/react-sdk'
 
-import { Text } from '@/layouts/common'
+import { Text } from '@/components/Commons'
 
 export const ConnectionState = () => {
   const isConnected = useHMSStore(selectIsConnectedToRoom)

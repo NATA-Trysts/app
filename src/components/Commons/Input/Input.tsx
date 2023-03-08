@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
 import { INPUT_BORDER, INPUT_DROP_SHADOW } from '@/libs/constants'
-import { EmailInputStatusType } from '@/stores/login'
+import { EmailInputStatusType } from '@/stores'
 
 const InputContainer = styled.div`
   width: 100%;

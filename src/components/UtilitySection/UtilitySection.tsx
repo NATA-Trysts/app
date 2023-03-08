@@ -2,8 +2,8 @@ import { motion } from 'framer-motion'
 import { FC, ReactNode } from 'react'
 import styled from 'styled-components'
 
-import { Text } from '@/layouts/common'
-import { useVirtualSpaceStore } from '@/stores/virtualSpace'
+import { Text } from '@/components/Commons'
+import { useVirtualSpaceStore } from '@/stores'
 
 import { Close } from './Close'
 

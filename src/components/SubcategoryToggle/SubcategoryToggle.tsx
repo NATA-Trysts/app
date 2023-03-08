@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
-import { MultiToggle, MultiToggleProps } from '../Commons/MultiToggle'
-import { ToggleLabel, ToggleLableContent } from '../Commons/MultiToggle/MultiToggleItem'
+import { MultiToggle, MultiToggleProps } from '@/components/Commons/MultiToggle'
+import { ToggleLabel, ToggleLableContent } from '@/components/Commons/MultiToggle/MultiToggleItem'
 
 export const SubCategoryToggle = ({ ...props }: MultiToggleProps) => {
   return <SubCategoryStyledToggle {...props}></SubCategoryStyledToggle>

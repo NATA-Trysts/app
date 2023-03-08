@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import NotfoundTextImage from '@/assets/notfound-text-image.png'
+import { Text } from '@/components/Commons'
 import { Logo } from '@/components/Commons/Logo'
-import { Text } from '@/layouts/common'
 
 const NotFoundPage = styled.div`
   width: 100vw;
@@ -53,11 +52,10 @@ const NotFound404 = styled.h1`
   margin-bottom: 24px;
   font-weight: bold;
   color: transparent;
-  background-image: url(${NotfoundTextImage});
-  -webkit-background-clip: text;
+  background: -webkit-linear-gradient(90deg, #ff958a -1.56%, #ff6e88 50.54%, #ff93a7 101.56%);
   background-clip: text;
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
   text-shadow: 0 0 0 transparent, 0 0 0 transparent, 0 0 0 transparent, 0 0 0 transparent, 0 0 0 transparent,
     0 0 0 transparent;
   transition: all 0.3s ease;

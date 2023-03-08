@@ -1,4 +1,4 @@
-import { CategoryType, SubCategoryItem, useBuilderStore } from '@/stores/builder'
+import { CategoryType, SubCategoryItem, useBuilderStore } from '@/stores'
 
 const useBuilder = () => {
   const setSubCategoryItems = useBuilderStore((state) => state.setSubCategoryItems)

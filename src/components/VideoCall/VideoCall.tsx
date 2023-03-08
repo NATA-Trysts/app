@@ -1,7 +1,7 @@
 import { selectIsConnectedToRoom, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
 import styled from 'styled-components'
 
-import { Text } from '@/layouts/common'
+import { Text } from '@/components/Commons'
 
 import { Conference } from './Conference'
 import { ConnectionState } from './ConnectionState'

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { ReactComponent as AllIcon } from '@/assets/icons/all-application.svg'
 import { ReactComponent as SmileFaceIcon } from '@/assets/icons/smile-face.svg'
-import { CategoryType, useBuilderStore } from '@/stores/builder'
+import { CategoryType, useBuilderStore } from '@/stores'
 
 import { BuilderHelp } from './BuilderHelp'
 import { CategoryItem } from './CategoryItem'

@@ -1,5 +1,5 @@
 import { NotificationType } from '@/libs/constants'
-import { useNotificationStore } from '@/stores/notification'
+import { useNotificationStore } from '@/stores'
 
 const useNotification = () => {
   const [notifications, setNotifications] = useNotificationStore((state) => [

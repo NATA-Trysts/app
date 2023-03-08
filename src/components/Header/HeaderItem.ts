@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { SearchBar } from '../Commons/SearchBar'
+import { SearchBar } from '@/components/Commons/SearchBar'
 
 export const HeaderContainer = styled.div`
   height: 76px;

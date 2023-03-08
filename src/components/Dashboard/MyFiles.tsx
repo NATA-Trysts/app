@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
-import { Space as SpaceType, useDashboardStore } from '@/stores/dashboard'
+import { SpacePreviewCard } from '@/components/SpacePreviewCard'
+import { Space as SpaceType, useDashboardStore } from '@/stores'
 
-import { SpacePreviewCard } from '../SpacePreviewCard'
 import { useDashboard } from './hooks/useDashboard'
 
 const MyFilesContainer = styled.section`

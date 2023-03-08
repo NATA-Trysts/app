@@ -1,10 +1,10 @@
 import { memo, ReactNode, useCallback, useMemo, useRef, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 
+import { CustomableContainer, Text } from '@/components/Commons'
 import { Stepper, StepperDetail, StepperRef } from '@/components/Commons/Stepper'
 import { CreateContent } from '@/components/CreateContent/CreateContent'
 import { CreateHeader } from '@/components/CreateContent/CreateHeader'
-import { CustomableContainer, Text } from '@/layouts/common'
 import { useAppStore } from '@/stores'
 
 const stepDetails: { header: string; description: string }[] = [

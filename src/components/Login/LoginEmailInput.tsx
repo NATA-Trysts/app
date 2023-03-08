@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-import { useNotification } from '@/hooks/useNotification'
-import { useLoginStore } from '@/stores/login'
+import { GradientButton } from '@/components/Button'
+import { Input } from '@/components/Commons/Input'
+import { useNotification } from '@/hooks'
+import { useLoginStore } from '@/stores'
 
-import { GradientButton } from '../Button'
-import { Input } from '../Commons/Input'
 import { useLogin } from './hooks/useLogin'
 
 const LoginEmailInputContainer = styled.div`

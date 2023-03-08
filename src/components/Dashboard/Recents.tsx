@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { Text } from '@/layouts/common'
-import { Space as SpaceType, useDashboardStore } from '@/stores/dashboard'
+import { Text } from '@/components/Commons'
+import { SpacePreviewCard } from '@/components/SpacePreviewCard'
+import { Space as SpaceType, useDashboardStore } from '@/stores'
 
-import { SpacePreviewCard } from '../SpacePreviewCard'
 import { useDashboard } from './hooks/useDashboard'
 
 const RecentContainer = styled.section`

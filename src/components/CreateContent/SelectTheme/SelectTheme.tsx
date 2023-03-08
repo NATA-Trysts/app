@@ -4,9 +4,9 @@ import styled from 'styled-components'
 
 import CustomImage from '@/assets/page/create/custom.png'
 import { BasicButton } from '@/components/Button'
+import { Text } from '@/components/Commons'
 import { ButtonContent } from '@/components/Commons/Button'
 import { MultiToggle, MultiToggleProps, MultiToggleRef, ToggleLabel } from '@/components/Commons/MultiToggle'
-import { Text } from '@/layouts/common'
 
 import { CanNextCreateContentProps, CreateForm, CreateFormHeader } from '..'
 import { ThemeImage, ThemeImageCard } from './ThemeImageCard'

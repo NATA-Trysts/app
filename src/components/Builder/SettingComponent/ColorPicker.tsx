@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { HexColorPicker } from 'react-colorful'
 import styled from 'styled-components'
 
+import { Text } from '@/components/Commons'
 import { Popover } from '@/components/Popover'
-import { Text } from '@/layouts/common'
-import { useBuilderStore } from '@/stores/builder'
+import { useBuilderStore } from '@/stores'
 
 const Container = styled.div`
   width: 100%;

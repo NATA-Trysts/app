@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import { ChatInput } from '@/components/ChatInput'
 import { ChatMessage } from '@/components/ChatMessage'
+import { CustomableContainer } from '@/components/Commons'
 import { MultitabDetect, MultiTabWarning } from '@/components/MultitabDetect'
 import { UtilitySection } from '@/components/UtilitySection'
 import {
@@ -18,7 +19,6 @@ import {
   VirtualSpaceNameCard,
 } from '@/components/VirtualSpace'
 import { FullLogo } from '@/components/VirtualSpace/FullLogo'
-import { CustomableContainer } from '@/layouts/common'
 import { truncateText } from '@/libs'
 import { useAppStore, useVirtualSpaceStore } from '@/stores'
 

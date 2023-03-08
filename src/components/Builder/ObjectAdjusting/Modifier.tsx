@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
-import { Text } from '@/layouts/common'
-import { ModifierValueType } from '@/stores/builder'
+import { Text } from '@/components/Commons'
+import { ModifierValueType } from '@/stores'
 
 import { useBuilder } from '../hooks/useBuilder'
 import { DragLabel } from './DragLabel'

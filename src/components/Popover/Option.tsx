@@ -1,7 +1,7 @@
 import React, { ComponentPropsWithoutRef } from 'react'
 import styled from 'styled-components'
 
-import { Text } from '@/layouts/common'
+import { Text } from '@/components/Commons'
 
 const Title = styled(Text)`
   color: #696969;

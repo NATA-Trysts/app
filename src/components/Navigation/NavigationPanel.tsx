@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { useDashboardStore } from '@/stores/dashboard'
+import { useDashboardStore } from '@/stores'
 
 import { NavigationArrow } from './NavigationArrow'
 import { NavigationHelp } from './NavigationHelp'

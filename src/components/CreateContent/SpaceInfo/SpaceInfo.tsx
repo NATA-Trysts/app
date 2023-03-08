@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import styled from 'styled-components'
 
+import { Text } from '@/components/Commons'
 import { Slider } from '@/components/Commons/Slider'
 import { Switch } from '@/components/Commons/Switch'
-import { Text } from '@/layouts/common'
 
 import { CanNextCreateContentProps, CreateField, CreateForm, CreateFormHeader, CreateInput, CreateLabel } from '..'
 

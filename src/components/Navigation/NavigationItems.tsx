@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import { ReactComponent as EditIcon } from '@/assets/icons/edit.svg'
 import { ReactComponent as HomeIcon } from '@/assets/icons/home.svg'
 import { ReactComponent as LibraryIcon } from '@/assets/icons/library.svg'
-import { Text } from '@/layouts/common'
+import { Text } from '@/components/Commons'
 import { FILTER_ICON_TO_WHITE } from '@/libs/constants'
-import { DashboardOption as DashboardOptionType, useDashboardStore } from '@/stores/dashboard'
+import { DashboardOption as DashboardOptionType, useDashboardStore } from '@/stores'
 
 const NavigationItemsContainer = styled.div``
 

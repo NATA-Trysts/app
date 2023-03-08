@@ -3,9 +3,8 @@ import { Canvas } from '@react-three/fiber'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { useDashboardStore } from '@/stores/dashboard'
-
-import { MyInformationCard } from '../MyInformationCard'
+import { MyInformationCard } from '@/components/MyInformationCard'
+import { useDashboardStore } from '@/stores'
 
 const NavigationProfileContainer = styled.div`
   width: 100%;
