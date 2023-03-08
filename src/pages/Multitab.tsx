@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
+import { CustomableContainer } from '@/components/Commons'
 import { MultitabDetect, MultiTabWarning } from '@/components/MultitabDetect'
-import { CustomableContainer } from '@/layouts/common'
 import { useAppStore } from '@/stores'
 
 const Warning = () => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { CustomColor } from '@/layouts/common'
+import { CustomColor } from '@/components/Commons'
 import { COLOR_PICKER_LIST } from '@/libs/constants'
 import { useAppStore } from '@/stores'
 

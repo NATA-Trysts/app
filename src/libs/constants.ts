@@ -1,4 +1,4 @@
-import { CustomColor } from '@/layouts/common'
+import { CustomColor } from '@/components/Commons'
 import { EmailInputStatusType } from '@/stores'
 
 export type ColorListObject = {

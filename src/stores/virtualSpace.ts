@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { CustomColor } from '@/layouts/common'
+import { CustomColor } from '@/components/Commons'
 
 type UltilityType = 'chat' | 'member' | 'info' | 'setting' | null
 
