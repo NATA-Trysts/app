@@ -1,8 +1,13 @@
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { exploreSpacesFromApi, librariesSpacesFromApi, mySpacesFromApi, SpaceSection } from '@/components/Dashboard'
-import { Header } from '@/components/Header'
+import {
+  exploreSpacesFromApi,
+  HeaderDashboard,
+  librariesSpacesFromApi,
+  mySpacesFromApi,
+  SpaceSection,
+} from '@/components/Dashboard'
 import { NavigationPanel } from '@/components/Navigation'
 import { NotificationStack } from '@/components/Notification'
 import { useDashboardStore } from '@/stores'
@@ -15,6 +20,7 @@ const DashboardPage = styled.div`
 
 const Body = styled.div`
   width: 100%;
+  top: 72px;
   height: calc(100vh - 88px);
   display: grid;
   grid-template-columns: 1fr auto;
@@ -37,7 +43,7 @@ const Dashboard = () => {
   return (
     <>
       <DashboardPage>
-        <Header />
+        <HeaderDashboard />
         <Body>
           <NavigationPanel />
           <SpaceSection />
