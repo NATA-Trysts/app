@@ -1,5 +1,5 @@
 import { CustomColor } from '@/layouts/common'
-import { EmailInputStatusType } from '@/stores/login'
+import { EmailInputStatusType } from '@/stores'
 
 export type ColorListObject = {
   [key in CustomColor]: string

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
-import { useLoginStore } from '@/stores/login'
+import { useLoginStore } from '@/stores'
 
 import { Logo } from '../Commons/Logo'
 

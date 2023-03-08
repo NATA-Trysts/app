@@ -2,7 +2,7 @@ import * as Switch from '@radix-ui/react-switch'
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
-import { useBuilderStore } from '@/stores/builder'
+import { useBuilderStore } from '@/stores'
 
 import { BuilderTextInput } from './BuilderTextInput'
 import { MusicUpload } from './MusicUpload'

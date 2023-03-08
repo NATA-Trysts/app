@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { ReactComponent as HelpIcon } from '@/assets/icons/help.svg'
 import { Text } from '@/layouts/common'
 import { FILTER_ICON_TO_WHITE } from '@/libs/constants'
-import { useDashboardStore } from '@/stores/dashboard'
+import { useDashboardStore } from '@/stores'
 
 const HelpTitle = styled(Text)<{ isDisplayed: boolean }>`
   display: ${({ isDisplayed }) => (isDisplayed ? 'block' : 'none')};

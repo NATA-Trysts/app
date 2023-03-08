@@ -3,7 +3,7 @@ import { FC, ReactNode } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
-import { useVirtualSpaceStore } from '@/stores/virtualSpace'
+import { useVirtualSpaceStore } from '@/stores'
 
 import { Close } from './Close'
 

@@ -1,4 +1,4 @@
-import { SubCategoryItem } from '@/stores/builder'
+import { SubCategoryItem } from '@/stores'
 
 // dummy data
 export const subCategoryList: SubCategoryItem[] = [

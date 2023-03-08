@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { Popover } from '@/components/Popover'
 import { Text } from '@/layouts/common'
-import { useBuilderStore } from '@/stores/builder'
+import { useBuilderStore } from '@/stores'
 
 const Container = styled.div`
   width: 100%;

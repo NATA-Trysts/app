@@ -4,7 +4,7 @@ import { useRef } from 'react'
 import styled from 'styled-components'
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 
-import { useBuilderStore } from '@/stores/builder'
+import { useBuilderStore } from '@/stores'
 
 //#region STYLE
 const Container = styled.section`

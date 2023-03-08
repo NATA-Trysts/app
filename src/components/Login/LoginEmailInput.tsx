@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import { useNotification } from '@/hooks/useNotification'
-import { useLoginStore } from '@/stores/login'
+import { useLoginStore } from '@/stores'
 
 import { GradientButton } from '../Button'
 import { Input } from '../Commons/Input'

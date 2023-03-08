@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { SubCategoryItem, useBuilderStore } from '@/stores/builder'
+import { SubCategoryItem, useBuilderStore } from '@/stores'
 
 import { BuilderSubCategory } from './BuilderSubCategory'
 import { useBuilder } from './hooks/useBuilder'

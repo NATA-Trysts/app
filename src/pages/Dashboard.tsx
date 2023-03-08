@@ -5,7 +5,7 @@ import { exploreSpacesFromApi, librariesSpacesFromApi, mySpacesFromApi, SpaceSec
 import { Header } from '@/components/Header'
 import { NavigationPanel } from '@/components/Navigation'
 import { NotificationStack } from '@/components/Notification'
-import { useDashboardStore } from '@/stores/dashboard'
+import { useDashboardStore } from '@/stores'
 
 const DashboardPage = styled.div`
   width: 100vw;

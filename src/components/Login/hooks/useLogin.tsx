@@ -1,4 +1,4 @@
-import { useLoginStore } from '@/stores/login'
+import { useLoginStore } from '@/stores'
 
 const useLogin = () => {
   // const email = useLoginStore((state) => state.email)

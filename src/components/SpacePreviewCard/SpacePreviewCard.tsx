@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { Space as SpaceType, useDashboardStore } from '@/stores/dashboard'
+import { Space as SpaceType, useDashboardStore } from '@/stores'
 
 import { CardBackgroundShadow } from './CardBackgroundShadow'
 import { PreviewCardContent } from './PreviewCardContent'

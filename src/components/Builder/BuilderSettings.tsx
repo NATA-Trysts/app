@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import styled from 'styled-components'
 
-import { useBuilderStore } from '@/stores/builder'
+import { useBuilderStore } from '@/stores'
 
 import { ObjectSection } from './ObjectAdjusting/ObjectSection'
 import { GlobalSection } from './SettingComponent/GlobalSection'

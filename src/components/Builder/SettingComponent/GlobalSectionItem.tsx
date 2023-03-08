@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { MultiToggle } from '@/components/Commons/MultiToggle'
 import { Text } from '@/layouts/common'
-import { useBuilderStore } from '@/stores/builder'
+import { useBuilderStore } from '@/stores'
 
 const Container = styled.div`
   width: 100%;

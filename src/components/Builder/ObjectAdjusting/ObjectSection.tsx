@@ -2,7 +2,7 @@
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
-import { useBuilderStore } from '@/stores/builder'
+import { useBuilderStore } from '@/stores'
 
 import { Modifier } from './Modifier'
 

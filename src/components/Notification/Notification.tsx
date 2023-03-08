@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Close from '@/assets/icons/close-icon.svg'
 import Info from '@/assets/icons/info-icon.svg'
 import { NOTIFICATION_CLOSE_COLOR, NOTIFICATION_COLOR, NotificationType } from '@/libs/constants'
-import { useNotificationStore } from '@/stores/notification'
+import { useNotificationStore } from '@/stores'
 
 const NotificationContainer = styled.div<{ type: NotificationType }>`
   width: 200px;

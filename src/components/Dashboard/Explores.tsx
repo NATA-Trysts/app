@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import { Text } from '@/layouts/common'
-import { Space as SpaceType, useDashboardStore } from '@/stores/dashboard'
+import { Space as SpaceType, useDashboardStore } from '@/stores'
 
 import { SpacePreviewCard } from '../SpacePreviewCard'
 import { useDashboard } from './hooks/useDashboard'

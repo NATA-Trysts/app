@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { LoginCodeInput, LoginEmailInput, LoginTitle } from '@/components/Login'
 import { useLogin } from '@/components/Login/hooks/useLogin'
 import { NotificationStack } from '@/components/Notification'
-import { useLoginStore } from '@/stores/login'
+import { useLoginStore } from '@/stores'
 
 const LoginPage = styled.div`
   width: 100vw;

@@ -7,7 +7,7 @@ import { ReactComponent as OutlookIcon } from '@/assets/icons/outlook.svg'
 import { useAuth } from '@/hooks'
 import { Text } from '@/layouts/common'
 import { TRYSTS_EMAIL_LOGIN } from '@/libs/constants'
-import { useLoginStore } from '@/stores/login'
+import { useLoginStore } from '@/stores'
 
 import { CodeField } from './CodeField'
 import { MailDirect } from './MailDirect'

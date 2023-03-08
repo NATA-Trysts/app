@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import { ReactComponent as ArrowGray } from '@/assets/icons/arrow-gray.svg'
-import { useDashboardStore } from '@/stores/dashboard'
+import { useDashboardStore } from '@/stores'
 
 const ArrowContainer = styled.div<{ isExpanded: boolean }>`
   position: absolute;

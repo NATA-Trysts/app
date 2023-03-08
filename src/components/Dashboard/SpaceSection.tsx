@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import styled from 'styled-components'
 
-import { useDashboardStore } from '@/stores/dashboard'
+import { useDashboardStore } from '@/stores'
 
 import { Explores } from './Explores'
 import { Libraries } from './Libraries'

@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom'
 import styled from 'styled-components'
 
-import { useNotificationStore } from '@/stores/notification'
+import { useNotificationStore } from '@/stores'
 
 import { createContainer } from './container'
 import { Notification } from './Notification'

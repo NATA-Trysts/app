@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { Space as SpaceType, useDashboardStore } from '@/stores/dashboard'
+import { Space as SpaceType, useDashboardStore } from '@/stores'
 
 import { SpacePreviewCard } from '../SpacePreviewCard'
 import { useDashboard } from './hooks/useDashboard'

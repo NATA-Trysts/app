@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
-import { SubCategoryItem as SubCategoryItemType } from '@/stores/builder'
+import { SubCategoryItem as SubCategoryItemType } from '@/stores'
 
 const BuilderSubCategoryContainer = styled.div`
   width: 218px;
