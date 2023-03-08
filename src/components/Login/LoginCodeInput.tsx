@@ -1,7 +1,8 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
+import axios from '@/api/axios'
 import { ReactComponent as GmailIcon } from '@/assets/icons/gmail.svg'
 import { ReactComponent as OutlookIcon } from '@/assets/icons/outlook.svg'
 import { Text } from '@/components/Commons'
@@ -147,6 +148,20 @@ export const LoginCodeInput = () => {
     setAuth({ user, roles, accessToken })
     navigate(from, { replace: true })
   }
+
+  useEffect(() => {
+    const controller = new AbortController()
+
+    if (isCompleted) {
+      axios.get('/api/test', { signal: controller.signal }).then(() => navigate('/dashboard'))
+    } else {
+      controller.abort()
+    }
+
+    return () => {
+      controller.abort()
+    }
+  }, [isCompleted, navigate])
 
   return (
     <LoginCodeInputContainer>
