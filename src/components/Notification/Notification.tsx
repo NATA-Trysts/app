@@ -7,7 +7,7 @@ import { NOTIFICATION_CLOSE_COLOR, NOTIFICATION_COLOR, NotificationType } from '
 import { useNotificationStore } from '@/stores'
 
 const NotificationContainer = styled.div<{ type: NotificationType }>`
-  width: 200px;
+  width: fit-content;
   height: 56px;
   border-radius: 12px;
   border: 1px solid #d0d0d0;
@@ -32,7 +32,8 @@ const NotificationIcon = styled.img`
 
 const NotificationMessage = styled.div`
   white-space: nowrap;
-  width: 128px;
+  max-width: 100%;
+  padding-right: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
 `
