@@ -1,1 +1,1 @@
-export * from '../VirtualSpace/Scene'
+export * from '@/components/VirtualSpace/Scene'
