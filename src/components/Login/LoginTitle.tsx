@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
+import { Text } from '@/components/Commons'
 import { Logo } from '@/components/Commons/Logo'
-import { Text } from '@/layouts/common'
 import { useLoginStore } from '@/stores'
 
 const LoginTitleContainer = styled.div<{ isSecondStep: boolean }>`

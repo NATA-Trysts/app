@@ -1,7 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Text } from '@/layouts/common'
-
+import { Text } from '../../Text'
 import {
   StepperDetailContainer as StepperDetailContainer,
   StepperDetailDescription as StepperDetailDescription,

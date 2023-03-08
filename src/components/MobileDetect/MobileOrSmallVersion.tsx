@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
+import { Text } from '@/components/Commons'
 import { Logo } from '@/components/Commons/Logo'
-import { Text } from '@/layouts/common'
 
 const MobilePage = styled.div`
   width: 100vw;

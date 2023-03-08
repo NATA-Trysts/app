@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 
-import { Text } from '@/layouts/common'
+import { Text } from '@/components/Commons'
 
 const Container = styled.div<{ isMine: boolean }>`
   width: 100%;

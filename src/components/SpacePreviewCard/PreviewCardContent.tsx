@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { Text } from '@/layouts/common'
+import { Text } from '@/components/Commons'
 import { useDashboardStore } from '@/stores'
 
 import { CardOptions } from './CardOptions'

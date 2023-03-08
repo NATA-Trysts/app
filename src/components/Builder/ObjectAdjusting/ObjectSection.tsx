@@ -1,7 +1,7 @@
 // import { useState } from 'react'
 import styled from 'styled-components'
 
-import { Text } from '@/layouts/common'
+import { Text } from '@/components/Commons'
 import { useBuilderStore } from '@/stores'
 
 import { Modifier } from './Modifier'

@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { Text } from '@/components/Commons'
 import { Option, Popover } from '@/components/Popover'
 import { WithTooltip } from '@/components/Toolbar'
-import { Text } from '@/layouts/common'
 import { useBuilderStore } from '@/stores'
 
 const ZoomOptionContainer = styled.div`

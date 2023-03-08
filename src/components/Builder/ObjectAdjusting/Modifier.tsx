@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { Text } from '@/layouts/common'
+import { Text } from '@/components/Commons'
 import { ModifierValueType } from '@/stores'
 
 import { useBuilder } from '../hooks/useBuilder'

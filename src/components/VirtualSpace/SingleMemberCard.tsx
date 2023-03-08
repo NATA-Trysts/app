@@ -1,9 +1,9 @@
 import { FC } from 'react'
 import styled from 'styled-components'
 
+import { Text } from '@/components/Commons'
 import { MemberCard } from '@/components/MemberCard'
 import { Option, Popover } from '@/components/Popover'
-import { Text } from '@/layouts/common'
 import { useAppStore } from '@/stores'
 
 const MemberInforContainer = styled.div<{ background: string }>`

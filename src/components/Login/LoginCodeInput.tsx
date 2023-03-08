@@ -4,8 +4,8 @@ import styled from 'styled-components'
 
 import { ReactComponent as GmailIcon } from '@/assets/icons/gmail.svg'
 import { ReactComponent as OutlookIcon } from '@/assets/icons/outlook.svg'
+import { Text } from '@/components/Commons'
 import { useAuth } from '@/hooks'
-import { Text } from '@/layouts/common'
 import { TRYSTS_EMAIL_LOGIN } from '@/libs/constants'
 import { useLoginStore } from '@/stores'
 

@@ -3,8 +3,8 @@ import { ReactComponent as Info } from '@/assets/icons/info.svg'
 import { ReactComponent as Logout } from '@/assets/icons/logout.svg'
 import { ReactComponent as People } from '@/assets/icons/people.svg'
 import { ReactComponent as Settingc } from '@/assets/icons/setting-c.svg'
+import { Text } from '@/components/Commons'
 import { Seprator, ToolbarContainer, ToolbarItem, WithTooltip } from '@/components/Toolbar'
-import { Text } from '@/layouts/common'
 import { useVirtualSpaceStore } from '@/stores'
 
 export const ToolbarRight = () => {

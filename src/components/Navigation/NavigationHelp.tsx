@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as HelpIcon } from '@/assets/icons/help.svg'
-import { Text } from '@/layouts/common'
+import { Text } from '@/components/Commons'
 import { FILTER_ICON_TO_WHITE } from '@/libs/constants'
 import { useDashboardStore } from '@/stores'
 

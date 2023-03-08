@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { ReactComponent as PasswordCloseIcon } from '@/assets/icons/preview-close.svg'
 import { ReactComponent as PasswordOpenIcon } from '@/assets/icons/preview-open.svg'
-import { Text } from '@/layouts/common'
+import { Text } from '@/components/Commons'
 import { useBuilderStore } from '@/stores'
 
 import { BuilderTextInput } from './BuilderTextInput'

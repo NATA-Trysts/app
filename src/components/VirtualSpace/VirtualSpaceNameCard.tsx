@@ -2,9 +2,9 @@ import { FC } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as Copy } from '@/assets/icons/copy.svg'
+import { Text } from '@/components/Commons'
 import { WithTooltip } from '@/components/Toolbar'
 import { useCopyToClipboard } from '@/hooks'
-import { Text } from '@/layouts/common'
 import { truncateText } from '@/libs'
 
 const Container = styled.div`

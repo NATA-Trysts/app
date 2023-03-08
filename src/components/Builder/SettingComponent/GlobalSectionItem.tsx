@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 import styled from 'styled-components'
 
+import { Text } from '@/components/Commons'
 import { MultiToggle } from '@/components/Commons/MultiToggle'
-import { Text } from '@/layouts/common'
 import { useBuilderStore } from '@/stores'
 
 const Container = styled.div`

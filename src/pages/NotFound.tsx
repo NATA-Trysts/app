@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { Text } from '@/components/Commons'
 import { Logo } from '@/components/Commons/Logo'
-import { Text } from '@/layouts/common'
 
 const NotFoundPage = styled.div`
   width: 100vw;

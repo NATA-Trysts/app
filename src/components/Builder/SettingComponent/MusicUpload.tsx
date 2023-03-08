@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 
+import { Text } from '@/components/Commons'
 import { useNotification } from '@/hooks'
-import { Text } from '@/layouts/common'
 
 const Container = styled.div`
   width: 100%;
