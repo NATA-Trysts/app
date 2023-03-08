@@ -8,7 +8,9 @@ import { Notification } from './Notification'
 
 const NotificationStackContainer = styled.div`
   position: relative;
-  width: 200px;
+  width: 92vw;
+  display: flex;
+  justify-content: center;
   > div:nth-child(1) {
     top: 28px;
     opacity: 1;
