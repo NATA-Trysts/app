@@ -2,11 +2,10 @@ import { FC } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as Copy } from '@/assets/icons/copy.svg'
+import { WithTooltip } from '@/components/Toolbar'
 import { useCopyToClipboard } from '@/hooks'
 import { Text } from '@/layouts/common'
 import { truncateText } from '@/libs'
-
-import { WithTooltip } from '../Toolbar'
 
 const Container = styled.div`
   padding: 8px 8px;

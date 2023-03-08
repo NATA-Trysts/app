@@ -68,7 +68,7 @@ const Guard = () => {
         />
 
         <Route element={<PersistLogin />}>
-          <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+          <Route>
             <Route
               element={
                 <Suspense fallback={<span>loading</span>}>

@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
+import { SpacePreviewCard } from '@/components/SpacePreviewCard'
 import { Text } from '@/layouts/common'
 import { Space as SpaceType, useDashboardStore } from '@/stores'
 
-import { SpacePreviewCard } from '../SpacePreviewCard'
 import { useDashboard } from './hooks/useDashboard'
 
 const ExploreContainer = styled.section`

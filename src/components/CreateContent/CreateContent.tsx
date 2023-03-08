@@ -7,7 +7,8 @@ import {
   StepperContentContainer,
   StepperController,
   StepperRef,
-} from '../Commons/Stepper'
+} from '@/components/Commons/Stepper'
+
 import { SelectTheme, SpaceInfo } from '.'
 
 export type CreateContentProps = {

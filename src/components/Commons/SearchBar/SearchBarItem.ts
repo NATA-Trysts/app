@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { Button } from '../Button'
+import { Button } from '@/components/Commons/Button'
 
 export const SearchBarContainer = styled.div`
   height: 48px;

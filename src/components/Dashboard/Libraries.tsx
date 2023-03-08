@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
+import { SpacePreviewCard } from '@/components/SpacePreviewCard'
+import { SubCategoryToggle } from '@/components/SubcategoryToggle'
 import { Space as SpaceType, useDashboardStore } from '@/stores'
-
-import { SpacePreviewCard } from '../SpacePreviewCard'
-import { SubCategoryToggle } from '../SubcategoryToggle'
 
 const LibrariesContainer = styled.div`
   width: 100%;

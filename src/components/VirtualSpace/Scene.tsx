@@ -2,11 +2,10 @@ import { Canvas } from '@react-three/fiber'
 import { Debug, Physics, RigidBody } from '@react-three/rapier'
 import { useEffect } from 'react'
 
+import { MainMember } from '@/components/Member/MainMember'
+import OtherPlayers from '@/components/Member/OtherMember'
 import { Container } from '@/layouts/common'
 import { useNetworkStore } from '@/stores'
-
-import { MainMember } from '../Member/MainMember'
-import OtherPlayers from '../Member/OtherMember'
 
 export const Scene = () => {
   const roomInstance = useNetworkStore((state) => state.roomInstance)

@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 
 import { ReactComponent as MultitabSvg } from '@/assets/icons/multitab.svg'
-
-import { BasicButton } from '../Button'
-import { ButtonContent } from '../Commons/Button/ButtonItem'
+import { BasicButton } from '@/components/Button'
+import { ButtonContent } from '@/components/Commons/Button/ButtonItem'
 
 export const MultiTabWarning = () => {
   return (

@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 
+import { Logo } from '@/components/Commons/Logo'
 import { Text } from '@/layouts/common'
 import { useLoginStore } from '@/stores'
-
-import { Logo } from '../Commons/Logo'
 
 const LoginTitleContainer = styled.div<{ isSecondStep: boolean }>`
   position: absolute;

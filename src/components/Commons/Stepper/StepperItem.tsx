@@ -1,8 +1,7 @@
 import styled, { keyframes } from 'styled-components'
 
 import borderImage from '@/assets/stepper-border.png'
-
-import { Button, ButtonContent } from '../Button'
+import { Button, ButtonContent } from '@/components/Commons/Button'
 
 export const StepperContainer = styled.div`
   padding-right: 4px;
