@@ -51,9 +51,10 @@ const Guard = () => {
         <Route
           element={
             <Suspense fallback={<span>loading</span>}>
-              <MobileDetect>
+              {/* <MobileDetect>
                 <Create />
-              </MobileDetect>
+              </MobileDetect> */}
+              <Create />
             </Suspense>
           }
           path="/create"
