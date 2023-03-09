@@ -34,7 +34,7 @@ export const SpaceInfo = ({ onCanNext = () => {} }: SpaceInfoProps) => {
     )
   }, [nameState, passwordState, onCanNext, enablePassword])
 
-  register('max-member', { value: 5 })
+  register('max-member', { value: 10 })
 
   return (
     <CreateForm>
@@ -76,13 +76,13 @@ export const SpaceInfo = ({ onCanNext = () => {} }: SpaceInfoProps) => {
             Maximum Member
           </SpaceInfoText>
         </CreateLabel>
-        <MemberSlider
-          defaultValue={getValues('max-member')}
+        <Slider
+          defaultValue={[getValues('max-member')]}
           marks={sliderMarks}
           max={50}
           min={2}
-          onChangeEnd={(value) => setValue('max-member', value)}
-        ></MemberSlider>
+          onValueCommit={(value) => setValue('max-member', value)}
+        ></Slider>
       </CreateField>
     </CreateForm>
   )
@@ -141,9 +141,4 @@ const PasswordInputContainer = styled.div<{ disabled: boolean }>`
 
 const PasswordSwitch = styled(Switch)`
   margin-left: auto;
-`
-
-const MemberSlider = styled(Slider)`
-  margin-left: 4px;
-  margin-right: 4px;
 `

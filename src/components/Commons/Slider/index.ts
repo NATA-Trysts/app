@@ -1,1 +1,6 @@
 export * from './Slider'
+export * from './SliderContext'
+export * from './SliderMark'
+export * from './SliderThumbLabel'
+export * from './SliderUtils'
+// export * from './Slider'

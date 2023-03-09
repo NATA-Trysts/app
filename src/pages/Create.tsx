@@ -1,11 +1,10 @@
 import { memo, ReactNode, useCallback, useMemo, useRef, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 
-import { CustomableContainer, Text } from '@/components/Commons'
+import { Text } from '@/components/Commons'
 import { Stepper, StepperDetail, StepperRef } from '@/components/Commons/Stepper'
 import { CreateContent } from '@/components/CreateContent/CreateContent'
 import { CreateHeader } from '@/components/CreateContent/CreateHeader'
-import { useAppStore } from '@/stores'
 
 const stepDetails: { header: string; description: string }[] = [
   {
@@ -24,7 +23,6 @@ const ContentMemo = memo(CreateContent)
 const StepperMemo = memo(Stepper)
 
 const Create = () => {
-  const customColor = useAppStore((state) => state.customColor)
   const stepperRef = useRef<StepperRef>(null)
   const [preImage, setPreImage] = useState<ReactNode>()
 
@@ -47,7 +45,7 @@ const Create = () => {
   }, [])
 
   return (
-    <CreateContainer customColor={customColor}>
+    <CreateContainer>
       <CreateHeader />
 
       <CreateSection>
@@ -72,7 +70,7 @@ const Create = () => {
 
 export default Create
 
-export const CreateContainer = styled(CustomableContainer)`
+export const CreateContainer = styled.div`
   position: relative;
   height: 100vh;
 `
