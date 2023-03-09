@@ -14,7 +14,7 @@ import { SelectMAU } from './SelectMAU'
 
 const PlanContainer = styled.div<{ type: 'individual' | 'startup' | 'enterprise' }>`
   width: 268px;
-  height: 448px;
+  height: 440px;
   padding: 16px;
   margin: 0 12px;
   background: rgba(12, 2, 32, 0.7);
@@ -58,11 +58,26 @@ const PopularBadge = styled.span`
   margin-left: 12px;
 `
 
+const PriceWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 const Price = styled(Text)`
   display: block;
   font-size: 32px;
   margin: 12px 0;
   text-transform: capitalize;
+`
+
+const Discount = styled.span`
+  font-size: 10px;
+  font-weight: 500;
+  color: #d8d8d8;
+  padding: 2px 6px;
+  border-radius: 50px;
+  border: 1px solid #d8d8d8;
+  margin-left: 8px;
 `
 
 const Options = styled.div`
@@ -94,6 +109,7 @@ const StartButton = styled.button<{ planType: 'individual' | 'startup' | 'enterp
   border: none;
   background: ${({ planType }) => PLAN_BUTTON_COLOR[planType]};
   opacity: 0.8;
+  cursor: pointer;
   transition: opacity 0.2s ease;
 
   &:hover {
@@ -104,10 +120,11 @@ const StartButton = styled.button<{ planType: 'individual' | 'startup' | 'enterp
 type PlanProps = {
   type: 'individual' | 'startup' | 'enterprise'
   price: string
+  discount?: number
   isPopular?: boolean
 }
 
-export const Plan = ({ isPopular = false, type, price }: PlanProps) => {
+export const Plan = ({ isPopular = false, discount, type, price }: PlanProps) => {
   return (
     <PlanContainer type={type}>
       <TopTextWrapper>
@@ -116,9 +133,12 @@ export const Plan = ({ isPopular = false, type, price }: PlanProps) => {
         </PlanName>
         {isPopular && <PopularBadge>Popular</PopularBadge>}
       </TopTextWrapper>
-      <Price size="medium" weight="normal">
-        {price !== 'free' ? `$${price}` : price}
-      </Price>
+      <PriceWrapper>
+        <Price size="medium" weight="normal">
+          {price !== 'free' ? `$${price}` : price}
+        </Price>
+        {discount && <Discount>-{discount}%</Discount>}
+      </PriceWrapper>
       <Options>
         <Option type={type}>
           <CheckIcon />

@@ -4,7 +4,7 @@ import { Plan } from './Plan'
 
 const PlansContainer = styled.div`
   position: relative;
-  top: 60px;
+  padding: 40px 0;
 
   display: flex;
   justify-content: center;
@@ -29,8 +29,8 @@ export const Plans = () => {
     <PlansContainer>
       <PlansBackgroundBlur />
       <Plan price={'free'} type="individual" />
-      <Plan isPopular={true} price={'150'} type="startup" />
-      <Plan price={'150'} type="enterprise" />
+      <Plan discount={25} isPopular={true} price={'150'} type="startup" />
+      <Plan discount={25} price={'150'} type="enterprise" />
     </PlansContainer>
   )
 }

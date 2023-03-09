@@ -5,13 +5,13 @@ import { PayButtons, Plans, PricingTitle } from '@/components/Pricing'
 
 const PricingPage = styled.div`
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #090118;
 `
 
 const Wrapper = styled.div`
   position: relative;
-  top: 100px;
+  padding-top: 100px;
 `
 
 const Pricing = () => {

@@ -3,8 +3,7 @@ import styled from 'styled-components'
 import { Text } from '@/components/Commons'
 
 const PayButtonsContainer = styled.div<{ top: number }>`
-  position: relative;
-  top: ${({ top }) => top}px;
+  padding-top: ${({ top }) => top}px;
   width: 100%;
   display: flex;
   justify-content: center;
