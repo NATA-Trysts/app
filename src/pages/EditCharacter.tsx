@@ -2,6 +2,8 @@ import { OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import styled from 'styled-components'
 
+import { AvatarPanel, BackButton } from '@/components/EditCharacter'
+
 const EditCharacterContainer = styled.div`
   width: 100vw;
   height: 100vh;
@@ -14,6 +16,10 @@ const CharacterCanvas = styled(Canvas)`
 `
 
 const EditCharacter = () => {
+  const handleClickBack = () => {
+    console.log('back')
+  }
+
   return (
     <EditCharacterContainer>
       <CharacterCanvas>
@@ -23,6 +29,8 @@ const EditCharacter = () => {
           <meshNormalMaterial />
         </mesh>
       </CharacterCanvas>
+      <BackButton onClickBack={handleClickBack} />
+      <AvatarPanel />
     </EditCharacterContainer>
   )
 }
