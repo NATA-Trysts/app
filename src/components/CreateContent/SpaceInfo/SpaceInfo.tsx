@@ -21,7 +21,7 @@ const sliderMarks = {
 export const SpaceInfo = ({ onCanNext = () => {} }: SpaceInfoProps) => {
   const [enablePassword, setPassword] = useState(false)
 
-  const { register, getValues, setValue, formState, getFieldState } = useFormContext()
+  const { register, getValues, setValue, formState, getFieldState, setFocus } = useFormContext()
 
   const nameField = register('space-name', { required: true })
   const passwordField = register('space-password', { required: true, disabled: !enablePassword })
@@ -35,6 +35,14 @@ export const SpaceInfo = ({ onCanNext = () => {} }: SpaceInfoProps) => {
   }, [nameState, passwordState, onCanNext, enablePassword])
 
   register('max-member', { value: 10 })
+
+  useEffect(() => {
+    setFocus('space-name')
+  }, [setFocus])
+
+  useEffect(() => {
+    if (enablePassword) setFocus('space-password')
+  }, [enablePassword, setFocus])
 
   return (
     <CreateForm>
@@ -62,7 +70,12 @@ export const SpaceInfo = ({ onCanNext = () => {} }: SpaceInfoProps) => {
             <DisableChip disabled={!enablePassword}>Disable</DisableChip>
             <EnableChip disabled={enablePassword}>Enable</EnableChip>
           </PasswordChipContainer>
-          <PasswordSwitch checked={enablePassword} onCheckedChange={(checked) => setPassword(checked)}></PasswordSwitch>
+          <PasswordSwitch
+            checked={enablePassword}
+            onCheckedChange={(checked) => {
+              setPassword(checked)
+            }}
+          ></PasswordSwitch>
         </PasswordLabel>
 
         <PasswordInputContainer disabled={enablePassword}>
@@ -135,7 +148,7 @@ const PasswordLabel = styled(CreateLabel)`
 
 const PasswordInputContainer = styled.div<{ disabled: boolean }>`
   overflow: hidden;
-  transition: max-height 1s ease, opacity 1s ease;
+  transition: max-height 0.25s ease, opacity 0.25s ease;
   ${(props) => (props.disabled ? 'max-height: 44px; opacity: 1' : 'max-height: 0px; opacity: 0;')}
 `
 

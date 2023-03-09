@@ -30,8 +30,11 @@ export const SliderMark = ({ value, onClick = () => {}, ...props }: SliderMarkPr
     [inverted, min, max],
   )
 
+  const currentValue = currentValues[0]
+
   const dataAttributes = {
     'data-highlighted': value >= head && value <= tail ? '' : undefined,
+    'data-thumb-touched': value === currentValue ? '' : undefined,
   }
 
   return (
@@ -53,4 +56,8 @@ export const StyledMark = styled.div<{ position?: string }>`
   transform: translateX(-50%);
   ${(props) => props.position}
   z-index: 0;
+
+  &[data-thumb-touched] {
+    pointer-events: none;
+  }
 `

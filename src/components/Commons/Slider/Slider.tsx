@@ -198,6 +198,7 @@ export const SliderPointMark = styled(SliderMark)`
 export const SliderLabelMark = styled(SliderMark)`
   top: 0%;
   transform: translate(-50%, -100%);
+  user-select: none;
   pointer-events: none;
 `
 
