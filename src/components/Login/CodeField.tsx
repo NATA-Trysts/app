@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import PinInput from 'react-pin-input'
 import styled from 'styled-components'
 
-const CodeFieldContainer = styled.div`
+const CodeFieldContainer = styled.div<{ isDisabled: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  opacity: ${({ isDisabled }) => (isDisabled ? 0.7 : 1)};
+  transition: opacity 0.3s ease;
 `
 
 const CodeFieldInput = {
@@ -25,31 +27,34 @@ const CodeFieldInput = {
 }
 
 type CodeFieldProps = {
+  disabled?: boolean
+  otp: string
+  setOtp: (value: string) => void
   setIsCompleted: (value: boolean) => void
 }
 
-export const CodeField = ({ setIsCompleted }: CodeFieldProps) => {
+export const CodeField = ({ disabled = false, otp, setOtp, setIsCompleted }: CodeFieldProps) => {
   const maxLength = 6
-  const [otpCode, setOtpCode] = useState('')
 
   const handleChange = (value: string) => {
-    setOtpCode(value)
+    setOtp(value)
   }
 
   useEffect(() => {
-    if (otpCode.length === maxLength) {
+    if (otp.length === maxLength) {
       setIsCompleted(true)
     } else {
       setIsCompleted(false)
     }
-  }, [otpCode, setIsCompleted])
+  }, [otp, setIsCompleted])
 
   return (
-    <CodeFieldContainer>
+    <CodeFieldContainer isDisabled={disabled}>
       <PinInput
         focus
         autoSelect={true}
-        initialValue={otpCode}
+        disabled={disabled}
+        initialValue={otp}
         inputFocusStyle={{ borderColor: '#CC22E8' }}
         inputMode="number"
         inputStyle={CodeFieldInput}
