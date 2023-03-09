@@ -14,6 +14,7 @@ import NotAuthorize from './pages/NotAuthorize'
 
 const Builder = lazy(() => import('@/pages/Builder'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
+const EditCharacter = lazy(() => import('@/pages/EditCharacter'))
 const Login = lazy(() => import('@/pages/Login'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 const VirtualSpace = lazy(() => import('@/pages/VirtualSpace'))
@@ -88,6 +89,9 @@ const Guard = () => {
               path="/files/:fileId"
             />
           </Route>
+        </Route>
+        <Route>
+          <Route element={<EditCharacter />} path="/character" />
         </Route>
 
         <Route element={<NotAuthorize />} path="/unauth" />
