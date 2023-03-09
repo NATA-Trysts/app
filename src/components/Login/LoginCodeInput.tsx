@@ -1,11 +1,11 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { ReactComponent as GmailIcon } from '@/assets/icons/gmail.svg'
 import { ReactComponent as OutlookIcon } from '@/assets/icons/outlook.svg'
 import { Text } from '@/components/Commons'
-import { useAuth } from '@/hooks'
+import { useAuth, useNotification } from '@/hooks'
 import { TRYSTS_EMAIL_LOGIN } from '@/libs/constants'
 import { useLoginStore } from '@/stores'
 
@@ -102,10 +102,21 @@ export const LoginCodeInput = () => {
     },
   ])
   const [isCompleted, setIsCompleted] = useState(false)
+  const [checkStatus, setCheckStatus] = useState<'failed' | 'checking' | 'success' | 'empty'>('empty')
+  const [otp, setOtp] = useState('')
+  const { addNotification } = useNotification()
   const setStep = useLoginStore((state) => state.setStep)
 
-  const handleCancel = () => {
-    setStep(1)
+  const handleCancel = (e: React.SyntheticEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    if (checkStatus === 'failed') {
+      // TODO: resend code
+    } else if (checkStatus === 'checking') {
+      setIsCompleted(false)
+      setCheckStatus('empty')
+    } else {
+      setStep(0)
+    }
   }
 
   const handleHoverDirectLink = (app: string) => {
@@ -148,6 +159,33 @@ export const LoginCodeInput = () => {
     navigate(from, { replace: true })
   }
 
+  useEffect(() => {
+    let timeout: NodeJS.Timeout
+
+    if (isCompleted) {
+      setCheckStatus('checking')
+      timeout = setTimeout(() => {
+        if (otp === '123456') {
+          setCheckStatus('success')
+          navigate('/dashboard', { replace: true })
+        } else {
+          setIsCompleted(false)
+          setCheckStatus('failed')
+          addNotification('error', 'Wrong code')
+        }
+      }, 3000)
+    }
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [isCompleted])
+
+  // when the user change the otp, reset the check status
+  useEffect(() => {
+    setCheckStatus('empty')
+  }, [otp])
+
   return (
     <LoginCodeInputContainer>
       <DirectLinks>
@@ -165,14 +203,14 @@ export const LoginCodeInput = () => {
         ))}
       </DirectLinks>
       <CodeSection isCompleted={isCompleted}>
-        <CodeField setIsCompleted={setIsCompleted} />
+        <CodeField disabled={checkStatus === 'checking'} otp={otp} setIsCompleted={setIsCompleted} setOtp={setOtp} />
         <CompletedSection>
           <CheckingText isChecking={isCompleted} size="medium" weight="lighter">
             Checking
           </CheckingText>
-          <CancelButton onClick={handleCancel}>
+          <CancelButton onClick={(e: React.SyntheticEvent<HTMLButtonElement>) => handleCancel(e)}>
             <Text size="medium" weight="normal">
-              Cancel
+              {checkStatus === 'failed' ? 'Resend' : 'Cancel'}
             </Text>
           </CancelButton>
           <CancelButton onClick={ok}>
