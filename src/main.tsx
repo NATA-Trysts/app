@@ -18,6 +18,7 @@ const Login = lazy(() => import('@/pages/Login'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 const VirtualSpace = lazy(() => import('@/pages/VirtualSpace'))
 const Create = lazy(() => import('@/pages/Create'))
+const Pricing = lazy(() => import('@/pages/Pricing'))
 
 if (process.env.NODE_ENV === 'production') {
   disableReactDevTools()
@@ -87,6 +88,16 @@ const Guard = () => {
                 </Suspense>
               }
               path="/files/:fileId"
+            />
+          </Route>
+          <Route>
+            <Route
+              element={
+                <Suspense fallback={<span>loading</span>}>
+                  <Pricing />
+                </Suspense>
+              }
+              path="/pricing"
             />
           </Route>
         </Route>

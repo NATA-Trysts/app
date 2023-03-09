@@ -78,6 +78,39 @@ const MESSAGES = {
   WORLD: {},
 }
 
+const PLAN_BORDER = {
+  individual: '#68646E',
+  startup: '#FF938A',
+  enterprise: '#66BDFF',
+}
+
+const PLAN_BUTTON_COLOR = {
+  individual: '#2c2c2c',
+  startup:
+    'linear-gradient(90deg, rgba(255, 147, 138, 0.8) 0%, rgba(255, 111, 137, 0.8) 47.92%, rgba(255, 145, 166, 0.8) 100%)',
+  enterprise: 'linear-gradient(90deg, rgba(103, 189, 255, 0.8) 0%, rgba(162, 235, 252, 0.8) 100%)',
+}
+
+const PLAN_BOX_SHADOW = {
+  individual: 'none',
+  startup: '0px 45px 80px rgba(214, 106, 106, 0.11), 0px 9px 13px rgba(214, 106, 106, 0.055)',
+  enterprise: '0px 38px 80px rgba(107, 166, 212, 0.12), 0px 7.6px 13px rgba(107, 166, 212, 0.06)',
+}
+
+const PLAN_NAME_BACKGROUND_TEXT = {
+  individual: 'white',
+  startup: 'linear-gradient(90deg, #FF938A 0%, #FF6F89 51.2%, #FF92A6 100%)',
+  enterprise: 'linear-gradient(90deg, #65BCFF 0%, #A3ECFC 100%)',
+}
+
+const PLAN_ICON_FILTER = {
+  individual: 'none',
+  startup:
+    'brightness(0) saturate(100%) invert(94%) sepia(38%) saturate(6245%) hue-rotate(301deg) brightness(108%) contrast(100%)',
+  enterprise:
+    'brightness(0) saturate(100%) invert(61%) sepia(12%) saturate(2012%) hue-rotate(171deg) brightness(109%) contrast(107%)',
+}
+
 export {
   COLOR_PICKER_LIST,
   FILTER_ICON_TO_WHITE,
@@ -86,6 +119,11 @@ export {
   MESSAGES,
   NOTIFICATION_CLOSE_COLOR,
   NOTIFICATION_COLOR,
+  PLAN_BORDER,
+  PLAN_BOX_SHADOW,
+  PLAN_BUTTON_COLOR,
+  PLAN_ICON_FILTER,
+  PLAN_NAME_BACKGROUND_TEXT,
   TAB_CATEGORY_COLOR,
   TRYSTS_EMAIL_LOGIN,
 }
