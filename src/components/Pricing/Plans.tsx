@@ -1,4 +1,7 @@
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+
+import { usePricingStore } from '@/stores'
 
 import { Plan } from './Plan'
 
@@ -25,12 +28,58 @@ const PlansBackgroundBlur = styled.div`
 `
 
 export const Plans = () => {
+  const [mode, startupCost, enterpriseCost] = usePricingStore((state) => [
+    state.mode,
+    state.startupCost,
+    state.enterpriseCost,
+  ])
+  const [discount, setDiscount] = useState({
+    individual: 0,
+    startup: 0,
+    enterprise: 0,
+  })
+
+  useEffect(() => {
+    if (mode === 'monthly') {
+      setDiscount({
+        individual: 0,
+        startup: 0,
+        enterprise: 0,
+      })
+    } else {
+      setDiscount({
+        individual: 0,
+        startup: 25,
+        enterprise: 25,
+      })
+    }
+  }, [mode])
+
   return (
     <PlansContainer>
       <PlansBackgroundBlur />
-      <Plan price={'free'} type="individual" />
-      <Plan discount={25} isPopular={true} price={'150'} type="startup" />
-      <Plan discount={25} price={'150'} type="enterprise" />
+      <Plan
+        discount={discount.individual}
+        mauQuantity={0}
+        options={['Lorem ipsum', 'Lorem ipsum']}
+        price={0}
+        type="individual"
+      />
+      <Plan
+        discount={discount.startup}
+        isPopular={true}
+        mauQuantity={startupCost.mau}
+        options={['Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum']}
+        price={startupCost.total}
+        type="startup"
+      />
+      <Plan
+        discount={discount.enterprise}
+        mauQuantity={enterpriseCost.mau}
+        options={['Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum']}
+        price={enterpriseCost.total}
+        type="enterprise"
+      />
     </PlansContainer>
   )
 }

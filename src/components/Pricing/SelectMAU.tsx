@@ -2,6 +2,8 @@ import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
 
+import { usePricing } from './hooks/usePricing'
+
 const SelectContainer = styled.div`
   position: absolute;
   width: 92%;
@@ -40,7 +42,24 @@ const ModifyButton = styled.button`
   font-size: 16px;
 `
 
-export const SelectMAU = () => {
+type SelectMAUProps = {
+  type: 'startup' | 'enterprise'
+  quantity: number
+}
+
+export const SelectMAU = ({ type, quantity }: SelectMAUProps) => {
+  const { addMAUs, subtractMAUs } = usePricing()
+
+  const handleAddMAUs = (e: React.SyntheticEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    addMAUs(type)
+  }
+
+  const handleSubtractMAUs = (e: React.SyntheticEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    subtractMAUs(type)
+  }
+
   return (
     <SelectContainer>
       <Title size="medium" weight="lighter">
@@ -48,11 +67,11 @@ export const SelectMAU = () => {
       </Title>
       <Wrapper>
         <Number size="medium" weight="normal">
-          1,000
+          {quantity.toLocaleString()}
         </Number>
         <Modify>
-          <ModifyButton>-</ModifyButton>
-          <ModifyButton>+</ModifyButton>
+          <ModifyButton onClick={(e: React.SyntheticEvent<HTMLButtonElement>) => handleSubtractMAUs(e)}>-</ModifyButton>
+          <ModifyButton onClick={(e: React.SyntheticEvent<HTMLButtonElement>) => handleAddMAUs(e)}>+</ModifyButton>
         </Modify>
       </Wrapper>
     </SelectContainer>

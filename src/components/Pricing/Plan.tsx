@@ -91,6 +91,7 @@ const Options = styled.div`
 
 const Option = styled.div<{ type: 'individual' | 'startup' | 'enterprise' }>`
   display: flex;
+  margin: 4px 0;
 
   svg {
     filter: ${({ type }) => PLAN_ICON_FILTER[type]};
@@ -119,12 +120,14 @@ const StartButton = styled.button<{ planType: 'individual' | 'startup' | 'enterp
 
 type PlanProps = {
   type: 'individual' | 'startup' | 'enterprise'
-  price: string
+  price: number
   discount?: number
   isPopular?: boolean
+  mauQuantity: number
+  options: string[]
 }
 
-export const Plan = ({ isPopular = false, discount, type, price }: PlanProps) => {
+export const Plan = ({ isPopular = false, discount, type, price, mauQuantity, options }: PlanProps) => {
   return (
     <PlanContainer type={type}>
       <TopTextWrapper>
@@ -135,19 +138,23 @@ export const Plan = ({ isPopular = false, discount, type, price }: PlanProps) =>
       </TopTextWrapper>
       <PriceWrapper>
         <Price size="medium" weight="normal">
-          {price !== 'free' ? `$${price}` : price}
+          {price !== 0 ? `$${price.toLocaleString()}` : 'free'}
         </Price>
-        {discount && <Discount>-{discount}%</Discount>}
+        {discount !== 0 && <Discount>-{discount}%</Discount>}
       </PriceWrapper>
-      <Options>
-        <Option type={type}>
-          <CheckIcon />
-          <Text size="small" weight="lighter">
-            Lorem Ipsum
-          </Text>
-        </Option>
-      </Options>
-      {type !== 'individual' && <SelectMAU />}
+      {
+        <Options>
+          {options.map((option, index) => (
+            <Option key={index} type={type}>
+              <CheckIcon />
+              <Text size="small" weight="lighter">
+                {option}
+              </Text>
+            </Option>
+          ))}
+        </Options>
+      }
+      {type !== 'individual' && <SelectMAU quantity={mauQuantity} type={type} />}
       <StartButton planType={type}>
         <Text size="medium" weight="normal">
           Get started

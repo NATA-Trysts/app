@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
+import { usePricingStore } from '@/stores'
 
 const PayButtonsContainer = styled.div<{ top: number }>`
   padding-top: ${({ top }) => top}px;
@@ -30,14 +31,20 @@ type PayButtonsProps = {
 }
 
 export const PayButtons = ({ top = 40 }: PayButtonsProps) => {
+  const [mode, setMode] = usePricingStore((state) => [state.mode, state.setMode])
+
+  const handleModeChange = (mode: 'monthly' | 'yearly') => {
+    setMode(mode)
+  }
+
   return (
     <PayButtonsContainer top={top}>
-      <PayButton isActive={true}>
+      <PayButton isActive={mode === 'monthly'} onClick={() => handleModeChange('monthly')}>
         <Text size="medium" weight="lighter">
           Pay monthly
         </Text>
       </PayButton>
-      <PayButton isActive={false}>
+      <PayButton isActive={mode === 'yearly'} onClick={() => handleModeChange('yearly')}>
         <Text size="medium" weight="lighter">
           Pay yearly
         </Text>
