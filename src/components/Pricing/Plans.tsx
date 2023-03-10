@@ -5,9 +5,9 @@ import { usePricingStore } from '@/stores'
 
 import { Plan } from './Plan'
 
-const PlansContainer = styled.div`
+const PlansContainer = styled.div<{ paddingProps: string }>`
   position: relative;
-  padding: 40px 0;
+  padding: ${({ paddingProps }) => paddingProps};
 
   display: flex;
   justify-content: center;
@@ -27,7 +27,12 @@ const PlansBackgroundBlur = styled.div`
   z-index: 1;
 `
 
-export const Plans = () => {
+type PlansProps = {
+  haveFreePlan?: boolean
+  padding: string
+}
+
+export const Plans = ({ haveFreePlan = true, padding = '40px 0' }: PlansProps) => {
   const [mode, startupCost, enterpriseCost] = usePricingStore((state) => [
     state.mode,
     state.startupCost,
@@ -56,15 +61,17 @@ export const Plans = () => {
   }, [mode])
 
   return (
-    <PlansContainer>
+    <PlansContainer paddingProps={padding}>
       <PlansBackgroundBlur />
-      <Plan
-        discount={discount.individual}
-        mauQuantity={0}
-        options={['Lorem ipsum', 'Lorem ipsum']}
-        price={0}
-        type="individual"
-      />
+      {haveFreePlan && (
+        <Plan
+          discount={discount.individual}
+          mauQuantity={0}
+          options={['Lorem ipsum', 'Lorem ipsum']}
+          price={0}
+          type="individual"
+        />
+      )}
       <Plan
         discount={discount.startup}
         isPopular={true}

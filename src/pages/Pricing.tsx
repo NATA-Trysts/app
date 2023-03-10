@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import { Header } from '@/components/Header'
 import { PayButtons, Plans, PricingTitle } from '@/components/Pricing'
+import { PricingModal } from '@/components/Pricing/PricingModal'
 
 const PricingPage = styled.div`
   width: 100vw;
@@ -15,6 +17,8 @@ const Wrapper = styled.div`
 `
 
 const Pricing = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   return (
     <PricingPage>
       <Header />
@@ -23,6 +27,9 @@ const Pricing = () => {
         <PayButtons />
         <Plans />
       </Wrapper>
+      {/* TEST PRICING MODAL */}
+      <button onClick={() => setIsModalOpen(!isModalOpen)}>Open modal</button>
+      <PricingModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
     </PricingPage>
   )
 }
