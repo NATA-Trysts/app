@@ -20,15 +20,16 @@ const PlanContainer = styled.div<{ type: 'individual' | 'startup' | 'enterprise'
   background: rgba(12, 2, 32, 0.7);
   border-width: 1px;
   border-style: solid;
-  border-color: ${({ type }) => PLAN_BORDER[type]};
+  border-color: #68646e;
   box-shadow: none;
   border-radius: 20px;
   z-index: 2;
   position: relative;
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow, border-color 0.3s ease;
 
   &:hover {
     box-shadow: ${({ type }) => PLAN_BOX_SHADOW[type]};
+    border-color: ${({ type }) => PLAN_BORDER[type]};
   }
 `
 
