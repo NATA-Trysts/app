@@ -4,10 +4,9 @@ import { Text } from '@/components/Commons'
 import { useEditCharacterStore } from '@/stores'
 
 const ContentContainer = styled.div`
-  position: absolute;
   left: 72px;
 
-  width: calc(100% - 72px);
+  width: 100%;
   height: 548px;
   margin: 16px 0;
 `
