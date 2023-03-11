@@ -1,6 +1,7 @@
-// import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 // import { OrbitControls } from '@react-three/drei'
 // import { Canvas } from '@react-three/fiber'
+import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { AvatarPanel, BackButton } from '@/components/EditCharacter'
@@ -19,6 +20,8 @@ const EditCharacterContainer = styled.div`
 
 const EditCharacter = () => {
   // const [categorySelectedId] = useEditCharacterStore((state) => [state.categorySelectedId])
+  const location = useLocation()
+  const [accessDirectly, setAccessDirectly] = useState(false)
 
   const handleClickBack = () => {}
 
@@ -26,6 +29,14 @@ const EditCharacter = () => {
   // useEffect(() => {
   //   console.log('category changed')
   // }, [categorySelectedId])
+
+  useEffect(() => {
+    if (location.state) {
+      setAccessDirectly(true)
+    } else {
+      setAccessDirectly(false)
+    }
+  }, [location.state])
 
   return (
     <EditCharacterContainer>
@@ -36,7 +47,7 @@ const EditCharacter = () => {
           <meshNormalMaterial />
         </mesh>
       </CharacterCanvas> */}
-      <BackButton onClickBack={handleClickBack} />
+      {accessDirectly && <BackButton onClickBack={handleClickBack} />}
       <AvatarPanel />
     </EditCharacterContainer>
   )
