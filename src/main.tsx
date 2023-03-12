@@ -16,6 +16,7 @@ const Builder = lazy(() => import('@/pages/Builder'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
 const Login = lazy(() => import('@/pages/Login'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
+const MarketPlace = lazy(() => import('@/pages/MarketPlace'))
 const VirtualSpace = lazy(() => import('@/pages/VirtualSpace'))
 const Create = lazy(() => import('@/pages/Create'))
 
@@ -90,6 +91,14 @@ const Guard = () => {
             />
           </Route>
         </Route>
+        <Route
+          element={
+            <MobileDetect>
+              <MarketPlace />
+            </MobileDetect>
+          }
+          path="/marketplace"
+        />
 
         <Route element={<NotAuthorize />} path="/unauth" />
         <Route element={<NotFound />} path="*" />

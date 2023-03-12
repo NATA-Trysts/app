@@ -33,6 +33,7 @@ export const ToggleLableContent = styled.span`
   font-size: 14px;
   line-height: 19px;
   color: #696969;
+  user-select: none;
   cursor: pointer;
 `
 export const StyledToggleButton = styled(ToggleButton)`
