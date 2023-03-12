@@ -51,7 +51,7 @@ const previewItems: PreviewItem[] = [
 ]
 
 function convertItemsToMansonryColumn(items: any[], columnLength: number): PreviewItem[][] {
-  const initiateColumns: PreviewItem[][] = Array<PreviewItem[]>(4).fill([])
+  const initiateColumns: PreviewItem[][] = [...Array<PreviewItem[]>(columnLength)].map(() => [])
 
   return items.reduce<PreviewItem[][]>((columns, current, index) => {
     const remainder = (index + 1) % columnLength
@@ -67,28 +67,31 @@ const MarketPlace = () => {
   const dialogRef = useRef<DialogRef>(null)
 
   const handleItemPreview = useCallback(() => {
-    const firstPart = []
-    const secondPart = []
-    const thirdPart = []
-    const lastPart = []
-
-    for (let i = 1; i <= previewItems.length; i++) {
-      const previewItem = previewItems[i - 1]
-
-      if (i % 4 === 1) {
-        firstPart.push(previewItem)
-      } else if (i % 4 === 2) {
-        secondPart.push(previewItem)
-      } else if (i % 4 === 3) {
-        thirdPart.push(previewItem)
-      } else if (i % 4 === 0) {
-        lastPart.push(previewItem)
-      }
-    }
-
-    const result = convertItemsToMansonryColumn(previewItems, 4)
-
-    console.log(result)
+    const columnElements = convertItemsToMansonryColumn(previewItems, 4).map((col, colIndex) => {
+      return (
+        <PreviewItemColumn key={`preview-col-${colIndex}`}>
+          {col.map((item, index) => {
+            return (
+              <PreviewItemCard key={`preview-col-${colIndex}-${index}`}>
+                <PreviewItemImage src={PreviewItemImageWebp} />
+                <PreviewItemInfo>
+                  <PreviewItemTitle>
+                    <PreviewItemText size="medium" weight="normal">
+                      {item.title}
+                    </PreviewItemText>
+                  </PreviewItemTitle>
+                  <PreviewItemDescription>
+                    <PreviewItemText size="small" weight="lighter">
+                      {item.description}
+                    </PreviewItemText>
+                  </PreviewItemDescription>
+                </PreviewItemInfo>
+              </PreviewItemCard>
+            )
+          })}
+        </PreviewItemColumn>
+      )
+    })
 
     dialogRef.current?.open(
       <>
@@ -100,109 +103,7 @@ const MarketPlace = () => {
           <MarketDialogText>$100</MarketDialogText>
           <GradientButton>Buy</GradientButton>
         </MarketDialogDescription>
-        <PreviewItemContainer>
-          <PreviewItemColumn>
-            {firstPart.map((item, index) => {
-              return (
-                <PreviewItemCard key={`preview-item-1-${index}`}>
-                  <PreviewItemImage src={PreviewItemImageWebp} />
-                  <PreviewItemInfo>
-                    <PreviewItemTitle>
-                      <PreviewItemText size="medium" weight="normal">
-                        {item.title}
-                      </PreviewItemText>
-                    </PreviewItemTitle>
-                    <PreviewItemDescription>
-                      <PreviewItemText size="small" weight="lighter">
-                        {item.description}
-                      </PreviewItemText>
-                    </PreviewItemDescription>
-                  </PreviewItemInfo>
-                </PreviewItemCard>
-              )
-            })}
-          </PreviewItemColumn>
-          <PreviewItemColumn>
-            {secondPart.map((item, index) => {
-              return (
-                <PreviewItemCard key={`preview-item-1-${index}`}>
-                  <PreviewItemImage src={PreviewItemImageWebp} />
-                  <PreviewItemInfo>
-                    <PreviewItemTitle>
-                      <PreviewItemText size="medium" weight="normal">
-                        {item.title}
-                      </PreviewItemText>
-                    </PreviewItemTitle>
-                    <PreviewItemDescription>
-                      <PreviewItemText size="small" weight="lighter">
-                        {item.description}
-                      </PreviewItemText>
-                    </PreviewItemDescription>
-                  </PreviewItemInfo>
-                </PreviewItemCard>
-              )
-            })}
-          </PreviewItemColumn>
-          <PreviewItemColumn>
-            {thirdPart.map((item, index) => {
-              return (
-                <PreviewItemCard key={`preview-item-1-${index}`}>
-                  <PreviewItemImage src={PreviewItemImageWebp} />
-                  <PreviewItemInfo>
-                    <PreviewItemTitle>
-                      <PreviewItemText size="medium" weight="normal">
-                        {item.title}
-                      </PreviewItemText>
-                    </PreviewItemTitle>
-                    <PreviewItemDescription>
-                      <PreviewItemText size="small" weight="lighter">
-                        {item.description}
-                      </PreviewItemText>
-                    </PreviewItemDescription>
-                  </PreviewItemInfo>
-                </PreviewItemCard>
-              )
-            })}
-          </PreviewItemColumn>
-          <PreviewItemColumn>
-            {lastPart.map((item, index) => {
-              return (
-                <PreviewItemCard key={`preview-item-1-${index}`}>
-                  <PreviewItemImage src={PreviewItemImageWebp} />
-                  <PreviewItemInfo>
-                    <PreviewItemTitle>
-                      <PreviewItemText size="medium" weight="normal">
-                        {item.title}
-                      </PreviewItemText>
-                    </PreviewItemTitle>
-                    <PreviewItemDescription>
-                      <PreviewItemText size="small" weight="lighter">
-                        {item.description}
-                      </PreviewItemText>
-                    </PreviewItemDescription>
-                  </PreviewItemInfo>
-                </PreviewItemCard>
-              )
-            })}
-          </PreviewItemColumn>
-          {/* {previewItems.map((item, index) => (
-            <PreviewItemCard key={`preview-item-${index}`}>
-              <PreviewItemImage src={PreviewItemImageWebp} />
-              <PreviewItemInfo>
-                <PreviewItemTitle>
-                  <PreviewItemText size="medium" weight="normal">
-                    {item.title}
-                  </PreviewItemText>
-                </PreviewItemTitle>
-                <PreviewItemDescription>
-                  <PreviewItemText size="small" weight="lighter">
-                    {item.description}
-                  </PreviewItemText>
-                </PreviewItemDescription>
-              </PreviewItemInfo>
-            </PreviewItemCard>
-          ))} */}
-        </PreviewItemContainer>
+        <PreviewItemContainer>{columnElements}</PreviewItemContainer>
       </>,
     )
   }, [])
@@ -234,7 +135,7 @@ const MarketPlace = () => {
         </ItemCard>
       )
     })
-  }, [])
+  }, [handleItemPreview])
 
   return (
     <MarketPlacePage>
@@ -260,7 +161,7 @@ const MarketPlace = () => {
         </ContentBody>
       </Content>
 
-      <Dialog ref={dialogRef} defaultOpen={true}></Dialog>
+      <Dialog ref={dialogRef}></Dialog>
     </MarketPlacePage>
   )
 }
