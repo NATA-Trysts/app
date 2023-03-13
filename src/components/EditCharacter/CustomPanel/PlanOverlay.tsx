@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 import { ReactComponent as StarIcon } from '@/assets/icons/star.svg'
 import { Text } from '@/components/Commons'
+import { useEditCharacterStore } from '@/stores'
 
 const Overlay = styled.div`
   width: calc(100% + 16px * 2);
@@ -39,11 +40,13 @@ type PlanOverlayProps = {
 }
 
 export const PlanOverlay = ({ isShown }: PlanOverlayProps) => {
+  const [setOpenPricingModal] = useEditCharacterStore((state) => [state.setOpenPricingModal])
+
   if (!isShown) return null
 
   return (
     <Overlay>
-      <PlanButton>
+      <PlanButton onClick={() => setOpenPricingModal(true)}>
         <StarIcon />
         <Text size="small" weight="normal">
           Try with Startup plan

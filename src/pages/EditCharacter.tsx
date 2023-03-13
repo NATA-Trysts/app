@@ -4,6 +4,8 @@ import { Canvas } from '@react-three/fiber'
 import styled from 'styled-components'
 
 import { AvatarPanel, BackButton, CustomPanel } from '@/components/EditCharacter'
+import { PricingModal } from '@/components/Pricing'
+import { useEditCharacterStore } from '@/stores'
 
 const EditCharacterContainer = styled.div`
   width: 100vw;
@@ -23,6 +25,10 @@ const EditCharacter = () => {
   // const [categorySelectedId] = useEditCharacterStore((state) => [state.categorySelectedId])
   // const location = useLocation()
   // const [accessDirectly, setAccessDirectly] = useState(true)
+  const [openPricingModal, setOpenPricingModal] = useEditCharacterStore((state) => [
+    state.openPricingModal,
+    state.setOpenPricingModal,
+  ])
 
   const handleClickBack = () => {}
 
@@ -51,6 +57,7 @@ const EditCharacter = () => {
       <BackButton onClickBack={handleClickBack} />
       <AvatarPanel />
       <CustomPanel />
+      <PricingModal isOpen={openPricingModal} setIsOpen={setOpenPricingModal} />
     </EditCharacterContainer>
   )
 }

@@ -36,6 +36,9 @@ type EditCharacterState = {
 
   selectedAnimationType: AnimationType
   setSelectedAnimationType: (animationType: AnimationType) => void
+
+  openPricingModal: boolean
+  setOpenPricingModal: (openPricingModal: boolean) => void
 }
 
 export const useEditCharacterStore = create<EditCharacterState>((set) => ({
@@ -109,4 +112,7 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
     name: 'Smooth',
   },
   setSelectedAnimationType: (animationType) => set(() => ({ selectedAnimationType: animationType })),
+
+  openPricingModal: false,
+  setOpenPricingModal: (openPricingModal) => set(() => ({ openPricingModal })),
 }))
