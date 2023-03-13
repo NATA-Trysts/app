@@ -1,21 +1,13 @@
-import { createContext } from '@chakra-ui/react-utils'
-import {
-  Slider as ChakraSlider,
-  SliderFilledTrack as ChakraSliderFilledTrack,
-  SliderMark as ChakraSliderMark,
-  SliderMarkProps,
-  SliderProps as ChakraSliderProps,
-  SliderThumb as ChakraSliderThumb,
-  SliderTrack as ChakraSliderTrack,
-  useSliderContext,
-} from '@chakra-ui/slider'
-import { forwardRef } from '@chakra-ui/system'
-import { isValidElement, ReactNode, useMemo, useState } from 'react'
-import styled, { CSSProperties } from 'styled-components'
+import * as RadixSlider from '@radix-ui/react-slider'
+import { CSSProperties, isValidElement, ReactNode, useMemo, useRef, useState } from 'react'
+import styled from 'styled-components'
 
-export type SliderProps = ChakraSliderProps & {
+import { SliderMarkContext } from './SliderContext'
+import { SliderMark } from './SliderMark'
+import { SliderThumbLabel } from './SliderThumbLabel'
+
+export type TrystsSliderProps = RadixSlider.SliderProps & {
   marks?: Record<string | number, ReactNode | Mark>
-  thumbSize?: number
 }
 
 export type Mark = {
@@ -27,34 +19,51 @@ export type MarkObj = Mark & {
   value: number
 }
 
-export type MarkContextType = {
-  marks: number[]
-}
-
-const [MarkSliderProvider, useMarkSliderContext] = createContext<MarkContextType>({
-  name: `MarkSliderContext`,
-})
-
 export const Slider = ({
   marks,
-  thumbSize = 8,
-  onChange = () => {},
+  name,
   min = 0,
   max = 100,
-  defaultValue = min,
+  step = 1,
+  orientation = 'horizontal',
+  disabled = false,
+  minStepsBetweenThumbs = 0,
+  defaultValue = [min],
+  onValueChange = () => {},
+  onValueCommit = () => {},
+  inverted = false,
   ...props
-}: SliderProps) => {
-  const [sliderValue, setSliderValue] = useState(defaultValue)
+}: TrystsSliderProps) => {
+  const sliderRef = useRef<HTMLSpanElement>(null)
+  const [values, setValues] = useState(defaultValue)
+
+  const handleValueChange = (values: number[]) => {
+    setValues(values)
+    onValueChange(values)
+  }
+
+  const handleMarkClick = (value: number) => {
+    setValues((prevValues) => {
+      const hasChanged = prevValues[0] !== value
+
+      // console.log(hasChanged ? [value, ...(prevValues.shift(), prevValues)] : prevValues)
+
+      return hasChanged ? [value, ...(prevValues.shift(), prevValues)] : prevValues
+    })
+  }
 
   const markList = useMemo<MarkObj[]>(() => {
     const keys = Object.keys(marks || {})
 
     return keys
       .map((key) => {
-        const mark = marks?.[key]
+        const markValue = Number(key)
+
         const markObj: MarkObj = {
-          value: Number(key),
+          value: markValue,
         }
+
+        const mark = marks?.[key]
 
         if (mark && typeof mark === 'object' && !isValidElement(mark) && ('label' in mark || 'style' in mark)) {
           markObj.style = mark.style
@@ -69,61 +78,132 @@ export const Slider = ({
       .sort((a, b) => a.value - b.value)
   }, [marks])
 
-  const hanldeValueChange = (value: number) => {
-    setSliderValue(value)
-    onChange(value)
-  }
-
   return (
-    <StyledSlider defaultValue={defaultValue} max={max} min={min} onChange={hanldeValueChange} {...props}>
-      <MarkSliderProvider value={{ marks: markList.map((mark) => mark.value) }}>
-        {markList.map(({ value, style, label }) => {
+    <SliderContainer>
+      <SliderMarkContext.Provider
+        value={{ min: min, max: max, currentValues: values, inverted: inverted, marks: markList }}
+      >
+        {markList.map((mark) => {
           return (
-            <SliderMark key={value} style={style} value={value}>
-              <SliderMarkPoint />
-              <SliderMarkPointDisplay>{label}</SliderMarkPointDisplay>
-            </SliderMark>
+            <SliderPointMark
+              key={`pointmark-${mark.value}`}
+              style={mark.style}
+              value={mark.value}
+              onClick={handleMarkClick}
+            />
           )
         })}
-        <SliderLabel value={sliderValue}>{sliderValue}</SliderLabel>
-        <SliderMainTrack>
-          <SliderFilledTrack />
-        </SliderMainTrack>
-        <SlidderThumb thumbsize={thumbSize} />
-      </MarkSliderProvider>
-    </StyledSlider>
+        {markList.map((mark) => {
+          return (
+            <SliderLabelMark key={`labelmark-${mark.value}`} style={mark.style} value={mark.value}>
+              <SliderText>{mark.label}</SliderText>
+            </SliderLabelMark>
+          )
+        })}
+        <SliderRoot
+          ref={sliderRef}
+          disabled={disabled}
+          inverted={inverted}
+          max={max}
+          min={min}
+          minStepsBetweenThumbs={minStepsBetweenThumbs}
+          name={name}
+          orientation={orientation}
+          step={step}
+          value={values}
+          onValueChange={handleValueChange}
+          onValueCommit={onValueCommit}
+          {...props}
+        >
+          <SliderTrack className="SliderTrack">
+            <SliderRange className="SliderRange" />
+          </SliderTrack>
+          <SliderThumbLabel>{values[0]}</SliderThumbLabel>
+          <SliderThumb className="SliderThumb" />
+        </SliderRoot>
+      </SliderMarkContext.Provider>
+    </SliderContainer>
   )
 }
 
-export const StyledSlider = styled(ChakraSlider)`
-  margin-top: 16px;
-`
-
-export const SliderMark = styled(ChakraSliderMark)`
-  margin-top: -12px;
-  font-size: 12px;
-  color: #ffffff;
+export const SliderContainer = styled.div`
+  width: 100%;
   position: relative;
-  transform: translate(-50%, -50%);
-  z-index: 1;
 `
 
-export const SliderLabel = forwardRef<SliderMarkProps, 'div'>((props, ref) => {
-  const { getMarkerProps } = useSliderContext()
-  const { marks } = useMarkSliderContext()
+export const SliderRoot = styled(RadixSlider.Root)`
+  margin-top: 16px;
+  padding: 3px 0;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  touch-action: none;
+`
 
-  const markProps = getMarkerProps(props, ref)
+export const SliderTrack = styled(RadixSlider.Track)`
+  position: relative;
+  height: 2px;
+  background: hsla(261, 26%, 22%, 1);
+  border-radius: 9999px;
+  flex-grow: 1;
+`
 
-  const labelData = {
-    'data-mark-highlighted': marks.find((mark) => mark === markProps.value) !== undefined ? '' : undefined,
+export const SliderRange = styled(RadixSlider.Range)`
+  position: absolute;
+  height: 2px;
+  border-radius: 9999px;
+  background: hsla(284, 72%, 55%, 1);
+`
+
+export const SliderThumb = styled(RadixSlider.Thumb)`
+  display: block;
+  height: 8px;
+  width: 8px;
+  background: hsla(284, 72%, 55%, 1);
+  border-radius: 50%;
+
+  transition: background 0.25s ease;
+
+  &:hover {
+    background: hsla(284, 72%, 45%, 1);
   }
 
-  return <StyledSliderLabel {...markProps} {...labelData}></StyledSliderLabel>
-})
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px hsla(284, 72%, 45%, 0.22);
+  }
+`
 
-export const StyledSliderLabel = styled(ChakraSliderMark)`
+export const SliderText = styled.span`
+  display: block;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+`
+
+export const SliderPointMark = styled(SliderMark)`
+  height: 8px;
+  width: 8px;
+  background: hsla(261, 19%, 40%, 1);
+  border-radius: 50%;
+  transition: background-color 0.1s linear;
+  z-index: 99;
+  cursor: pointer;
+
+  &[data-highlighted] {
+    background-color: hsla(284, 72%, 55%, 1);
+  }
+`
+
+export const SliderLabelMark = styled(SliderMark)`
+  top: 0%;
+  transform: translate(-50%, -100%);
+  user-select: none;
+  pointer-events: none;
+`
+
+export const SliderThumblMark = styled(SliderMark)`
   width: 22px;
-  margin-top: 20px;
   border-radius: 4px;
   background-color: hsla(284, 72%, 55%, 1);
 
@@ -131,9 +211,9 @@ export const StyledSliderLabel = styled(ChakraSliderMark)`
   text-align: center;
   color: #ffffff;
 
-  position: relative;
-  transform: translate(-50%, -50%);
-  z-index: 2;
+  transform: translate(-50%, 100%);
+  top: 1px;
+  z-index: 1;
 
   opacity: 1;
   transition: opacity 0.5s ease;
@@ -155,62 +235,4 @@ export const StyledSliderLabel = styled(ChakraSliderMark)`
   &[data-mark-highlighted] {
     opacity: 0;
   }
-`
-
-export const SliderMarkPoint = styled.div`
-  height: 8px;
-  width: 8px;
-  background: hsla(261, 19%, 40%, 1);
-  border-radius: 50%;
-
-  position: absolute;
-  z-index: 1;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  top: 20px;
-
-  pointer-events: auto !important;
-  cursor: pointer;
-
-  [data-highlighted] & {
-    background-color: hsla(284, 72%, 55%, 1);
-  }
-`
-
-export const SliderMarkPointDisplay = styled.span`
-  pointer-events: none;
-  position: relative;
-`
-
-export const SlidderThumb = styled(ChakraSliderThumb)<{ thumbsize: number }>`
-  ${(props) => `height: ${props.thumbsize}px; width: ${props.thumbsize}px;`}
-
-  background: hsla(284, 72%, 55%, 1);
-  border-radius: 50%;
-
-  z-index: 2;
-
-  transform: translateY(-50%);
-  transition: background 0.25s ease;
-
-  &:hover {
-    background: hsla(284, 72%, 45%, 1);
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 4px hsla(284, 72%, 45%, 0.22);
-  }
-`
-
-export const SliderMainTrack = styled(ChakraSliderTrack)`
-  height: 2px;
-  background: hsla(261, 26%, 22%, 1);
-  border-radius: 9999px;
-`
-
-export const SliderFilledTrack = styled(ChakraSliderFilledTrack)`
-  height: 2px;
-  border-radius: 9999px;
-  background: hsla(284, 72%, 55%, 1);
 `
