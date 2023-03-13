@@ -3,7 +3,15 @@ import { Canvas } from '@react-three/fiber'
 // import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { AvatarPanel, BackButton, CustomPanel, NameBox, ThemePicker, ToolbarMiddle } from '@/components/EditCharacter'
+import {
+  AvatarPanel,
+  BackButton,
+  CustomPanel,
+  JoinButton,
+  NameBox,
+  ThemePicker,
+  ToolbarMiddle,
+} from '@/components/EditCharacter'
 import { PricingModal } from '@/components/Pricing'
 import { useEditCharacterStore } from '@/stores'
 
@@ -61,6 +69,7 @@ const EditCharacter = () => {
       <ThemePicker />
       <NameBox name="Hoang Tien Thinh" />
       <ToolbarMiddle />
+      <JoinButton />
     </EditCharacterContainer>
   )
 }
