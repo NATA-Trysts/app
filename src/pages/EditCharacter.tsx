@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber'
 // import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { AvatarPanel, BackButton, CustomPanel } from '@/components/EditCharacter'
+import { AvatarPanel, BackButton, CustomPanel, ThemePicker } from '@/components/EditCharacter'
 import { PricingModal } from '@/components/Pricing'
 import { useEditCharacterStore } from '@/stores'
 
@@ -58,6 +58,7 @@ const EditCharacter = () => {
       <AvatarPanel />
       <CustomPanel />
       <PricingModal isOpen={openPricingModal} setIsOpen={setOpenPricingModal} />
+      <ThemePicker />
     </EditCharacterContainer>
   )
 }

@@ -39,6 +39,9 @@ type EditCharacterState = {
 
   openPricingModal: boolean
   setOpenPricingModal: (openPricingModal: boolean) => void
+
+  theme: string
+  setTheme: (theme: string) => void
 }
 
 export const useEditCharacterStore = create<EditCharacterState>((set) => ({
@@ -115,4 +118,7 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
 
   openPricingModal: false,
   setOpenPricingModal: (openPricingModal) => set(() => ({ openPricingModal })),
+
+  theme: '#C771E1',
+  setTheme: (theme) => set(() => ({ theme })),
 }))
