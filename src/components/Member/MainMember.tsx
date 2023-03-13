@@ -40,6 +40,7 @@ export const MainMember = () => {
       collider={[1.5, 2, 1.5]}
       initialPosition={[0, 5, 0]}
       polarAngle={[0.5, Math.PI / 2]}
+      speed={6}
       onAnimationChange={dispatchAction}
       onCharacterMove={dispatchMovement}
     >

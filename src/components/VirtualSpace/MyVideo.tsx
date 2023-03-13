@@ -1,4 +1,4 @@
-import { selectPeers, useHMSStore } from '@100mslive/react-sdk'
+import { selectLocalPeer, useHMSStore } from '@100mslive/react-sdk'
 import styled from 'styled-components'
 
 import { VideoTile } from '@/components/VideoCall'
@@ -14,11 +14,11 @@ const MyVideoContainer = styled.div`
 `
 
 export const MyVideo = () => {
-  const peers = useHMSStore(selectPeers)
+  const peer = useHMSStore(selectLocalPeer)
 
   return (
     <MyVideoContainer>
-      <VideoTile peer={peers[0]} />
+      <VideoTile peer={peer} />
     </MyVideoContainer>
   )
 }
