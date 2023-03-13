@@ -5,6 +5,11 @@ type SubcategoryActiveItem = {
   itemId: number
 }
 
+export type AnimationType = {
+  id: number
+  name: string
+}
+
 type CategorySelectedItemId = Map<number, SubcategoryActiveItem[]>
 
 type EditCharacterState = {
@@ -13,6 +18,24 @@ type EditCharacterState = {
 
   categorySelectedItemIds: CategorySelectedItemId
   setCategorySelectedItemIds: (categoryId: number, subcategoryId: string, itemId: number) => void
+
+  tattooSelectedId: number
+  setTattooSelectedId: (id: number) => void
+
+  color: string
+  setColor: (color: string) => void
+
+  animationColor: {
+    colorA: string
+    colorB: string
+  }
+  setAnimationColor: (colorA: string, colorB: string) => void
+
+  animationTypeList: AnimationType[]
+  setAnimationTypeList: (animationTypeList: AnimationType[]) => void
+
+  selectedAnimationType: AnimationType
+  setSelectedAnimationType: (animationType: AnimationType) => void
 }
 
 export const useEditCharacterStore = create<EditCharacterState>((set) => ({
@@ -48,4 +71,42 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
         categorySelectedItemIds: new Map(state.categorySelectedItemIds).set(categoryId, subcategoryActiveItems),
       }
     }),
+
+  tattooSelectedId: -1,
+  setTattooSelectedId: (id) => set(() => ({ tattooSelectedId: id })),
+
+  color: '#A67BC2',
+  setColor: (color) => set(() => ({ color })),
+
+  animationColor: {
+    colorA: '#A67BC2',
+    colorB: '#A67BC2',
+  },
+  setAnimationColor: (colorA, colorB) => set(() => ({ animationColor: { colorA: colorA, colorB: colorB } })),
+
+  animationTypeList: [
+    {
+      id: 1,
+      name: 'Smooth',
+    },
+    {
+      id: 2,
+      name: 'Bounce',
+    },
+    {
+      id: 3,
+      name: 'Elastic',
+    },
+    {
+      id: 4,
+      name: 'Fluid',
+    },
+  ],
+  setAnimationTypeList: (animationTypeList) => set(() => ({ animationTypeList })),
+
+  selectedAnimationType: {
+    id: 1,
+    name: 'Smooth',
+  },
+  setSelectedAnimationType: (animationType) => set(() => ({ selectedAnimationType: animationType })),
 }))
