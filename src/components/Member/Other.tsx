@@ -2,7 +2,8 @@ import { useFrame } from '@react-three/fiber'
 import { useEffect, useRef } from 'react'
 import { Group, Quaternion, Vector3 } from 'three'
 
-import { BaseCharacterModel } from './BaseCharacterModel'
+import { BaseCharacter } from './BaseCharacter'
+// import { BaseCharacterModel } from './BaseCharacterModel'
 
 const nextPosition = new Vector3()
 const nextQuaternion = new Quaternion()
@@ -33,7 +34,10 @@ export const Other = (props: OtherProps) => {
 
   return (
     <>
-      <BaseCharacterModel ref={playerRef} action={props.action} />
+      <group ref={playerRef}>
+        <BaseCharacter action={props.action} />
+      </group>
+      {/* <BaseCharacterModel ref={playerRef} action={props.action} /> */}
       {/* <Html>
         <video />
       </Html> */}
