@@ -1,4 +1,6 @@
 export * from './AvatarPanel/AvatarPanel'
 export * from './BackButton'
 export * from './CustomPanel/CustomPanel'
+export * from './NameBox'
 export * from './ThemePicker'
+export * from './ToolbarMiddle'
