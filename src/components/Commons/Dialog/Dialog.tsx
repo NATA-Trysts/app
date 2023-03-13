@@ -65,7 +65,7 @@ export const Dialog = forwardRef<DialogRef, DialogProps>(
             onOpenAutoFocus={onOpenAutoFocus}
             onPointerDownOutside={onPointerDownOutside}
           >
-            {content}
+            <DialogContentBody>{content}</DialogContentBody>
             <RadixDialog.Close asChild>
               <CloseButton className="Button green">
                 <CrossIcon />
@@ -124,6 +124,8 @@ export const DialogContent = styled(RadixDialog.Content)`
     outline: none;
   }
 `
+
+export const DialogContentBody = styled.div``
 
 export const DialogTitle = styled(RadixDialog.Title)`
   margin: 0;

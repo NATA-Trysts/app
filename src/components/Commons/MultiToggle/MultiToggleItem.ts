@@ -8,6 +8,7 @@ export const ToggleLabel = styled.label`
   outline: 1px solid #555555;
   border-radius: 8px;
   background: transparent;
+  cursor: pointer;
 
   transition: background-color 0.25s ease, color 0.25s ease;
 
@@ -34,7 +35,6 @@ export const ToggleLableContent = styled.span`
   line-height: 19px;
   color: #696969;
   user-select: none;
-  cursor: pointer;
 `
 export const StyledToggleButton = styled(ToggleButton)`
   width: 0;

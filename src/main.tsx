@@ -16,7 +16,7 @@ const Builder = lazy(() => import('@/pages/Builder'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
 const Login = lazy(() => import('@/pages/Login'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
-const MarketPlace = lazy(() => import('@/pages/MarketPlace'))
+const MarketPlace = lazy(() => import('@/pages/MarketPlace/MarketPlace'))
 const VirtualSpace = lazy(() => import('@/pages/VirtualSpace'))
 const Create = lazy(() => import('@/pages/Create'))
 
