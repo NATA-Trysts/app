@@ -1,13 +1,16 @@
+import { forwardRef } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
 import { useEditCharacterStore } from '@/stores'
 
 import { listTattoos } from './dummyData'
+import { PlanOverlay } from './PlanOverlay'
 
 const TattooSectionContainer = styled.div`
   margin: 16px 0;
   transition: opacity 0.2s ease;
+  position: relative;
 `
 
 const ListWrapper = styled.div`
@@ -39,19 +42,18 @@ const ItemImg = styled.img`
   object-fit: cover;
 `
 
-export const TattooSection = () => {
+export const TattooSection = forwardRef<any>(function TattooSection(props, ref) {
   const [tattooSelectedId, setTattooSelectedId] = useEditCharacterStore((state) => [
     state.tattooSelectedId,
     state.setTattooSelectedId,
   ])
 
   const handleSelectTattoo = (id: number) => {
-    // if selectedId is equal to id, set selectedId to -1, else set the tattooSelectedId to id
     setTattooSelectedId(tattooSelectedId === id ? -1 : id)
   }
 
   return (
-    <TattooSectionContainer>
+    <TattooSectionContainer ref={ref}>
       <Text size="medium" weight="normal">
         Tattoo
       </Text>
@@ -64,6 +66,7 @@ export const TattooSection = () => {
           )
         })}
       </ListWrapper>
+      <PlanOverlay isShown={false} />
     </TattooSectionContainer>
   )
-}
+})

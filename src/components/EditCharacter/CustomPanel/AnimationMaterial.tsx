@@ -7,10 +7,12 @@ import { Popover } from '@/components/Popover'
 import { useEditCharacterStore } from '@/stores'
 
 import { AnimationType } from './AnimationType'
+import { PlanOverlay } from './PlanOverlay'
 
 const MaterialSectionContainer = styled.div`
   width: 100%;
-  margin: 16px 0;
+  margin-top: 32px;
+  position: relative;
   transition: opacity 0.2s ease;
 `
 
@@ -173,6 +175,7 @@ export const AnimationMaterial = () => {
           </ValueWrapper>
         </Property>
       </List>
+      <PlanOverlay isShown={true} />
     </MaterialSectionContainer>
   )
 }

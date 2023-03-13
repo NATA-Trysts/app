@@ -4,9 +4,13 @@ import styled from 'styled-components'
 import { Text } from '@/components/Commons'
 import { useEditCharacterStore } from '@/stores'
 
+import { PlanOverlay } from './PlanOverlay'
+
 const ColorPickerContainer = styled.div`
   width: 100%;
   transition: opacity 0.2s ease;
+  margin-top: 32px;
+  position: relative;
 
   .react-colorful {
     width: 100%;
@@ -51,6 +55,7 @@ export const ColorPicker = () => {
       </Title>
       <HexColorPicker color={color} onChange={setColor} />
       <HexInput type="text" value={color} onChange={handleChangeHex} />
+      <PlanOverlay isShown={false} />
     </ColorPickerContainer>
   )
 }

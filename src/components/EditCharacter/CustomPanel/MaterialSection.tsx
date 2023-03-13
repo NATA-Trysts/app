@@ -4,9 +4,12 @@ import styled from 'styled-components'
 import { ReactComponent as UploadIcon } from '@/assets/icons/thumbnail-upload.svg'
 import { Text } from '@/components/Commons'
 
+import { PlanOverlay } from './PlanOverlay'
+
 const MaterialSectionContainer = styled.div`
   width: 100%;
-  margin: 16px 0;
+  margin-top: 32px;
+  position: relative;
   transition: opacity 0.2s ease;
 `
 
@@ -104,6 +107,7 @@ export const MaterialSection = () => {
         </Overlay>
         <MaterialImage src={image} />
       </MaterialBox>
+      <PlanOverlay isShown={false} />
     </MaterialSectionContainer>
   )
 }
