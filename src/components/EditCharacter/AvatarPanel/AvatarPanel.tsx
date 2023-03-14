@@ -3,10 +3,12 @@ import styled from 'styled-components'
 import { Category } from './Category'
 import { Content } from './Content'
 
-const AvatarPanelContainer = styled.div`
+const AvatarPanelContainer = styled.div<{ bottom: number; left: number; right: number; top: number }>`
   position: absolute;
-  top: 96px;
-  left: 120px;
+  bottom: ${({ bottom }) => bottom}px;
+  left: ${({ left }) => left}px;
+  right: ${({ right }) => right}px;
+  top: ${({ top }) => top}px;
 
   width: 300px;
   height: 580px;
@@ -18,9 +20,16 @@ const AvatarPanelContainer = styled.div`
   grid-template-areas: 'category content';
 `
 
-export const AvatarPanel = () => {
+type AvatarPanelProps = {
+  top?: number
+  left?: number
+  right?: number
+  bottom?: number
+}
+
+export const AvatarPanel = ({ top = 96, left = 120, right = 0, bottom = 0 }: AvatarPanelProps) => {
   return (
-    <AvatarPanelContainer>
+    <AvatarPanelContainer bottom={bottom} left={left} right={right} top={top}>
       <Category />
       <Content />
     </AvatarPanelContainer>

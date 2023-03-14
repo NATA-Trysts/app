@@ -5,10 +5,12 @@ import { ColorPicker } from './ColorPicker'
 import { MaterialSection } from './MaterialSection'
 import { TattooSection } from './TattooSection'
 
-const CustomPanelContainer = styled.div`
+const CustomPanelContainer = styled.div<{ bottom: number; left: number; right: number; top: number }>`
   position: absolute;
-  top: 96px;
-  right: 100px;
+  top: ${({ top }) => top}px;
+  bottom: ${({ bottom }) => bottom}px;
+  right: ${({ right }) => right}px;
+  /* left: ${({ left }) => left}px; */
 
   width: 300px;
   height: 580px;
@@ -36,9 +38,16 @@ const CustomPanelContainer = styled.div`
   }
 `
 
-export const CustomPanel = () => {
+type CustomPanelProps = {
+  top?: number
+  left?: number
+  right?: number
+  bottom?: number
+}
+
+export const CustomPanel = ({ top = 96, left = 0, right = 100, bottom = 0 }: CustomPanelProps) => {
   return (
-    <CustomPanelContainer>
+    <CustomPanelContainer bottom={bottom} left={left} right={right} top={top}>
       <TattooSection />
       <ColorPicker />
       <MaterialSection />
