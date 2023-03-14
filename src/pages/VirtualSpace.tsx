@@ -50,6 +50,7 @@ const OverlayContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 80px 1fr;
   pointer-events: none;
+  overflow: hidden; // CAUTION: not sure if this is a good idea, use this for avoid scroll on mobile
 `
 
 const HeaderContainer = styled.section`
@@ -165,32 +166,31 @@ const VirtualSpace = () => {
   const hmsActions = useHMSActions()
 
   const join = async () => {
-    const response = await fetch('https://prod-in2.100ms.live/hmsapi/shtest.app.100ms.live/api/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        // eslint-disable-next-line camelcase
-        room_id: '638968d0aee54625da649a38',
-        role: 'student',
-        // eslint-disable-next-line camelcase
-        user_id: Date.now().toString(),
-      }),
-    })
-    const a = await response.json()
-    const config = {
-      userName: 'SH',
-      authToken: a.token,
-      settings: {
-        isAudioMuted: true,
-        isVideoMuted: false,
-      },
-      metaData: JSON.stringify({ city: 'Da Nang' }),
-      rememberDeviceSelection: true,
-    }
-
-    await hmsActions.join(config)
+    // const response = await fetch('https://prod-in2.100ms.live/hmsapi/shtest.app.100ms.live/api/token', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     // eslint-disable-next-line camelcase
+    //     room_id: '638968d0aee54625da649a38',
+    //     role: 'student',
+    //     // eslint-disable-next-line camelcase
+    //     user_id: Date.now().toString(),
+    //   }),
+    // })
+    // const a = await response.json()
+    // const config = {
+    //   userName: 'SH',
+    //   authToken: a.token,
+    //   settings: {
+    //     isAudioMuted: true,
+    //     isVideoMuted: false,
+    //   },
+    //   metaData: JSON.stringify({ city: 'Da Nang' }),
+    //   rememberDeviceSelection: true,
+    // }
+    // await hmsActions.join(config)
   }
 
   useEffect(() => {
@@ -200,6 +200,10 @@ const VirtualSpace = () => {
       hmsActions.leave()
     }
   }, [])
+
+  useEffect(() => {
+    console.log('virtual space re-rendered')
+  })
 
   return (
     <CustomableContainer customColor={customColor}>
