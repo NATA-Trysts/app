@@ -14,12 +14,19 @@ export const MarketPlacePage = styled.div`
 
 export const Content = styled.main`
   box-sizing: border-box;
-  width: fit-content;
-  padding: 28px 0 0;
+  height: calc(100vh - 76px);
+  padding: 0 0 0;
   margin: 0 auto;
 
   position: relative;
   top: 76px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const ContentHeader = styled.div`
@@ -27,25 +34,29 @@ export const ContentHeader = styled.div`
   height: 108px;
   margin: 0 auto;
   text-align: center;
+  margin-bottom: 24px;
 `
 
-export const ContentBody = styled.section``
-
-export const ToogleContainer = styled.div`
+export const ContentBody = styled.section`
   width: fit-content;
   margin: 0 auto;
-  padding: 24px 0;
+`
+
+export const ToogleContainer = styled.div`
+  background: hsla(260, 77%, 7%, 1);
+  margin: 0 auto;
+  padding: 1px 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 3;
 `
 
 export const ItemContainer = styled.div`
+  padding-bottom: 24px;
   display: grid;
   grid-template-columns: repeat(3, 400px);
   grid-auto-rows: 320px;
   grid-gap: 20px;
-
-  height: calc(100vh - 297px);
-  overflow-x: hidden;
-  overflow-y: auto;
 `
 
 export const ItemCard = styled.article`
@@ -55,6 +66,7 @@ export const ItemCard = styled.article`
   background-color: purple;
   overflow: hidden;
 `
+
 export const ItemImage = styled.img`
   width: 100%;
   object-fit: cover;
@@ -69,7 +81,19 @@ export const ItemImageOverlay = styled.div`
   left: 0;
 `
 
-export const ItemImageMark = styled.div`
+export const ItemChipGroup = styled.div`
+  display: flex;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  gap: 4px;
+
+  ${ItemImageOverlay}:hover & {
+    opacity: 0;
+  }
+`
+
+export const ItemImageMask = styled.div`
   width: 100%;
   height: 100%;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
@@ -86,12 +110,21 @@ export const ItemImageMark = styled.div`
   cursor: pointer;
 `
 
-export const EyeIcon = styled(EyeSvg)`
+export const PreviewIcon = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
+
+export const PreviewText = styled(Text)`
+  color: hsla(0, 3%, 87%, 1);
+`
+
+export const EyeIcon = styled(EyeSvg)``
 
 export const BuyButton = styled(GradientButton)`
   position: absolute;
@@ -107,10 +140,6 @@ export const BuyButton = styled(GradientButton)`
 
   ${ItemImageOverlay}:hover &:not(:disabled) {
     opacity: 1;
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
   }
 `
 
@@ -126,7 +155,7 @@ export const MarketPlaceText = styled(Text)`
 
 export const ItemDescription = styled.div`
   width: 376px;
-  background: rgba(200, 200, 200, 0.2);
+  background: url('/assets/noise.png'), rgba(200, 200, 200, 0.2);
   backdrop-filter: blur(10px);
   padding: 10px 12px 11px 20px;
   border-radius: 6px;
@@ -168,22 +197,7 @@ export const MarketDialogDescription = styled(DialogDescription)`
   align-items: center;
   gap: 16px;
 `
-export const MarketChip = styled.span`
-  height: 20px;
-  padding: 3px 8px;
-  border-radius: 50px;
-  border: 1px solid hsla(68, 41%, 79%, 1);
-  color: hsla(68, 41%, 79%, 1);
 
-  display: inline-block;
-  overflow: hidden;
-
-  font-weight: 500;
-  font-size: 10px;
-  line-height: 14px;
-
-  vertical-align: middle;
-`
 export const PreviewItemContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 240px);

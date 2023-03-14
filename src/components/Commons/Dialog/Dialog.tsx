@@ -103,6 +103,7 @@ export const DialogOverlay = styled(RadixDialog.Overlay)`
   position: fixed;
   inset: 0;
   animation: ${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 9999;
 `
 
 export const DialogContent = styled(RadixDialog.Content)`
@@ -149,9 +150,8 @@ export const CloseButton = styled.button`
   border-width: 0;
 
   position: absolute;
-  top: 20px;
-  right: -10px;
-  transform: translateX(100%);
+  top: 16px;
+  right: 16px;
 
   display: flex;
   align-items: center;

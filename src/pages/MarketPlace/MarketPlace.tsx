@@ -1,12 +1,15 @@
-import { useCallback, useMemo, useRef } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 
 import ItemImageWebp from '@/assets/marketplace-item.webp'
 import PreviewItemImageWebp from '@/assets/marketplace-preview-item.webp'
 import { GradientButton } from '@/components/Button'
 import { Text } from '@/components/Commons'
+import { Chip } from '@/components/Commons/Chip'
 import { Dialog, DialogRef } from '@/components/Commons/Dialog'
+import { MultiToggleOption } from '@/components/Commons/MultiToggle'
 import { Header } from '@/components/Header'
 import { SubCategoryToggle } from '@/components/SubcategoryToggle'
+import { Model } from '@/models/Model'
 
 import {
   BuyButton,
@@ -15,19 +18,20 @@ import {
   ContentHeader,
   EyeIcon,
   ItemCard,
+  ItemChipGroup,
   ItemContainer,
   ItemDescription,
   ItemImage,
   ItemImageContainer,
-  ItemImageMark,
+  ItemImageMask,
   ItemImageOverlay,
   ItemPrice,
-  MarketChip,
   MarketDialogDescription,
   MarketDialogText,
   MarketDialogTitle,
   MarketPlacePage,
   MarketPlaceText,
+  PreviewIcon,
   PreviewItemCard,
   PreviewItemColumn,
   PreviewItemContainer,
@@ -36,6 +40,7 @@ import {
   PreviewItemInfo,
   PreviewItemText,
   PreviewItemTitle,
+  PreviewText,
   ToogleContainer,
 } from './MarketPlaceItem'
 
@@ -43,6 +48,37 @@ type PreviewItem = {
   title: string
   description: string
 }
+
+function createModels(modelCollections: Array<{ amount: number; collection: string }>): Model[] {
+  let currentIndex = 0
+
+  return modelCollections.reduce<Model[]>((models, current) => {
+    const collectionModels = [...Array(current.amount)].map<Model>(() => {
+      currentIndex++
+
+      return {
+        id: currentIndex,
+        name: `${current.collection} inspiration`,
+        category: 'category 1',
+        collection: current.collection,
+        description: 'Very nice item, please trust me bro',
+        customable: { primary: 'primary', secondary: 'secondary' },
+        materials: { primary: null, secondary: null },
+        resolutions: { low: 'low', medium: 'medium' },
+        thumbnail: ItemImageWebp,
+      }
+    })
+
+    return [...models, ...collectionModels]
+  }, [])
+}
+
+const models: Model[] = createModels([
+  { amount: 3, collection: 'Nha Trang' },
+  { amount: 5, collection: 'Hoi An' },
+  { amount: 7, collection: 'Da Lat' },
+  { amount: 2, collection: 'Da Nang' },
+])
 
 const previewItems: PreviewItem[] = [
   { title: 'Duma Chair', description: 'The perfect blend of comfort and ' },
@@ -93,6 +129,7 @@ function convertItemsToMansonryColumn(items: any[], columnLength: number): Previ
 }
 
 const MarketPlace = () => {
+  const [filter, setFilter] = useState('All')
   const dialogRef = useRef<DialogRef>(null)
 
   const handleItemPreview = useCallback(() => {
@@ -126,7 +163,7 @@ const MarketPlace = () => {
       <>
         <MarketDialogTitle>
           <MarketDialogText>Nha Trang inspiration</MarketDialogText>
-          <MarketChip>Popular</MarketChip>
+          <Chip color="hsla(68, 41%, 79%, 1)">Popular</Chip>
         </MarketDialogTitle>
         <MarketDialogDescription>
           <MarketDialogText>$100</MarketDialogText>
@@ -137,34 +174,55 @@ const MarketPlace = () => {
     )
   }, [])
 
-  const items = useMemo(() => {
-    return [...Array(50).keys()].map((_, index) => {
-      return (
-        <ItemCard key={`item-${index}`}>
-          <ItemImageContainer>
-            <ItemImage src={ItemImageWebp} />
-            <ItemImageOverlay>
-              <BuyButton>Buy</BuyButton>
-              <ItemImageMark onClick={handleItemPreview}>
-                <EyeIcon />
-              </ItemImageMark>
-            </ItemImageOverlay>
-
-            <ItemDescription>
-              <MarketPlaceText size="medium" weight="normal">
-                Nha Trang inspiration
-              </MarketPlaceText>
-              <ItemPrice>
-                <MarketPlaceText size="medium" weight="normal">
-                  $20
-                </MarketPlaceText>
-              </ItemPrice>
-            </ItemDescription>
-          </ItemImageContainer>
-        </ItemCard>
-      )
+  const collectionToogleOptions = useMemo(() => {
+    //use Set to remove duplicate collections
+    const collections = [...new Set(models.map((model) => model.collection))]
+    const collectionOptions = collections.map<MultiToggleOption>((collection) => {
+      return { value: collection, display: collection }
     })
-  }, [handleItemPreview])
+
+    return [{ value: 'All', display: 'All' }, ...collectionOptions]
+  }, [])
+
+  const items = useMemo(() => {
+    return models
+      .filter((model) => filter === 'All' || model.collection === filter)
+      .map((model) => {
+        return (
+          <ItemCard key={`item-${model.id}`}>
+            <ItemImageContainer>
+              <ItemImage src={ItemImageWebp} />
+              <ItemImageOverlay>
+                <ItemChipGroup>
+                  <Chip color="hsla(0, 82%, 59%, 1)">Hot 🔥</Chip>
+                  <Chip color="hsla(0, 32%, 71%, 1)">-25%</Chip>
+                </ItemChipGroup>
+                <BuyButton>Buy</BuyButton>
+                <ItemImageMask onClick={handleItemPreview}>
+                  <PreviewIcon>
+                    <EyeIcon />
+                    <PreviewText size="small" weight="normal">
+                      Preview
+                    </PreviewText>
+                  </PreviewIcon>
+                </ItemImageMask>
+              </ItemImageOverlay>
+
+              <ItemDescription>
+                <MarketPlaceText size="medium" weight="normal">
+                  {model.name}
+                </MarketPlaceText>
+                <ItemPrice>
+                  <MarketPlaceText size="medium" weight="normal">
+                    $20
+                  </MarketPlaceText>
+                </ItemPrice>
+              </ItemDescription>
+            </ItemImageContainer>
+          </ItemCard>
+        )
+      })
+  }, [handleItemPreview, filter])
 
   return (
     <MarketPlacePage>
@@ -178,12 +236,9 @@ const MarketPlace = () => {
         <ContentBody>
           <ToogleContainer>
             <SubCategoryToggle
-              options={[
-                { value: 'all', display: 'All' },
-                { value: 'office-1', display: 'Office' },
-                { value: 'office-2', display: 'Office' },
-              ]}
-              selected={'all'}
+              handleSelectedChange={(value) => setFilter(value)}
+              options={collectionToogleOptions}
+              selected={collectionToogleOptions[0].value}
             ></SubCategoryToggle>
           </ToogleContainer>
           <ItemContainer>{items}</ItemContainer>

@@ -50,6 +50,8 @@ export const StyledToggleButton = styled(ToggleButton)`
 export const ToggleContainer = styled.div``
 
 export const ToggleGroup = styled.div`
+  width: fit-content;
+  margin: 0 auto;
   display: flex;
   gap: 8px;
 `
