@@ -8,7 +8,7 @@ import { PlanOverlay } from './PlanOverlay'
 
 const MaterialSectionContainer = styled.div`
   width: 100%;
-  margin-top: 32px;
+  margin: 32px 0;
   position: relative;
   transition: opacity 0.2s ease;
 `

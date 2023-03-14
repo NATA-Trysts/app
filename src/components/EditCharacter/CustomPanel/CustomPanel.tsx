@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 
 import { AnimationMaterial } from './AnimationMaterial'
@@ -45,7 +46,7 @@ type CustomPanelProps = {
   bottom?: number
 }
 
-export const CustomPanel = ({ top = 96, left = 0, right = 100, bottom = 0 }: CustomPanelProps) => {
+export const CustomPanel = React.memo(({ top = 96, left = 0, right = 100, bottom = 0 }: CustomPanelProps) => {
   return (
     <CustomPanelContainer bottom={bottom} left={left} right={right} top={top}>
       <TattooSection />
@@ -54,4 +55,4 @@ export const CustomPanel = ({ top = 96, left = 0, right = 100, bottom = 0 }: Cus
       <AnimationMaterial />
     </CustomPanelContainer>
   )
-}
+})

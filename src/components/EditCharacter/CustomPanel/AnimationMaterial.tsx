@@ -11,7 +11,7 @@ import { PlanOverlay } from './PlanOverlay'
 
 const MaterialSectionContainer = styled.div`
   width: 100%;
-  margin-top: 32px;
+  margin: 16px 0;
   position: relative;
   transition: opacity 0.2s ease;
 `
@@ -92,6 +92,7 @@ export const AnimationMaterial = () => {
 
   const [inputColorA, setInputColorA] = useState(animationColor.colorA)
   const [inputColorB, setInputColorB] = useState(animationColor.colorB)
+  const [isShownPlanOverlay, setIsShownPlanOverlay] = useState(false)
 
   const handlePickColorA = (color: string) => {
     setAnimationColor(color, animationColor.colorB)
@@ -128,7 +129,10 @@ export const AnimationMaterial = () => {
   }
 
   return (
-    <MaterialSectionContainer>
+    <MaterialSectionContainer
+      onMouseEnter={() => setIsShownPlanOverlay(true)}
+      onMouseLeave={() => setIsShownPlanOverlay(false)}
+    >
       <Title size="medium" weight="normal">
         Animation Material
       </Title>
@@ -175,7 +179,7 @@ export const AnimationMaterial = () => {
           </ValueWrapper>
         </Property>
       </List>
-      <PlanOverlay isShown={true} />
+      <PlanOverlay isShown={isShownPlanOverlay} />
     </MaterialSectionContainer>
   )
 }

@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { HexColorPicker } from 'react-colorful'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
+import { useColorPicker } from '@/hooks'
 import { useEditCharacterStore } from '@/stores'
 
 import { PlanOverlay } from './PlanOverlay'
@@ -33,18 +35,42 @@ const HexInput = styled.input`
   color: #f7f6f6;
 `
 
-const hexRegex = /^#[0-9A-Fa-f]{6}$/
-
 export const ColorPicker = () => {
   const [color, setColor] = useEditCharacterStore((state) => [state.color, state.setColor])
+  const [colorInput, setColorInput] = useState(color)
+
+  const { applyPatternToString, checkValidHex, formatHex } = useColorPicker()
+
+  const handlePickColor = (color: string) => {
+    setColor(color)
+    setColorInput(color)
+  }
 
   const handleChangeHex = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (hexRegex.test(e.target.value)) {
-      setColor(e.target.value)
-    }
+    setColorInput(e.target.value)
+  }
 
-    if (e.target.value.length <= 7) {
-      setColor(e.target.value)
+  const handleBlur = () => {
+    const colorFromInput = applyPatternToString(colorInput)
+
+    if (checkValidHex(colorFromInput)) {
+      setColor(formatHex(colorFromInput))
+      setColorInput(formatHex(colorFromInput))
+    } else {
+      setColorInput(formatHex(color))
+    }
+  }
+
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const colorFromInput = applyPatternToString(colorInput)
+
+      if (checkValidHex(colorFromInput)) {
+        setColor(formatHex(colorFromInput))
+        setColorInput(formatHex(colorFromInput))
+      } else {
+        setColorInput(formatHex(color))
+      }
     }
   }
 
@@ -53,8 +79,8 @@ export const ColorPicker = () => {
       <Title size="medium" weight="normal">
         Color
       </Title>
-      <HexColorPicker color={color} onChange={setColor} />
-      <HexInput type="text" value={color} onChange={handleChangeHex} />
+      <HexColorPicker color={color} onChange={handlePickColor} />
+      <HexInput type="text" value={colorInput} onBlur={handleBlur} onChange={handleChangeHex} onKeyDown={handleEnter} />
       <PlanOverlay isShown={false} />
     </ColorPickerContainer>
   )
