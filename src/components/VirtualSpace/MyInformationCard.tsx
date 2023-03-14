@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { Text } from '@/components/Commons'
 import { MyInformationCard as InformationCard } from '@/components/MyInformationCard'
 import { Option, Popover } from '@/components/Popover'
-import { useAppStore } from '@/stores'
+import { useAppStore, useVirtualSpaceStore } from '@/stores'
 
 const MemberInforContainer = styled.div<{ background: string }>`
   padding: 8px;
@@ -57,6 +57,13 @@ const CustomOption = styled(Option)<{ hoverBackground?: string }>`
 
 export const MyInformationCard: FC<MyInformationCardProps> = ({ name, handler, avatar }) => {
   const color = useAppStore((state) => state.customColor)
+  const [isEditAvatar, setIsEditAvatar] = useVirtualSpaceStore((state) => [state.isEditAvatar, state.setIsEditAvatar])
+
+  const h = () => {
+    console.log('handle change edit avatar', isEditAvatar)
+
+    setIsEditAvatar(!isEditAvatar)
+  }
 
   return (
     <Popover
@@ -79,13 +86,8 @@ export const MyInformationCard: FC<MyInformationCardProps> = ({ name, handler, a
           <Gap />
           <CustomOption
             hoverBackground={`hsla(${customColorHueMapping[color]}, 65%, 66%, 1)`}
-            title="Change name"
-            onClick={() => {}}
-          />
-          <CustomOption
-            hoverBackground={`hsla(${customColorHueMapping[color]}, 65%, 66%, 1)`}
             title="Edit avatar"
-            onClick={() => {}}
+            onClick={h}
           />
           <CustomOption customHoverBackgroundColor="#FC677B" title="Log out" onClick={() => {}} />
         </MemberInforContainer>

@@ -17,6 +17,9 @@ type VirtualSpaceState = {
 
   authToken: string
   setAuthToken: (authToken: string) => void
+
+  isEditAvatar: boolean
+  setIsEditAvatar: (isEditAvatar: boolean) => void
 }
 
 export const useVirtualSpaceStore = create<VirtualSpaceState>()(
@@ -36,6 +39,9 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()(
 
       authToken: '',
       setAuthToken: (authToken: string) => set({ authToken }),
+
+      isEditAvatar: false,
+      setIsEditAvatar: (isEditAvatar: boolean) => set({ isEditAvatar }),
     }),
     {
       name: 'virtual-space-storage',

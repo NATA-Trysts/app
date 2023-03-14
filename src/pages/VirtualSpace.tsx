@@ -1,5 +1,3 @@
-import { useHMSActions } from '@100mslive/react-sdk'
-import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -12,7 +10,6 @@ import {
   MyInformationCard,
   MyVideo,
   Network,
-  Scene,
   SingleMemberCard,
   ToolbarMiddle,
   ToolbarRight,
@@ -162,51 +159,51 @@ const VirtualSpace = () => {
     },
   }
 
-  const hmsActions = useHMSActions()
+  // const hmsActions = useHMSActions()
 
-  const join = async () => {
-    const response = await fetch('https://prod-in2.100ms.live/hmsapi/shtest.app.100ms.live/api/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        // eslint-disable-next-line camelcase
-        room_id: '638968d0aee54625da649a38',
-        role: 'student',
-        // eslint-disable-next-line camelcase
-        user_id: Date.now().toString(),
-      }),
-    })
-    const a = await response.json()
-    const config = {
-      userName: 'SH',
-      authToken: a.token,
-      settings: {
-        isAudioMuted: true,
-        isVideoMuted: false,
-      },
-      metaData: JSON.stringify({ city: 'Da Nang' }),
-      rememberDeviceSelection: true,
-    }
+  // const join = async () => {
+  //   const response = await fetch('https://prod-in2.100ms.live/hmsapi/shtest.app.100ms.live/api/token', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       // eslint-disable-next-line camelcase
+  //       room_id: '638968d0aee54625da649a38',
+  //       role: 'student',
+  //       // eslint-disable-next-line camelcase
+  //       user_id: Date.now().toString(),
+  //     }),
+  //   })
+  //   const a = await response.json()
+  //   const config = {
+  //     userName: 'SH',
+  //     authToken: a.token,
+  //     settings: {
+  //       isAudioMuted: true,
+  //       isVideoMuted: false,
+  //     },
+  //     metaData: JSON.stringify({ city: 'Da Nang' }),
+  //     rememberDeviceSelection: true,
+  //   }
 
-    await hmsActions.join(config)
-  }
+  //   await hmsActions.join(config)
+  // }
 
-  useEffect(() => {
-    join()
+  // useEffect(() => {
+  //   join()
 
-    return () => {
-      hmsActions.leave()
-    }
-  }, [])
+  //   return () => {
+  //     hmsActions.leave()
+  //   }
+  // }, [])
 
   return (
     <CustomableContainer customColor={customColor}>
       <MultitabDetect fallback={<MultiTabWarning />}>
         <Container customColor={customColor}>
           <Network spaceId={spaceId} />
-          <Scene />
+          {/* <Scene /> */}
           <OverlayContainer>
             <HeaderContainer>
               <FullLogo />
