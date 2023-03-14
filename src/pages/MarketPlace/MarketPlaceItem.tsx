@@ -52,6 +52,7 @@ export const ToogleContainer = styled.div`
 `
 
 export const ItemContainer = styled.div`
+  min-height: 684px;
   padding-bottom: 24px;
   display: grid;
   grid-template-columns: repeat(3, 400px);
