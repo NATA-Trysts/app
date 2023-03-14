@@ -14,6 +14,8 @@ const createContainer = () => {
   element.style.left = '0'
   element.style.width = '100%'
   element.style.height = '100%'
+  // max value of z-index
+  element.style.zIndex = '2147483646'
   document.body.appendChild(element)
 
   return element

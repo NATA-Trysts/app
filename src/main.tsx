@@ -29,10 +29,6 @@ const ROLES = {
   admin: 2000,
 }
 
-// const Layout = () => {
-//   return <Outlet />
-// }
-
 const Guard = () => {
   return (
     <Routes>
@@ -52,9 +48,9 @@ const Guard = () => {
         <Route
           element={
             <Suspense fallback={<span>loading</span>}>
-              {/* <MobileDetect>
+              <MobileDetect>
                 <Create />
-              </MobileDetect> */}
+              </MobileDetect>
               <Create />
             </Suspense>
           }
