@@ -8,10 +8,10 @@ const Video = styled.video`
   background: var(--color-5);
 `
 
-export const VideoTile = ({ peer }: { peer: HMSPeer }) => {
+export const VideoTile = ({ peer }: { peer: HMSPeer | undefined }) => {
   const { videoRef } = useVideo({
     trackId: peer?.videoTrack,
   })
 
-  return <Video ref={videoRef} autoPlay muted playsInline></Video>
+  return <>{peer ? <Video ref={videoRef} autoPlay muted playsInline></Video> : null}</>
 }
