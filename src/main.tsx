@@ -14,8 +14,10 @@ import NotAuthorize from './pages/NotAuthorize'
 
 const Builder = lazy(() => import('@/pages/Builder'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
+const EditCharacter = lazy(() => import('@/pages/EditCharacter'))
 const Login = lazy(() => import('@/pages/Login'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
+const MarketPlace = lazy(() => import('@/pages/MarketPlace/MarketPlace'))
 const VirtualSpace = lazy(() => import('@/pages/VirtualSpace'))
 const Create = lazy(() => import('@/pages/Create'))
 const Pricing = lazy(() => import('@/pages/Pricing'))
@@ -51,7 +53,6 @@ const Guard = () => {
               <MobileDetect>
                 <Create />
               </MobileDetect>
-              <Create />
             </Suspense>
           }
           path="/create"
@@ -97,6 +98,17 @@ const Guard = () => {
             />
           </Route>
         </Route>
+        <Route>
+          <Route element={<EditCharacter />} path="/character" />
+        </Route>
+        <Route
+          element={
+            <MobileDetect>
+              <MarketPlace />
+            </MobileDetect>
+          }
+          path="/marketplace"
+        />
 
         <Route element={<NotAuthorize />} path="/unauth" />
         <Route element={<NotFound />} path="*" />

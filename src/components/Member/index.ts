@@ -1,1 +1,3 @@
-export * from './BaseCharacterModel'
+export * from './BaseCharacter'
+export * from './MainMember'
+export * from './Other'
