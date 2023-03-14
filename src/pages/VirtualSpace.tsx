@@ -1,3 +1,5 @@
+import { useHMSActions } from '@100mslive/react-sdk'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -7,17 +9,18 @@ import { CustomableContainer } from '@/components/Commons'
 import { MultitabDetect, MultiTabWarning } from '@/components/MultitabDetect'
 import { UtilitySection } from '@/components/UtilitySection'
 import {
+  CustomCharacterPanel,
   MyInformationCard,
   MyVideo,
   Network,
   SingleMemberCard,
   ToolbarMiddle,
   ToolbarRight,
-  VirtualSpaceNameCard,
 } from '@/components/VirtualSpace'
-import { FullLogo } from '@/components/VirtualSpace/FullLogo'
 import { truncateText } from '@/libs'
 import { useAppStore, useVirtualSpaceStore } from '@/stores'
+
+import { Header } from './Header'
 
 //#region Styles
 const Container = styled(CustomableContainer)`
@@ -47,14 +50,7 @@ const OverlayContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 80px 1fr;
   pointer-events: none;
-`
-
-const HeaderContainer = styled.section`
-  pointer-events: auto;
-  grid-area: header;
-  padding: 16px;
-  display: flex;
-  gap: 8px;
+  overflow: hidden; // CAUTION: not sure if this is a good idea, use this for avoid scroll on mobile
 `
 
 const LeftSideContainer = styled.section`
@@ -159,44 +155,44 @@ const VirtualSpace = () => {
     },
   }
 
-  // const hmsActions = useHMSActions()
+  const hmsActions = useHMSActions()
 
-  // const join = async () => {
-  //   const response = await fetch('https://prod-in2.100ms.live/hmsapi/shtest.app.100ms.live/api/token', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       // eslint-disable-next-line camelcase
-  //       room_id: '638968d0aee54625da649a38',
-  //       role: 'student',
-  //       // eslint-disable-next-line camelcase
-  //       user_id: Date.now().toString(),
-  //     }),
-  //   })
-  //   const a = await response.json()
-  //   const config = {
-  //     userName: 'SH',
-  //     authToken: a.token,
-  //     settings: {
-  //       isAudioMuted: true,
-  //       isVideoMuted: false,
-  //     },
-  //     metaData: JSON.stringify({ city: 'Da Nang' }),
-  //     rememberDeviceSelection: true,
-  //   }
+  const join = async () => {
+    const response = await fetch('https://prod-in2.100ms.live/hmsapi/shtest.app.100ms.live/api/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        // eslint-disable-next-line camelcase
+        room_id: '638968d0aee54625da649a38',
+        role: 'student',
+        // eslint-disable-next-line camelcase
+        user_id: Date.now().toString(),
+      }),
+    })
+    const a = await response.json()
+    const config = {
+      userName: 'SH',
+      authToken: a.token,
+      settings: {
+        isAudioMuted: true,
+        isVideoMuted: false,
+      },
+      metaData: JSON.stringify({ city: 'Da Nang' }),
+      rememberDeviceSelection: true,
+    }
 
-  //   await hmsActions.join(config)
-  // }
+    await hmsActions.join(config)
+  }
 
-  // useEffect(() => {
-  //   join()
+  useEffect(() => {
+    join()
 
-  //   return () => {
-  //     hmsActions.leave()
-  //   }
-  // }, [])
+    return () => {
+      hmsActions.leave()
+    }
+  }, [])
 
   return (
     <CustomableContainer customColor={customColor}>
@@ -205,10 +201,7 @@ const VirtualSpace = () => {
           <Network spaceId={spaceId} />
           {/* <Scene /> */}
           <OverlayContainer>
-            <HeaderContainer>
-              <FullLogo />
-              <VirtualSpaceNameCard name="Son Ha's Wedding " spaceId="123" />
-            </HeaderContainer>
+            <Header />
             <LeftSideContainer>
               <LeftSideWrapper>
                 <MyVideo />
@@ -273,6 +266,8 @@ const VirtualSpace = () => {
               )}
               <ToolbarRight />
             </RightSideContainer>
+
+            <CustomCharacterPanel />
           </OverlayContainer>
         </Container>
       </MultitabDetect>

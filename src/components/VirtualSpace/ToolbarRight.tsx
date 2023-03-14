@@ -4,17 +4,22 @@ import { ReactComponent as Logout } from '@/assets/icons/logout.svg'
 import { ReactComponent as People } from '@/assets/icons/people.svg'
 import { ReactComponent as Settingc } from '@/assets/icons/setting-c.svg'
 import { Text } from '@/components/Commons'
-import { Seprator, ToolbarContainer, ToolbarItem, WithTooltip } from '@/components/Toolbar'
+import { AnimatedToolbarContainer, CustomToolbarItem, ToolbarItem, WithTooltip } from '@/components/Toolbar'
 import { useVirtualSpaceStore } from '@/stores'
 
 export const ToolbarRight = () => {
-  const [selectedUltility, setSelectedUltility] = useVirtualSpaceStore((state) => [
+  const [selectedUltility, setSelectedUltility, isEditAvatar] = useVirtualSpaceStore((state) => [
     state.selectedUltility,
     state.setSelectedUltility,
+    state.isEditAvatar,
   ])
 
   return (
-    <ToolbarContainer>
+    <AnimatedToolbarContainer
+      animate={{
+        y: isEditAvatar ? 70 : 0,
+      }}
+    >
       <ToolbarItem>
         <WithTooltip
           active={selectedUltility === 'chat'}
@@ -25,7 +30,7 @@ export const ToolbarRight = () => {
           <Chat />
         </WithTooltip>
       </ToolbarItem>
-      <ToolbarItem>
+      <CustomToolbarItem>
         <WithTooltip
           active={selectedUltility === 'member'}
           content="Member"
@@ -37,8 +42,8 @@ export const ToolbarRight = () => {
             888
           </Text>
         </WithTooltip>
-      </ToolbarItem>
-      <ToolbarItem>
+      </CustomToolbarItem>
+      <CustomToolbarItem>
         <WithTooltip
           active={selectedUltility === 'setting'}
           content="Setting"
@@ -47,8 +52,8 @@ export const ToolbarRight = () => {
         >
           <Settingc />
         </WithTooltip>
-      </ToolbarItem>
-      <ToolbarItem>
+      </CustomToolbarItem>
+      <CustomToolbarItem>
         <WithTooltip
           active={selectedUltility === 'info'}
           content="Info"
@@ -57,13 +62,12 @@ export const ToolbarRight = () => {
         >
           <Info />
         </WithTooltip>
-      </ToolbarItem>
-      <Seprator />
-      <ToolbarItem>
+      </CustomToolbarItem>
+      <CustomToolbarItem>
         <WithTooltip content="Leave" customHoverColor="#FC677B" id="leave">
           <Logout />
         </WithTooltip>
-      </ToolbarItem>
-    </ToolbarContainer>
+      </CustomToolbarItem>
+    </AnimatedToolbarContainer>
   )
 }

@@ -1,6 +1,7 @@
 export * from './app'
 export * from './builder'
 export * from './dashboard'
+export * from './editCharacter'
 export * from './login'
 export * from './member'
 export * from './network'

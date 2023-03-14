@@ -1,5 +1,6 @@
 import { OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
+import { motion } from 'framer-motion'
 import { FC } from 'react'
 import styled from 'styled-components'
 
@@ -8,6 +9,7 @@ import { MyInformationCard as InformationCard } from '@/components/MyInformation
 import { Option, Popover } from '@/components/Popover'
 import { useAppStore, useVirtualSpaceStore } from '@/stores'
 
+//#region STYLES
 const MemberInforContainer = styled.div<{ background: string }>`
   padding: 8px;
   border-radius: 12px;
@@ -35,7 +37,7 @@ const customColorHueMapping = {
   blue: 216,
 }
 
-const CustomInformationCard = styled.div`
+const CustomInformationCard = styled(motion.div)`
   display: flex;
   width: 200px;
 `
@@ -54,14 +56,13 @@ const CustomOption = styled(Option)<{ hoverBackground?: string }>`
     background: ${(props) => props.hoverBackground};
   }
 `
+//#endregion
 
 export const MyInformationCard: FC<MyInformationCardProps> = ({ name, handler, avatar }) => {
   const color = useAppStore((state) => state.customColor)
   const [isEditAvatar, setIsEditAvatar] = useVirtualSpaceStore((state) => [state.isEditAvatar, state.setIsEditAvatar])
 
   const h = () => {
-    console.log('handle change edit avatar', isEditAvatar)
-
     setIsEditAvatar(!isEditAvatar)
   }
 
@@ -95,7 +96,11 @@ export const MyInformationCard: FC<MyInformationCardProps> = ({ name, handler, a
       side="right"
       sideOffset={12}
     >
-      <CustomInformationCard>
+      <CustomInformationCard
+        animate={{
+          y: isEditAvatar ? 100 : 0,
+        }}
+      >
         <InformationCard avatar={avatar} handler={handler} name={name} />
       </CustomInformationCard>
     </Popover>

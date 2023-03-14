@@ -4,11 +4,12 @@ import { SearchBar } from '@/components/Commons/SearchBar'
 
 export const HeaderContainer = styled.div`
   height: 76px;
-  background-color: rgba(18, 19, 22, 0.3);
+  background: rgba(9, 1, 24, 0.1);
   padding: 15px 35px 13px;
   display: flex;
   align-items: center;
   position: relative;
+  backdrop-filter: blur(15px);
 `
 
 export const HeaderButtons = styled.div`
