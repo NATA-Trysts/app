@@ -1,11 +1,13 @@
 import styled from 'styled-components'
 
-export type CustomColor = 'purple' | 'green' | 'blue'
+export type CustomColor = 'purple' | 'green' | 'blue' | 'yellow' | 'pink'
 
-const customColorHueMapping = {
-  purple: 291,
+export const customColorHueMapping = {
+  pink: 291,
   green: 137,
   blue: 216,
+  yellow: 36,
+  purple: 256,
 }
 
 const handleCustomColor = (color: CustomColor) => customColorHueMapping[color]

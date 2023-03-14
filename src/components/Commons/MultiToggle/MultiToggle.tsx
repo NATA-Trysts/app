@@ -45,7 +45,7 @@ export const MultiToggle = forwardRef<MultiToggleRef, MultiToggleProps>(
       (option: MultiToggleOption) => {
         if (!selectedOption) return false
 
-        return option.value == selectedOption.value
+        return option.value === selectedOption.value
       },
       [selectedOption],
     )
