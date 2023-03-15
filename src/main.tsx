@@ -11,6 +11,7 @@ import { PersistLogin, RequireAuth } from './components/Authentication'
 import { MobileDetect } from './components/MobileDetect'
 import { AuthProvider } from './context/AuthProvider'
 import NotAuthorize from './pages/NotAuthorize'
+import DashboardSkeleton from './pages/Skeleton/DashboardSkeleton'
 
 const Builder = lazy(() => import('@/pages/Builder'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
@@ -70,7 +71,7 @@ const Guard = () => {
           <Route>
             <Route
               element={
-                <Suspense fallback={<span>loading</span>}>
+                <Suspense fallback={<DashboardSkeleton />}>
                   <Dashboard />
                 </Suspense>
               }

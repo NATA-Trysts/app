@@ -2,6 +2,16 @@ import styled from 'styled-components'
 
 import { SkeletonItem, SkeletonTheme } from '@/components/Skeleton'
 
+const SkeletonContainer = styled.div<{ isExpanded: boolean }>`
+  background: ${({ isExpanded }) => (isExpanded ? '#212225' : 'transparent')};
+  border-radius: 8px;
+  padding: ${({ isExpanded }) => (isExpanded ? '4px' : '0')};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
 const MyInformation = styled.div`
   display: flex;
   align-items: center;
@@ -13,15 +23,18 @@ const TextSection = styled.div``
 const Character = styled.div`
   margin-top: 12px;
   margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 type SkeletonProps = {
   isExpanded: boolean
 }
 
-export const Skeleton = ({ isExpanded }: SkeletonProps) => {
+export const ProfileSkeleton = ({ isExpanded }: SkeletonProps) => {
   return (
-    <>
+    <SkeletonContainer isExpanded={isExpanded}>
       {isExpanded ? (
         <SkeletonTheme baseColor="#838383" highlightColor="#cac9c9">
           <MyInformation>
@@ -40,6 +53,6 @@ export const Skeleton = ({ isExpanded }: SkeletonProps) => {
           <SkeletonItem circle height={40} width={40} />
         </SkeletonTheme>
       )}
-    </>
+    </SkeletonContainer>
   )
 }

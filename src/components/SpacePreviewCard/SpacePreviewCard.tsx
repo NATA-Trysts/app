@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -6,7 +6,6 @@ import { Space as SpaceType, useDashboardStore } from '@/stores'
 
 import { CardBackgroundShadow } from './CardBackgroundShadow'
 import { PreviewCardContent } from './PreviewCardContent'
-import { Skeleton } from './Skeleton'
 
 const SpacePreviewCardContainer = styled.div`
   position: relative;
@@ -31,8 +30,6 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
     state.setSelectedSpacePreview,
   ])
   const [isHovered, setIsHovered] = useState(false)
-  const [isLoading, setIsLoading] = useState(true) // for testing skeleton
-
   const navigate = useNavigate()
 
   const handleClick = () => {
@@ -51,14 +48,6 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
     }
   }
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsLoading(false)
-    }, 1000)
-
-    return () => clearTimeout(timeout)
-  }, [])
-
   return (
     <SpacePreviewCardContainer
       onClick={handleClick}
@@ -66,26 +55,20 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {isLoading ? (
-        <Skeleton />
-      ) : (
-        <>
-          <CardBackgroundShadow isActive={item.id === selectedSpacePreview?.id} isHovered={isHovered} />
-          <PreviewCardContent
-            imageUrl={imageUrl}
-            isActive={item.id === selectedSpacePreview?.id}
-            isHovered={isHovered}
-            spaceAuthorId={item.authorId || '1234'} // temp
-            spaceId={item.id}
-            subtitle={subtitle}
-            title={title}
-            onClickThreeDots={(e) => {
-              e.stopPropagation()
-              setSelectedSpacePreview(item)
-            }}
-          />
-        </>
-      )}
+      <CardBackgroundShadow isActive={item.id === selectedSpacePreview?.id} isHovered={isHovered} />
+      <PreviewCardContent
+        imageUrl={imageUrl}
+        isActive={item.id === selectedSpacePreview?.id}
+        isHovered={isHovered}
+        spaceAuthorId={item.authorId || '1234'} // temp
+        spaceId={item.id}
+        subtitle={subtitle}
+        title={title}
+        onClickThreeDots={(e) => {
+          e.stopPropagation()
+          setSelectedSpacePreview(item)
+        }}
+      />
     </SpacePreviewCardContainer>
   )
 }

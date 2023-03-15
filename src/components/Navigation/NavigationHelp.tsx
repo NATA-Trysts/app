@@ -6,8 +6,6 @@ import { Text } from '@/components/Commons'
 import { FILTER_ICON_TO_WHITE } from '@/libs/constants'
 import { useDashboardStore } from '@/stores'
 
-import { Skeleton } from './Skeleton/NavigationItemSkeleton'
-
 const HelpTitle = styled(Text)<{ isDisplayed: boolean }>`
   display: ${({ isDisplayed }) => (isDisplayed ? 'block' : 'none')};
   margin-left: 12px;
@@ -48,15 +46,9 @@ const HelpWrapper = styled.div<{ isDisplayed: boolean }>`
   align-items: center;
 `
 
-const SkeletonWrapper = styled.div`
-  width: 100%;
-  margin-top: 12px;
-`
-
 export const NavigationHelp = () => {
   const isExpanded = useDashboardStore((state) => state.isExpanded)
   const [isDisplayed, setIsDisplayed] = useState(isExpanded)
-  const [isLoading, setIsLoading] = useState(true)
 
   // delay display of help title to prevent flickering
   useEffect(() => {
@@ -67,27 +59,14 @@ export const NavigationHelp = () => {
     }
   }, [isExpanded])
 
-  // TESTING SKELETON
-  useEffect(() => {
-    setTimeout(() => setIsLoading(true), 3000)
-  }, [])
-
   return (
-    <>
-      {isLoading ? (
-        <SkeletonWrapper style={{ marginTop: '12px' }}>
-          <Skeleton />
-        </SkeletonWrapper>
-      ) : (
-        <NavigationHelpContainer>
-          <HelpWrapper isDisplayed={isDisplayed}>
-            <HelpIcon />
-            <HelpTitle isDisplayed={isDisplayed} size="medium" weight="lighter">
-              Help & Feedback
-            </HelpTitle>
-          </HelpWrapper>
-        </NavigationHelpContainer>
-      )}
-    </>
+    <NavigationHelpContainer>
+      <HelpWrapper isDisplayed={isDisplayed}>
+        <HelpIcon />
+        <HelpTitle isDisplayed={isDisplayed} size="medium" weight="lighter">
+          Help & Feedback
+        </HelpTitle>
+      </HelpWrapper>
+    </NavigationHelpContainer>
   )
 }

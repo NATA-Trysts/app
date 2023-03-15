@@ -8,8 +8,6 @@ import { Text } from '@/components/Commons'
 import { FILTER_ICON_TO_WHITE } from '@/libs/constants'
 import { DashboardOption as DashboardOptionType, useDashboardStore } from '@/stores'
 
-import { Skeleton } from './Skeleton/NavigationItemSkeleton'
-
 const NavigationItemsContainer = styled.div``
 
 const List = styled.div`
@@ -102,7 +100,6 @@ export const NavigationItems = () => {
       isActive: false,
     },
   ])
-  const [isLoading, setIsLoading] = useState(true)
 
   // delay display of title to prevent flickering
   useEffect(() => {
@@ -132,11 +129,6 @@ export const NavigationItems = () => {
     )
   }, [dashboardOption])
 
-  // TESTING SKELETON ONLY
-  useEffect(() => {
-    setTimeout(() => setIsLoading(true), 3000)
-  }, [])
-
   const handleItemClick = (id: DashboardOptionType) => {
     setDashboardOption(id)
   }
@@ -145,20 +137,14 @@ export const NavigationItems = () => {
     <NavigationItemsContainer>
       <List>
         {listItems.map((item) => (
-          <div key={item.id}>
-            {isLoading ? (
-              <Skeleton key={item.id} />
-            ) : (
-              <Item key={item.id} isActive={item.isActive} onClick={() => handleItemClick(item.id)}>
-                <ItemWrapper isDisplayed={isDisplayed}>
-                  {item.icon}
-                  <Title isActive={item.isActive} isDisplayed={isDisplayed} size="medium" weight="lighter">
-                    {item.title}
-                  </Title>
-                </ItemWrapper>
-              </Item>
-            )}
-          </div>
+          <Item key={item.id} isActive={item.isActive} onClick={() => handleItemClick(item.id)}>
+            <ItemWrapper isDisplayed={isDisplayed}>
+              {item.icon}
+              <Title isActive={item.isActive} isDisplayed={isDisplayed} size="medium" weight="lighter">
+                {item.title}
+              </Title>
+            </ItemWrapper>
+          </Item>
         ))}
       </List>
     </NavigationItemsContainer>

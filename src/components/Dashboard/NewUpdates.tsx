@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
-import { SkeletonItem, SkeletonTheme } from '@/components/Skeleton'
 
 const NewUpdateContainer = styled.section`
   width: 100%;
@@ -33,16 +31,8 @@ const UpdateContentImage = styled.img`
 `
 
 export const NewUpdates = () => {
-  const [isLoading, setIsLoading] = useState(true)
-
   // temporary fixed image
   const updateImage = 'https://cdn.pixabay.com/photo/2012/08/27/14/19/mountains-55067__340.png'
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(true)
-    }, 3000)
-  })
 
   return (
     <NewUpdateContainer>
@@ -50,15 +40,9 @@ export const NewUpdates = () => {
         <Title size="large" weight="normal">
           New Updates
         </Title>
-        {isLoading ? (
-          <SkeletonTheme baseColor="#838383" highlightColor="#cac9c9">
-            <SkeletonItem height={211} width="100%" />
-          </SkeletonTheme>
-        ) : (
-          <UpdateContent>
-            <UpdateContentImage src={updateImage} />
-          </UpdateContent>
-        )}
+        <UpdateContent>
+          <UpdateContentImage src={updateImage} />
+        </UpdateContent>
       </Wrapper>
     </NewUpdateContainer>
   )

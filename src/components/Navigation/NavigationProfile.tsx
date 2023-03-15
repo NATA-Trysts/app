@@ -6,8 +6,6 @@ import styled from 'styled-components'
 import { MyInformationCard } from '@/components/MyInformationCard'
 import { useDashboardStore } from '@/stores'
 
-import { Skeleton } from './Skeleton/NavigationProfileSkeleton'
-
 const NavigationProfileContainer = styled.div`
   width: 100%;
   background-color: #212225;
@@ -49,7 +47,6 @@ export const NavigationProfile = () => {
 
   const isExpanded = useDashboardStore((state) => state.isExpanded)
   const [isDisplayed, setIsDisplayed] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
 
   // delay display of help title to prevent flickering
   useEffect(() => {
@@ -60,34 +57,23 @@ export const NavigationProfile = () => {
     }
   }, [isExpanded])
 
-  // TESTING SKELETON
-  useEffect(() => {
-    setTimeout(() => setIsLoading(true), 3000)
-  }, [])
-
   return (
     <NavigationProfileContainer>
-      {isLoading ? (
-        <Skeleton isExpanded={isExpanded} />
-      ) : (
+      {isDisplayed ? (
         <>
-          {isDisplayed ? (
-            <>
-              <MyInformationCard avatar={userInfo.avatar} handler={userInfo.handler} name={userInfo.name} />
-              <ProfileCharacter>
-                <ProfileCharacterCanvas>
-                  <OrbitControls />
-                  <mesh>
-                    <boxGeometry args={[1, 1, 1]} />
-                    <meshNormalMaterial />
-                  </mesh>
-                </ProfileCharacterCanvas>
-              </ProfileCharacter>
-            </>
-          ) : (
-            <ProfileAvatar src={userInfo.avatar} />
-          )}
+          <MyInformationCard avatar={userInfo.avatar} handler={userInfo.handler} name={userInfo.name} />
+          <ProfileCharacter>
+            <ProfileCharacterCanvas>
+              <OrbitControls />
+              <mesh>
+                <boxGeometry args={[1, 1, 1]} />
+                <meshNormalMaterial />
+              </mesh>
+            </ProfileCharacterCanvas>
+          </ProfileCharacter>
         </>
+      ) : (
+        <ProfileAvatar src={userInfo.avatar} />
       )}
     </NavigationProfileContainer>
   )
