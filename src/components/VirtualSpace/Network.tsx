@@ -3,7 +3,7 @@
 import { Client, Room } from 'colyseus.js'
 import { useEffect } from 'react'
 
-import { Member, useMemberStore, useNetworkStore } from '@/stores'
+import { Member, Message, useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
 const MULTIPLAYER_SERVICE_ENDPOINT = import.meta.env.VITE_MULTIPLAYER_SERVICE_ENDPOINT
 const WORLD_NAME = import.meta.env.VITE_WORLD_NAME
@@ -18,6 +18,8 @@ export const Network = (props: { spaceId: string | undefined }) => {
       state.updateOtherMembers,
       state.updateActionOtherMember,
     ])
+
+  const [addMessage] = useVirtualSpaceStore((state) => [state.addMessage])
 
   const handler = async () => {
     if (!props.spaceId) return
@@ -101,6 +103,10 @@ export const Network = (props: { spaceId: string | undefined }) => {
 
       room.state.members.onRemove = (_, sessionId: string) => {
         removeOtherMembers(sessionId)
+      }
+
+      room.state.messages.onAdd = (message: Message) => {
+        addMessage(message)
       }
 
       setRoomInstance(room)

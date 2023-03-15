@@ -20,7 +20,8 @@ import {
 } from '@/components/VirtualSpace'
 import { FullLogo } from '@/components/VirtualSpace/FullLogo'
 import { truncateText } from '@/libs'
-import { useAppStore, useVirtualSpaceStore } from '@/stores'
+import { MESSAGES } from '@/libs/constants'
+import { useAppStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
 //#region Styles
 const Container = styled(CustomableContainer)`
@@ -124,13 +125,13 @@ const LeftSideWrapper = styled.div`
 
 //#endregion
 
-const SAMPLE_MESSAGE_DATA = {
-  author: 'sonhaaa',
-  avatarUri: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
-  isMine: true,
-  message: 'This is the first time I try Trysts. I love it! This is the first time I try Trysts.',
-  time: '12:34 pm',
-}
+// const SAMPLE_MESSAGE_DATA = {
+//   author: 'sonhaaa',
+//   avatarUri: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
+//   isMine: true,
+//   message: 'This is the first time I try Trysts. I love it! This is the first time I try Trysts.',
+//   time: '12:34 pm',
+// }
 
 const SAMPLE_MEMBER_DATA = {
   handler: 'sonhaaa#1234',
@@ -140,7 +141,8 @@ const SAMPLE_MEMBER_DATA = {
 
 const VirtualSpace = () => {
   const customColor = useAppStore((state) => state.customColor)
-  const [selectedUltility] = useVirtualSpaceStore((state) => [state.selectedUltility])
+  const roomInstance = useNetworkStore((state) => state.roomInstance)
+  const [selectedUltility, chatMessages] = useVirtualSpaceStore((state) => [state.selectedUltility, state.chatMessages])
   const { spaceId } = useParams()
 
   const ultilityMapping = {
@@ -201,6 +203,15 @@ const VirtualSpace = () => {
     }
   }, [])
 
+  const dispatchMessage = (data: any) => {
+    roomInstance?.send(MESSAGES.MEMBER.SEND_MESSAGE, {
+      name: roomInstance.sessionId,
+      avatar: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
+      timestamp: Date.now(),
+      content: data.chat,
+    })
+  }
+
   return (
     <CustomableContainer customColor={customColor}>
       <MultitabDetect fallback={<MultiTabWarning />}>
@@ -236,20 +247,22 @@ const VirtualSpace = () => {
                       chat: (
                         <ChatContainer>
                           <ChatMessageContainer>
-                            {Array(10)
-                              .fill(SAMPLE_MESSAGE_DATA)
-                              .map((message: typeof SAMPLE_MESSAGE_DATA, index) => (
+                            {Object.values(chatMessages).map((message) => {
+                              console.log(message)
+
+                              return (
                                 <ChatMessage
-                                  key={index}
-                                  author={truncateText(message.author, 15)}
-                                  avatarUri={message.avatarUri}
-                                  isMine={false}
-                                  message={message.message}
-                                  time={message.time}
+                                  key={message.id}
+                                  author={truncateText(message.name, 15)}
+                                  avatarUri={message.avatar}
+                                  isMine={roomInstance?.sessionId === message.sessionId}
+                                  message={message.content}
+                                  time={new Date(message.timestamp).toLocaleString()}
                                 />
-                              ))}
+                              )
+                            })}
                           </ChatMessageContainer>
-                          <ChatInput />
+                          <ChatInput onSendMessage={dispatchMessage} />
                         </ChatContainer>
                       ),
                       member: (
