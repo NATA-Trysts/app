@@ -1,8 +1,8 @@
-import { useMemo } from 'react'
 import styled from 'styled-components'
 
-import { useDashboardStore } from '@/stores'
+import { Space as SpaceType, useDashboardStore } from '@/stores'
 
+import { exploreSpacesFromApi, librariesSpacesFromApi, mySpacesFromApi } from './dummyData'
 import { Explores } from './Explores'
 import { Libraries } from './Libraries'
 import { MyFiles } from './MyFiles'
@@ -19,23 +19,86 @@ const SpaceSectionContainer = styled.div<{ isExpanded: boolean }>`
   overflow-y: scroll;
 `
 
+function wrapPromise(promise: Promise<any>) {
+  let status = 'pending'
+  let response: SpaceType[] = []
+
+  const suspender = promise.then(
+    (res) => {
+      status = 'success'
+      response = res
+    },
+    (err) => {
+      status = 'error'
+      response = err
+    },
+  )
+
+  const read = () => {
+    switch (status) {
+      case 'pending':
+        throw suspender
+      case 'error':
+        throw response
+      default:
+        return response
+    }
+  }
+
+  return { read }
+}
+
+// temporary using data, will be replaced with api call
+const fetchData = (data: SpaceType[]) => {
+  const promise = new Promise((resolve) => {
+    resolve(data)
+  })
+
+  return wrapPromise(promise)
+}
+
+const convertArrayToMap = (array: SpaceType[]) => {
+  const librarySpaces = new Map<string, SpaceType[]>()
+
+  array.forEach((space) => {
+    if (librarySpaces.has(space.category)) {
+      const spaces = librarySpaces.get(space.category)
+
+      if (spaces) {
+        spaces.push(space)
+        librarySpaces.set(space.category, spaces)
+      }
+    } else {
+      librarySpaces.set(space.category, [space])
+    }
+  })
+
+  return librarySpaces
+}
+
+const mySpacesResource = fetchData(mySpacesFromApi)
+const exploreSpacesResource = fetchData(exploreSpacesFromApi)
+const librariesSpacesResource = fetchData(librariesSpacesFromApi)
+
 export const SpaceSection = () => {
   const [isExpanded, dashboardOption] = useDashboardStore((state) => [state.isExpanded, state.dashboardOption])
 
+  const mySpace = mySpacesResource.read()
+  const exploreSpace = exploreSpacesResource.read()
+  const librariesSpaceMap = convertArrayToMap(librariesSpacesResource.read())
+
   // fixed component for each dashboard option
-  const sectionComponents = useMemo(() => {
-    return {
-      1: (
-        <>
-          <Recents />
-          <NewUpdates />
-          <Explores />
-        </>
-      ),
-      2: <MyFiles />,
-      3: <Libraries />,
-    }
-  }, [])
+  const sectionComponents = {
+    1: (
+      <>
+        <Recents spaces={mySpace} />
+        <NewUpdates />
+        <Explores spaces={exploreSpace} />
+      </>
+    ),
+    2: <MyFiles spaces={mySpace} />,
+    3: <Libraries librarySpaces={librariesSpaceMap} />,
+  }
 
   return <SpaceSectionContainer isExpanded={isExpanded}>{sectionComponents[dashboardOption]}</SpaceSectionContainer>
 }

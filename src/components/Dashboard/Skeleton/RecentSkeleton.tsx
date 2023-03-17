@@ -20,7 +20,7 @@ const List = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
-  margin: 8px 0;
+  margin: 12px 8px;
 `
 
 export const RecentSkeleton = () => {

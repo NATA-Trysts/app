@@ -25,7 +25,7 @@ export const NewUpdatesSkeleton = () => {
           New Updates
         </Title>
         <SkeletonTheme baseColor="#838383" highlightColor="#cac9c9">
-          <SkeletonItem height={211} width="100%" />
+          <SkeletonItem borderRadius={16} height={211} style={{ margin: '16px 0' }} width="100%" />
         </SkeletonTheme>
       </Wrapper>
     </NewUpdateContainer>

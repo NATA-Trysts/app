@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { SpacePreviewCard } from '@/components/SpacePreviewCard'
 import { SubCategoryToggle } from '@/components/SubcategoryToggle'
-import { Space as SpaceType, useDashboardStore } from '@/stores'
+import { Space as SpaceType } from '@/stores'
 
 const LibrariesContainer = styled.div`
   width: 100%;
@@ -24,9 +24,11 @@ const List = styled.div`
   margin: 8px 0;
 `
 
-export const Libraries = () => {
-  const librarySpaces: Map<string, SpaceType[]> = useDashboardStore((state) => state.librarySpaces)
+type LibrariesProps = {
+  librarySpaces: Map<string, SpaceType[]>
+}
 
+export const Libraries = ({ librarySpaces }: LibrariesProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [listLibrarySpaces, setListLibrarySpaces] = useState<SpaceType[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
