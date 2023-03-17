@@ -8,6 +8,7 @@ import { Space as SpaceType } from '@/stores'
 const LibrariesContainer = styled.div`
   width: 100%;
   height: auto;
+  margin-top: 4px;
 `
 
 const Wrapper = styled.div`
