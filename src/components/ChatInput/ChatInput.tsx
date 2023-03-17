@@ -1,3 +1,4 @@
+import { useForm } from 'react-hook-form'
 import ReactTextareaAutosize from 'react-textarea-autosize'
 import styled from 'styled-components'
 
@@ -7,11 +8,10 @@ import { useVirtualSpaceStore } from '@/stores'
 
 const Container = styled.div`
   width: 100%;
-`
-
-const InputForm = styled.form`
   position: relative;
 `
+
+// const InputForm = styled.form``
 
 const MessageInputContainer = styled.div`
   padding: 14px 48px 14px 12px;
@@ -46,27 +46,51 @@ const EmojiContainer = styled.div`
   bottom: 8px;
 `
 
-export const ChatInput = () => {
+export type ChatInputProps = {
+  onSendMessage?: (data: any) => void
+}
+
+export const ChatInput = ({ onSendMessage = () => {} }: ChatInputProps) => {
   const setCanControlCharacter = useVirtualSpaceStore((state) => state.setCanControlCharacter)
+  const { register, handleSubmit, setValue } = useForm()
+
+  const onEnterPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key == 'Enter' && event.shiftKey == false) {
+      event.preventDefault()
+      handleSendMessage()
+    }
+  }
+
+  const handleSendMessage = () => {
+    handleSubmit(
+      (data) => {
+        setValue('chat', '')
+        onSendMessage(data)
+      },
+      (errors) => console.error(errors),
+    )()
+  }
 
   return (
     <Container>
-      <InputForm>
-        <MessageInputContainer>
-          <MessageInput
-            maxRows={3}
-            minRows={1}
-            placeholder="Type something"
-            onBlur={() => setCanControlCharacter(true)}
-            onFocus={() => setCanControlCharacter(false)}
-          />
-        </MessageInputContainer>
-        <EmojiContainer>
-          <SVGClickable>
-            <Emoji />
-          </SVGClickable>
-        </EmojiContainer>
-      </InputForm>
+      {/* <InputForm onSubmit={}> */}
+      <MessageInputContainer>
+        <MessageInput
+          {...register('chat', { required: true })}
+          maxRows={3}
+          minRows={1}
+          placeholder="Type something"
+          onBlur={() => setCanControlCharacter(true)}
+          onFocus={() => setCanControlCharacter(false)}
+          onKeyDown={onEnterPress}
+        />
+      </MessageInputContainer>
+      <EmojiContainer>
+        <SVGClickable type="button">
+          <Emoji />
+        </SVGClickable>
+      </EmojiContainer>
+      {/* </InputForm> */}
     </Container>
   )
 }
