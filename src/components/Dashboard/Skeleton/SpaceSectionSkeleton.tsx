@@ -16,7 +16,7 @@ const SpaceSkeletonContainer = styled.div<{ isExpanded: boolean }>`
 `
 
 export const SpaceSectionSkeleton = () => {
-  const [isExpanded] = useDashboardStore((state) => [state.isExpanded, state.dashboardOption])
+  const [isExpanded] = useDashboardStore((state) => [state.isExpanded])
 
   return (
     <SpaceSkeletonContainer isExpanded={isExpanded}>

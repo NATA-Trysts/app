@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { Space as SpaceType, useDashboardStore } from '@/stores'
+import { Space as SpaceType, useDashboardStore, useNavigationStore } from '@/stores'
 
 import { exploreSpacesFromApi, librariesSpacesFromApi, mySpacesFromApi } from './dummyData'
 import { Explores } from './Explores'
@@ -81,7 +81,8 @@ const exploreSpacesResource = fetchData(exploreSpacesFromApi)
 const librariesSpacesResource = fetchData(librariesSpacesFromApi)
 
 export const SpaceSection = () => {
-  const [isExpanded, dashboardOption] = useDashboardStore((state) => [state.isExpanded, state.dashboardOption])
+  const [isExpanded] = useDashboardStore((state) => [state.isExpanded])
+  const [dashboardOption] = useNavigationStore((state) => [state.dashboardOption])
 
   const mySpace = mySpacesResource.read()
   const exploreSpace = exploreSpacesResource.read()
