@@ -16,7 +16,26 @@ const useDashboard = () => {
     return recentSpaces
   }
 
-  return { calculateTimeAgo, sortRecentSpace }
+  const convertArrayToMap = (array: Space[]) => {
+    const librarySpaces = new Map<string, Space[]>()
+
+    array.forEach((space) => {
+      if (librarySpaces.has(space.category)) {
+        const spaces = librarySpaces.get(space.category)
+
+        if (spaces) {
+          spaces.push(space)
+          librarySpaces.set(space.category, spaces)
+        }
+      } else {
+        librarySpaces.set(space.category, [space])
+      }
+    })
+
+    return librarySpaces
+  }
+
+  return { calculateTimeAgo, convertArrayToMap, sortRecentSpace }
 }
 
 export { useDashboard }

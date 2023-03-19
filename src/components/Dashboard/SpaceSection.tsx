@@ -4,6 +4,7 @@ import { Space as SpaceType, useDashboardStore, useNavigationStore } from '@/sto
 
 import { exploreSpacesFromApi, librariesSpacesFromApi, mySpacesFromApi } from './dummyData'
 import { Explores } from './Explores'
+import { useDashboard } from './hooks/useDashboard'
 import { Libraries } from './Libraries'
 import { MyFiles } from './MyFiles'
 import { NewUpdates } from './NewUpdates'
@@ -57,25 +58,6 @@ const fetchData = (data: SpaceType[]) => {
   return wrapPromise(promise)
 }
 
-const convertArrayToMap = (array: SpaceType[]) => {
-  const librarySpaces = new Map<string, SpaceType[]>()
-
-  array.forEach((space) => {
-    if (librarySpaces.has(space.category)) {
-      const spaces = librarySpaces.get(space.category)
-
-      if (spaces) {
-        spaces.push(space)
-        librarySpaces.set(space.category, spaces)
-      }
-    } else {
-      librarySpaces.set(space.category, [space])
-    }
-  })
-
-  return librarySpaces
-}
-
 const mySpacesResource = fetchData(mySpacesFromApi)
 const exploreSpacesResource = fetchData(exploreSpacesFromApi)
 const librariesSpacesResource = fetchData(librariesSpacesFromApi)
@@ -83,6 +65,7 @@ const librariesSpacesResource = fetchData(librariesSpacesFromApi)
 export const SpaceSection = () => {
   const [isExpanded] = useDashboardStore((state) => [state.isExpanded])
   const [dashboardOption] = useNavigationStore((state) => [state.dashboardOption])
+  const { convertArrayToMap } = useDashboard()
 
   const mySpace = mySpacesResource.read()
   const exploreSpace = exploreSpacesResource.read()
