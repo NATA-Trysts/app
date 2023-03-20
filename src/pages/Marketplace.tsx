@@ -8,9 +8,6 @@ import { Chip } from '@/components/Commons/Chip'
 import { Dialog, DialogRef } from '@/components/Commons/Dialog'
 import { MultiToggleOption } from '@/components/Commons/MultiToggle'
 import { Header } from '@/components/Header'
-import { SubCategoryToggle } from '@/components/SubcategoryToggle'
-import { Model } from '@/models/Model'
-
 import {
   BuyButton,
   Content,
@@ -42,7 +39,9 @@ import {
   PreviewItemTitle,
   PreviewText,
   ToogleContainer,
-} from './MarketPlaceItem'
+} from '@/components/Marketplace'
+import { SubCategoryToggle } from '@/components/SubcategoryToggle'
+import { Model } from '@/models/Model'
 
 type PreviewItem = {
   title: string
@@ -226,7 +225,7 @@ const MarketPlace = () => {
 
   return (
     <MarketPlacePage>
-      <Header></Header>
+      <Header />
       <Content>
         <ContentHeader>
           <Text size="x-large" weight="normal">
