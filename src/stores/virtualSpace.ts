@@ -1,6 +1,5 @@
 import produce from 'immer'
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 
 import { CustomColor } from '@/components/Commons'
 
@@ -33,36 +32,41 @@ type VirtualSpaceState = {
 
   authToken: string
   setAuthToken: (authToken: string) => void
+
+  isEditAvatar: boolean
+  setIsEditAvatar: (isEditAvatar: boolean) => void
+
+  isFirstTime: boolean
+  setIsFirstTime: (isFirstTime: boolean) => void
 }
 
-export const useVirtualSpaceStore = create<VirtualSpaceState>()(
-  persist(
-    (set) => ({
-      spaceId: '123',
-      setSpaceId: (spaceId) => set(() => ({ spaceId })),
+export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
+  spaceId: '123',
+  setSpaceId: (spaceId) => set(() => ({ spaceId })),
 
-      selectedUltility: 'chat',
-      setSelectedUltility: (selectedUltility) => set(() => ({ selectedUltility })),
+  selectedUltility: null,
+  setSelectedUltility: (selectedUltility) => set(() => ({ selectedUltility })),
 
-      customColor: 'blue',
-      setCustomColor: (customColor: CustomColor) => set(() => ({ customColor })),
+  customColor: 'blue',
+  setCustomColor: (customColor: CustomColor) => set(() => ({ customColor })),
 
-      canControlCharacter: true,
-      setCanControlCharacter: (canControlCharacter: boolean) => set(() => ({ canControlCharacter })),
+  canControlCharacter: true,
+  setCanControlCharacter: (canControlCharacter: boolean) => set(() => ({ canControlCharacter })),
 
-      chatMessages: {},
-      addMessage: (message) =>
-        set(
-          produce((state: VirtualSpaceState) => {
-            state.chatMessages[message.id] = message
-          }),
-        ),
+  authToken: '',
+  setAuthToken: (authToken: string) => set({ authToken }),
 
-      authToken: '',
-      setAuthToken: (authToken: string) => set({ authToken }),
-    }),
-    {
-      name: 'virtual-space-storage',
-    },
-  ),
-)
+  isEditAvatar: true,
+  setIsEditAvatar: (isEditAvatar: boolean) => set({ isEditAvatar }),
+
+  isFirstTime: true,
+  setIsFirstTime: (isFirstTime: boolean) => set({ isFirstTime }),
+
+  chatMessages: {},
+  addMessage: (message) =>
+    set(
+      produce((state: VirtualSpaceState) => {
+        state.chatMessages[message.id] = message
+      }),
+    ),
+}))

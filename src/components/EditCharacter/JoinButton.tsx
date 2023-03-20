@@ -1,8 +1,9 @@
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
 
-const ButtonContainer = styled.button`
+const ButtonContainer = styled(motion.button)`
   position: absolute;
   right: 100px;
   top: 687px;
@@ -15,6 +16,7 @@ const ButtonContainer = styled.button`
   box-shadow: none;
   transition: background, box-shadow 0.2s ease;
   cursor: pointer;
+  pointer-events: auto;
 
   :hover {
     box-shadow: 0px 28px 72px rgba(234, 42, 210, 0.44), 0px 15.7926px 28.3481px rgba(234, 42, 210, 0.267259),
@@ -23,9 +25,19 @@ const ButtonContainer = styled.button`
   }
 `
 
-export const JoinButton = () => {
+type JoinButtonProps = {
+  isEdit: boolean
+  onClick: () => void
+}
+
+export const JoinButton = ({ isEdit = false, ...otherProps }: JoinButtonProps) => {
   return (
-    <ButtonContainer>
+    <ButtonContainer
+      animate={{
+        x: isEdit ? 0 : 500,
+      }}
+      {...otherProps}
+    >
       <Text size="medium" weight="normal">
         Hope into space
       </Text>

@@ -1,9 +1,10 @@
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
 import { ReactComponent as ArrowLeft } from '@/assets/icons/arrow-left.svg'
 import { Text } from '@/components/Commons'
 
-const BackButtonContainer = styled.button<{ top: number; left: number }>`
+const BackButtonContainer = styled(motion.button)<{ top: number; left: number }>`
   position: absolute;
   top: ${({ top }) => top}px;
   left: ${({ left }) => left}px;
@@ -17,6 +18,7 @@ const BackButtonContainer = styled.button<{ top: number; left: number }>`
   border-radius: 12px;
   border: none;
   cursor: pointer;
+  pointer-events: auto;
 
   &:hover {
     background-color: #202022;
@@ -32,11 +34,19 @@ type BackButtonProps = {
   top?: number
   left?: number
   onClickBack: () => void
+  isEdit: boolean
 }
 
-export const BackButton = ({ top = 40, left = 120, onClickBack }: BackButtonProps) => {
+export const BackButton = ({ top = 40, left = 120, onClickBack, isEdit = false }: BackButtonProps) => {
   return (
-    <BackButtonContainer left={left} top={top} onClick={onClickBack}>
+    <BackButtonContainer
+      animate={{
+        x: isEdit ? 0 : -500,
+      }}
+      left={left}
+      top={top}
+      onClick={onClickBack}
+    >
       <ArrowLeft />
       <BackText size="medium" weight="normal">
         Back

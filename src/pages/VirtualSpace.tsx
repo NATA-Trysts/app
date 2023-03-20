@@ -9,19 +9,19 @@ import { CustomableContainer } from '@/components/Commons'
 import { MultitabDetect, MultiTabWarning } from '@/components/MultitabDetect'
 import { UtilitySection } from '@/components/UtilitySection'
 import {
+  CustomCharacterPanel,
   MyInformationCard,
   MyVideo,
   Network,
-  Scene,
   SingleMemberCard,
   ToolbarMiddle,
   ToolbarRight,
-  VirtualSpaceNameCard,
 } from '@/components/VirtualSpace'
-import { FullLogo } from '@/components/VirtualSpace/FullLogo'
 import { truncateText } from '@/libs'
 import { MESSAGES } from '@/libs/constants'
 import { useAppStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
+
+import { Header } from './Header'
 
 //#region Styles
 const Container = styled(CustomableContainer)`
@@ -52,14 +52,6 @@ const OverlayContainer = styled.div`
   grid-template-rows: 80px 1fr;
   pointer-events: none;
   overflow: hidden; // CAUTION: not sure if this is a good idea, use this for avoid scroll on mobile
-`
-
-const HeaderContainer = styled.section`
-  pointer-events: auto;
-  grid-area: header;
-  padding: 16px;
-  display: flex;
-  gap: 8px;
 `
 
 const LeftSideContainer = styled.section`
@@ -160,31 +152,32 @@ const VirtualSpace = () => {
   const hmsActions = useHMSActions()
 
   const join = async () => {
-    // const response = await fetch('https://prod-in2.100ms.live/hmsapi/shtest.app.100ms.live/api/token', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     // eslint-disable-next-line camelcase
-    //     room_id: '638968d0aee54625da649a38',
-    //     role: 'student',
-    //     // eslint-disable-next-line camelcase
-    //     user_id: Date.now().toString(),
-    //   }),
-    // })
-    // const a = await response.json()
-    // const config = {
-    //   userName: 'SH',
-    //   authToken: a.token,
-    //   settings: {
-    //     isAudioMuted: true,
-    //     isVideoMuted: false,
-    //   },
-    //   metaData: JSON.stringify({ city: 'Da Nang' }),
-    //   rememberDeviceSelection: true,
-    // }
-    // await hmsActions.join(config)
+    const response = await fetch('https://prod-in2.100ms.live/hmsapi/shtest.app.100ms.live/api/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        // eslint-disable-next-line camelcase
+        room_id: '638968d0aee54625da649a38',
+        role: 'student',
+        // eslint-disable-next-line camelcase
+        user_id: Date.now().toString(),
+      }),
+    })
+    const a = await response.json()
+    const config = {
+      userName: 'SH',
+      authToken: a.token,
+      settings: {
+        isAudioMuted: true,
+        isVideoMuted: false,
+      },
+      metaData: JSON.stringify({ city: 'Da Nang' }),
+      rememberDeviceSelection: true,
+    }
+
+    await hmsActions.join(config)
   }
 
   useEffect(() => {
@@ -209,12 +202,9 @@ const VirtualSpace = () => {
       <MultitabDetect fallback={<MultiTabWarning />}>
         <Container customColor={customColor}>
           <Network spaceId={spaceId} />
-          <Scene />
+          {/* <Scene /> */}
           <OverlayContainer>
-            <HeaderContainer>
-              <FullLogo />
-              <VirtualSpaceNameCard name="Son Ha's Wedding " spaceId="123" />
-            </HeaderContainer>
+            <Header />
             <LeftSideContainer>
               <LeftSideWrapper>
                 <MyVideo />
@@ -281,6 +271,8 @@ const VirtualSpace = () => {
               )}
               <ToolbarRight />
             </RightSideContainer>
+
+            <CustomCharacterPanel />
           </OverlayContainer>
         </Container>
       </MultitabDetect>
