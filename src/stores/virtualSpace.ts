@@ -38,6 +38,12 @@ type VirtualSpaceState = {
 
   isFirstTime: boolean
   setIsFirstTime: (isFirstTime: boolean) => void
+
+  interactable: boolean
+  setInteractable: (interactable: boolean) => void
+
+  intersectId: string | null
+  setIntersectId: (intersectId: string) => void
 }
 
 export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
@@ -56,7 +62,7 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
   authToken: '',
   setAuthToken: (authToken: string) => set({ authToken }),
 
-  isEditAvatar: true,
+  isEditAvatar: false,
   setIsEditAvatar: (isEditAvatar: boolean) => set({ isEditAvatar }),
 
   isFirstTime: true,
@@ -69,4 +75,10 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
         state.chatMessages[message.id] = message
       }),
     ),
+
+  interactable: false,
+  setInteractable: (interactable: boolean) => set({ interactable }),
+
+  intersectId: null,
+  setIntersectId: (intersectId: string) => set({ intersectId }),
 }))
