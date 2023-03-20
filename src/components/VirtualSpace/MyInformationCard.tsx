@@ -43,8 +43,13 @@ const CharacterPreviewContainer = styled.div`
   border-radius: 6px;
 `
 
-const CustomOption = styled(Option)<{ hoverBackground?: string }>`
+const CustomOption = styled(Option)<{ hoverBackground?: string; textColor: string }>`
   background: transparent;
+  color: ${(props) => props.textColor};
+
+  span {
+    color: ${(props) => props.textColor};
+  }
 
   :hover {
     background: ${(props) => props.hoverBackground};
@@ -64,7 +69,7 @@ export const MyInformationCard: FC<MyInformationCardProps> = ({ name, handler, a
     <Popover
       align="end"
       content={
-        <MemberInforContainer background={`hsla(${customColorHueMapping[color]}, 81%, 6%, 1)`}>
+        <MemberInforContainer background={`hsla(${customColorHueMapping[color]}, 79%, 11%, 1)`}>
           <CharacterPreviewContainer>
             <Canvas>
               <OrbitControls />
@@ -81,10 +86,16 @@ export const MyInformationCard: FC<MyInformationCardProps> = ({ name, handler, a
           <Gap />
           <CustomOption
             hoverBackground={`hsla(${customColorHueMapping[color]}, 65%, 66%, 1)`}
+            textColor={`hsla(${customColorHueMapping[color]},  25%, 66%, 1)`}
             title="Edit avatar"
             onClick={h}
           />
-          <CustomOption customHoverBackgroundColor="#FC677B" title="Log out" onClick={() => {}} />
+          <CustomOption
+            customHoverBackgroundColor="#FC677B"
+            textColor={`hsla(${customColorHueMapping[color]},  25%, 66%, 1)`}
+            title="Log out"
+            onClick={() => {}}
+          />
         </MemberInforContainer>
       }
       side="right"
