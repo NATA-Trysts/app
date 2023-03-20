@@ -31,9 +31,8 @@ const UpdateContentImage = styled.img`
 `
 
 export const NewUpdates = () => {
-  // temporay fixed image
-  const updateImage =
-    'https://s3-alpha-sig.figma.com/img/9730/e208/7d616e96b8b08c1f9d7af3672c044e1f?Expires=1678665600&Signature=EessPP2nYJ2k~Jgn4SpuA--a6cn3~b1eCqU5j5C7N7wbjP3bjRxwKr4TlTVr0GOP-OtaLtrgL7FWz~uOBn7AyvR8M5BrXseXW5c48jEz9L2Ciy7F07bnREDAwUnbmrhOWfZhyODQdAd8rSagYSIhzI7JKuawSDd8ti21nVsVrS6WRtZOS7PljX9EWT5t~bGnLIouk6TLZ3t90Nj2RMQjQeSpbzse2IwApfrmuRz2uwseCkkqYLc2wgDCX4hdZZcM26OtaAWU8j9-HK8Pmim86sON9MHessuRQ9ROcK3fYep73X41LPk3nkkd8iH2ifmYICdrGIcOUyP6Fq6DnI4dzw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4'
+  // temporary fixed image
+  const updateImage = 'https://cdn.pixabay.com/photo/2012/08/27/14/19/mountains-55067__340.png'
 
   return (
     <NewUpdateContainer>
