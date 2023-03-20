@@ -1,21 +1,26 @@
 import { useHMSActions } from '@100mslive/react-sdk'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { ChatInput } from '@/components/ChatInput'
 import { ChatMessage } from '@/components/ChatMessage'
 import { CustomableContainer } from '@/components/Commons'
+import { KeyboardModal } from '@/components/KeyboardMapping'
 import { MultitabDetect, MultiTabWarning } from '@/components/MultitabDetect'
 import { UtilitySection } from '@/components/UtilitySection'
 import {
+  BackgroundMusicSelect,
+  KeyboardMapping,
   MyInformationCard,
   MyVideo,
   Network,
+  QualitySelect,
   Scene,
   SingleMemberCard,
   ToolbarMiddle,
   ToolbarRight,
+  VideoLayout,
   VirtualSpaceNameCard,
 } from '@/components/VirtualSpace'
 import { FullLogo } from '@/components/VirtualSpace/FullLogo'
@@ -116,6 +121,8 @@ const MemberContainer = styled(ChatContainer)`
   justify-content: flex-start;
 `
 
+const SettingContainer = styled(MemberContainer)``
+
 const LeftSideWrapper = styled.div`
   height: 100%;
   display: flex;
@@ -137,6 +144,7 @@ const VirtualSpace = () => {
   const roomInstance = useNetworkStore((state) => state.roomInstance)
   const [selectedUltility, chatMessages] = useVirtualSpaceStore((state) => [state.selectedUltility, state.chatMessages])
   const { spaceId } = useParams()
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const ultilityMapping = {
     chat: {
@@ -272,7 +280,14 @@ const VirtualSpace = () => {
                         </MemberContainer>
                       ),
                       info: <></>,
-                      setting: <></>,
+                      setting: (
+                        <SettingContainer>
+                          <QualitySelect />
+                          <BackgroundMusicSelect />
+                          <VideoLayout />
+                          <KeyboardMapping setIsModalOpen={setIsModalOpen} />
+                        </SettingContainer>
+                      ),
                     }[selectedUltility]
                   }
                 </UtilitySection>
@@ -283,6 +298,7 @@ const VirtualSpace = () => {
             </RightSideContainer>
           </OverlayContainer>
         </Container>
+        <KeyboardModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
       </MultitabDetect>
     </CustomableContainer>
   )
