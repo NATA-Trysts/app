@@ -13,6 +13,7 @@ import {
   MyInformationCard,
   MyVideo,
   Network,
+  Scene,
   SingleMemberCard,
   ToolbarMiddle,
   ToolbarRight,
@@ -36,6 +37,7 @@ const Container = styled(CustomableContainer)`
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  overflow: hidden;
 `
 
 const OverlayContainer = styled.div`
@@ -202,7 +204,7 @@ const VirtualSpace = () => {
       <MultitabDetect fallback={<MultiTabWarning />}>
         <Container customColor={customColor}>
           <Network spaceId={spaceId} />
-          {/* <Scene /> */}
+          <Scene />
           <OverlayContainer>
             <Header />
             <LeftSideContainer>
