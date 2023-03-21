@@ -80,6 +80,11 @@ const MovingLayout = styled.div`
 
 const InteractionSection = styled(MovingSection)`
   height: 300px;
+`
+
+const InteractionKeyList = styled.div`
+  width: 100%;
+  height: 90%;
   overflow: scroll;
   overflow-x: hidden;
 
@@ -87,10 +92,7 @@ const InteractionSection = styled(MovingSection)`
     width: 0; /* Remove scrollbar space */
     background: transparent; /* Optional: just make scrollbar invisible */
   }
-`
 
-const InteractionKeyList = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 8px;
