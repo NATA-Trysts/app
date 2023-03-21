@@ -1,8 +1,9 @@
 import { createPortal } from 'react-dom'
 import styled from 'styled-components'
 
-import { ReactComponent as Close } from '@/assets/icons/close.svg'
-import { Text } from '@/components/Commons'
+import { customColorHueMapping, Text } from '@/components/Commons'
+import { Close } from '@/components/UtilitySection'
+import { useAppStore } from '@/stores'
 
 import { createContainer } from './container'
 import { KeyButton } from './KeyButton'
@@ -20,13 +21,31 @@ const ModalOverlay = styled.div`
   align-items: center;
 `
 
-const Container = styled.div`
+const Container = styled.div<{ closeBackgroundColor: string; iconColor: string }>`
   width: 611px;
   height: 647px;
   background: #191a1d;
   border-radius: 20px;
   padding: 24px 32px;
   position: relative;
+
+  > button {
+    background: ${({ closeBackgroundColor }) => closeBackgroundColor};
+    top: 28px;
+    right: 28px;
+
+    svg {
+      stroke: ${({ iconColor }) => iconColor};
+    }
+
+    :hover {
+      background: ${({ closeBackgroundColor }) => closeBackgroundColor};
+
+      svg {
+        stroke: ${({ iconColor }) => iconColor};
+      }
+    }
+  }
 `
 
 const MovingSection = styled.div`
@@ -91,22 +110,6 @@ const InteractionButtons = styled.div`
   overflow: auto;
 `
 
-const CloseIcon = styled.div`
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  :hover {
-    background: #47494e;
-    border-radius: 11.2px;
-  }
-`
 //#endregion
 
 type KeyboardModalProps = {
@@ -156,14 +159,17 @@ const interactiveKeyList = [
 ]
 
 export const KeyboardModal = ({ isOpen, setIsOpen }: KeyboardModalProps) => {
+  const color = useAppStore((state) => state.customColor)
+
   if (!isOpen) return null
   else {
     return createPortal(
       <ModalOverlay onClick={() => setIsOpen(false)}>
-        <Container>
-          <CloseIcon>
-            <Close onClick={() => setIsOpen(false)} />
-          </CloseIcon>
+        <Container
+          closeBackgroundColor={`hsla(${customColorHueMapping[color]}, 79%, 20%, 1)`}
+          iconColor={`hsla(${customColorHueMapping[color]},  25%, 66%, 1)`}
+        >
+          <Close onClick={() => setIsOpen(false)} />
           <Text
             size="large"
             style={{ paddingBottom: '12px', display: 'inline-block', fontSize: '24px' }}
