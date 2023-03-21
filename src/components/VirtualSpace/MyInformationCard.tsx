@@ -1,7 +1,7 @@
 import { OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { motion } from 'framer-motion'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import styled from 'styled-components'
 
 import { customColorHueMapping, Text } from '@/components/Commons'
@@ -61,8 +61,11 @@ export const MyInformationCard: FC<MyInformationCardProps> = ({ name, handler, a
   const color = useAppStore((state) => state.customColor)
   const [isEditAvatar, setIsEditAvatar] = useVirtualSpaceStore((state) => [state.isEditAvatar, state.setIsEditAvatar])
 
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false)
+
   const h = () => {
     setIsEditAvatar(!isEditAvatar)
+    setIsPopoverOpen(false)
   }
 
   return (
@@ -98,6 +101,9 @@ export const MyInformationCard: FC<MyInformationCardProps> = ({ name, handler, a
           />
         </MemberInforContainer>
       }
+      handleClickTrigger={() => setIsPopoverOpen(!isPopoverOpen)} // ISSUE: does not close
+      handleInteractOutside={() => setIsPopoverOpen(false)}
+      isPopoverOpen={isPopoverOpen}
       side="right"
       sideOffset={12}
     >

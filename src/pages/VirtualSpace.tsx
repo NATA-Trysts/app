@@ -1,5 +1,5 @@
 import { useHMSActions } from '@100mslive/react-sdk'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -93,7 +93,8 @@ const RightSideContainer = styled.section`
 const ChatMessageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow-y: scroll;
+  overflow-x: auto;
   height: 100%;
   width: 100%;
   border-radius: 8px;
@@ -139,6 +140,7 @@ const VirtualSpace = () => {
   const [selectedUltility, chatMessages] = useVirtualSpaceStore((state) => [state.selectedUltility, state.chatMessages])
   const { spaceId } = useParams()
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const chatBottomRef = useRef<HTMLDivElement>(null)
 
   const ultilityMapping = {
     chat: {
@@ -198,12 +200,16 @@ const VirtualSpace = () => {
     }
   }, [])
 
-  const dispatchMessage = (data: any) => {
+  useEffect(() => {
+    chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  })
+
+  const dispatchMessage = (message: string) => {
     roomInstance?.send(MESSAGES.MEMBER.SEND_MESSAGE, {
       name: roomInstance.sessionId,
       avatar: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
       timestamp: Date.now(),
-      content: data.chat,
+      content: message.trim(),
     })
   }
 
@@ -240,8 +246,6 @@ const VirtualSpace = () => {
                         <ChatContainer>
                           <ChatMessageContainer>
                             {Object.values(chatMessages).map((message) => {
-                              console.log(message)
-
                               return (
                                 <ChatMessage
                                   key={message.id}
@@ -249,10 +253,15 @@ const VirtualSpace = () => {
                                   avatarUri={message.avatar}
                                   isMine={roomInstance?.sessionId === message.sessionId}
                                   message={message.content}
-                                  time={new Date(message.timestamp).toLocaleString()}
+                                  time={new Date(message.timestamp).toLocaleString('vn-VI', {
+                                    hour12: true,
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                  })}
                                 />
                               )
                             })}
+                            <div ref={chatBottomRef}></div>
                           </ChatMessageContainer>
                           <ChatInput onSendMessage={dispatchMessage} />
                         </ChatContainer>

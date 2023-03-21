@@ -1,6 +1,5 @@
 import { Canvas } from '@react-three/fiber'
 import { Debug, Physics, RigidBody } from '@react-three/rapier'
-import { Perf } from 'r3f-perf'
 
 import { Chair } from '@/components/Furniture'
 import { Hint } from '@/components/Hint'
@@ -15,7 +14,7 @@ export const Scene = () => {
   return (
     <Container>
       <Canvas>
-        <Perf />
+        {/* <Perf /> */}
         <ambientLight intensity={1} />
         <pointLight castShadow receiveShadow intensity={1} position={[0, 4, 0]} />
         <RoomLeave />
