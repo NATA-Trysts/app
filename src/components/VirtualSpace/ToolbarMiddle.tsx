@@ -9,6 +9,9 @@ import { ReactComponent as Micro } from '@/assets/icons/micro.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
 import { ReactComponent as Whiteboard } from '@/assets/icons/whiteboard.svg'
 import { NameBox } from '@/components/EditCharacter'
+import { EmojiContent } from '@/components/EmojiContent'
+import { ListAudio, ListCamera } from '@/components/ListDevice'
+import { Popover } from '@/components/Popover'
 import { AnimatedToolbarContainer, ToolbarItem, WithTooltip } from '@/components/Toolbar'
 import { useVirtualSpaceStore } from '@/stores'
 
@@ -50,21 +53,29 @@ export const ToolbarMiddle = () => {
           layout: { duration: 0.3 },
         }}
       >
-        <ToolbarItem onClick={toggleAudio}>
-          <WithTooltip content={audioEnabled ? 'Mute' : 'Unmute'} id="micro">
+        <ToolbarItem>
+          <WithTooltip content={audioEnabled ? 'Mute' : 'Unmute'} id="micro" onClick={toggleAudio}>
             <Micro />
           </WithTooltip>
-          <WithTooltip content="Mic setting" id="micro-setting">
-            <ArrowUp />
-          </WithTooltip>
+          <Popover align="center" content={<ListAudio />} side="top" sideOffset={10}>
+            <div>
+              <WithTooltip content="Mic setting" id="micro-setting">
+                <ArrowUp />
+              </WithTooltip>
+            </div>
+          </Popover>
         </ToolbarItem>
-        <CustomToolbarItem onClick={toggleVideo}>
-          <WithTooltip content={`${videoEnabled ? 'Off' : 'On'} camera`} id="camera">
+        <CustomToolbarItem>
+          <WithTooltip content={`${videoEnabled ? 'Off' : 'On'} camera`} id="camera" onClick={toggleVideo}>
             <Camera />
           </WithTooltip>
-          <WithTooltip content="Camera setting" id="camera-setting">
-            <ArrowUp />
-          </WithTooltip>
+          <Popover align="center" content={<ListCamera />} side="top" sideOffset={10}>
+            <div>
+              <WithTooltip content="Camera setting" id="camera-setting">
+                <ArrowUp />
+              </WithTooltip>
+            </div>
+          </Popover>
         </CustomToolbarItem>
         <Condition
           layout
@@ -103,9 +114,13 @@ export const ToolbarMiddle = () => {
           }}
           onClick={() => setInteractable(!interactable)}
         >
-          <WithTooltip content="Emoji" id="emoji">
-            <Emoji />
-          </WithTooltip>
+          <Popover align="center" content={<EmojiContent />} side="top" sideOffset={10}>
+            <div>
+              <WithTooltip content="Emoji" id="emoji">
+                <Emoji />
+              </WithTooltip>
+            </div>
+          </Popover>
         </CustomToolbarItem>
       </AnimatedToolbarContainer>
       <NameBox isEdit={isEditAvatar} name="abc" />
