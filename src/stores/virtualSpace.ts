@@ -30,6 +30,12 @@ type VirtualSpaceState = {
   setCanControlCharacter: (canControlCharacter: boolean) => void
   chatMessages: ChatMessage
   addMessage: (message: Message) => void
+  quality: string
+  setQuality: (quality: string) => void
+  backgroundMusic: boolean
+  setBackgroundMusic: (backgroundMusic: boolean) => void
+  videoLayout: string
+  setVideoLayout: (videoLayout: string) => void
 
   authToken: string
   setAuthToken: (authToken: string) => void
@@ -57,6 +63,15 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()(
             state.chatMessages[message.id] = message
           }),
         ),
+
+      quality: 'medium',
+      setQuality: (quality: string) => set(() => ({ quality })),
+
+      backgroundMusic: true,
+      setBackgroundMusic: (backgroundMusic: boolean) => set(() => ({ backgroundMusic })),
+
+      videoLayout: 'grid',
+      setVideoLayout: (videoLayout: string) => set(() => ({ videoLayout })),
 
       authToken: '',
       setAuthToken: (authToken: string) => set({ authToken }),

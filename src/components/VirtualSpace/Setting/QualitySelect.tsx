@@ -1,9 +1,9 @@
 import * as Select from '@radix-ui/react-select'
-import { useState } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
 import { SelectItem } from '@/components/Select'
+import { useVirtualSpaceStore } from '@/stores'
 
 const QualitySelectWrapper = styled.div`
   display: grid;
@@ -62,16 +62,16 @@ const listQuality = [
 ]
 
 export const QualitySelect = () => {
-  const [value, setValue] = useState('medium')
+  const [quality, setQuality] = useVirtualSpaceStore((state) => [state.quality, state.setQuality])
 
   return (
     <QualitySelectWrapper>
       <Name size="small" weight="lighter">
         Quality
       </Name>
-      <Select.Root value={value} onValueChange={setValue}>
+      <Select.Root value={quality} onValueChange={setQuality}>
         <Trigger>
-          <Select.Value placeholder={value} />
+          <Select.Value placeholder={quality} />
         </Trigger>
         <Select.Portal>
           <Content>

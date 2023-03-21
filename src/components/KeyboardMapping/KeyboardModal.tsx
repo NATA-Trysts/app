@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import styled from 'styled-components'
 
+import { ReactComponent as Close } from '@/assets/icons/close.svg'
 import { Text } from '@/components/Commons'
 
 import { createContainer } from './container'
@@ -39,7 +39,7 @@ const MovingSection = styled.div`
 
 const MovingLayout = styled.div`
   width: 168px;
-  margin: 8px auto;
+  margin: 16px auto;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-column-gap: 12px;
@@ -60,7 +60,7 @@ const MovingLayout = styled.div`
 `
 
 const InteractionSection = styled(MovingSection)`
-  height: 283px;
+  height: 300px;
   overflow: scroll;
   overflow-x: hidden;
 
@@ -91,43 +91,21 @@ const InteractionButtons = styled.div`
   overflow: auto;
 `
 
-const ControlButton = styled.div`
+const CloseIcon = styled.div`
   position: absolute;
-  bottom: 20px;
-  right: 20px;
-`
-
-const CancelButton = styled.button`
-  border: none;
-  background: transparent;
-  margin-right: 8px;
-  width: 69px;
-  height: 38px;
-  border-radius: 12px;
+  top: 24px;
+  right: 24px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-
-  font-weight: 600;
-  font-size: 14px;
-  color: #d8d8d8;
-
-  transition: background 0.2s ease;
 
   :hover {
-    color: #ffffff;
-    background: #444444;
+    background: #47494e;
+    border-radius: 11.2px;
   }
-`
-
-const SaveButton = styled.button`
-  width: 69px;
-  height: 38px;
-  background: linear-gradient(90deg, #aa7ac5 0%, #c974e3 50%, #e7a4f8 100%);
-  border-radius: 12px;
-  border: none;
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 16px;
-  cursor: pointer;
 `
 //#endregion
 
@@ -138,37 +116,54 @@ type KeyboardModalProps = {
 
 const container = createContainer()
 
+const interactiveKeyList = [
+  {
+    name: 'Raise hand',
+    keyName: ['r'],
+  },
+  {
+    name: 'Toggle video',
+    keyName: ['ctrl', 'v'],
+  },
+  {
+    name: 'Toggle microphone',
+    keyName: ['ctrl', 'D'],
+  },
+  {
+    name: 'Interactive with object',
+    keyName: ['z'],
+  },
+  {
+    name: 'Confetti',
+    keyName: ['f'],
+  },
+  {
+    name: 'Toggle chat',
+    keyName: ['c'],
+  },
+  {
+    name: 'Toggle member',
+    keyName: ['m'],
+  },
+  {
+    name: 'Toggle setting',
+    keyName: ['p'],
+  },
+  {
+    name: 'Toggle info',
+    keyName: ['i'],
+  },
+]
+
 export const KeyboardModal = ({ isOpen, setIsOpen }: KeyboardModalProps) => {
-  const [keyId, setKeyId] = useState('')
-
-  const handleInactiveKey = () => {
-    setKeyId('')
-  }
-
-  useEffect(() => {
-    const c = (ev: KeyboardEvent) => {
-      if (keyId === '' || keyId === null) return
-
-      const key = ev.key
-      const element = document.getElementById(keyId)
-
-      if (element !== null && element !== undefined) {
-        element.innerHTML = key
-      }
-    }
-
-    document.addEventListener('keydown', c, false)
-
-    return () => {
-      document.removeEventListener('keydown', c, false)
-    }
-  }, [keyId])
-
   if (!isOpen) return null
   else {
     return createPortal(
-      <ModalOverlay onClick={handleInactiveKey}>
-        <Container onClick={handleInactiveKey}>
+      <ModalOverlay onClick={() => setIsOpen(false)}>
+        <Container>
+          <CloseIcon>
+            <Close onClick={() => setIsOpen(false)} />
+          </CloseIcon>
           <Text
             size="large"
             style={{ paddingBottom: '12px', display: 'inline-block', fontSize: '24px' }}
@@ -181,10 +176,10 @@ export const KeyboardModal = ({ isOpen, setIsOpen }: KeyboardModalProps) => {
               Moving
             </Text>
             <MovingLayout>
-              <KeyButton keyId={keyId} keyName="w" setKeyId={setKeyId} />
-              <KeyButton keyId={keyId} keyName="a" setKeyId={setKeyId} />
-              <KeyButton keyId={keyId} keyName="s" setKeyId={setKeyId} />
-              <KeyButton keyId={keyId} keyName="d" setKeyId={setKeyId} />
+              <KeyButton hasTooltip keyName="w" toolTipContent="Forward" toolTipPlace="top" />
+              <KeyButton hasTooltip keyName="a" toolTipContent="Left" toolTipPlace="left" />
+              <KeyButton hasTooltip keyName="s" toolTipContent="Backward" toolTipPlace="bottom" />
+              <KeyButton hasTooltip keyName="d" toolTipContent="Right" toolTipPlace="right" />
             </MovingLayout>
           </MovingSection>
           <InteractionSection>
@@ -192,29 +187,20 @@ export const KeyboardModal = ({ isOpen, setIsOpen }: KeyboardModalProps) => {
               Interaction
             </Text>
             <InteractionKeyList>
-              <InteractionKeyItem>
-                <Text size="small" weight="lighter">
-                  Sit on chair
-                </Text>
-                <InteractionButtons>
-                  <KeyButton keyId={keyId} keyName="p" setKeyId={setKeyId} />
-                </InteractionButtons>
-              </InteractionKeyItem>
-              <InteractionKeyItem>
-                <Text size="small" weight="lighter">
-                  Toggle Video
-                </Text>
-                <InteractionButtons>
-                  <KeyButton keyId={keyId} keyName="ctrl" setKeyId={setKeyId} />
-                  <KeyButton keyId={keyId} keyName="v" setKeyId={setKeyId} />
-                </InteractionButtons>
-              </InteractionKeyItem>
+              {interactiveKeyList.map((item, index) => (
+                <InteractionKeyItem key={index}>
+                  <Text size="medium" weight="lighter">
+                    {item.name}
+                  </Text>
+                  <InteractionButtons>
+                    {item.keyName.map((key, index) => (
+                      <KeyButton key={index} keyName={key} />
+                    ))}
+                  </InteractionButtons>
+                </InteractionKeyItem>
+              ))}
             </InteractionKeyList>
           </InteractionSection>
-          <ControlButton>
-            <CancelButton onClick={() => setIsOpen(false)}>Cancel</CancelButton>
-            <SaveButton onClick={() => setIsOpen(false)}>Save</SaveButton>
-          </ControlButton>
         </Container>
       </ModalOverlay>,
       container,

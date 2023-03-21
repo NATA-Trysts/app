@@ -1,7 +1,9 @@
+import { useCallback } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
 import { MultiToggle } from '@/components/Commons/MultiToggle'
+import { useVirtualSpaceStore } from '@/stores'
 
 const Container = styled.div`
   display: grid;
@@ -47,6 +49,15 @@ const Wrapper = styled.div`
 `
 
 export const BackgroundMusicSelect = () => {
+  const [setBackgroundMusic] = useVirtualSpaceStore((state) => [state.setBackgroundMusic])
+
+  const handleSelectedChange = useCallback(
+    (value: string) => {
+      value === 'on' ? setBackgroundMusic(true) : setBackgroundMusic(false)
+    },
+    [setBackgroundMusic],
+  )
+
   return (
     <Container>
       <Name size="small" weight="lighter">
@@ -55,7 +66,7 @@ export const BackgroundMusicSelect = () => {
 
       <Wrapper>
         <MultiToggle
-          handleSelectedChange={() => {}} // param: value
+          handleSelectedChange={handleSelectedChange} // param: value
           options={[
             { value: 'on', display: 'On' },
             { value: 'off', display: 'Off' },
