@@ -4,8 +4,10 @@ import styled from 'styled-components'
 
 import { ReactComponent as ArrowUp } from '@/assets/icons/arrow-up.svg'
 import { ReactComponent as Camera } from '@/assets/icons/camera.svg'
+import { ReactComponent as CameraOff } from '@/assets/icons/camera-off.svg'
 import { ReactComponent as Emoji } from '@/assets/icons/emoji.svg'
-import { ReactComponent as Micro } from '@/assets/icons/micro.svg'
+import { ReactComponent as Micro } from '@/assets/icons/mic.svg'
+import { ReactComponent as MicroOff } from '@/assets/icons/mic-off.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
 import { ReactComponent as Whiteboard } from '@/assets/icons/whiteboard.svg'
 import { NameBox } from '@/components/EditCharacter'
@@ -55,7 +57,7 @@ export const ToolbarMiddle = () => {
       >
         <ToolbarItem>
           <WithTooltip content={audioEnabled ? 'Mute' : 'Unmute'} id="micro" onClick={toggleAudio}>
-            <Micro />
+            {audioEnabled ? <Micro /> : <MicroOff />}
           </WithTooltip>
           <Popover align="center" content={<ListAudio />} side="top" sideOffset={10}>
             <div>
@@ -67,7 +69,7 @@ export const ToolbarMiddle = () => {
         </ToolbarItem>
         <CustomToolbarItem>
           <WithTooltip content={`${videoEnabled ? 'Off' : 'On'} camera`} id="camera" onClick={toggleVideo}>
-            <Camera />
+            {videoEnabled ? <Camera /> : <CameraOff />}
           </WithTooltip>
           <Popover align="center" content={<ListCamera />} side="top" sideOffset={10}>
             <div>
