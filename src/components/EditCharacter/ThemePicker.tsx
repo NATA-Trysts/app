@@ -44,10 +44,10 @@ const Theme = styled.div<{ backgroundColor: string; active: boolean }>`
 `
 
 type ThemePickerProps = {
-  isEdit: boolean
+  isEdit?: boolean
 }
 
-export const ThemePicker = ({ isEdit }: ThemePickerProps) => {
+export const ThemePicker = ({ isEdit = false }: ThemePickerProps) => {
   const [customColor, setCustomColor] = useAppStore((state) => [state.customColor, state.setCustomColor])
   const handleClickTheme = (color: CustomColor) => {
     setCustomColor(color)

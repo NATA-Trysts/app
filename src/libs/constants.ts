@@ -28,6 +28,8 @@ const COLOR_PICKER_LIST: ColorListObject = {
   purple: 'hsla(286, 65%, 66%, 1)',
   green: 'hsla(137, 65%, 66%, 1)',
   blue: 'hsla(216, 65%, 66%, 1)',
+  pink: 'hsla(291, 65%, 66%, 1)',
+  yellow: 'hsla(36, 65%, 66%, 1)',
 }
 
 const NOTIFICATION_COLOR: NotificationColor = {

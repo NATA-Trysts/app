@@ -26,8 +26,8 @@ const ButtonContainer = styled(motion.button)`
 `
 
 type JoinButtonProps = {
-  isEdit: boolean
-  onClick: () => void
+  isEdit?: boolean
+  onClick?: () => void
 }
 
 export const JoinButton = ({ isEdit = false, ...otherProps }: JoinButtonProps) => {
