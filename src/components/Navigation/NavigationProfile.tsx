@@ -58,9 +58,9 @@ export const NavigationProfile = () => {
   }, [isExpanded])
 
   return (
-    <>
+    <NavigationProfileContainer>
       {isDisplayed ? (
-        <NavigationProfileContainer>
+        <>
           <MyInformationCard avatar={userInfo.avatar} handler={userInfo.handler} name={userInfo.name} />
           <ProfileCharacter>
             <ProfileCharacterCanvas>
@@ -71,10 +71,10 @@ export const NavigationProfile = () => {
               </mesh>
             </ProfileCharacterCanvas>
           </ProfileCharacter>
-        </NavigationProfileContainer>
+        </>
       ) : (
         <ProfileAvatar src={userInfo.avatar} />
       )}
-    </>
+    </NavigationProfileContainer>
   )
 }

@@ -1,16 +1,8 @@
-import { useEffect } from 'react'
 import styled from 'styled-components'
 
-import {
-  exploreSpacesFromApi,
-  HeaderDashboard,
-  librariesSpacesFromApi,
-  mySpacesFromApi,
-  SpaceSection,
-} from '@/components/Dashboard'
+import { HeaderDashboard, SpaceSection } from '@/components/Dashboard'
 import { NavigationPanel } from '@/components/Navigation'
 import { NotificationStack } from '@/components/Notification'
-import { useDashboardStore } from '@/stores'
 
 const DashboardPage = styled.div`
   width: 100vw;
@@ -28,18 +20,6 @@ const Body = styled.div`
 `
 
 const Dashboard = () => {
-  const [setMySpaces, setExploreSpaces, setLibrarySpaces] = useDashboardStore((state) => [
-    state.setMySpaces,
-    state.setExploreSpaces,
-    state.setLibrarySpaces,
-  ])
-
-  useEffect(() => {
-    setMySpaces(mySpacesFromApi)
-    setExploreSpaces(exploreSpacesFromApi)
-    setLibrarySpaces(librariesSpacesFromApi)
-  }, [setMySpaces, setExploreSpaces, setLibrarySpaces])
-
   return (
     <>
       <DashboardPage>

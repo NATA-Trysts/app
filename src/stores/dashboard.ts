@@ -28,11 +28,13 @@ type DashboardState = {
   selectedSpacePreview: Space | null
   setSelectedSpacePreview: (selectedSpacePreview: Space | null) => void
 
-  dashboardOption: DashboardOption
-  setDashboardOption: (dashboardOption: DashboardOption) => void
-
   librarySpaces: Map<string, Space[]>
   setLibrarySpaces: (librarySpacesFromApi: Space[]) => void
+}
+
+type NavigationState = {
+  dashboardOption: DashboardOption
+  setDashboardOption: (dashboardOption: DashboardOption) => void
 }
 
 export const useDashboardStore = create<DashboardState>()(
@@ -49,9 +51,6 @@ export const useDashboardStore = create<DashboardState>()(
 
       selectedSpacePreview: null,
       setSelectedSpacePreview: (selectedSpacePreview: Space | null) => set(() => ({ selectedSpacePreview })),
-
-      dashboardOption: 1,
-      setDashboardOption: (dashboardOption: DashboardOption) => set(() => ({ dashboardOption })),
 
       librarySpaces: new Map(),
       setLibrarySpaces: (librarySpacesFromApi: Space[]) => {
@@ -77,3 +76,10 @@ export const useDashboardStore = create<DashboardState>()(
     },
   ),
 )
+
+export const useNavigationStore = create<NavigationState>((set) => {
+  return {
+    dashboardOption: 1,
+    setDashboardOption: (dashboardOption: DashboardOption) => set(() => ({ dashboardOption })),
+  }
+})

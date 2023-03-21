@@ -7,6 +7,8 @@ import { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 
+import { DashboardSkeleton } from '@/components/Dashboard'
+
 import { PersistLogin, RequireAuth } from './components/Authentication'
 import { MobileDetect } from './components/MobileDetect'
 import { AuthProvider } from './context/AuthProvider'
@@ -70,7 +72,7 @@ const Guard = () => {
           <Route>
             <Route
               element={
-                <Suspense fallback={<span>loading</span>}>
+                <Suspense fallback={<DashboardSkeleton />}>
                   <Dashboard />
                 </Suspense>
               }

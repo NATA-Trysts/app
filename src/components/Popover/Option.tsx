@@ -35,6 +35,7 @@ type OptionProps = {
   title: string
   hoverBackground?: string
   customHoverBackgroundColor?: string
+  children?: React.ReactNode // for icon and something else
 } & ComponentPropsWithoutRef<'button'>
 
 export const Option = (props: OptionProps) => {
@@ -43,6 +44,7 @@ export const Option = (props: OptionProps) => {
       <Title color={props.color} size="medium" weight="normal">
         {props.title}
       </Title>
+      {props.children}
     </Container>
   )
 }

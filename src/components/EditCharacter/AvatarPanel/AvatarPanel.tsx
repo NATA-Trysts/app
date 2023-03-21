@@ -1,9 +1,10 @@
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
 import { Category } from './Category'
 import { Content } from './Content'
 
-const AvatarPanelContainer = styled.div<{ bottom: number; left: number; right: number; top: number }>`
+const AvatarPanelContainer = styled(motion.div)<{ bottom: number; left: number; right: number; top: number }>`
   position: absolute;
   bottom: ${({ bottom }) => bottom}px;
   left: ${({ left }) => left}px;
@@ -18,6 +19,7 @@ const AvatarPanelContainer = styled.div<{ bottom: number; left: number; right: n
   grid-template-columns: 72px 1fr;
   grid-template-rows: 1fr;
   grid-template-areas: 'category content';
+  pointer-events: auto;
 `
 
 type AvatarPanelProps = {
@@ -25,11 +27,20 @@ type AvatarPanelProps = {
   left?: number
   right?: number
   bottom?: number
+  isEdit: boolean
 }
 
-export const AvatarPanel = ({ top = 96, left = 120, right = 0, bottom = 0 }: AvatarPanelProps) => {
+export const AvatarPanel = ({ top = 96, left = 120, right = 0, bottom = 0, isEdit = false }: AvatarPanelProps) => {
   return (
-    <AvatarPanelContainer bottom={bottom} left={left} right={right} top={top}>
+    <AvatarPanelContainer
+      animate={{
+        x: isEdit ? 0 : -500,
+      }}
+      bottom={bottom}
+      left={left}
+      right={right}
+      top={top}
+    >
       <Category />
       <Content />
     </AvatarPanelContainer>

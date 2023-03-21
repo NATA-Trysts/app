@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
 import { SpacePreviewCard } from '@/components/SpacePreviewCard'
-import { Space as SpaceType, useDashboardStore } from '@/stores'
+import { Space as SpaceType } from '@/stores'
 
 import { useDashboard } from './hooks/useDashboard'
 
@@ -23,9 +23,11 @@ const List = styled.div`
   margin: 8px 0;
 `
 
-export const Explores = () => {
-  const exploreSpaces: SpaceType[] = useDashboardStore((state) => state.exploreSpaces)
+type ExploresProps = {
+  spaces: SpaceType[]
+}
 
+export const Explores = ({ spaces }: ExploresProps) => {
   const { calculateTimeAgo } = useDashboard()
 
   return (
@@ -35,7 +37,7 @@ export const Explores = () => {
           Explores
         </Text>
         <List>
-          {exploreSpaces.map((item) => (
+          {spaces.map((item) => (
             <SpacePreviewCard
               key={item.id}
               imageUrl={item.imageUrl}

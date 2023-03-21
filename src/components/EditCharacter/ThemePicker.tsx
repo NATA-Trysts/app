@@ -1,11 +1,16 @@
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
-import { useEditCharacterStore } from '@/stores'
+import { useAppStore } from '@/stores'
 
-const ThemePickerContainer = styled.div`
+import { CustomColor } from '../Commons'
+
+const ThemePickerContainer = styled(motion.div)`
   position: absolute;
   left: 120px;
-  bottom: 51px;
+  pointer-events: auto;
+  top: 687px;
+
   width: 300px;
   height: 72px;
   background-color: #191a1d;
@@ -38,20 +43,27 @@ const Theme = styled.div<{ backgroundColor: string; active: boolean }>`
   `}
 `
 
-export const ThemePicker = () => {
-  const [theme, setTheme] = useEditCharacterStore((state) => [state.theme, state.setTheme])
+type ThemePickerProps = {
+  isEdit: boolean
+}
 
-  const handleClickTheme = (color: string) => {
-    setTheme(color)
+export const ThemePicker = ({ isEdit }: ThemePickerProps) => {
+  const [customColor, setCustomColor] = useAppStore((state) => [state.customColor, state.setCustomColor])
+  const handleClickTheme = (color: CustomColor) => {
+    setCustomColor(color)
   }
 
   return (
-    <ThemePickerContainer>
-      <Theme active={theme === '#C771E1'} backgroundColor="#C771E1" onClick={() => handleClickTheme('#C771E1')} />
-      <Theme active={theme === '#71E191'} backgroundColor="#71E191" onClick={() => handleClickTheme('#71E191')} />
-      <Theme active={theme === '#719EE1'} backgroundColor="#719EE1" onClick={() => handleClickTheme('#719EE1')} />
-      <Theme active={theme === '#E1B471'} backgroundColor="#E1B471" onClick={() => handleClickTheme('#E1B471')} />
-      <Theme active={theme === '#8E71E1'} backgroundColor="#8E71E1" onClick={() => handleClickTheme('#8E71E1')} />
+    <ThemePickerContainer
+      animate={{
+        x: isEdit ? 0 : -500,
+      }}
+    >
+      <Theme active={customColor === 'pink'} backgroundColor="#C771E1" onClick={() => handleClickTheme('pink')} />
+      <Theme active={customColor === 'green'} backgroundColor="#71E191" onClick={() => handleClickTheme('green')} />
+      <Theme active={customColor === 'blue'} backgroundColor="#719EE1" onClick={() => handleClickTheme('blue')} />
+      <Theme active={customColor === 'yellow'} backgroundColor="#E1B471" onClick={() => handleClickTheme('yellow')} />
+      <Theme active={customColor === 'purple'} backgroundColor="#8E71E1" onClick={() => handleClickTheme('purple')} />
     </ThemePickerContainer>
   )
 }

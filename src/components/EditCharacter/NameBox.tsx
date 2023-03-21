@@ -1,18 +1,21 @@
+import { motion } from 'framer-motion'
 import { useRef, useState } from 'react'
 import styled from 'styled-components'
 
-const NameBoxContainer = styled.div`
+const NameBoxContainer = styled(motion.div)`
   width: 232px;
   height: 47px;
   position: absolute;
   left: 50%;
   bottom: 72px;
-  transform: translateX(-50%);
-  background: #2d0634;
+  /* transform: translateX(-50%); */
+  background: var(--color-5);
   border-radius: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
+  pointer-events: auto;
+  z-index: 0;
 `
 
 const NameWrapper = styled.div`
@@ -26,18 +29,27 @@ const NameWrapper = styled.div`
 const NameInput = styled.input`
   width: 100%;
   height: 100%;
-  background: #4e1957;
+  background: var(--color-4);
   border-radius: 8px;
   outline-color: transparent;
   border: none;
   text-align: center;
+  font-family: var(--font-family);
+  font-weight: 600;
+  outline: none;
+  padding: 0 8px;
+
+  ::placeholder {
+    color: var(--color-2);
+  }
 `
 
 type NameBoxProps = {
   name: string
+  isEdit: boolean
 }
 
-export const NameBox = ({ name }: NameBoxProps) => {
+export const NameBox = ({ name, isEdit = false }: NameBoxProps) => {
   const [nameInput, setNameInput] = useState(name)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -52,9 +64,32 @@ export const NameBox = ({ name }: NameBoxProps) => {
   }
 
   return (
-    <NameBoxContainer>
+    <NameBoxContainer
+      animate={{
+        y: isEdit ? 0 : 50,
+        opacity: isEdit ? 1 : 0,
+      }}
+      initial={{
+        y: 50,
+        x: '-50%',
+      }}
+      transition={{
+        y: {
+          duration: 0.25,
+        },
+        opacity: {
+          duration: 0.1,
+        },
+      }}
+    >
       <NameWrapper>
-        <NameInput ref={inputRef} value={nameInput} onChange={handleChange} onKeyDown={handleKeyDown} />
+        <NameInput
+          ref={inputRef}
+          placeholder="What's your name?"
+          value={nameInput}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
       </NameWrapper>
     </NameBoxContainer>
   )

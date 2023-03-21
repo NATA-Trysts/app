@@ -2,6 +2,8 @@ import { Canvas } from '@react-three/fiber'
 import { Debug, Physics, RigidBody } from '@react-three/rapier'
 import { Perf } from 'r3f-perf'
 
+import { Chair } from '@/components/Furniture'
+import { Hint } from '@/components/Hint'
 import { MainMember } from '@/components/Member'
 import { Container } from '@/layouts/common'
 
@@ -25,11 +27,17 @@ export const Scene = () => {
               <meshBasicMaterial color="pink" />
             </mesh>
           </RigidBody>
+
+          <group name="furniture">
+            <Chair />
+          </group>
+
           <MainMember />
           <OtherMember />
         </Physics>
       </Canvas>
       <OtherMemberVideoReference />
+      <Hint />
     </Container>
   )
 }

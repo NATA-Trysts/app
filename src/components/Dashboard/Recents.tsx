@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
 import { SpacePreviewCard } from '@/components/SpacePreviewCard'
-import { Space as SpaceType, useDashboardStore } from '@/stores'
+import { Space as SpaceType } from '@/stores'
 
 import { useDashboard } from './hooks/useDashboard'
 
@@ -26,25 +25,18 @@ const List = styled.div`
   margin: 8px 0;
 `
 
-export const Recents = () => {
-  const mySpaces: SpaceType[] = useDashboardStore((state) => state.mySpaces)
-  const [recentSpaces, setRecentSpaces] = useState<SpaceType[]>([])
+type RecentsProps = {
+  spaces: SpaceType[]
+}
 
-  const { calculateTimeAgo } = useDashboard()
+export const Recents = ({ spaces }: RecentsProps) => {
+  const { calculateTimeAgo, sortRecentSpace } = useDashboard()
 
-  useEffect(() => {
-    const recentSpaces = mySpaces
-      .sort((a, b) => {
-        return new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime()
-      })
-      .slice(0, 4)
-
-    setRecentSpaces(recentSpaces)
-  }, [mySpaces])
+  const recentSpaces = sortRecentSpace(spaces).slice(0, 4)
 
   return (
     <>
-      {recentSpaces.length !== 0 ? (
+      {!recentSpaces || recentSpaces.length === 0 ? null : (
         <RecentContainer>
           <Wrapper>
             <Text size="large" weight="normal">
@@ -63,7 +55,7 @@ export const Recents = () => {
             </List>
           </Wrapper>
         </RecentContainer>
-      ) : null}
+      )}
     </>
   )
 }
