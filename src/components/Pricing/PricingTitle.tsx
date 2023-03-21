@@ -3,8 +3,10 @@ import styled from 'styled-components'
 import { Text } from '../Commons'
 
 const TitleContainer = styled.div`
-  width: 100vw;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   // disable user selection
   -webkit-touch-callout: none;
@@ -15,7 +17,7 @@ const TitleContainer = styled.div`
 `
 
 const Main = styled.div`
-  padding-top: 24px;
+  padding-top: 28px;
 `
 
 const Subtitle = styled(Text)`

@@ -103,7 +103,7 @@ export const AnimationType = () => {
   ])
 
   const handleSelectAnimationType = (id: string) => {
-    const animationType = animationTypeList.find((animationType) => animationType.id === id)
+    const animationType = animationTypeList.find((animationType) => animationType.id === Number(id))
 
     if (animationType) {
       setSelectedAnimationType(animationType)

@@ -46,7 +46,7 @@ type CustomPanelProps = {
   left?: number
   right?: number
   bottom?: number
-  isEdit: boolean
+  isEdit?: boolean
 }
 
 export const CustomPanel = React.memo(

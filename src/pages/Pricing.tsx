@@ -6,14 +6,13 @@ import { PayButtons, Plans, PricingTitle } from '@/components/Pricing'
 import { PricingModal } from '@/components/Pricing/PricingModal'
 
 const PricingPage = styled.div`
-  width: 100vw;
-  min-height: 100vh;
+  min-height: calc(100vh + 76px);
   background-color: #090118;
 `
 
 const Wrapper = styled.div`
   position: relative;
-  padding-top: 100px;
+  padding-top: 76px;
 `
 
 const Pricing = () => {
@@ -28,7 +27,6 @@ const Pricing = () => {
         <Plans />
       </Wrapper>
       {/* TEST PRICING MODAL */}
-      <button onClick={() => setIsModalOpen(!isModalOpen)}>Open modal</button>
       <PricingModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
     </PricingPage>
   )

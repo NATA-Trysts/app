@@ -2,12 +2,16 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
+import { isValidUrl } from '@/libs/utils'
+import { RedirectLink } from '@/Redirect'
 
 const Container = styled.div<{ isMine: boolean }>`
   width: 100%;
-  display: grid;
-  grid-template-columns: ${(props) => (props.isMine ? '1fr 32px' : '32px 1fr')};
+  display: flex;
   gap: 6px;
+  flex-direction: ${(props) => (props.isMine ? 'row-reverse' : 'row')};
+  /* display: grid;
+  grid-template-columns: ${(props) => (props.isMine ? '1fr 32px' : '32px 1fr')}; */
 `
 const AvatarContainer = styled.div`
   width: 32px;
@@ -24,7 +28,9 @@ const Avatar = styled.img`
 `
 
 const ContentContainer = styled.div`
-  width: 100%;
+  width: fit-content;
+  max-width: calc(100% - 76px);
+  word-break: break-all;
   padding: 8px 12px;
   border-radius: 8px;
   display: flex;
@@ -47,6 +53,10 @@ const Time = styled(Text)`
   color: #dedede;
 `
 
+const Message = styled(Text)`
+  white-space: pre-wrap;
+`
+
 type ChatMessageProps = {
   time: string
   author: string
@@ -58,7 +68,7 @@ type ChatMessageProps = {
 export const ChatMessage: FC<ChatMessageProps> = ({ time, author, avatarUri, message, isMine }) => {
   return (
     <Container isMine={isMine}>
-      {isMine ? (
+      {/* {isMine ? (
         <>
           <ContentContainer>
             <Author size="medium" weight="normal">
@@ -98,7 +108,26 @@ export const ChatMessage: FC<ChatMessageProps> = ({ time, author, avatarUri, mes
             </TimeContainer>
           </ContentContainer>
         </>
-      )}
+      )} */}
+      <>
+        <AvatarContainer>
+          <Avatar alt={`${author} avatar`} src={avatarUri} />
+        </AvatarContainer>
+        <ContentContainer>
+          <Author size="medium" weight="normal">
+            {isMine ? 'You' : author}
+          </Author>
+
+          <Message size="medium" weight="lighter">
+            {isValidUrl(message) ? <RedirectLink href={message}>{message}</RedirectLink> : message}
+          </Message>
+          <TimeContainer>
+            <Time size="medium" weight="lighter">
+              {time}
+            </Time>
+          </TimeContainer>
+        </ContentContainer>
+      </>
     </Container>
   )
 }

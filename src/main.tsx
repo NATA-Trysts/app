@@ -13,13 +13,14 @@ import { PersistLogin, RequireAuth } from './components/Authentication'
 import { MobileDetect } from './components/MobileDetect'
 import { AuthProvider } from './context/AuthProvider'
 import NotAuthorize from './pages/NotAuthorize'
+import { Redirect } from './Redirect'
 
 const Builder = lazy(() => import('@/pages/Builder'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
 const EditCharacter = lazy(() => import('@/pages/EditCharacter'))
 const Login = lazy(() => import('@/pages/Login'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
-const MarketPlace = lazy(() => import('@/pages/MarketPlace/MarketPlace'))
+const MarketPlace = lazy(() => import('@/pages/Marketplace'))
 const VirtualSpace = lazy(() => import('@/pages/VirtualSpace'))
 const Create = lazy(() => import('@/pages/Create'))
 const Pricing = lazy(() => import('@/pages/Pricing'))
@@ -111,6 +112,7 @@ const Guard = () => {
           }
           path="/marketplace"
         />
+        <Route element={<Redirect />} path="/l" />
 
         <Route element={<NotAuthorize />} path="/unauth" />
         <Route element={<NotFound />} path="*" />

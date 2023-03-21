@@ -46,7 +46,7 @@ const NameInput = styled.input`
 
 type NameBoxProps = {
   name: string
-  isEdit: boolean
+  isEdit?: boolean
 }
 
 export const NameBox = ({ name, isEdit = false }: NameBoxProps) => {

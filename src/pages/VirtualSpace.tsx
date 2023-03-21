@@ -1,22 +1,27 @@
 import { useHMSActions } from '@100mslive/react-sdk'
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { ChatInput } from '@/components/ChatInput'
 import { ChatMessage } from '@/components/ChatMessage'
 import { CustomableContainer } from '@/components/Commons'
+import { KeyboardModal } from '@/components/KeyboardMapping'
 import { MultitabDetect, MultiTabWarning } from '@/components/MultitabDetect'
 import { UtilitySection } from '@/components/UtilitySection'
 import {
+  BackgroundMusicSelect,
   CustomCharacterPanel,
+  KeyboardMapping,
   MyInformationCard,
   MyVideo,
   Network,
+  QualitySelect,
   Scene,
   SingleMemberCard,
   ToolbarMiddle,
   ToolbarRight,
+  VideoLayout,
 } from '@/components/VirtualSpace'
 import { truncateText } from '@/libs'
 import { MESSAGES } from '@/libs/constants'
@@ -88,7 +93,8 @@ const RightSideContainer = styled.section`
 const ChatMessageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow-y: scroll;
+  overflow-x: auto;
   height: 100%;
   width: 100%;
   border-radius: 8px;
@@ -109,6 +115,8 @@ const MemberContainer = styled(ChatContainer)`
   overflow: auto;
   justify-content: flex-start;
 `
+
+const SettingContainer = styled(MemberContainer)``
 
 const LeftSideWrapper = styled.div`
   height: 100%;
@@ -131,6 +139,8 @@ const VirtualSpace = () => {
   const roomInstance = useNetworkStore((state) => state.roomInstance)
   const [selectedUltility, chatMessages] = useVirtualSpaceStore((state) => [state.selectedUltility, state.chatMessages])
   const { spaceId } = useParams()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const chatBottomRef = useRef<HTMLDivElement>(null)
 
   const ultilityMapping = {
     chat: {
@@ -190,12 +200,16 @@ const VirtualSpace = () => {
     }
   }, [])
 
-  const dispatchMessage = (data: any) => {
+  useEffect(() => {
+    chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  })
+
+  const dispatchMessage = (message: string) => {
     roomInstance?.send(MESSAGES.MEMBER.SEND_MESSAGE, {
       name: roomInstance.sessionId,
       avatar: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
       timestamp: Date.now(),
-      content: data.chat,
+      content: message.trim(),
     })
   }
 
@@ -232,8 +246,6 @@ const VirtualSpace = () => {
                         <ChatContainer>
                           <ChatMessageContainer>
                             {Object.values(chatMessages).map((message) => {
-                              console.log(message)
-
                               return (
                                 <ChatMessage
                                   key={message.id}
@@ -241,10 +253,15 @@ const VirtualSpace = () => {
                                   avatarUri={message.avatar}
                                   isMine={roomInstance?.sessionId === message.sessionId}
                                   message={message.content}
-                                  time={new Date(message.timestamp).toLocaleString()}
+                                  time={new Date(message.timestamp).toLocaleString('vn-VI', {
+                                    hour12: true,
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                  })}
                                 />
                               )
                             })}
+                            <div ref={chatBottomRef}></div>
                           </ChatMessageContainer>
                           <ChatInput onSendMessage={dispatchMessage} />
                         </ChatContainer>
@@ -264,7 +281,14 @@ const VirtualSpace = () => {
                         </MemberContainer>
                       ),
                       info: <></>,
-                      setting: <></>,
+                      setting: (
+                        <SettingContainer>
+                          <QualitySelect />
+                          <BackgroundMusicSelect />
+                          <VideoLayout />
+                          <KeyboardMapping setIsModalOpen={setIsModalOpen} />
+                        </SettingContainer>
+                      ),
                     }[selectedUltility]
                   }
                 </UtilitySection>
@@ -277,6 +301,7 @@ const VirtualSpace = () => {
             <CustomCharacterPanel />
           </OverlayContainer>
         </Container>
+        <KeyboardModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
       </MultitabDetect>
     </CustomableContainer>
   )
