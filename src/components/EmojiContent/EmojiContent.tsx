@@ -130,12 +130,16 @@ const emojis = [
   },
 ]
 
-export const EmojiContent = () => {
+type EmojiContentProps = {
+  setIsPopoverOpen: (value: boolean) => void
+}
+
+export const EmojiContent = ({ setIsPopoverOpen }: EmojiContentProps) => {
   return (
     <Container>
       <List>
         {emojis.map((emoji, index) => (
-          <Item key={emoji.id}>
+          <Item key={emoji.id} onClick={() => setIsPopoverOpen(false)}>
             <ItemImage alt={emoji.name} loading="lazy" src={emoji.imgSrc} />
             <ItemName>{emoji.name}</ItemName>
             <ItemOrder>{index + 1}</ItemOrder>

@@ -32,12 +32,17 @@ const CustomOption = styled(Option)<{ activeBackground: string; textColor: strin
       `}
 `
 
-export const ListCamera = () => {
+type ListCameraProps = {
+  setIsPopoverOpen: (value: boolean) => void
+}
+
+export const ListCamera = ({ setIsPopoverOpen }: ListCameraProps) => {
   const color = useAppStore((state) => state.customColor)
   const { allDevices, selectedDeviceIDs, updateDevice } = useDevices()
 
   const handleClick = (deviceId: string) => {
     updateDevice({ deviceId, deviceType: DeviceType.videoInput })
+    setIsPopoverOpen(false)
   }
 
   return (

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { ReactComponent as ArrowUp } from '@/assets/icons/arrow-up.svg'
 import { ReactComponent as Camera } from '@/assets/icons/camera.svg'
 import { ReactComponent as Emoji } from '@/assets/icons/emoji.svg'
-import { ReactComponent as Micro } from '@/assets/icons/micro.svg'
+import { ReactComponent as Micro } from '@/assets/icons/mic.svg'
 import { WithTooltip } from '@/components/Toolbar'
 
 const Container = styled.div`

@@ -1,5 +1,6 @@
 import { selectIsLocalAudioEnabled, selectIsLocalVideoEnabled, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as ArrowUp } from '@/assets/icons/arrow-up.svg'
@@ -34,6 +35,10 @@ export const ToolbarMiddle = () => {
   const audioEnabled = useHMSStore(selectIsLocalAudioEnabled)
   const videoEnabled = useHMSStore(selectIsLocalVideoEnabled)
 
+  const [isOpenCameraSetting, setIsOpenCameraSetting] = useState(false)
+  const [isOpenMicSetting, setIsOpenMicSetting] = useState(false)
+  const [isOpenEmoji, setIsOpenEmoji] = useState(false)
+
   const toggleAudio = async () => await hmsActions.setLocalAudioEnabled(!audioEnabled)
 
   const toggleVideo = async () => await hmsActions.setLocalVideoEnabled(!videoEnabled)
@@ -59,7 +64,15 @@ export const ToolbarMiddle = () => {
           <WithTooltip content={audioEnabled ? 'Mute' : 'Unmute'} id="micro" onClick={toggleAudio}>
             {audioEnabled ? <Micro /> : <MicroOff />}
           </WithTooltip>
-          <Popover align="center" content={<ListAudio />} side="top" sideOffset={10}>
+          <Popover
+            align="center"
+            content={<ListAudio setIsPopoverOpen={setIsOpenMicSetting} />}
+            handleClickTrigger={() => setIsOpenMicSetting(!isOpenMicSetting)} // ISSUE: does not close
+            handleInteractOutside={() => setIsOpenMicSetting(false)}
+            isPopoverOpen={isOpenMicSetting}
+            side="top"
+            sideOffset={10}
+          >
             <div>
               <WithTooltip content="Mic setting" id="micro-setting">
                 <ArrowUp />
@@ -71,7 +84,15 @@ export const ToolbarMiddle = () => {
           <WithTooltip content={`${videoEnabled ? 'Off' : 'On'} camera`} id="camera" onClick={toggleVideo}>
             {videoEnabled ? <Camera /> : <CameraOff />}
           </WithTooltip>
-          <Popover align="center" content={<ListCamera />} side="top" sideOffset={10}>
+          <Popover
+            align="center"
+            content={<ListCamera setIsPopoverOpen={setIsOpenCameraSetting} />}
+            handleClickTrigger={() => setIsOpenCameraSetting(!isOpenCameraSetting)} // ISSUE: does not close
+            handleInteractOutside={() => setIsOpenCameraSetting(false)}
+            isPopoverOpen={isOpenCameraSetting}
+            side="top"
+            sideOffset={10}
+          >
             <div>
               <WithTooltip content="Camera setting" id="camera-setting">
                 <ArrowUp />
@@ -116,7 +137,15 @@ export const ToolbarMiddle = () => {
           }}
           onClick={() => setInteractable(!interactable)}
         >
-          <Popover align="center" content={<EmojiContent />} side="top" sideOffset={10}>
+          <Popover
+            align="center"
+            content={<EmojiContent setIsPopoverOpen={setIsOpenEmoji} />}
+            handleClickTrigger={() => setIsOpenEmoji(!isOpenEmoji)} // ISSUE: does not close
+            handleInteractOutside={() => setIsOpenEmoji(false)}
+            isPopoverOpen={isOpenEmoji}
+            side="top"
+            sideOffset={10}
+          >
             <div>
               <WithTooltip content="Emoji" id="emoji">
                 <Emoji />

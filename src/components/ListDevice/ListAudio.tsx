@@ -1,5 +1,4 @@
 import { DeviceType, useDevices } from '@100mslive/react-sdk'
-import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
 import { customColorHueMapping } from '@/components/Commons'
@@ -53,12 +52,17 @@ const CustomOption = styled(Option)<{ activeBackground: string; textColor: strin
       `}
 `
 
-export const ListAudio = () => {
+type ListMicProps = {
+  setIsPopoverOpen: (value: boolean) => void
+}
+
+export const ListAudio = ({ setIsPopoverOpen }: ListMicProps) => {
   const color = useAppStore((state) => state.customColor)
   const { allDevices, selectedDeviceIDs, updateDevice } = useDevices()
 
   const handleClick = async (deviceId: string, deviceType: DeviceType) => {
     updateDevice({ deviceId, deviceType })
+    setIsPopoverOpen(false)
   }
 
   return (
@@ -100,33 +104,32 @@ export const ListAudio = () => {
               />
             ))}
         </List>
-        <TestAudio id={selectedDeviceIDs.audioOutput} />
       </SpeakerSection>
     </Container>
   )
 }
 
-const TEST_AUDIO_URL = 'https://100ms.live/test-audio.wav'
+// const TEST_AUDIO_URL = 'https://100ms.live/test-audio.wav'
 
-const TestAudio = ({ id }: any) => {
-  const audioRef = useRef(null)
+// const TestAudio = ({ id }: any) => {
+//   const audioRef = useRef(null)
 
-  useEffect(() => {
-    if (audioRef.current && id) {
-      try {
-        if (typeof (audioRef.current as any).setSinkId !== 'undefined') {
-          ;(audioRef.current as any).setSinkId(id)
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }, [id])
+//   useEffect(() => {
+//     if (audioRef.current && id) {
+//       try {
+//         if (typeof (audioRef.current as any).setSinkId !== 'undefined') {
+//           ;(audioRef.current as any).setSinkId(id)
+//         }
+//       } catch (error) {
+//         console.log(error)
+//       }
+//     }
+//   }, [id])
 
-  return (
-    <>
-      <button onClick={() => (audioRef.current as any).play()}>test audio</button>
-      <audio ref={audioRef} src={TEST_AUDIO_URL} />
-    </>
-  )
-}
+//   return (
+//     <>
+//       <button onClick={() => (audioRef.current as any).play()}>test audio</button>
+//       <audio ref={audioRef} src={TEST_AUDIO_URL} />
+//     </>
+//   )
+// }
