@@ -1,14 +1,20 @@
 import { selectIsLocalAudioEnabled, selectIsLocalVideoEnabled, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as ArrowUp } from '@/assets/icons/arrow-up.svg'
 import { ReactComponent as Camera } from '@/assets/icons/camera.svg'
+import { ReactComponent as CameraOff } from '@/assets/icons/camera-off.svg'
 import { ReactComponent as Emoji } from '@/assets/icons/emoji.svg'
-import { ReactComponent as Micro } from '@/assets/icons/micro.svg'
+import { ReactComponent as Micro } from '@/assets/icons/mic.svg'
+import { ReactComponent as MicroOff } from '@/assets/icons/mic-off.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
 import { ReactComponent as Whiteboard } from '@/assets/icons/whiteboard.svg'
 import { NameBox } from '@/components/EditCharacter'
+import { EmojiContent } from '@/components/EmojiContent'
+import { ListAudio, ListCamera } from '@/components/ListDevice'
+import { Popover } from '@/components/Popover'
 import { AnimatedToolbarContainer, ToolbarItem, WithTooltip } from '@/components/Toolbar'
 import { useVirtualSpaceStore } from '@/stores'
 
@@ -28,6 +34,10 @@ export const ToolbarMiddle = () => {
 
   const audioEnabled = useHMSStore(selectIsLocalAudioEnabled)
   const videoEnabled = useHMSStore(selectIsLocalVideoEnabled)
+
+  const [isOpenCameraSetting, setIsOpenCameraSetting] = useState(false)
+  const [isOpenMicSetting, setIsOpenMicSetting] = useState(false)
+  const [isOpenEmoji, setIsOpenEmoji] = useState(false)
 
   const toggleAudio = async () => await hmsActions.setLocalAudioEnabled(!audioEnabled)
 
@@ -50,21 +60,45 @@ export const ToolbarMiddle = () => {
           layout: { duration: 0.3 },
         }}
       >
-        <ToolbarItem onClick={toggleAudio}>
-          <WithTooltip content={audioEnabled ? 'Mute' : 'Unmute'} id="micro">
-            <Micro />
+        <ToolbarItem>
+          <WithTooltip content={audioEnabled ? 'Mute' : 'Unmute'} id="micro" onClick={toggleAudio}>
+            {audioEnabled ? <Micro /> : <MicroOff />}
           </WithTooltip>
-          <WithTooltip content="Mic setting" id="micro-setting">
-            <ArrowUp />
-          </WithTooltip>
+          <Popover
+            align="center"
+            content={<ListAudio setIsPopoverOpen={setIsOpenMicSetting} />}
+            handleClickTrigger={() => setIsOpenMicSetting(!isOpenMicSetting)} // ISSUE: does not close
+            handleInteractOutside={() => setIsOpenMicSetting(false)}
+            isPopoverOpen={isOpenMicSetting}
+            side="top"
+            sideOffset={10}
+          >
+            <div>
+              <WithTooltip content="Mic setting" id="micro-setting">
+                <ArrowUp />
+              </WithTooltip>
+            </div>
+          </Popover>
         </ToolbarItem>
-        <CustomToolbarItem onClick={toggleVideo}>
-          <WithTooltip content={`${videoEnabled ? 'Off' : 'On'} camera`} id="camera">
-            <Camera />
+        <CustomToolbarItem>
+          <WithTooltip content={`${videoEnabled ? 'Off' : 'On'} camera`} id="camera" onClick={toggleVideo}>
+            {videoEnabled ? <Camera /> : <CameraOff />}
           </WithTooltip>
-          <WithTooltip content="Camera setting" id="camera-setting">
-            <ArrowUp />
-          </WithTooltip>
+          <Popover
+            align="center"
+            content={<ListCamera setIsPopoverOpen={setIsOpenCameraSetting} />}
+            handleClickTrigger={() => setIsOpenCameraSetting(!isOpenCameraSetting)} // ISSUE: does not close
+            handleInteractOutside={() => setIsOpenCameraSetting(false)}
+            isPopoverOpen={isOpenCameraSetting}
+            side="top"
+            sideOffset={10}
+          >
+            <div>
+              <WithTooltip content="Camera setting" id="camera-setting">
+                <ArrowUp />
+              </WithTooltip>
+            </div>
+          </Popover>
         </CustomToolbarItem>
         <Condition
           layout
@@ -103,9 +137,21 @@ export const ToolbarMiddle = () => {
           }}
           onClick={() => setInteractable(!interactable)}
         >
-          <WithTooltip content="Emoji" id="emoji">
-            <Emoji />
-          </WithTooltip>
+          <Popover
+            align="center"
+            content={<EmojiContent setIsPopoverOpen={setIsOpenEmoji} />}
+            handleClickTrigger={() => setIsOpenEmoji(!isOpenEmoji)} // ISSUE: does not close
+            handleInteractOutside={() => setIsOpenEmoji(false)}
+            isPopoverOpen={isOpenEmoji}
+            side="top"
+            sideOffset={10}
+          >
+            <div>
+              <WithTooltip content="Emoji" id="emoji">
+                <Emoji />
+              </WithTooltip>
+            </div>
+          </Popover>
         </CustomToolbarItem>
       </AnimatedToolbarContainer>
       <NameBox isEdit={isEditAvatar} name="abc" />
