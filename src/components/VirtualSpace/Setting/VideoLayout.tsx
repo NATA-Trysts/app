@@ -16,7 +16,7 @@ const Name = styled(Text)`
 const LayoutOption = styled.div<{ isActive: boolean }>`
   width: 100%;
   height: 124px;
-  border: 2px solid ${({ isActive }) => (isActive ? '#c771e1' : 'transparent')};
+  border: 3px solid ${({ isActive }) => (isActive ? '#c771e1' : 'transparent')};
   border-radius: 5px;
   overflow: hidden;
   cursor: pointer;
@@ -24,7 +24,7 @@ const LayoutOption = styled.div<{ isActive: boolean }>`
   transition: border, opacity 0.2s ease;
 
   &:hover {
-    border: 2px solid #c771e1;
+    border: 3px solid #c771e1;
     opacity: ${({ isActive }) => (isActive ? 1 : 0.8)};
   }
 `

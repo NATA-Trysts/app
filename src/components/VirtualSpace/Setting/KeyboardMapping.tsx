@@ -16,9 +16,9 @@ const Name = styled(Text)`
 const MappingButton = styled.button`
   width: 100%;
   height: 28px;
-  background: #37393e;
+  background: transparent;
   border-radius: 6px;
-  border: 1px solid transparent;
+  border: 1px solid #727272;
   cursor: pointer;
   color: #727272;
   font-weight: 500;
@@ -27,6 +27,8 @@ const MappingButton = styled.button`
 
   &:hover {
     border: 1px solid #c771e1;
+    background: #c771e1;
+    color: white;
   }
 `
 
