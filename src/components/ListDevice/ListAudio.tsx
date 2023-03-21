@@ -1,3 +1,4 @@
+import { DeviceType, useDevices } from '@100mslive/react-sdk'
 import styled from 'styled-components'
 
 import { customColorHueMapping } from '@/components/Commons'
@@ -31,7 +32,7 @@ const SectionTitle = styled.span`
 
 const List = styled.div``
 
-const CustomOption = styled(Option)<{ textColor: string }>`
+const CustomOption = styled(Option)<{ activeBackground: string; textColor: string; isActive: boolean }>`
   width: 100%;
   height: 34px;
   background: transparent;
@@ -40,65 +41,63 @@ const CustomOption = styled(Option)<{ textColor: string }>`
     color: ${(props) => props.textColor};
   }
 
-  svg {
-    position: absolute;
-    right: 12px;
-    path {
-      stroke: ${(props) => props.textColor};
+  ${(props) =>
+    props.isActive &&
+    `
+    background: ${props.activeBackground};
+    
+    span {
+    color: white
     }
-    rect {
-      stroke: ${(props) => props.textColor};
-    }
-    ellipse {
-      stroke: ${(props) => props.textColor};
-    }
-  }
-
-  &:hover {
-    svg {
-      filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(2%) hue-rotate(154deg) brightness(108%)
-        contrast(101%);
-    }
-  }
+      `}
 `
-
-let microphones: MediaDeviceInfo[] = []
-let audios: MediaDeviceInfo[] = []
-
-navigator.mediaDevices.enumerateDevices().then((devices) => {
-  microphones = devices.filter((device) => device.kind === 'audioinput')
-  audios = devices.filter((device) => device.kind === 'audiooutput')
-})
 
 export const ListAudio = () => {
   const color = useAppStore((state) => state.customColor)
+  const { allDevices, selectedDeviceIDs, updateDevice } = useDevices()
+
+  const handleClick = (deviceId: string, deviceType: DeviceType) => {
+    updateDevice({ deviceId, deviceType })
+  }
 
   return (
     <Container backgroundColor={`hsla(${customColorHueMapping[color]}, 79%, 11%, 1)`}>
       <MicrophoneSection>
         <SectionTitle>Microphone</SectionTitle>
         <List>
-          {microphones.map((microphone) => (
-            <CustomOption
-              key={microphone.deviceId}
-              hoverBackground={`hsla(${customColorHueMapping[color]}, 65%, 66%, 1)`}
-              textColor={`hsla(${customColorHueMapping[color]},  25%, 66%, 1)`}
-              title={microphone.label}
-            />
-          ))}
+          {allDevices.audioInput &&
+            allDevices.audioInput.map((microphone) => (
+              <CustomOption
+                key={microphone.deviceId}
+                activeBackground={`hsla(${customColorHueMapping[color]}, 65%, 66%, 1)`}
+                hoverBackground={`hsla(${customColorHueMapping[color]}, 65%, 66%, 1)`}
+                isActive={selectedDeviceIDs.audioInput === microphone.deviceId}
+                textColor={`hsla(${customColorHueMapping[color]},  25%, 66%, 1)`}
+                title={microphone.label}
+                onClick={() => {
+                  handleClick(microphone.deviceId, DeviceType.audioInput)
+                }}
+              />
+            ))}
         </List>
       </MicrophoneSection>
       <SpeakerSection>
         <SectionTitle>Speaker</SectionTitle>
         <List>
-          {audios.map((audio) => (
-            <CustomOption
-              key={audio.deviceId}
-              hoverBackground={`hsla(${customColorHueMapping[color]}, 65%, 66%, 1)`}
-              textColor={`hsla(${customColorHueMapping[color]},  25%, 66%, 1)`}
-              title={audio.label}
-            />
-          ))}
+          {allDevices.audioOutput &&
+            allDevices.audioOutput.map((audio) => (
+              <CustomOption
+                key={audio.deviceId}
+                activeBackground={`hsla(${customColorHueMapping[color]}, 65%, 66%, 1)`}
+                hoverBackground={`hsla(${customColorHueMapping[color]}, 65%, 66%, 1)`}
+                isActive={selectedDeviceIDs.audioOutput === audio.deviceId}
+                textColor={`hsla(${customColorHueMapping[color]},  25%, 66%, 1)`}
+                title={audio.label}
+                onClick={() => {
+                  handleClick(audio.deviceId, DeviceType.audioOutput)
+                }}
+              />
+            ))}
         </List>
       </SpeakerSection>
     </Container>
