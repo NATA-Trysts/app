@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import styled from 'styled-components'
 
-import { Text } from '@/components/Commons'
+import { customColorHueMapping, Text } from '@/components/Commons'
 import { MemberCard } from '@/components/MemberCard'
 import { Option, Popover } from '@/components/Popover'
 import { useAppStore } from '@/stores'
@@ -28,14 +28,12 @@ type SingleMemberCardProps = {
   avatar: string
 }
 
-const customColorHueMapping = {
-  purple: 291,
-  green: 137,
-  blue: 216,
-}
-
-const CustomOption = styled(Option)<{ hoverBackground?: string }>`
+const CustomOption = styled(Option)<{ hoverBackground?: string; textColor: string }>`
   background: transparent;
+
+  span {
+    color: ${(props) => props.textColor};
+  }
 
   :hover {
     background: ${(props) => props.hoverBackground};
@@ -49,12 +47,17 @@ export const SingleMemberCard: FC<SingleMemberCardProps> = ({ name, handler, ava
     <Popover
       align="start"
       content={
-        <MemberInforContainer background={`hsla(${customColorHueMapping[color]}, 81%, 6%, 1)`}>
+        <MemberInforContainer background={`hsla(${customColorHueMapping[color]}, 79%, 11%, 1)`}>
           <MemberHandler size="medium" weight="normal">
             {handler}
           </MemberHandler>
           <Gap />
-          <CustomOption customHoverBackgroundColor="#FC677B" title="Kick out" onClick={() => {}} />
+          <CustomOption
+            customHoverBackgroundColor="#FC677B"
+            textColor={`hsla(${customColorHueMapping[color]},  25%, 66%, 1)`}
+            title="Kick out"
+            onClick={() => {}}
+          />
         </MemberInforContainer>
       }
       side="left"

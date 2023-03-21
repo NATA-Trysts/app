@@ -32,13 +32,25 @@ type VirtualSpaceState = {
 
   authToken: string
   setAuthToken: (authToken: string) => void
+
+  isEditAvatar: boolean
+  setIsEditAvatar: (isEditAvatar: boolean) => void
+
+  isFirstTime: boolean
+  setIsFirstTime: (isFirstTime: boolean) => void
+
+  interactable: boolean
+  setInteractable: (interactable: boolean) => void
+
+  intersectId: string | null
+  setIntersectId: (intersectId: string) => void
 }
 
 export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
   spaceId: '123',
   setSpaceId: (spaceId) => set(() => ({ spaceId })),
 
-  selectedUltility: 'chat',
+  selectedUltility: null,
   setSelectedUltility: (selectedUltility) => set(() => ({ selectedUltility })),
 
   customColor: 'blue',
@@ -46,6 +58,15 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
 
   canControlCharacter: true,
   setCanControlCharacter: (canControlCharacter: boolean) => set(() => ({ canControlCharacter })),
+
+  authToken: '',
+  setAuthToken: (authToken: string) => set({ authToken }),
+
+  isEditAvatar: false,
+  setIsEditAvatar: (isEditAvatar: boolean) => set({ isEditAvatar }),
+
+  isFirstTime: true,
+  setIsFirstTime: (isFirstTime: boolean) => set({ isFirstTime }),
 
   chatMessages: {},
   addMessage: (message) =>
@@ -55,6 +76,9 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
       }),
     ),
 
-  authToken: '',
-  setAuthToken: (authToken: string) => set({ authToken }),
+  interactable: false,
+  setInteractable: (interactable: boolean) => set({ interactable }),
+
+  intersectId: null,
+  setIntersectId: (intersectId: string) => set({ intersectId }),
 }))

@@ -30,7 +30,6 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
     state.setSelectedSpacePreview,
   ])
   const [isHovered, setIsHovered] = useState(false)
-
   const navigate = useNavigate()
 
   const handleClick = () => {

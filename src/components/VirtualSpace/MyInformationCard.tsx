@@ -1,13 +1,15 @@
 import { OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { FC } from 'react'
+import { motion } from 'framer-motion'
+import { FC, useState } from 'react'
 import styled from 'styled-components'
 
-import { Text } from '@/components/Commons'
+import { customColorHueMapping, Text } from '@/components/Commons'
 import { MyInformationCard as InformationCard } from '@/components/MyInformationCard'
 import { Option, Popover } from '@/components/Popover'
-import { useAppStore } from '@/stores'
+import { useAppStore, useVirtualSpaceStore } from '@/stores'
 
+//#region STYLES
 const MemberInforContainer = styled.div<{ background: string }>`
   padding: 8px;
   border-radius: 12px;
@@ -29,13 +31,7 @@ type MyInformationCardProps = {
   avatar: string
 }
 
-const customColorHueMapping = {
-  purple: 291,
-  green: 137,
-  blue: 216,
-}
-
-const CustomInformationCard = styled.div`
+const CustomInformationCard = styled(motion.div)`
   display: flex;
   width: 200px;
 `
@@ -47,22 +43,36 @@ const CharacterPreviewContainer = styled.div`
   border-radius: 6px;
 `
 
-const CustomOption = styled(Option)<{ hoverBackground?: string }>`
+const CustomOption = styled(Option)<{ hoverBackground?: string; textColor: string }>`
   background: transparent;
+  color: ${(props) => props.textColor};
+
+  span {
+    color: ${(props) => props.textColor};
+  }
 
   :hover {
     background: ${(props) => props.hoverBackground};
   }
 `
+//#endregion
 
 export const MyInformationCard: FC<MyInformationCardProps> = ({ name, handler, avatar }) => {
   const color = useAppStore((state) => state.customColor)
+  const [isEditAvatar, setIsEditAvatar] = useVirtualSpaceStore((state) => [state.isEditAvatar, state.setIsEditAvatar])
+
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false)
+
+  const h = () => {
+    setIsEditAvatar(!isEditAvatar)
+    setIsPopoverOpen(false)
+  }
 
   return (
     <Popover
       align="end"
       content={
-        <MemberInforContainer background={`hsla(${customColorHueMapping[color]}, 81%, 6%, 1)`}>
+        <MemberInforContainer background={`hsla(${customColorHueMapping[color]}, 79%, 11%, 1)`}>
           <CharacterPreviewContainer>
             <Canvas>
               <OrbitControls />
@@ -79,21 +89,29 @@ export const MyInformationCard: FC<MyInformationCardProps> = ({ name, handler, a
           <Gap />
           <CustomOption
             hoverBackground={`hsla(${customColorHueMapping[color]}, 65%, 66%, 1)`}
-            title="Change name"
-            onClick={() => {}}
+            textColor={`hsla(${customColorHueMapping[color]},  25%, 66%, 1)`}
+            title="Edit avatar"
+            onClick={h}
           />
           <CustomOption
-            hoverBackground={`hsla(${customColorHueMapping[color]}, 65%, 66%, 1)`}
-            title="Edit avatar"
+            customHoverBackgroundColor="#FC677B"
+            textColor={`hsla(${customColorHueMapping[color]},  25%, 66%, 1)`}
+            title="Log out"
             onClick={() => {}}
           />
-          <CustomOption customHoverBackgroundColor="#FC677B" title="Log out" onClick={() => {}} />
         </MemberInforContainer>
       }
+      handleClickTrigger={() => setIsPopoverOpen(!isPopoverOpen)} // ISSUE: does not close
+      handleInteractOutside={() => setIsPopoverOpen(false)}
+      isPopoverOpen={isPopoverOpen}
       side="right"
       sideOffset={12}
     >
-      <CustomInformationCard>
+      <CustomInformationCard
+        animate={{
+          y: isEditAvatar ? 100 : 0,
+        }}
+      >
         <InformationCard avatar={avatar} handler={handler} name={name} />
       </CustomInformationCard>
     </Popover>

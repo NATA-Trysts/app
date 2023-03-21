@@ -6,7 +6,7 @@ import { ReactComponent as HomeIcon } from '@/assets/icons/home.svg'
 import { ReactComponent as LibraryIcon } from '@/assets/icons/library.svg'
 import { Text } from '@/components/Commons'
 import { FILTER_ICON_TO_WHITE } from '@/libs/constants'
-import { DashboardOption as DashboardOptionType, useDashboardStore } from '@/stores'
+import { DashboardOption as DashboardOptionType, useDashboardStore, useNavigationStore } from '@/stores'
 
 const NavigationItemsContainer = styled.div``
 
@@ -74,11 +74,13 @@ type Item = {
 }
 
 export const NavigationItems = () => {
-  const [isExpanded, dashboardOption, setDashboardOption] = useDashboardStore((state) => [
-    state.isExpanded,
+  const [isExpanded] = useDashboardStore((state) => [state.isExpanded])
+
+  const [dashboardOption, setDashboardOption] = useNavigationStore((state) => [
     state.dashboardOption,
     state.setDashboardOption,
   ])
+
   const [isDisplayed, setIsDisplayed] = useState(isExpanded)
   const [listItems, setListItems] = useState<Item[]>([
     {
