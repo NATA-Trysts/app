@@ -12,3 +12,11 @@ export function useMutableCallback<T>(fn: T) {
 
   return ref
 }
+
+export function isValidUrl(urlString: string) {
+  try {
+    return Boolean(new URL(urlString))
+  } catch (e) {
+    return false
+  }
+}

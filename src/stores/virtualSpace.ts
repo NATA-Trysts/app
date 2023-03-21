@@ -1,6 +1,5 @@
 import produce from 'immer'
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 
 import { CustomColor } from '@/components/Commons'
 
@@ -35,34 +34,27 @@ type VirtualSpaceState = {
   setAuthToken: (authToken: string) => void
 }
 
-export const useVirtualSpaceStore = create<VirtualSpaceState>()(
-  persist(
-    (set) => ({
-      spaceId: '123',
-      setSpaceId: (spaceId) => set(() => ({ spaceId })),
+export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
+  spaceId: '123',
+  setSpaceId: (spaceId) => set(() => ({ spaceId })),
 
-      selectedUltility: 'chat',
-      setSelectedUltility: (selectedUltility) => set(() => ({ selectedUltility })),
+  selectedUltility: 'chat',
+  setSelectedUltility: (selectedUltility) => set(() => ({ selectedUltility })),
 
-      customColor: 'blue',
-      setCustomColor: (customColor: CustomColor) => set(() => ({ customColor })),
+  customColor: 'blue',
+  setCustomColor: (customColor: CustomColor) => set(() => ({ customColor })),
 
-      canControlCharacter: true,
-      setCanControlCharacter: (canControlCharacter: boolean) => set(() => ({ canControlCharacter })),
+  canControlCharacter: true,
+  setCanControlCharacter: (canControlCharacter: boolean) => set(() => ({ canControlCharacter })),
 
-      chatMessages: {},
-      addMessage: (message) =>
-        set(
-          produce((state: VirtualSpaceState) => {
-            state.chatMessages[message.id] = message
-          }),
-        ),
+  chatMessages: {},
+  addMessage: (message) =>
+    set(
+      produce((state: VirtualSpaceState) => {
+        state.chatMessages[message.id] = message
+      }),
+    ),
 
-      authToken: '',
-      setAuthToken: (authToken: string) => set({ authToken }),
-    }),
-    {
-      name: 'virtual-space-storage',
-    },
-  ),
-)
+  authToken: '',
+  setAuthToken: (authToken: string) => set({ authToken }),
+}))

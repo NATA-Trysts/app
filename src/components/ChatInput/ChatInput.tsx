@@ -1,17 +1,15 @@
-import { useForm } from 'react-hook-form'
-import ReactTextareaAutosize from 'react-textarea-autosize'
 import styled from 'styled-components'
 
 import { ReactComponent as Emoji } from '@/assets/icons/emoji.svg'
 import { SVGClickable } from '@/layouts/common'
 import { useVirtualSpaceStore } from '@/stores'
 
+import { TextAreaSendable } from '../Commons/TextArea/TextAreaSendable'
+
 const Container = styled.div`
   width: 100%;
   position: relative;
 `
-
-// const InputForm = styled.form``
 
 const MessageInputContainer = styled.div`
   padding: 14px 48px 14px 12px;
@@ -24,7 +22,7 @@ const MessageInputContainer = styled.div`
   align-items: center;
 `
 
-const MessageInput = styled(ReactTextareaAutosize)`
+const MessageInput = styled(TextAreaSendable)`
   border: none;
   font-family: var(--font-family);
   font-size: 14px;
@@ -52,37 +50,18 @@ export type ChatInputProps = {
 
 export const ChatInput = ({ onSendMessage = () => {} }: ChatInputProps) => {
   const setCanControlCharacter = useVirtualSpaceStore((state) => state.setCanControlCharacter)
-  const { register, handleSubmit, setValue } = useForm()
-
-  const onEnterPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key == 'Enter' && event.shiftKey == false) {
-      event.preventDefault()
-      handleSendMessage()
-    }
-  }
-
-  const handleSendMessage = () => {
-    handleSubmit(
-      (data) => {
-        setValue('chat', '')
-        onSendMessage(data)
-      },
-      (errors) => console.error(errors),
-    )()
-  }
 
   return (
     <Container>
-      {/* <InputForm onSubmit={}> */}
       <MessageInputContainer>
         <MessageInput
-          {...register('chat', { required: true })}
           maxRows={3}
           minRows={1}
+          name="chat"
           placeholder="Type something"
           onBlur={() => setCanControlCharacter(true)}
           onFocus={() => setCanControlCharacter(false)}
-          onKeyDown={onEnterPress}
+          onValueSubmit={onSendMessage}
         />
       </MessageInputContainer>
       <EmojiContainer>
@@ -90,7 +69,6 @@ export const ChatInput = ({ onSendMessage = () => {} }: ChatInputProps) => {
           <Emoji />
         </SVGClickable>
       </EmojiContainer>
-      {/* </InputForm> */}
     </Container>
   )
 }
