@@ -27,7 +27,7 @@ type AvatarPanelProps = {
   left?: number
   right?: number
   bottom?: number
-  isEdit: boolean
+  isEdit?: boolean
 }
 
 export const AvatarPanel = ({ top = 96, left = 120, right = 0, bottom = 0, isEdit = false }: AvatarPanelProps) => {

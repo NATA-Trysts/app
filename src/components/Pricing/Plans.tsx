@@ -29,7 +29,7 @@ const PlansBackgroundBlur = styled.div`
 
 type PlansProps = {
   haveFreePlan?: boolean
-  padding: string
+  padding?: string
 }
 
 export const Plans = ({ haveFreePlan = true, padding = '40px 0' }: PlansProps) => {

@@ -34,7 +34,7 @@ type BackButtonProps = {
   top?: number
   left?: number
   onClickBack: () => void
-  isEdit: boolean
+  isEdit?: boolean
 }
 
 export const BackButton = ({ top = 40, left = 120, onClickBack, isEdit = false }: BackButtonProps) => {
