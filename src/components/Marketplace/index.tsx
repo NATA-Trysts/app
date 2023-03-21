@@ -1,1 +1,1 @@
-export * from './MarketPlaceItem'
+export * from './MarketplaceItem'
