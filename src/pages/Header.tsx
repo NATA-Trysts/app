@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as LeftUpIcon } from '@/assets/icons/left-up.svg'
@@ -58,10 +59,15 @@ export const Header = () => {
   const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
   const color = useAppStore((state) => state.customColor)
 
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false)
+
   const logoOptions = [
     {
       title: 'Website',
-      onClick: () => window.open('https://trysts.io', '_blank'),
+      onClick: () => {
+        window.open('https://trysts.io', '_blank')
+        setIsPopoverOpen(false)
+      },
       icon: <LeftUpIcon />,
     },
     {
@@ -112,6 +118,9 @@ export const Header = () => {
             ))}
           </LogoPopover>
         }
+        handleClickTrigger={() => setIsPopoverOpen(!isPopoverOpen)} // ISSUE: does not close
+        handleInteractOutside={() => setIsPopoverOpen(false)}
+        isPopoverOpen={isPopoverOpen}
         side="bottom"
         sideOffset={6}
       >
