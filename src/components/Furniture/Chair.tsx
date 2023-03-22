@@ -1,25 +1,26 @@
-import { CuboidCollider, RigidBody } from '@react-three/rapier'
+import { useGLTF } from '@react-three/drei'
+import * as THREE from 'three'
+import { GLTF } from 'three-stdlib'
 
-import { useVirtualSpaceStore } from '@/stores'
+type GLTFResult = GLTF & {
+  nodes: {
+    chair: THREE.Mesh
+  }
+  materials: {
+    Material: THREE.MeshStandardMaterial
+  }
+}
 
-export const Chair = () => {
-  const setInteractable = useVirtualSpaceStore((state) => state.setInteractable)
+export function Chair(props: JSX.IntrinsicElements['group']) {
+  const { nodes, materials } = useGLTF(
+    'https://cdn.jsdelivr.net/gh/NATA-Trysts/cdn@master/models-transform/chair-transformed.glb',
+  ) as GLTFResult
 
   return (
-    <group name="projector">
-      <RigidBody type="fixed">
-        <mesh position={[3, 0, 4]}>
-          <boxGeometry args={[1, 5, 3]} />
-          <meshBasicMaterial color="red" />
-        </mesh>
-        <CuboidCollider
-          sensor
-          args={[5, 5, 5]}
-          position={[3, 0, 4]}
-          onIntersectionEnter={() => setInteractable(true)}
-          onIntersectionExit={() => setInteractable(false)}
-        />
-      </RigidBody>
+    <group {...props} dispose={null} name="chair">
+      <mesh geometry={nodes.chair.geometry} material={materials.Material} rotation={[-Math.PI, 0, -Math.PI]} />
     </group>
   )
 }
+
+useGLTF.preload('https://cdn.jsdelivr.net/gh/NATA-Trysts/cdn@master/models-transform/chair-transformed.glb')

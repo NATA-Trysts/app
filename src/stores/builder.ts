@@ -1,6 +1,11 @@
 import { create } from 'zustand'
 
-export type CategoryType = 'Animal' | 'ThreeJS'
+export type CategoryType = 'chair' | 'table'
+
+export type ModelResolution = {
+  low: string
+  medium: string
+}
 
 export type SubCategoryItem = {
   id: number
@@ -8,6 +13,8 @@ export type SubCategoryItem = {
   description: string
   img: string
   category: CategoryType
+  collection: string
+  resolutions: ModelResolution
 }
 
 type SpaceInformationType = {
@@ -33,6 +40,11 @@ type ObjectAdjustingType = {
     values: ModifierValueType
     canBeNegative: boolean
   }[]
+}
+
+export type MousePosition = {
+  x: number
+  z: number
 }
 
 type BuilderState = {
@@ -67,10 +79,20 @@ type BuilderState = {
 
   objectAdjusting: ObjectAdjustingType
   setObjectAdjusting: (objectAdjusting: ObjectAdjustingType) => void
+
+  models: any[]
+  addModel: (model: SubCategoryItem) => void
+  // updateModel: (payload: any) => void
+
+  isEditing: boolean
+  setIsEditing: (isEditing: boolean) => void
+
+  mousePosition: MousePosition
+  updateMousePosition: (mousePosition: MousePosition) => void
 }
 
 export const useBuilderStore = create<BuilderState>((set) => ({
-  selectedCategoryName: 'Animal',
+  selectedCategoryName: 'chair',
   setSelectedCategory: (categoryName: CategoryType) => set(() => ({ selectedCategoryName: categoryName })),
 
   subCategoryItems: new Map(),
@@ -89,8 +111,8 @@ export const useBuilderStore = create<BuilderState>((set) => ({
     }),
 
   scrollPosition: new Map([
-    ['Animal', 0],
-    ['ThreeJS', 0],
+    ['chair', 0],
+    ['table', 0],
   ]),
   setScrollPosition: (scrollPosition: Map<CategoryType, number>) => set(() => ({ scrollPosition })),
 
@@ -147,4 +169,22 @@ export const useBuilderStore = create<BuilderState>((set) => ({
     ],
   },
   setObjectAdjusting: (objectAdjusting: ObjectAdjustingType) => set(() => ({ objectAdjusting })),
+
+  models: [],
+  addModel: (newModel: SubCategoryItem) => set((state) => ({ models: [...state.models, newModel] })),
+  // updateModel: (payload) =>
+  //   set((state) => {
+  //     const allModels = [...state.models]
+
+  //     allModels[payload.id].position = payload.position
+
+  //     return allModels
+  //   }),
+
+  isEditing: false,
+  setIsEditing: (isEdit) => set(() => ({ isEditing: isEdit })),
+
+  mousePosition: { x: 0, z: 0 },
+  updateMousePosition: (updatedPosition: MousePosition) =>
+    set({ mousePosition: { x: updatedPosition.x, z: updatedPosition.z } }),
 }))
