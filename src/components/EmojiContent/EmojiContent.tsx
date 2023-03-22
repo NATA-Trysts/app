@@ -1,4 +1,8 @@
+import { useRef } from 'react'
 import styled from 'styled-components'
+
+import { customColorHueMapping } from '@/components/Commons'
+import { useAppStore } from '@/stores'
 
 const Container = styled.div`
   width: 248px;
@@ -7,7 +11,7 @@ const Container = styled.div`
   border-radius: 12px;
 `
 
-const List = styled.div`
+const List = styled.div<{ borderColor: string }>`
   width: 100%;
   height: 100%;
   padding: 8px;
@@ -21,6 +25,19 @@ const List = styled.div`
     width: 0; /* Remove scrollbar space */
     background: transparent; /* Optional: just make scrollbar invisible */
   }
+
+  > div {
+    opacity: 1;
+  }
+
+  &:hover > div:not(:hover) {
+    opacity: 0.85;
+  }
+
+  > div:hover {
+    opacity: 1;
+    border: 2px solid ${(props) => props.borderColor};
+  }
 `
 
 const Item = styled.div`
@@ -30,6 +47,8 @@ const Item = styled.div`
   overflow: hidden;
   cursor: pointer;
   position: relative;
+  border: 2px solid transparent;
+  transition: opacity, border 0.2s ease;
 `
 
 const ItemImage = styled.img`
@@ -135,11 +154,20 @@ type EmojiContentProps = {
 }
 
 export const EmojiContent = ({ setIsPopoverOpen }: EmojiContentProps) => {
+  const color = useAppStore((state) => state.customColor)
+  const modalRef = useRef<HTMLDivElement>(null)
+
+  const handleItemClick = (index: number) => {
+    if (index) {
+      setIsPopoverOpen(false)
+    }
+  }
+
   return (
-    <Container>
-      <List>
+    <Container ref={modalRef}>
+      <List borderColor={`hsla(${customColorHueMapping[color]}, 65%, 66%, 1)`}>
         {emojis.map((emoji, index) => (
-          <Item key={emoji.id} onClick={() => setIsPopoverOpen(false)}>
+          <Item key={emoji.id} onClick={() => handleItemClick(index)}>
             <ItemImage alt={emoji.name} loading="lazy" src={emoji.imgSrc} />
             <ItemName>{emoji.name}</ItemName>
             <ItemOrder>{index + 1}</ItemOrder>
