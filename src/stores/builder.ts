@@ -60,6 +60,7 @@ type BuilderState = {
 
   globalSettings: GlobalSettingsType
   setGlobalSettings: (globalSettings: GlobalSettingsType) => void
+  updateGlobalSettings: (key: string, value: boolean | string) => void
 
   globalBackground: GlobalBackgroundType
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => void
@@ -112,6 +113,15 @@ export const useBuilderStore = create<BuilderState>((set) => ({
     ['gizmo', { values: ['cube', 'port'], selected: 'cube' }],
   ]),
   setGlobalSettings: (globalSettings: GlobalSettingsType) => set(() => ({ globalSettings })),
+  updateGlobalSettings: (key: string, value: boolean | string) =>
+    set((state) => {
+      const newGlobalSettings = new Map(state.globalSettings)
+      const a = newGlobalSettings.get(key)!
+
+      newGlobalSettings.set(key, { ...(newGlobalSettings.get(key) as typeof a), selected: value })
+
+      return { globalSettings: newGlobalSettings }
+    }),
 
   globalBackground: '#D9D9D9',
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => set(() => ({ globalBackground })),

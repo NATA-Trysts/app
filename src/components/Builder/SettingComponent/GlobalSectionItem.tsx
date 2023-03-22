@@ -20,7 +20,7 @@ const Property = styled(Text)`
 `
 
 const Wrapper = styled.div`
-  width: 136px;
+  width: 124px;
   height: 28px;
 
   > div {
@@ -58,21 +58,14 @@ type GlobalSectionItemProps = {
 }
 
 export const GlobalSectionItem = ({ property, options, selected }: GlobalSectionItemProps) => {
-  const [globalSettings, setGlobalSettings] = useBuilderStore((state) => [
-    state.globalSettings,
-    state.setGlobalSettings,
-  ])
+  const [updateGlobalSettings] = useBuilderStore((state) => [state.updateGlobalSettings])
 
-  const handleChange = useCallback((data: any) => {
-    const newGlobalSettings = new Map(globalSettings)
-
-    newGlobalSettings.set(property, {
-      values: newGlobalSettings.get(property)?.values as string[] | boolean[],
-      selected: data,
-    })
-
-    setGlobalSettings(newGlobalSettings)
-  }, [])
+  const handleChange = useCallback(
+    (data: any) => {
+      updateGlobalSettings(property, data)
+    },
+    [property, updateGlobalSettings],
+  )
 
   return (
     <Container>
@@ -80,7 +73,7 @@ export const GlobalSectionItem = ({ property, options, selected }: GlobalSection
         {property}
       </Property>
       <Wrapper>
-        <MultiToggle handleSelectedChange={handleChange} options={options} selected={selected} />
+        <MultiToggle handleSelectedChange={handleChange} name={property} options={options} selected={selected} />
       </Wrapper>
     </Container>
   )
