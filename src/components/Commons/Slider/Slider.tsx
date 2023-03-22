@@ -1,13 +1,16 @@
 import * as RadixSlider from '@radix-ui/react-slider'
-import { CSSProperties, isValidElement, ReactNode, useMemo, useRef, useState } from 'react'
+import { debounce } from 'lodash-es'
+import { CSSProperties, isValidElement, ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import { SliderMarkContext } from './SliderContext'
 import { SliderMark } from './SliderMark'
 import { SliderThumbLabel } from './SliderThumbLabel'
 
-export type TrystsSliderProps = RadixSlider.SliderProps & {
+export type TrystsSliderProps = Omit<RadixSlider.SliderProps, 'onValueCommit' | 'onValueChange'> & {
   marks?: Record<string | number, ReactNode | Mark>
+  onValueChange?: (value: SliderValue) => void
+  onValueCommit?: (value: SliderValue) => void
 }
 
 export type Mark = {
@@ -17,6 +20,14 @@ export type Mark = {
 
 export type MarkObj = Mark & {
   value: number
+}
+
+export type SliderValue = number | number[] | undefined
+
+function getSliderValue(values: number[]): SliderValue {
+  if (values.length === 0) return undefined
+  else if (values.length === 1) return values[0]
+  else return values
 }
 
 export const Slider = ({
@@ -37,18 +48,27 @@ export const Slider = ({
   const sliderRef = useRef<HTMLSpanElement>(null)
   const [values, setValues] = useState(defaultValue)
 
+  const debounceValueChange = useRef(
+    debounce((values: number[]) => {
+      onValueCommit(getSliderValue(values))
+    }, 200),
+  )
+
+  useEffect(() => {
+    onValueChange(getSliderValue(values))
+    debounceValueChange.current(values)
+  }, [values, onValueChange, debounceValueChange])
+
   const handleValueChange = (values: number[]) => {
     setValues(values)
-    onValueChange(values)
   }
 
-  const handleMarkClick = (value: number) => {
+  const handleMarkClick = (nextValue: number) => {
     setValues((prevValues) => {
-      const hasChanged = prevValues[0] !== value
+      const hasChanged = prevValues[0] !== nextValue
+      const currentValue = hasChanged ? [nextValue, ...(prevValues.shift(), prevValues)] : prevValues
 
-      // console.log(hasChanged ? [value, ...(prevValues.shift(), prevValues)] : prevValues)
-
-      return hasChanged ? [value, ...(prevValues.shift(), prevValues)] : prevValues
+      return currentValue
     })
   }
 
@@ -112,7 +132,6 @@ export const Slider = ({
           step={step}
           value={values}
           onValueChange={handleValueChange}
-          onValueCommit={onValueCommit}
           {...props}
         >
           <SliderTrack className="SliderTrack">

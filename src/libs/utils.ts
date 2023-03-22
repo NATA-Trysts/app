@@ -20,3 +20,7 @@ export function isValidUrl(urlString: string) {
     return false
   }
 }
+
+export function isOnlyWhitespace(str: string) {
+  return str.trim().length !== 0
+}

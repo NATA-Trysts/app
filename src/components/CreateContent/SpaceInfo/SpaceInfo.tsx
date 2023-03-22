@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { Text } from '@/components/Commons'
 import { Slider } from '@/components/Commons/Slider'
 import { Switch } from '@/components/Commons/Switch'
+import { isOnlyWhitespace } from '@/libs/utils'
 
 import { CanNextCreateContentProps, CreateField, CreateForm, CreateFormHeader, CreateInput, CreateLabel } from '..'
 
@@ -23,8 +24,15 @@ export const SpaceInfo = ({ onCanNext = () => {} }: SpaceInfoProps) => {
 
   const { register, getValues, setValue, formState, getFieldState, setFocus } = useFormContext()
 
-  const nameField = register('space-name', { required: true })
-  const passwordField = register('space-password', { required: true, disabled: !enablePassword })
+  const nameField = register('space-name', {
+    required: true,
+    validate: { whitespace: isOnlyWhitespace },
+  })
+  const passwordField = register('space-password', {
+    required: true,
+    disabled: !enablePassword,
+    validate: { whitespace: isOnlyWhitespace },
+  })
   const nameState = getFieldState('space-name', formState)
   const passwordState = getFieldState('space-password', formState)
 
@@ -94,7 +102,9 @@ export const SpaceInfo = ({ onCanNext = () => {} }: SpaceInfoProps) => {
           marks={sliderMarks}
           max={50}
           min={2}
-          onValueCommit={(value) => setValue('max-member', value)}
+          onValueCommit={(value) => {
+            setValue('max-member', value)
+          }}
         ></Slider>
       </CreateField>
     </CreateForm>
