@@ -64,7 +64,7 @@ export const MultiToggle = forwardRef<MultiToggleRef, MultiToggleProps>(
     useEffect(() => {
       const value = getValue(selectedOption)
 
-      if (value) handleSelectedChange?.(value)
+      if (value !== undefined) handleSelectedChange?.(value)
     }, [selectedOption, handleSelectedChange])
 
     const toggles: any[] = useMemo(() => {
