@@ -17,6 +17,7 @@ const Container = styled.div`
   --color-5: #191a1d;
   --color-4: #212225;
   --color-3: #696969;
+  user-select: none;
 `
 
 export const BuilderToolbar = () => {
