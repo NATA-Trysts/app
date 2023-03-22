@@ -1,5 +1,6 @@
 import { Content, PopoverContentProps, Portal, Root, Trigger } from '@radix-ui/react-popover'
 import React, { FC, ReactNode } from 'react'
+import styled from 'styled-components'
 
 type PopoverProps = {
   children: ReactNode
@@ -9,6 +10,10 @@ type PopoverProps = {
   handleClickTrigger?: () => void
 } & PopoverContentProps
 
+const NoOutlineContent = styled(Content)`
+  outline: none;
+`
+
 export const Popover: FC<PopoverProps> = (props) => {
   return (
     <Root open={props.isPopoverOpen}>
@@ -16,9 +21,9 @@ export const Popover: FC<PopoverProps> = (props) => {
         {props.children}
       </Trigger>
       <Portal>
-        <Content {...props} onInteractOutside={props.handleInteractOutside}>
+        <NoOutlineContent {...props} onInteractOutside={props.handleInteractOutside}>
           {props.content}
-        </Content>
+        </NoOutlineContent>
       </Portal>
     </Root>
   )
