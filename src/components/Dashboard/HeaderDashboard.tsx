@@ -13,9 +13,9 @@ export const HeaderDashboard = () => {
     <Header>
       <HeaderSearchBar onSearch={handleSearch} />
       <HeaderButtons>
-        <BasicButton>
+        <BasicButton color="dark">
           <ShopIcon stroke="#696969" />
-          Shop
+          Market Place
         </BasicButton>
         <GradientButton>Create Space</GradientButton>
       </HeaderButtons>
