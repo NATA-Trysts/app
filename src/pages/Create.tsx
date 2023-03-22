@@ -73,6 +73,7 @@ export default Create
 export const CreateContainer = styled.div`
   position: relative;
   height: 100vh;
+  background-color: hsla(261, 92%, 5%, 1);
 `
 
 export const CreateSection = styled.section`
