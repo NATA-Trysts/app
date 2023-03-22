@@ -68,7 +68,7 @@ export const TextAreaSendable = ({
       }}
       rules={{
         required: true,
-        validate: { 'all-whitespace': (value) => (value as string).trim().length !== 0 },
+        validate: { whitespace: (value) => (value as string).trim().length !== 0 },
       }}
     />
   )
