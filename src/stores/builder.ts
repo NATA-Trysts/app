@@ -8,7 +8,7 @@ export type ModelResolution = {
 }
 
 export type SubCategoryItem = {
-  id: number
+  id: string
   name: string
   description: string
   img: string
@@ -33,6 +33,12 @@ export type ModifierValueType = {
   z: number | string
 }
 
+export type Vec3 = {
+  x: number
+  y: number
+  z: number
+}
+
 type ObjectAdjustingType = {
   name: string
   modifiers: {
@@ -42,9 +48,13 @@ type ObjectAdjustingType = {
   }[]
 }
 
-export type MousePosition = {
-  x: number
-  z: number
+export type MousePosition = Omit<Vec3, 'y'>
+
+export type SpaceModel = {
+  id: string
+  position: Vec3
+  rotation: Vec3
+  scale: Vec3
 }
 
 type BuilderState = {
@@ -80,8 +90,8 @@ type BuilderState = {
   objectAdjusting: ObjectAdjustingType
   setObjectAdjusting: (objectAdjusting: ObjectAdjustingType) => void
 
-  models: any[]
-  addModel: (model: SubCategoryItem) => void
+  models: SpaceModel[]
+  addModel: (model: SpaceModel) => void
   // updateModel: (payload: any) => void
 
   isEditing: boolean
@@ -132,7 +142,7 @@ export const useBuilderStore = create<BuilderState>((set) => ({
   globalSettings: new Map([
     ['wireframe', { values: [true, false], selected: false }],
     ['grid', { values: [true, false], selected: true }],
-    ['gizmo', { values: ['cube', 'port'], selected: 'cube' }],
+    ['gizmo', { values: ['cube', 'port'], selected: 'port' }],
   ]),
   setGlobalSettings: (globalSettings: GlobalSettingsType) => set(() => ({ globalSettings })),
   updateGlobalSettings: (key: string, value: boolean | string) =>
@@ -171,7 +181,7 @@ export const useBuilderStore = create<BuilderState>((set) => ({
   setObjectAdjusting: (objectAdjusting: ObjectAdjustingType) => set(() => ({ objectAdjusting })),
 
   models: [],
-  addModel: (newModel: SubCategoryItem) => set((state) => ({ models: [...state.models, newModel] })),
+  addModel: (newModel: SpaceModel) => set((state) => ({ models: [...state.models, newModel] })),
   // updateModel: (payload) =>
   //   set((state) => {
   //     const allModels = [...state.models]
@@ -185,6 +195,5 @@ export const useBuilderStore = create<BuilderState>((set) => ({
   setIsEditing: (isEdit) => set(() => ({ isEditing: isEdit })),
 
   mousePosition: { x: 0, z: 0 },
-  updateMousePosition: (updatedPosition: MousePosition) =>
-    set({ mousePosition: { x: updatedPosition.x, z: updatedPosition.z } }),
+  updateMousePosition: (updatedPosition: MousePosition) => set({ mousePosition: updatedPosition }),
 }))

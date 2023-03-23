@@ -4,7 +4,7 @@ const useBuilder = () => {
   const setSubCategoryItems = useBuilderStore((state) => state.setSubCategoryItems)
   const setSelectedSubCategoryItems = useBuilderStore((state) => state.setSelectedSubCategoryItems)
   const updateSelectedSubCategoryItems = useBuilderStore((state) => state.updateSelectedSubCategoryItems)
-
+  const addModel = useBuilderStore((state) => state.addModel)
   // mapping data from api to map object
   const mappingData = async (listFromApi: SubCategoryItem[]) => {
     const newSubCategoryItems = new Map<CategoryType, SubCategoryItem[]>()
@@ -30,6 +30,12 @@ const useBuilder = () => {
 
   const clickSubCategory = (item: SubCategoryItem) => {
     updateSelectedSubCategoryItems(item.category, item)
+    addModel({
+      id: item.id,
+      position: { x: 0, y: 0, z: 0 },
+      scale: { x: 0, y: 0, z: 0 },
+      rotation: { x: 0, y: 0, z: 0 },
+    })
   }
 
   const removeLeadingZero = (value: string) => {
