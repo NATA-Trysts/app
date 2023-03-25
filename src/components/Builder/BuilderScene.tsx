@@ -1,6 +1,5 @@
 import { GizmoHelper, GizmoViewcube, GizmoViewport, OrbitControls } from '@react-three/drei'
-import { Canvas, ThreeEvent, useFrame, useThree } from '@react-three/fiber'
-import { animate } from 'framer-motion'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Perf } from 'r3f-perf'
 import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
@@ -8,6 +7,8 @@ import { GridHelper, Group, Mesh } from 'three'
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 
 import { useBuilderStore } from '@/stores'
+
+import { Furnitures, Ground } from './Models'
 
 //#region STYLE
 const Container = styled.section`
@@ -51,171 +52,6 @@ const WireframeController = ({ wireframe = true }: { wireframe: boolean }) => {
   return <></>
 }
 
-const Ground = () => {
-  const groundRef = useRef<Group | null>(null)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isEditing, setIsEditing] = useBuilderStore((state) => [state.isEditing, state.setIsEditing])
-  const [updateMousePosition] = useBuilderStore((state) => [state.updateMousePosition])
-  const isModelClicked = useRef<boolean>(false)
-  // const modelRef = useRef<Group | null>(null)
-
-  const INITIAL_Y = 0
-  // const HIGHEST_Y = 2
-
-  // const xU = useRef(0)
-  const yU = useRef(INITIAL_Y)
-  // const zU = useRef(0)
-
-  const xX = useRef(0)
-  const zX = useRef(0)
-
-  const onPointerMove = (e: ThreeEvent<PointerEvent>) => {
-    e.stopPropagation()
-
-    // if (isEditing && isModelClicked.current) {
-    // updateMousePosition({ x: e.point.x, z: e.point.z })
-    xX.current = e.point.x
-    zX.current = e.point.z
-    // xU.current = e.point.x
-    // zU.current = e.point.z
-    // }
-  }
-
-  // const onModelPointerDown = (e: ThreeEvent<PointerEvent>) => {
-  //   e.stopPropagation()
-  //   setIsEditing(true)
-  //   isModelClicked.current = true
-  //   animate(INITIAL_Y, HIGHEST_Y, {
-  //     onUpdate: (latest) => {
-  //       yU.current = latest
-  //     },
-  //   })
-  // }
-
-  useEffect(() => {
-    const handlePointerUp = (e: PointerEvent) => {
-      e.stopPropagation()
-      if (isModelClicked.current) {
-        setIsEditing(false)
-        isModelClicked.current = false
-        animate(yU.current, INITIAL_Y, {
-          onUpdate: (latest) => {
-            yU.current = latest
-          },
-        })
-      }
-    }
-
-    window.addEventListener('pointerup', handlePointerUp)
-
-    return () => window.removeEventListener('pointerup', handlePointerUp)
-  }, [])
-
-  const counter = useRef(0)
-  const offset = 5
-
-  useFrame(() => {
-    counter.current += 1
-    if (counter.current % offset === 0) updateMousePosition({ x: xX.current, z: zX.current })
-
-    // if (modelRef.current) modelRef.current.position.set(xU.current, yU.current, zU.current)
-  })
-
-  return (
-    <>
-      <group ref={groundRef} name="ground" position={[0, -0.5, 0]} onPointerMove={onPointerMove}>
-        <mesh>
-          <boxGeometry args={[100, 1, 100]} />
-          <meshBasicMaterial color="brown" />
-        </mesh>
-      </group>
-
-      {/* <group ref={modelRef} position={[0, INITIAL_Y, 0]} onPointerDown={onModelPointerDown}>
-        <Desk position={[0, 0, 0]} scale={[0.01, 0.01, 0.01]} />
-      </group> */}
-    </>
-  )
-}
-
-// const M2 = ({ id }: { id: string }) => {
-//   const [mousePosition] = useBuilderStore((state) => [state.mousePosition])
-//   const anchorRef = useRef<Mesh>(null)
-//   const [isEditing, setIsEditing] = useBuilderStore((state) => [state.isEditing, state.setIsEditing])
-//   const isModelClicked = useRef<boolean>(false)
-//   const modelRef = useRef<Group | null>(null)
-
-//   const INITIAL_Y = 0
-//   const HIGHEST_Y = 2
-
-//   const xU = useRef(0)
-//   const yU = useRef(INITIAL_Y)
-//   const zU = useRef(0)
-
-//   const onModelPointerDown = (e: ThreeEvent<PointerEvent>) => {
-//     e.stopPropagation()
-//     setIsEditing(true)
-
-//     // isModelClicked.current = true
-//     animate(INITIAL_Y, HIGHEST_Y, {
-//       onUpdate: (latest) => {
-//         modelRef.current?.position.set(xU.current, latest, zU.current)
-//       },
-//     })
-//   }
-
-//   // useEffect(() => {
-//   //   const handlePointerUp = (e: PointerEvent) => {
-//   //     e.stopPropagation()
-//   //     if (isModelClicked.current) {
-//   //       setIsEditing(false)
-//   //       isModelClicked.current = false
-//   //       animate(yU.current, INITIAL_Y, {
-//   //         onUpdate: (latest) => {
-//   //           yU.current = latest
-//   //         },
-//   //       })
-//   //     }
-//   //   }
-
-//   //   isModelClicked.current && window.addEventListener('pointerup', handlePointerUp)
-
-//   //   return () => {
-//   //     window.removeEventListener('pointerup', handlePointerUp)
-//   //   }
-//   // }, [])
-
-//   // useFrame(() => {
-//   //   console.log('::', yU.current)
-//   //   if (modelRef.current) modelRef.current.position.set(xU.current, yU.current, zU.current)
-//   // })
-
-//   return (
-//     <group ref={modelRef} position={[0, INITIAL_Y, 0]} onPointerDown={onModelPointerDown}>
-//       {
-//         {
-//           1: <Chair position={[0, 0, 0]} scale={[0.01, 0.01, 0.01]} />,
-//           2: <Desk position={[0, 0, 0]} scale={[0.01, 0.01, 0.01]} />,
-//         }[id]
-//       }
-//     </group>
-//   )
-// }
-
-// const Furnitures = () => {
-//   const [models] = useBuilderStore((state) => [state.models])
-
-//   useEffect(() => {
-//     console.log(models)
-//   }, [models])
-
-//   return (
-//     <Suspense fallback={null}>
-//       {/* <Mo /> */}
-//       {models.length > 0 && models.map((model) => <M2 key={Math.random().toString()} id={model.id} />)}
-//     </Suspense>
-//   )
-// }
-
 export const BuilderScene = () => {
   const gridHelperRef = useRef<GridHelper | null>(null)
   const [globalSettings] = useBuilderStore((state) => [state.globalSettings, state.setZoom])
@@ -246,15 +82,9 @@ export const BuilderScene = () => {
           )}
         </GizmoHelper>
 
+        <Furnitures />
+
         <Ground />
-
-        {/* <Anchor /> */}
-
-        {/* <Furnitures /> */}
-
-        {/* <Ground /> */}
-
-        {/* <Anchor /> */}
       </Canvas>
     </Container>
   )

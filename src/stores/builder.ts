@@ -197,3 +197,13 @@ export const useBuilderStore = create<BuilderState>((set) => ({
   mousePosition: { x: 0, z: 0 },
   updateMousePosition: (updatedPosition: MousePosition) => set({ mousePosition: updatedPosition }),
 }))
+
+type EditorState = {
+  mousePosition: MousePosition
+  updateMousePosition: (mousePosition: MousePosition) => void
+}
+
+export const useEditorStore = create<EditorState>()((set) => ({
+  mousePosition: { x: 0, z: 0 },
+  updateMousePosition: (mousePosition: MousePosition) => set(() => ({ mousePosition })),
+}))
