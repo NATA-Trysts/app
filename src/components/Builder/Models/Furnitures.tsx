@@ -8,6 +8,7 @@ import { useBuilderStore, useEditorStore } from '@/stores'
 
 type FurnitureProps = {
   id: string
+  wireframe: boolean
 }
 
 const Furniture = (props: FurnitureProps) => {
@@ -66,10 +67,10 @@ const Furniture = (props: FurnitureProps) => {
   })
 
   return (
-    <group ref={modelRef} onPointerDown={onModelPointerDown}>
+    <group ref={modelRef} name="furnitures" onPointerDown={onModelPointerDown}>
       {
         {
-          1: <Chair position={[0, 0, 0]} scale={[0.01, 0.01, 0.01]} />,
+          1: <Chair position={[0, 0, 0]} scale={[0.01, 0.01, 0.01]} wireframe={props.wireframe} />,
           2: <Desk position={[0, 0, 0]} scale={[0.01, 0.01, 0.01]} />,
         }[props.id]
       }
@@ -78,7 +79,14 @@ const Furniture = (props: FurnitureProps) => {
 }
 
 export const Furnitures = () => {
-  const [models] = useBuilderStore((state) => [state.models])
+  const [models, globalSettings] = useBuilderStore((state) => [state.models, state.globalSettings])
 
-  return <>{models.length > 0 && models.map((model, index) => <Furniture key={index} id={model.id} />)}</>
+  return (
+    <>
+      {models.length > 0 &&
+        models.map((model, index) => (
+          <Furniture key={index} id={model.id} wireframe={globalSettings.get('wireframe')?.selected as boolean} />
+        ))}
+    </>
+  )
 }
