@@ -37,6 +37,7 @@ export const Other = (props: OtherProps) => {
   useEffect(() => {
     const videoElement = document.getElementById(`video-ref-${props.id}`) as HTMLVideoElement
 
+    console.log(peers)
     if (peers && peers.videoTrack && videoElement) {
       hmsActions.attachVideo(peers.videoTrack, videoElement)
       setVideoTexture(new VideoTexture(videoElement))
@@ -61,7 +62,7 @@ export const Other = (props: OtherProps) => {
         <BaseCharacter action={props.action} />
         <mesh ref={videoFrame} position={[0, 4.5, 0]}>
           <planeGeometry args={[VIDEO_WIDTH, (VIDEO_WIDTH * 3) / 4]} />
-          <meshBasicMaterial transparent map={videoTexture || tempTexture} />
+          <meshBasicMaterial transparent map={videoTexture || tempTexture} toneMapped={false} />
         </mesh>
       </group>
     </>

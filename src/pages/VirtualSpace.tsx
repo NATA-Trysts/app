@@ -193,7 +193,11 @@ const VirtualSpace = () => {
   }
 
   useEffect(() => {
-    join()
+    try {
+      join()
+    } catch (error) {
+      console.error(error)
+    }
 
     return () => {
       hmsActions.leave()

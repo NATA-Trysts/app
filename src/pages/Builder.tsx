@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { BuilderPanel, BuilderScene, BuilderSettings, BuilderToolbar } from '@/components/Builder'
+import { BuilderPanel, BuilderSettings, BuilderToolbar, Scene as BuilderScene } from '@/components/Builder'
 import { NotificationStack } from '@/components/Notification'
 
 const BuilderPage = styled.div`

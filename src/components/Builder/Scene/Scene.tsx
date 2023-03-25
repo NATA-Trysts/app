@@ -8,7 +8,7 @@ import { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 
 import { useBuilderStore } from '@/stores'
 
-import { Furnitures, Ground } from './Models'
+import { Furnitures, Ground } from '../Models'
 
 //#region STYLE
 const Container = styled.section`
@@ -37,7 +37,7 @@ const Control = () => {
   )
 }
 
-export const BuilderScene = () => {
+export const Scene = () => {
   const gridHelperRef = useRef<GridHelper | null>(null)
   const [globalSettings] = useBuilderStore((state) => [state.globalSettings, state.setZoom])
 
