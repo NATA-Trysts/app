@@ -69,7 +69,7 @@ const INPUT_BORDER: InputStatusColor = {
   errorPending: '#DA2121',
 }
 
-const TRYSTS_EMAIL_LOGIN = 'login@trysts.io'
+const TRYSTS_EMAIL_LOGIN = 'trystsplatform@gmail.com'
 
 const MESSAGES = {
   MEMBER: {

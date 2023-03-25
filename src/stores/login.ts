@@ -12,6 +12,25 @@ type LoginState = {
 
   step: number
   setStep: (step: number) => void
+
+  fullHash: string
+  setFullHash: (fullHash: string) => void
+}
+
+type UserState = {
+  user: {
+    id: string
+    email: string
+    username: string
+    handler: string
+  }
+  setUser: (user: { id: string; email: string; username: string; handler: string }) => void
+
+  accessToken: string
+  setAccessToken: (accessToken: string) => void
+
+  refreshToken: string
+  setRefreshToken: (refreshToken: string) => void
 }
 
 export const useLoginStore = create<LoginState>()(
@@ -25,9 +44,28 @@ export const useLoginStore = create<LoginState>()(
 
       step: 1,
       setStep: (step: number) => set(() => ({ step })),
+
+      fullHash: '',
+      setFullHash: (fullHash: string) => set(() => ({ fullHash })),
     }),
     {
       name: 'login-storage',
     },
   ),
 )
+
+export const useUserStore = create<UserState>()((set) => ({
+  user: {
+    id: '',
+    email: '',
+    username: '',
+    handler: '',
+  },
+  setUser: (user: { id: string; email: string; username: string; handler: string }) => set(() => ({ user })),
+
+  accessToken: '',
+  setAccessToken: (accessToken: string) => set(() => ({ accessToken })),
+
+  refreshToken: '',
+  setRefreshToken: (refreshToken: string) => set(() => ({ refreshToken })),
+}))

@@ -1,3 +1,4 @@
+import axios from '@/api/axios'
 import { useLoginStore } from '@/stores'
 
 const useLogin = () => {
@@ -7,6 +8,7 @@ const useLogin = () => {
     state.setEmailInputStatus,
   ])
   const setStep = useLoginStore((state) => state.setStep)
+  const [email, setFullHash] = useLoginStore((state) => [state.email, state.setFullHash])
 
   const validateEmail = (emailFromInput: string) => {
     const emailPattern =
@@ -24,6 +26,14 @@ const useLogin = () => {
   const submitEmail = () => {
     if (emailInputStatus === 'valid') {
       setStep(2)
+      axios
+        .post('/api/login', { email })
+        .then((res: any) => {
+          setFullHash(res.data.fullHash)
+        })
+        .catch((err: any) => {
+          console.error(err)
+        })
     }
   }
 

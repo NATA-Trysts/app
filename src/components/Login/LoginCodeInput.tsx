@@ -2,12 +2,13 @@ import { ReactNode, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
+import axios from '@/api/axios'
 import { ReactComponent as GmailIcon } from '@/assets/icons/gmail.svg'
 import { ReactComponent as OutlookIcon } from '@/assets/icons/outlook.svg'
 import { Text } from '@/components/Commons'
 import { useAuth, useNotification } from '@/hooks'
 import { TRYSTS_EMAIL_LOGIN } from '@/libs/constants'
-import { useLoginStore } from '@/stores'
+import { useLoginStore, useUserStore } from '@/stores'
 
 import { CodeField } from './CodeField'
 import { MailDirect } from './MailDirect'
@@ -105,7 +106,8 @@ export const LoginCodeInput = () => {
   const [checkStatus, setCheckStatus] = useState<'failed' | 'checking' | 'success' | 'empty'>('empty')
   const [otp, setOtp] = useState('')
   const { addNotification } = useNotification()
-  const setStep = useLoginStore((state) => state.setStep)
+  const [setStep, email, fullHash] = useLoginStore((state) => [state.setStep, state.email, state.fullHash])
+  const setUser = useUserStore((state) => state.setUser)
 
   const handleCancel = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -160,24 +162,45 @@ export const LoginCodeInput = () => {
   }
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout
+    let ignore = false
 
     if (isCompleted) {
       setCheckStatus('checking')
-      timeout = setTimeout(() => {
-        if (otp === '123456') {
-          setCheckStatus('success')
-          navigate('/dashboard', { replace: true })
-        } else {
+      axios
+        .post('/api/verify', {
+          otp,
+          email,
+          hash: fullHash,
+        })
+        .then((res) => {
+          if (!ignore) {
+            if (res.status === 200) {
+              const user = res.data.user
+
+              setCheckStatus('success')
+              setUser({
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                handler: user.handler,
+              })
+              navigate('/dashboard', { replace: true })
+            } else {
+              setIsCompleted(false)
+              setCheckStatus('failed')
+              addNotification('error', 'Cannot verify! Try again')
+            }
+          }
+        })
+        .catch(() => {
           setIsCompleted(false)
           setCheckStatus('failed')
           addNotification('error', 'Wrong code')
-        }
-      }, 3000)
+        })
     }
 
     return () => {
-      clearTimeout(timeout)
+      ignore = true
     }
   }, [isCompleted])
 

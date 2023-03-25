@@ -40,6 +40,12 @@ export const CodeField = ({ disabled = false, otp, setOtp, setIsCompleted }: Cod
     setOtp(value)
   }
 
+  // handle for copy code behavior
+  const handleComplete = (value: string) => {
+    setOtp(value)
+    setIsCompleted(true)
+  }
+
   useEffect(() => {
     if (otp.length === maxLength) {
       setIsCompleted(true)
@@ -62,6 +68,7 @@ export const CodeField = ({ disabled = false, otp, setOtp, setIsCompleted }: Cod
         regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
         type="numeric"
         onChange={handleChange}
+        onComplete={handleComplete}
       />
     </CodeFieldContainer>
   )
