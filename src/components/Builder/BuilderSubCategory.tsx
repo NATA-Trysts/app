@@ -51,7 +51,7 @@ const SubCategoryImg = styled.img`
 
 type SubCategoryItemProps = {
   list?: SubCategoryItemType[]
-  selectedId?: number
+  selectedId?: string
   onClickItem: (item: SubCategoryItemType) => void
 }
 

@@ -1,13 +1,20 @@
 import { create } from 'zustand'
 
-export type CategoryType = 'Animal' | 'ThreeJS'
+export type CategoryType = 'chair' | 'table'
+
+export type ModelResolution = {
+  low: string
+  medium: string
+}
 
 export type SubCategoryItem = {
-  id: number
+  id: string
   name: string
   description: string
   img: string
   category: CategoryType
+  collection: string
+  resolutions: ModelResolution
 }
 
 type SpaceInformationType = {
@@ -26,6 +33,12 @@ export type ModifierValueType = {
   z: number | string
 }
 
+export type Vec3 = {
+  x: number
+  y: number
+  z: number
+}
+
 type ObjectAdjustingType = {
   name: string
   modifiers: {
@@ -33,6 +46,15 @@ type ObjectAdjustingType = {
     values: ModifierValueType
     canBeNegative: boolean
   }[]
+}
+
+export type MousePosition = Omit<Vec3, 'y'>
+
+export type SpaceModel = {
+  id: string
+  position: Vec3
+  rotation: Vec3
+  scale: Vec3
 }
 
 type BuilderState = {
@@ -67,10 +89,20 @@ type BuilderState = {
 
   objectAdjusting: ObjectAdjustingType
   setObjectAdjusting: (objectAdjusting: ObjectAdjustingType) => void
+
+  models: SpaceModel[]
+  addModel: (model: SpaceModel) => void
+  // updateModel: (payload: any) => void
+
+  isEditing: boolean
+  setIsEditing: (isEditing: boolean) => void
+
+  mousePosition: MousePosition
+  updateMousePosition: (mousePosition: MousePosition) => void
 }
 
 export const useBuilderStore = create<BuilderState>((set) => ({
-  selectedCategoryName: 'Animal',
+  selectedCategoryName: 'chair',
   setSelectedCategory: (categoryName: CategoryType) => set(() => ({ selectedCategoryName: categoryName })),
 
   subCategoryItems: new Map(),
@@ -89,8 +121,8 @@ export const useBuilderStore = create<BuilderState>((set) => ({
     }),
 
   scrollPosition: new Map([
-    ['Animal', 0],
-    ['ThreeJS', 0],
+    ['chair', 0],
+    ['table', 0],
   ]),
   setScrollPosition: (scrollPosition: Map<CategoryType, number>) => set(() => ({ scrollPosition })),
 
@@ -110,7 +142,7 @@ export const useBuilderStore = create<BuilderState>((set) => ({
   globalSettings: new Map([
     ['wireframe', { values: [true, false], selected: false }],
     ['grid', { values: [true, false], selected: true }],
-    ['gizmo', { values: ['cube', 'port'], selected: 'cube' }],
+    ['gizmo', { values: ['cube', 'port'], selected: 'port' }],
   ]),
   setGlobalSettings: (globalSettings: GlobalSettingsType) => set(() => ({ globalSettings })),
   updateGlobalSettings: (key: string, value: boolean | string) =>
@@ -147,4 +179,31 @@ export const useBuilderStore = create<BuilderState>((set) => ({
     ],
   },
   setObjectAdjusting: (objectAdjusting: ObjectAdjustingType) => set(() => ({ objectAdjusting })),
+
+  models: [],
+  addModel: (newModel: SpaceModel) => set((state) => ({ models: [...state.models, newModel] })),
+  // updateModel: (payload) =>
+  //   set((state) => {
+  //     const allModels = [...state.models]
+
+  //     allModels[payload.id].position = payload.position
+
+  //     return allModels
+  //   }),
+
+  isEditing: false,
+  setIsEditing: (isEdit) => set(() => ({ isEditing: isEdit })),
+
+  mousePosition: { x: 0, z: 0 },
+  updateMousePosition: (updatedPosition: MousePosition) => set({ mousePosition: updatedPosition }),
+}))
+
+type EditorState = {
+  mousePosition: MousePosition
+  updateMousePosition: (mousePosition: MousePosition) => void
+}
+
+export const useEditorStore = create<EditorState>()((set) => ({
+  mousePosition: { x: 0, z: 0 },
+  updateMousePosition: (mousePosition: MousePosition) => set(() => ({ mousePosition })),
 }))
