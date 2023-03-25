@@ -1,9 +1,9 @@
 import { GizmoHelper, GizmoViewcube, GizmoViewport, OrbitControls } from '@react-three/drei'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { Perf } from 'r3f-perf'
 import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { GridHelper, Group, Mesh } from 'three'
+import { GridHelper } from 'three'
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 
 import { useBuilderStore } from '@/stores'
@@ -37,21 +37,6 @@ const Control = () => {
   )
 }
 
-const WireframeController = ({ wireframe = true }: { wireframe: boolean }) => {
-  const { scene } = useThree()
-
-  useEffect(() => {
-    scene.children.forEach((child) => {
-      if (child instanceof Group && ['chair', 'desk'].includes(child.name))
-        child.children.forEach((c) => {
-          if (c instanceof Mesh) c.material.wireframe = wireframe
-        })
-    })
-  }, [wireframe])
-
-  return <></>
-}
-
 export const BuilderScene = () => {
   const gridHelperRef = useRef<GridHelper | null>(null)
   const [globalSettings] = useBuilderStore((state) => [state.globalSettings, state.setZoom])
@@ -71,7 +56,6 @@ export const BuilderScene = () => {
           <ambientLight intensity={1} />
         </group>
 
-        <WireframeController wireframe={globalSettings.get('wireframe')?.selected as boolean} />
         {globalSettings.get('grid')?.selected && <gridHelper ref={gridHelperRef} position={[0, 0, 0]} />}
 
         <GizmoHelper alignment="bottom-center" margin={[80, 80]} renderOrder={1}>
