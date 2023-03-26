@@ -2,8 +2,8 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
+import { RedirectLink } from '@/components/Redirect'
 import { isValidUrl } from '@/libs/utils'
-import { RedirectLink } from '@/Redirect'
 
 const Container = styled.div<{ isMine: boolean }>`
   width: 100%;

@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash-es'
 
 import { useMemberStore } from '@/stores'
 
-import { VideoReference } from '../VideoCall/VideoReference'
+import { VideoReference } from '../VideoCall'
 
 export const MemberVideoReference = () => {
   const otherMembers = useMemberStore((state) => state.otherMembers)

@@ -8,16 +8,15 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 
 import { DashboardSkeleton } from '@/components/Dashboard'
+import { Redirect } from '@/components/Redirect'
 
 import { PersistLogin, RequireAuth } from './components/Authentication'
 import { MobileDetect } from './components/MobileDetect'
 import { AuthProvider } from './context/AuthProvider'
 import NotAuthorize from './pages/NotAuthorize'
-import { Redirect } from './Redirect'
 
 const Builder = lazy(() => import('@/pages/Builder'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
-const EditCharacter = lazy(() => import('@/pages/EditCharacter'))
 const Login = lazy(() => import('@/pages/Login'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 const MarketPlace = lazy(() => import('@/pages/Marketplace'))
@@ -101,9 +100,6 @@ const Guard = () => {
             />
           </Route>
         </Route>
-        <Route>
-          <Route element={<EditCharacter />} path="/character" />
-        </Route>
         <Route
           element={
             <MobileDetect>
@@ -113,7 +109,6 @@ const Guard = () => {
           path="/marketplace"
         />
         <Route element={<Redirect />} path="/l" />
-
         <Route element={<NotAuthorize />} path="/unauth" />
         <Route element={<NotFound />} path="*" />
       </Route>
