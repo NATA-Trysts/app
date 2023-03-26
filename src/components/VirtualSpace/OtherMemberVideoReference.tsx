@@ -10,7 +10,9 @@ export const OtherMemberVideoReference = () => {
   return (
     <>
       {!isEmpty(otherMembers)
-        ? Object.values(otherMembers).map((player) => <VideoReference key={player.id} id={`video-ref-${player.id}`} />)
+        ? Object.values(otherMembers).map((player) => (
+            <VideoReference key={player.id} id={`video-ref-${player.peerId}`} />
+          ))
         : null}
     </>
   )

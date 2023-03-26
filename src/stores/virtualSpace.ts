@@ -3,7 +3,7 @@ import { create } from 'zustand'
 
 import { CustomColor } from '@/components/Commons'
 
-type UltilityType = 'chat' | 'member' | 'info' | 'setting' | null
+type UltilityType = 'chat' | 'member' | 'setting' | null
 
 export type Message = {
   id: string
