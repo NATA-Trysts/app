@@ -4,7 +4,7 @@ import { useMemberStore } from '@/stores'
 
 import { VideoReference } from '../VideoCall/VideoReference'
 
-export const OtherMemberVideoReference = () => {
+export const MemberVideoReference = () => {
   const otherMembers = useMemberStore((state) => state.otherMembers)
 
   return (
@@ -14,6 +14,7 @@ export const OtherMemberVideoReference = () => {
             <VideoReference key={player.id} id={`video-ref-${player.peerId}`} />
           ))
         : null}
+      <VideoReference id="my" />
     </>
   )
 }

@@ -35,7 +35,6 @@ export const Other = (props: OtherProps) => {
   const remotePeers = useHMSStore(selectRemotePeers)
 
   useEffect(() => {
-    console.log(`video-ref-${props.peerId}`)
     const videoElement = document.getElementById(`video-ref-${props.peerId}`) as HTMLVideoElement
     const filteredRemotePeer = remotePeers.filter((peer) => peer.id === props.peerId)[0]
 

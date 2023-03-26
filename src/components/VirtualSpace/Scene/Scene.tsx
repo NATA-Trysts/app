@@ -7,8 +7,8 @@ import { Hint } from '@/components/Hint'
 import { MainMember } from '@/components/Member'
 import { Container } from '@/layouts/common'
 
+import { MemberVideoReference } from '../MemberVideoReference'
 import { OtherMember } from '../OtherMember'
-import { OtherMemberVideoReference } from '../OtherMemberVideoReference'
 import { Loading } from './Loading'
 
 export const Scene = () => {
@@ -32,7 +32,7 @@ export const Scene = () => {
           </Physics>
         </Suspense>
       </Canvas>
-      <OtherMemberVideoReference />
+      <MemberVideoReference />
       <Hint />
     </Container>
   )

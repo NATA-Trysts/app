@@ -1,4 +1,4 @@
-import { selectLocalPeer, useHMSStore } from '@100mslive/react-sdk'
+import { selectIsLocalVideoEnabled, selectLocalPeer, useHMSStore } from '@100mslive/react-sdk'
 import styled from 'styled-components'
 
 import { VideoTile } from '@/components/VideoCall'
@@ -17,12 +17,13 @@ const MyVideoContainer = styled.div`
 export const MyVideo = () => {
   const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
   const peer = useHMSStore(selectLocalPeer)
+  const videoEnabled = useHMSStore(selectIsLocalVideoEnabled)
 
   return (
     <>
-      {peer && !isEditAvatar ? (
+      {videoEnabled && !isEditAvatar ? (
         <MyVideoContainer>
-          <VideoTile peer={peer} />
+          <VideoTile id="my" peer={peer} />
         </MyVideoContainer>
       ) : null}
     </>
