@@ -1,5 +1,6 @@
 // @ts-nocheck
 
+import { selectLocalPeerID, useHMSStore } from '@100mslive/react-sdk'
 import { Client, Room } from 'colyseus.js'
 import { useEffect } from 'react'
 
@@ -8,8 +9,8 @@ import { Member, Message, useMemberStore, useNetworkStore, useVirtualSpaceStore 
 const MULTIPLAYER_SERVICE_ENDPOINT = import.meta.env.VITE_MULTIPLAYER_SERVICE_ENDPOINT
 const WORLD_NAME = import.meta.env.VITE_WORLD_NAME
 
-export const Network = (props: { spaceId: string | undefined }) => {
-  const setRoomInstance = useNetworkStore((state) => state.setRoomInstance)
+export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
+  const [setRoomInstance, isJoinedHMS] = useNetworkStore((state) => [state.setRoomInstance, state.isJoinedHMS])
   const [setMainMember, addOtherMembers, removeOtherMembers, updateOtherMembers, updateActionOtherMember] =
     useMemberStore((state) => [
       state.setMainMember,
@@ -20,11 +21,14 @@ export const Network = (props: { spaceId: string | undefined }) => {
     ])
 
   const [addMessage] = useVirtualSpaceStore((state) => [state.addMessage])
+  const localPeerId = useHMSStore(selectLocalPeerID)
 
   useEffect(() => {
     let room: typeof Room = null
 
     const handler = async () => {
+      console.log('::: localPeerId: ', localPeerId)
+
       if (!props.spaceId) return
 
       const client = new Client(MULTIPLAYER_SERVICE_ENDPOINT)
@@ -33,12 +37,15 @@ export const Network = (props: { spaceId: string | undefined }) => {
 
       try {
         try {
-          room = await client.joinById(props.spaceId, {})
+          room = await client.joinById(props.spaceId, {
+            peerId: localPeerId,
+          })
         } catch (error) {
           if (error.message === `room "${props.spaceId}" not found`) {
             try {
               room = await client.create(WORLD_NAME, {
                 spaceId: props.spaceId,
+                peerId: localPeerId,
               })
             } catch (error) {
               throw Error('Join room failed!')
@@ -50,6 +57,7 @@ export const Network = (props: { spaceId: string | undefined }) => {
           if (sessionId === room.sessionId) {
             setMainMember({
               id: member.id,
+              peerId: member.peerId,
               position: {
                 x: member.position.x,
                 y: member.position.y,
@@ -66,6 +74,7 @@ export const Network = (props: { spaceId: string | undefined }) => {
           } else {
             addOtherMembers(sessionId, {
               id: member.id,
+              peerId: member.peerId,
               position: {
                 x: member.position.x,
                 y: member.position.y,
@@ -116,12 +125,12 @@ export const Network = (props: { spaceId: string | undefined }) => {
       }
     }
 
-    handler()
+    isJoinedHMS && handler()
 
     return () => {
       room?.leave()
     }
-  }, [])
+  }, [isJoinedHMS])
 
   return null
 }

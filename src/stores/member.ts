@@ -4,6 +4,7 @@ import { create } from 'zustand'
 
 export type Member = {
   id: string
+  peerId: string
   position: {
     x: number
     y: number
@@ -23,8 +24,8 @@ type OtherMember = {
 }
 
 type MemberState = {
-  mainMemberPublicKey: string
-  setMainMemberPublicKey: (publicKey: string) => void
+  mainMemberId: string
+  setMainMemberId: (mainMemberId: string) => void
   mainMember: Member | null
   setMainMember: (member: Member) => void
   otherMembers: OtherMember
@@ -39,8 +40,8 @@ type MemberState = {
 }
 
 export const useMemberStore = create<MemberState>((set) => ({
-  mainMemberPublicKey: '',
-  setMainMemberPublicKey: (publicKey) => set(() => ({ mainMemberPublicKey: publicKey })),
+  mainMemberId: '',
+  setMainMemberId: (mainMemberId: string) => set({ mainMemberId }),
 
   mainMember: null,
   setMainMember: (member: Member) => set(() => ({ mainMember: member })),
