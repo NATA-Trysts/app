@@ -1,7 +1,10 @@
 import { useMemo } from 'react'
 import styled from 'styled-components'
 
-import { useBuilderStore } from '@/stores'
+import {
+  //useBuilderStore,
+  useEditorStore,
+} from '@/stores'
 
 import { ObjectSection } from './ObjectAdjusting/ObjectSection'
 import { GlobalSection } from './SettingComponent/GlobalSection'
@@ -23,26 +26,35 @@ const BuilderSettingsContainer = styled.div`
   z-index: 999;
 `
 
-type ISettingOption = {
-  space: 'space'
-  object: 'object'
-}
+// type ISettingOption = {
+//   space: 'space'
+//   object: 'object'
+// }
 
 export const BuilderSettings = () => {
   // re-render cause be setSettingOption => removed
-  const settingOption = useBuilderStore((state) => state.settingOption)
+  // const settingOption = useBuilderStore((state) => state.settingOption)
+  const selectedModelId = useEditorStore((state) => state.selectedModelId)
 
   const components = useMemo(() => {
-    return {
-      space: (
-        <>
-          <SpaceInformationSection />
-          <GlobalSection />
-        </>
-      ),
-      object: <ObjectSection />,
-    }
-  }, [])
+    return selectedModelId ? (
+      <ObjectSection />
+    ) : (
+      <>
+        <SpaceInformationSection />
+        <GlobalSection />
+      </>
+    )
+    // return {
+    //   space: (
+    //     <>
+    //       <SpaceInformationSection />
+    //       <GlobalSection />
+    //     </>
+    //   ),
+    //   object: <ObjectSection />,
+    // }
+  }, [selectedModelId])
 
-  return <BuilderSettingsContainer>{components[settingOption as keyof ISettingOption]}</BuilderSettingsContainer>
+  return <BuilderSettingsContainer>{components}</BuilderSettingsContainer>
 }

@@ -7,6 +7,7 @@ import { useEditorStore } from '@/stores'
 export const Ground = () => {
   const groundRef = useRef<Group | null>(null)
   const [updateMousePosition] = useEditorStore((state) => [state.updateMousePosition])
+  // const [updateMousePosition] = useBuilderStore((state) => [state.updateMousePosition])
 
   const onPointerMove = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()

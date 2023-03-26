@@ -2,7 +2,7 @@
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
-import { useBuilderStore } from '@/stores'
+import { useEditorStore } from '@/stores'
 
 import { Modifier } from './Modifier'
 
@@ -12,6 +12,7 @@ const Container = styled.div`
   padding: 16px;
   background-color: transparent;
   transition: background-color 0.2s ease;
+  user-select: none;
 
   &:hover {
     background-color: #272728;
@@ -25,7 +26,7 @@ type IValues = {
 }
 
 export const ObjectSection = () => {
-  const [objectAdjusting, setObjectAdjusting] = useBuilderStore((state) => [
+  const [objectAdjusting, setObjectAdjusting] = useEditorStore((state) => [
     state.objectAdjusting,
     state.setObjectAdjusting,
   ])
@@ -34,13 +35,11 @@ export const ObjectSection = () => {
     if (!objectAdjusting) return
 
     const newObjectAdjusting = { ...objectAdjusting }
-
     const modifier = newObjectAdjusting.modifiers.find((modifier) => modifier.name === property)
 
     if (!modifier) return
 
     modifier.values[axis as keyof IValues] = value
-
     setObjectAdjusting(newObjectAdjusting)
   }
 
