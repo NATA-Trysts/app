@@ -1,4 +1,5 @@
 import axios from '@/api/axios'
+import { useNotification } from '@/hooks'
 import { useLoginStore, useStepStore } from '@/stores'
 
 const useLogin = () => {
@@ -9,6 +10,7 @@ const useLogin = () => {
   ])
   const setStep = useStepStore((state) => state.setStep)
   const [email, setFullHash] = useLoginStore((state) => [state.email, state.setFullHash])
+  const { addNotification } = useNotification()
 
   const validateEmail = (emailFromInput: string) => {
     const emailPattern =
@@ -25,14 +27,14 @@ const useLogin = () => {
 
   const submitEmail = () => {
     if (emailInputStatus === 'valid') {
-      setStep(2)
       axios
         .post('/api/login', { email })
         .then((res: any) => {
           setFullHash(res.data.fullHash)
+          setStep(2)
         })
-        .catch((err: any) => {
-          console.error(err)
+        .catch(() => {
+          addNotification('error', "Can't send email, try again")
         })
     }
   }
