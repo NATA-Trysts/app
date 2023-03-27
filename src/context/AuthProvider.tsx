@@ -4,6 +4,7 @@ export type Auth = {
   user: any
   roles: number[]
   accessToken: string
+  refreshToken: string
 }
 
 export type AuthContextType = {

@@ -20,7 +20,7 @@ export const PersistLogin = () => {
       }
     }
 
-    !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false)
+    !auth?.refreshToken ? verifyRefreshToken() : setIsLoading(false)
 
     return () => {
       isMounted = false

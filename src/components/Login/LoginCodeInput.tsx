@@ -156,8 +156,9 @@ export const LoginCodeInput = () => {
     }
     const roles = [1000]
     const accessToken = '123'
+    const refreshToken = '456'
 
-    setAuth({ user, roles, accessToken })
+    setAuth({ user, roles, accessToken, refreshToken })
     navigate(from, { replace: true })
   }
 
@@ -167,7 +168,7 @@ export const LoginCodeInput = () => {
     if (isCompleted) {
       setCheckStatus('checking')
       axios
-        .post('/api/verify', {
+        .post('/verify', {
           otp,
           email,
           hash: fullHash,
@@ -179,8 +180,7 @@ export const LoginCodeInput = () => {
               const { accessToken, refreshToken } = res.data
 
               setCheckStatus('success')
-              setAuth({ user, roles: [1000], accessToken })
-              document.cookie = `refreshToken=${refreshToken}; path=/; HttpOnly`
+              setAuth({ user, roles: [1000], accessToken, refreshToken })
               navigate('/dashboard', { replace: true })
             } else {
               setIsCompleted(false)

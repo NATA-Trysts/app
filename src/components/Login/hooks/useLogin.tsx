@@ -28,7 +28,7 @@ const useLogin = () => {
   const submitEmail = () => {
     if (emailInputStatus === 'valid') {
       axios
-        .post('/api/login', { email })
+        .post('/login', { email })
         .then((res: any) => {
           setFullHash(res.data.fullHash)
           setStep(2)
