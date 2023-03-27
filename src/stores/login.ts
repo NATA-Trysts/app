@@ -22,22 +22,6 @@ type StepState = {
   setStep: (step: number) => void
 }
 
-type UserState = {
-  user: {
-    id: string
-    email: string
-    username: string
-    handler: string
-  }
-  setUser: (user: { id: string; email: string; username: string; handler: string }) => void
-
-  accessToken: string
-  setAccessToken: (accessToken: string) => void
-
-  refreshToken: string
-  setRefreshToken: (refreshToken: string) => void
-}
-
 export const useLoginStore = create<LoginState>()(
   persist(
     (set) => ({
@@ -62,20 +46,4 @@ export const useLoginStore = create<LoginState>()(
 export const useStepStore = create<StepState>()((set) => ({
   step: 1,
   setStep: (step: number) => set(() => ({ step })),
-}))
-
-export const useUserStore = create<UserState>()((set) => ({
-  user: {
-    id: '',
-    email: '',
-    username: '',
-    handler: '',
-  },
-  setUser: (user: { id: string; email: string; username: string; handler: string }) => set(() => ({ user })),
-
-  accessToken: '',
-  setAccessToken: (accessToken: string) => set(() => ({ accessToken })),
-
-  refreshToken: '',
-  setRefreshToken: (refreshToken: string) => set(() => ({ refreshToken })),
 }))
