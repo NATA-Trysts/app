@@ -24,3 +24,5 @@ export function isValidUrl(urlString: string) {
 export function isOnlyWhitespace(str: string) {
   return str.trim().length !== 0
 }
+
+export const approximatelyEqual = (a: number, b: number, epsilon = 0.001) => Math.abs(a - b) < epsilon
