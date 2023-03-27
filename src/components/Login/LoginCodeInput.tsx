@@ -8,7 +8,7 @@ import { ReactComponent as OutlookIcon } from '@/assets/icons/outlook.svg'
 import { Text } from '@/components/Commons'
 import { useAuth, useNotification } from '@/hooks'
 import { TRYSTS_EMAIL_LOGIN } from '@/libs/constants'
-import { useLoginStore, useStepStore } from '@/stores'
+import { useLoginStore, useStepStore, useUserStore } from '@/stores'
 
 import { CodeField } from './CodeField'
 import { MailDirect } from './MailDirect'
@@ -108,6 +108,11 @@ export const LoginCodeInput = () => {
   const { addNotification } = useNotification()
   const [email, fullHash] = useLoginStore((state) => [state.email, state.fullHash])
   const setStep = useStepStore((state) => state.setStep)
+  const [setUsername, setHandler, setEmail] = useUserStore((state) => [
+    state.setUsername,
+    state.setHandler,
+    state.setEmail,
+  ])
 
   const handleCancel = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -180,7 +185,19 @@ export const LoginCodeInput = () => {
               const { accessToken, refreshToken } = res.data
 
               setCheckStatus('success')
-              setAuth({ user, roles: [1000], accessToken, refreshToken })
+              setAuth({
+                user: {
+                  id: user._id,
+                  email: user.email,
+                  refreshToken: user.refreshToken,
+                },
+                roles: [1000],
+                accessToken,
+                refreshToken,
+              })
+              setUsername(user.username)
+              setHandler(user.handler)
+              setEmail(user.email)
               navigate('/dashboard', { replace: true })
             } else {
               setIsCompleted(false)
