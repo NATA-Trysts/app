@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { LoginCodeInput, LoginEmailInput, LoginTitle } from '@/components/Login'
 import { useLogin } from '@/components/Login/hooks/useLogin'
 import { NotificationStack } from '@/components/Notification'
-import { useLoginStore } from '@/stores'
+import { useLoginStore, useStepStore } from '@/stores'
 
 const LoginPage = styled.div`
   width: 100vw;
@@ -16,7 +16,8 @@ const LoginPage = styled.div`
 const LoginForm = styled.form``
 
 const Login = () => {
-  const [email, step] = useLoginStore((state) => [state.email, state.step])
+  const [email] = useLoginStore((state) => [state.email])
+  const [step] = useStepStore((state) => [state.step])
   const { submitEmail } = useLogin()
 
   useEffect(() => {

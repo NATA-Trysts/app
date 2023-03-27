@@ -8,7 +8,7 @@ import { ReactComponent as OutlookIcon } from '@/assets/icons/outlook.svg'
 import { Text } from '@/components/Commons'
 import { useAuth, useNotification } from '@/hooks'
 import { TRYSTS_EMAIL_LOGIN } from '@/libs/constants'
-import { useLoginStore, useUserStore } from '@/stores'
+import { useLoginStore, useStepStore, useUserStore } from '@/stores'
 
 import { CodeField } from './CodeField'
 import { MailDirect } from './MailDirect'
@@ -106,7 +106,8 @@ export const LoginCodeInput = () => {
   const [checkStatus, setCheckStatus] = useState<'failed' | 'checking' | 'success' | 'empty'>('empty')
   const [otp, setOtp] = useState('')
   const { addNotification } = useNotification()
-  const [setStep, email, fullHash] = useLoginStore((state) => [state.setStep, state.email, state.fullHash])
+  const [email, fullHash] = useLoginStore((state) => [state.email, state.fullHash])
+  const setStep = useStepStore((state) => state.setStep)
   const setUser = useUserStore((state) => state.setUser)
 
   const handleCancel = (e: React.SyntheticEvent<HTMLButtonElement>) => {

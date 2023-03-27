@@ -1,5 +1,5 @@
 import axios from '@/api/axios'
-import { useLoginStore } from '@/stores'
+import { useLoginStore, useStepStore } from '@/stores'
 
 const useLogin = () => {
   // const email = useLoginStore((state) => state.email)
@@ -7,7 +7,7 @@ const useLogin = () => {
     state.emailInputStatus,
     state.setEmailInputStatus,
   ])
-  const setStep = useLoginStore((state) => state.setStep)
+  const setStep = useStepStore((state) => state.setStep)
   const [email, setFullHash] = useLoginStore((state) => [state.email, state.setFullHash])
 
   const validateEmail = (emailFromInput: string) => {
