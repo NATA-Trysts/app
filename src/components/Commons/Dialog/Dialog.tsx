@@ -1,6 +1,17 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
 import { DialogProps as RadixDialogProps } from '@radix-ui/react-dialog'
-import { forwardRef, ReactNode, useCallback, useImperativeHandle, useState } from 'react'
+import {
+  createContext,
+  forwardRef,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import styled, { keyframes } from 'styled-components'
 
 import { ReactComponent as CrossIcon } from '@/assets/icons/cross.svg'
@@ -14,6 +25,7 @@ type FocusOutsideEvent = CustomEvent<{
 
 export type DialogProps = Omit<RadixDialogProps, 'open'> & {
   container?: HTMLElement
+  onDialogClose?: (data: any) => void
   onOpenAutoFocus?: (e: Event) => void
   onCloseAutoFocus?: (e: Event) => void
   onEscapeKeyDown?: (e: KeyboardEvent) => void
@@ -22,25 +34,47 @@ export type DialogProps = Omit<RadixDialogProps, 'open'> & {
 }
 
 export type DialogRef = {
-  open: (content?: ReactNode) => void
+  open?: (content?: ReactNode) => void
+}
+
+export type DialogContext = {
+  close: (data?: any) => void
+  children?: ReactNode
+}
+
+const DialogContext = createContext<DialogContext | undefined>(undefined)
+
+export const DialogProvider = (props: DialogContext) => {
+  const { children, ...context } = props
+
+  const value = useMemo(() => context, Object.values(context)) as DialogContext
+
+  return <DialogContext.Provider value={value}>{children}</DialogContext.Provider>
+}
+
+export const useDialogContext = () => {
+  return useContext(DialogContext)
 }
 
 export const Dialog = forwardRef<DialogRef, DialogProps>(
   (
     {
       container,
+      onDialogClose,
       onOpenAutoFocus,
       onCloseAutoFocus,
       onEscapeKeyDown,
       onPointerDownOutside,
       onInteractOutside,
       defaultOpen,
+      children,
       ...props
     }: DialogProps,
     ref,
   ) => {
     const [open, setOpen] = useState(defaultOpen)
-    const [content, setContent] = useState<ReactNode>('')
+    const [content, setContent] = useState<ReactNode>(children)
+    const closeReturn = useRef<any>(undefined)
 
     useImperativeHandle(ref, () => ({
       open(contents) {
@@ -50,29 +84,40 @@ export const Dialog = forwardRef<DialogRef, DialogProps>(
       },
     }))
 
+    useEffect(() => {
+      if (!open) onDialogClose?.(closeReturn)
+    }, [open, onDialogClose])
+
     const handleOnChange = useCallback((open: boolean) => {
       setOpen(open)
     }, [])
 
+    const close = (data: any) => {
+      closeReturn.current = data
+      setOpen(false)
+    }
+
     return (
       <RadixDialog.Root open={open} {...props} onOpenChange={handleOnChange}>
-        <RadixDialog.Portal container={container}>
-          <DialogOverlay />
-          <DialogContent
-            onCloseAutoFocus={onCloseAutoFocus}
-            onEscapeKeyDown={onEscapeKeyDown}
-            onInteractOutside={onInteractOutside}
-            onOpenAutoFocus={onOpenAutoFocus}
-            onPointerDownOutside={onPointerDownOutside}
-          >
-            <DialogContentBody>{content}</DialogContentBody>
-            <RadixDialog.Close asChild>
-              <CloseButton className="Button green">
-                <CrossIcon />
-              </CloseButton>
-            </RadixDialog.Close>
-          </DialogContent>
-        </RadixDialog.Portal>
+        <DialogProvider close={close}>
+          <RadixDialog.Portal container={container}>
+            <DialogOverlay />
+            <DialogContent
+              onCloseAutoFocus={onCloseAutoFocus}
+              onEscapeKeyDown={onEscapeKeyDown}
+              onInteractOutside={onInteractOutside}
+              onOpenAutoFocus={onOpenAutoFocus}
+              onPointerDownOutside={onPointerDownOutside}
+            >
+              <DialogContentBody>{content}</DialogContentBody>
+              <RadixDialog.Close asChild>
+                <CloseButton className="Button green">
+                  <CrossIcon />
+                </CloseButton>
+              </RadixDialog.Close>
+            </DialogContent>
+          </RadixDialog.Portal>
+        </DialogProvider>
       </RadixDialog.Root>
     )
   },

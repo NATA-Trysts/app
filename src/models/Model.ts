@@ -28,4 +28,5 @@ export type Model = {
   resolutions: ModelResolution
   materials: ModelMaterial
   customable: ModelCustomable
+  price: number
 }
