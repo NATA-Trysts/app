@@ -41,6 +41,20 @@ const CustomPanelContainer = styled(motion.div)<{ bottom: number; left: number; 
   }
 `
 
+const CustomPanelSection = styled.div`
+  ${CustomPanelContainer} &:not(:last-child) {
+    margin-bottom: 0.5px;
+  }
+
+  /* ${CustomPanelContainer} > &:first-child {
+    padding-bottom: 10px;
+  } */
+
+  ${CustomPanelContainer} > & {
+    padding: 10px 0px;
+  }
+`
+
 type CustomPanelProps = {
   top?: number
   left?: number
@@ -64,10 +78,18 @@ export const CustomPanel = React.memo(
         right={right}
         top={top}
       >
-        <TattooSection />
-        <ColorPicker />
-        <MaterialSection />
-        <AnimationMaterial />
+        <CustomPanelSection>
+          <TattooSection />
+        </CustomPanelSection>
+        <CustomPanelSection>
+          <ColorPicker />
+        </CustomPanelSection>
+        <CustomPanelSection>
+          <MaterialSection />
+        </CustomPanelSection>
+        <CustomPanelSection>
+          <AnimationMaterial />
+        </CustomPanelSection>
       </CustomPanelContainer>
     )
   },

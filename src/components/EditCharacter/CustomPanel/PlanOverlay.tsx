@@ -7,7 +7,7 @@ import { useEditCharacterStore } from '@/stores'
 const Overlay = styled.div`
   width: calc(100% + 16px * 2);
   background: rgba(0, 0, 0, 0.5);
-  height: calc(100% + 16px * 2);
+  height: calc(100% + 10px * 2);
   position: absolute;
   top: -16px;
   left: -16px;
