@@ -6,14 +6,14 @@ import { useEffect, useRef, useState } from 'react'
 import { Group, Mesh, VideoTexture } from 'three'
 
 import { MESSAGES } from '@/libs/constants'
-import { useNetworkStore, useVirtualSpaceStore } from '@/stores'
+import { useEditCharacterStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
 import { BaseCharacter } from './BaseCharacter'
 
 const VIDEO_WIDTH = 2
 
 export const MainMember = () => {
-  const canControlCharacter = useVirtualSpaceStore((state) => state.canControlCharacter)
+  const isInputFocus = useEditCharacterStore((state) => state.isInputFocus)
   const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
   const roomInstance = useNetworkStore((state) => state.roomInstance)
   const anim = useCharacterControl(['idle', 'walk'])
@@ -64,7 +64,7 @@ export const MainMember = () => {
   return (
     <CharacterControl
       cameraPosition={[20, 6, 20]}
-      canControl={canControlCharacter}
+      canControl={!isInputFocus}
       collider={[1.5, 2, 1.5]}
       initialPosition={[0, 5, 0]}
       polarAngle={[0.5, Math.PI / 2]}

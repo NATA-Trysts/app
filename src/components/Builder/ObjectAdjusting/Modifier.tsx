@@ -65,9 +65,18 @@ type ModifierProps = {
   values: ModifierValueType
   canBeNegative?: boolean
   onChange: (property: string, axis: string, value: number | string) => void
+  onFocus?: () => void
+  onBlur?: () => void
 }
 
-export const Modifier = ({ name, values, canBeNegative, onChange }: ModifierProps) => {
+export const Modifier = ({
+  name,
+  values,
+  canBeNegative,
+  onChange,
+  onFocus = () => {},
+  onBlur = () => {},
+}: ModifierProps) => {
   const { removeLeadingZero } = useBuilder()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +102,9 @@ export const Modifier = ({ name, values, canBeNegative, onChange }: ModifierProp
             name="x"
             type="number"
             value={values.x}
+            onBlur={onBlur}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+            onFocus={onFocus}
           />
         </Item>
         <Item>
@@ -102,7 +113,9 @@ export const Modifier = ({ name, values, canBeNegative, onChange }: ModifierProp
             name="y"
             type="number"
             value={values.y}
+            onBlur={onBlur}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+            onFocus={onFocus}
           />
         </Item>
         <Item>
@@ -111,7 +124,9 @@ export const Modifier = ({ name, values, canBeNegative, onChange }: ModifierProp
             name="z"
             type="number"
             value={values.z}
+            onBlur={onBlur}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+            onFocus={onFocus}
           />
         </Item>
       </ModifierItemsContainer>

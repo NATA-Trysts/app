@@ -42,6 +42,9 @@ type EditCharacterState = {
 
   theme: string
   setTheme: (theme: string) => void
+
+  isInputFocus: boolean
+  setIsInputFocus: (isInputFocus: boolean) => void
 }
 
 export const useEditCharacterStore = create<EditCharacterState>((set) => ({
@@ -121,4 +124,7 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
 
   theme: '#C771E1',
   setTheme: (theme) => set(() => ({ theme })),
+
+  isInputFocus: false,
+  setIsInputFocus: (isInputFocus: boolean) => set(() => ({ isInputFocus })),
 }))

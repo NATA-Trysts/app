@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { ReactComponent as Emoji } from '@/assets/icons/emoji.svg'
 import { SVGClickable } from '@/layouts/common'
-import { useVirtualSpaceStore } from '@/stores'
+import { useEditCharacterStore } from '@/stores'
 
 import { TextAreaSendable } from '../Commons/TextArea/TextAreaSendable'
 
@@ -49,7 +49,7 @@ export type ChatInputProps = {
 }
 
 export const ChatInput = ({ onSendMessage = () => {} }: ChatInputProps) => {
-  const setCanControlCharacter = useVirtualSpaceStore((state) => state.setCanControlCharacter)
+  const setIsInputFocus = useEditCharacterStore((state) => state.setIsInputFocus)
 
   return (
     <Container>
@@ -59,8 +59,8 @@ export const ChatInput = ({ onSendMessage = () => {} }: ChatInputProps) => {
           minRows={1}
           name="chat"
           placeholder="Type something"
-          onBlur={() => setCanControlCharacter(true)}
-          onFocus={() => setCanControlCharacter(false)}
+          onBlur={() => setIsInputFocus(false)}
+          onFocus={() => setIsInputFocus(true)}
           onValueSubmit={onSendMessage}
         />
       </MessageInputContainer>
