@@ -118,7 +118,13 @@ const Furniture = (props: FurnitureProps) => {
           }
         </Select>
       </group>
-      <group ref={groundRef} name="ground" position={[0, -0.5, 0]} visible={false} onPointerMove={pointerMove}>
+      <group
+        ref={groundRef}
+        name="moving-reference"
+        position={[0, -0.5, 0]}
+        visible={false}
+        onPointerMove={pointerMove}
+      >
         <mesh>
           <boxGeometry args={[100, 1, 100]} />
         </mesh>
@@ -133,11 +139,12 @@ export const Furnitures = () => {
     state.selectedModelUuid,
     state.setSelectedModelUuid,
   ])
+  const isInputFocus = useBuilderStore((state) => state.isInputFocus)
   const deleteModel = useBuilderStore((state) => state.deleteModel)
 
-  useKeyPressEvent('Backspace', () => selectedModelUuid && deleteModel(selectedModelUuid))
-  useKeyPressEvent('Delete', () => selectedModelUuid && deleteModel(selectedModelUuid))
-  useKeyPressEvent('Escape', () => setSelectedModelUuid(null))
+  useKeyPressEvent('Backspace', () => !isInputFocus && selectedModelUuid && deleteModel(selectedModelUuid))
+  useKeyPressEvent('Delete', () => !isInputFocus && selectedModelUuid && deleteModel(selectedModelUuid))
+  useKeyPressEvent('Escape', () => !isInputFocus && setSelectedModelUuid(null))
 
   return (
     <>

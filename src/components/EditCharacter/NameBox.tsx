@@ -2,6 +2,8 @@ import { motion } from 'framer-motion'
 import { useRef, useState } from 'react'
 import styled from 'styled-components'
 
+import { useEditCharacterStore } from '@/stores'
+
 const NameBoxContainer = styled(motion.div)`
   width: 232px;
   height: 47px;
@@ -52,6 +54,7 @@ type NameBoxProps = {
 export const NameBox = ({ name, isEdit = false }: NameBoxProps) => {
   const [nameInput, setNameInput] = useState(name)
   const inputRef = useRef<HTMLInputElement>(null)
+  const setIsInputFocus = useEditCharacterStore((state) => state.setIsInputFocus)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNameInput(e.target.value)
@@ -87,7 +90,9 @@ export const NameBox = ({ name, isEdit = false }: NameBoxProps) => {
           ref={inputRef}
           placeholder="What's your name?"
           value={nameInput}
+          onBlur={() => setIsInputFocus(false)}
           onChange={handleChange}
+          onFocus={() => setIsInputFocus(true)}
           onKeyDown={handleKeyDown}
         />
       </NameWrapper>

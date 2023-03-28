@@ -52,7 +52,7 @@ export const Scene = () => {
 
   return (
     <Container>
-      <Canvas performance={{ min: 0.1 }}>
+      <Canvas id="cv" performance={{ min: 0.1 }}>
         <Control />
         {/* <Perf /> */}
         <Stats />

@@ -90,6 +90,9 @@ type BuilderState = {
 
   selectedModelUuid: string | null
   setSelectedModelUuid: (selectedModelUuid: string | null) => void
+
+  isInputFocus: boolean
+  setIsInputFocus: (isInputFocus: boolean) => void
 }
 
 export const useBuilderStore = create<BuilderState>()((set) => ({
@@ -172,4 +175,7 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
 
   selectedModelUuid: null,
   setSelectedModelUuid: (selectedModelUuid: string | null) => set(() => ({ selectedModelUuid })),
+
+  isInputFocus: false,
+  setIsInputFocus: (isInputFocus: boolean) => set(() => ({ isInputFocus })),
 }))
