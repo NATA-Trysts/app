@@ -107,7 +107,7 @@ export const Chat = () => {
   const chatMessages = useVirtualSpaceStore((state) => state.chatMessages)
   const chatBottomRef = useRef<HTMLDivElement>(null)
   const chatRef = useRef<HTMLDivElement>(null)
-  const [scrollAtBottom, setScrollAtButton] = useState(false)
+  const [scrollAtBottom, setScrollAtButton] = useState(true)
   const [newMessage, setNewMessage] = useState(false)
   const newMessageAmount = useRef(0)
 
@@ -147,8 +147,6 @@ export const Chat = () => {
   }, [])
 
   useEffect(() => {
-    console.log('message change ' + scrollAtBottom)
-
     if (Object.values(chatMessages).at(-1)?.sessionId === roomInstance?.sessionId) {
       scrollToBottom()
     } else {
