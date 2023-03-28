@@ -8,6 +8,8 @@ const BuilderPage = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
+
+  user-select: none;
 `
 
 const Builder = () => {
@@ -17,10 +19,10 @@ const Builder = () => {
 
   return (
     <BuilderPage>
-      <BuilderPanel />
-      <BuilderScene />
-      <BuilderToolbar />
       <BuilderSettings />
+      <BuilderScene />
+      <BuilderPanel />
+      <BuilderToolbar />
       <NotificationStack />
     </BuilderPage>
   )

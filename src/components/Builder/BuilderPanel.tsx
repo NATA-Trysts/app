@@ -20,6 +20,8 @@ const BuilderPanelContainer = styled.div`
   align-items: center;
   overflow: hidden;
   z-index: 999;
+
+  user-select: none;
 `
 
 export const BuilderPanel = () => {

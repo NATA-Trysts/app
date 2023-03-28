@@ -1,8 +1,6 @@
 import { create } from 'zustand'
-import { subscribeWithSelector } from 'zustand/middleware'
-import { shallow } from 'zustand/shallow'
 
-export type CategoryType = 'chair' | 'table' | null | undefined
+export type CategoryType = 'chair' | 'table' | null
 
 export type ModelResolution = {
   low: string
@@ -42,6 +40,8 @@ export type Vec3 = {
 }
 
 type ObjectAdjustingType = {
+  uuid: string
+  id: string
   name: string
   modifiers: {
     name: string
@@ -53,15 +53,12 @@ type ObjectAdjustingType = {
 export type MousePosition = Omit<Vec3, 'y'>
 
 export type SpaceModel = {
+  uuid: string // unique
+  name: string
   id: string
   position: ModifierValueType
   rotation: ModifierValueType
-  scale: ModifierValueType
 }
-
-type CustomObjectAdjustingType = ObjectAdjustingType & { id: string }
-
-type ModelUpdate = Pick<CustomObjectAdjustingType, 'id'> & { position: Vec3; scale: Vec3; rotation: Vec3 }
 
 type BuilderState = {
   selectedCategoryName: CategoryType
@@ -93,18 +90,17 @@ type BuilderState = {
   globalBackground: GlobalBackgroundType
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => void
 
-  // objectAdjusting: ObjectAdjustingType
-  // setObjectAdjusting: (objectAdjusting: ObjectAdjustingType) => void
-
   models: SpaceModel[]
   addModel: (model: SpaceModel) => void
-  updateModel: (modelUpdate: ModelUpdate) => void
+  updateModel: (modelUpdate: SpaceModel) => void
+  updateModelByField: (property: string, field: string, value: number) => void
+  deleteModel: (modelUuid: string) => void
 
   isEditing: boolean
   setIsEditing: (isEditing: boolean) => void
 
-  mousePosition: MousePosition
-  updateMousePosition: (mousePosition: MousePosition) => void
+  selectedModelUuid: string | null
+  setSelectedModelUuid: (selectedModelUuid: string | null) => void
 }
 
 export const useBuilderStore = create<BuilderState>()((set) => ({
@@ -164,111 +160,43 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
   globalBackground: '#D9D9D9',
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => set(() => ({ globalBackground })),
 
-  // objectAdjusting: {
-  //   name: 'Computer',
-  //   modifiers: [
-  //     {
-  //       name: 'position',
-  //       values: { x: 0, y: 0, z: 0 },
-  //       canBeNegative: true,
-  //     },
-  //     {
-  //       name: 'rotation',
-  //       values: { x: 0, y: 0, z: 0 },
-  //       canBeNegative: true,
-  //     },
-  //     {
-  //       name: 'scale',
-  //       values: { x: 1, y: 1, z: 1 },
-  //       canBeNegative: false,
-  //     },
-  //   ],
-  // },
-  // setObjectAdjusting: (objectAdjusting: ObjectAdjustingType) => set(() => ({ objectAdjusting })),
-
   models: [],
-  addModel: (newModel: SpaceModel) => set((state) => ({ models: [...state.models, newModel] })),
-  updateModel: (modelUpdate: ModelUpdate) =>
+  addModel: (newModel: SpaceModel) =>
+    set((state) => ({ models: [...state.models, newModel], selectedModelUuid: newModel.uuid })),
+  updateModel: (modelUpdate: SpaceModel) =>
     set((state) => ({
-      models: state.models.map((model) => (model.id === modelUpdate.id ? { ...model, ...modelUpdate } : model)),
+      models: state.models.map((model) => (model.uuid === modelUpdate.uuid ? { ...model, ...modelUpdate } : model)),
     })),
+  updateModelByField: (property: string, field: string, value: number) =>
+    set((state) => ({
+      models: state.models.map((model) =>
+        model.uuid === state.selectedModelUuid
+          ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], [field]: value } }
+          : model,
+      ),
+    })),
+  deleteModel: (modelUuid: string) =>
+    set((state) => ({ models: state.models.filter((model) => model.uuid !== modelUuid), selectedModelUuid: null })),
 
   isEditing: false,
   setIsEditing: (isEdit) => set(() => ({ isEditing: isEdit })),
 
-  mousePosition: { x: 0, z: 0 },
-  updateMousePosition: (updatedPosition: MousePosition) => set({ mousePosition: updatedPosition }),
+  selectedModelUuid: null,
+  setSelectedModelUuid: (selectedModelUuid: string | null) => set(() => ({ selectedModelUuid })),
 }))
 
 type EditorState = {
-  mousePosition: MousePosition
-  updateMousePosition: (mousePosition: MousePosition) => void
+  objectAdjusting: ObjectAdjustingType | null
+  setObjectAdjusting: (objectAdjusting: ObjectAdjustingType | null) => void
 
-  selectedModelId: string | null
-
-  objectAdjusting: CustomObjectAdjustingType | null
-  setObjectAdjusting: (objectAdjusting: ObjectAdjustingType & { id: string }) => void
+  globalBackground: GlobalBackgroundType
+  setGlobalBackground: (globalBackground: GlobalBackgroundType) => void
 }
 
-export const useEditorStore = create<EditorState>()(
-  subscribeWithSelector((set) => ({
-    mousePosition: { x: 0, z: 0 },
-    updateMousePosition: (mousePosition: MousePosition) => set(() => ({ mousePosition })),
+export const useEditorStore = create<EditorState>()((set) => ({
+  globalBackground: '#D9D9D9',
+  setGlobalBackground: (globalBackground: GlobalBackgroundType) => set(() => ({ globalBackground })),
 
-    objectAdjusting: null,
-    setObjectAdjusting: (objectAdjusting: CustomObjectAdjustingType) => set(() => ({ objectAdjusting })),
-
-    selectedModelId: null,
-  })),
-)
-
-// Auto update the selectedModelId when objectAdjusting change
-useEditorStore.subscribe(
-  (state) => state.objectAdjusting,
-  (current, prev) => {
-    if (current?.id !== prev?.id) useEditorStore.setState({ selectedModelId: current?.id || null })
-  },
-  { equalityFn: shallow },
-)
-
-useEditorStore.subscribe(
-  (state) => state.mousePosition,
-  (current, prev) => {
-    if ((current.x !== prev.x || current.z !== prev.z) && useBuilderStore.getState().isEditing) {
-      useEditorStore.setState({
-        objectAdjusting: {
-          ...(useEditorStore.getState().objectAdjusting as CustomObjectAdjustingType),
-          modifiers: [
-            {
-              name: 'position',
-              values: {
-                x: current.x,
-                y: 0,
-                z: current.z,
-              },
-              canBeNegative: true,
-            },
-            {
-              name: 'rotation',
-              values: {
-                x: 0,
-                y: 1,
-                z: 0,
-              },
-              canBeNegative: true,
-            },
-            {
-              name: 'scale',
-              values: {
-                x: 1,
-                y: 1,
-                z: 1,
-              },
-              canBeNegative: false,
-            },
-          ],
-        },
-      })
-    }
-  },
-)
+  objectAdjusting: null,
+  setObjectAdjusting: (objectAdjusting: ObjectAdjustingType | null) => set(() => ({ objectAdjusting })),
+}))

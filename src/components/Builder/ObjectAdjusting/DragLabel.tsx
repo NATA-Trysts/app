@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
@@ -30,6 +30,7 @@ const SPEED_FACTOR = 0.1
 export const DragLabel = ({ axisName, canBeNegative = true, value, setValue }: DragLabelProps) => {
   const [snapshot, setSnapshot] = useState(value)
   const [startVal, setStartVal] = useState(0)
+  const prevVal = useRef(startVal)
 
   const onStart = useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -50,7 +51,11 @@ export const DragLabel = ({ axisName, canBeNegative = true, value, setValue }: D
         const distance = (event.clientX - startVal) * SPEED_FACTOR
         const newValue = Math.round(Number(snapshot) + distance)
 
-        canBeNegative ? setValue(newValue, axisName) : setValue(Math.max(newValue, 0), axisName)
+        // Prevent unnecessary update when value keep the same
+        if (prevVal.current !== newValue) {
+          canBeNegative ? setValue(newValue, axisName) : setValue(Math.max(newValue, 0), axisName)
+          prevVal.current = newValue
+        }
       }
     }
 
