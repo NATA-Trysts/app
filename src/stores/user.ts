@@ -2,6 +2,9 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 type UserState = {
+  id: string
+  setId: (id: string) => void
+
   username: string
   setUsername: (username: string) => void
 
@@ -15,6 +18,9 @@ type UserState = {
 export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
+      id: '',
+      setId: (id: string) => set(() => ({ id })),
+
       username: '',
       setUsername: (username: string) => set(() => ({ username })),
 

@@ -8,11 +8,14 @@ export const useRefreshToken = () => {
   const refresh = async () => {
     const response = await axios.get('/refresh', {
       withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
 
     // @ts-ignore
     setAuth((prev: any) => {
-      return { ...prev, roles: response.data.roles, accessToken: response.data.accessToken }
+      return { ...prev, roles: [1000], accessToken: response.data.accessToken }
     })
 
     return response.data.accessToken

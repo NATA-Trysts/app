@@ -108,10 +108,11 @@ export const LoginCodeInput = () => {
   const { addNotification } = useNotification()
   const [email, fullHash] = useLoginStore((state) => [state.email, state.fullHash])
   const setStep = useStepStore((state) => state.setStep)
-  const [setUsername, setHandler, setEmail] = useUserStore((state) => [
+  const [setUsername, setHandler, setEmail, setId] = useUserStore((state) => [
     state.setUsername,
     state.setHandler,
     state.setEmail,
+    state.setId,
   ])
 
   const handleCancel = (e: React.SyntheticEvent<HTMLButtonElement>) => {
@@ -161,9 +162,8 @@ export const LoginCodeInput = () => {
     }
     const roles = [1000]
     const accessToken = '123'
-    const refreshToken = '456'
 
-    setAuth({ user, roles, accessToken, refreshToken })
+    setAuth({ user, roles, accessToken })
     navigate(from, { replace: true })
   }
 
@@ -173,28 +173,33 @@ export const LoginCodeInput = () => {
     if (isCompleted) {
       setCheckStatus('checking')
       axios
-        .post('/verify', {
-          otp,
-          email,
-          hash: fullHash,
-        })
+        .post(
+          '/verify',
+          {
+            otp,
+            email,
+            hash: fullHash,
+          },
+          {
+            withCredentials: true,
+          },
+        )
         .then((res) => {
           if (!ignore) {
             if (res.status === 200) {
               const user = res.data.user
-              const { accessToken, refreshToken } = res.data
+              const { accessToken } = res.data
 
               setCheckStatus('success')
               setAuth({
                 user: {
                   id: user._id,
                   email: user.email,
-                  refreshToken: user.refreshToken,
                 },
                 roles: [1000],
                 accessToken,
-                refreshToken,
               })
+              setId(user._id)
               setUsername(user.username)
               setHandler(user.handler)
               setEmail(user.email)
