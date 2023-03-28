@@ -39,17 +39,6 @@ export type Vec3 = {
   z: number
 }
 
-type ObjectAdjustingType = {
-  uuid: string
-  id: string
-  name: string
-  modifiers: {
-    name: string
-    values: ModifierValueType
-    canBeNegative: boolean
-  }[]
-}
-
 export type MousePosition = Omit<Vec3, 'y'>
 
 export type SpaceModel = {
@@ -183,20 +172,4 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
 
   selectedModelUuid: null,
   setSelectedModelUuid: (selectedModelUuid: string | null) => set(() => ({ selectedModelUuid })),
-}))
-
-type EditorState = {
-  objectAdjusting: ObjectAdjustingType | null
-  setObjectAdjusting: (objectAdjusting: ObjectAdjustingType | null) => void
-
-  globalBackground: GlobalBackgroundType
-  setGlobalBackground: (globalBackground: GlobalBackgroundType) => void
-}
-
-export const useEditorStore = create<EditorState>()((set) => ({
-  globalBackground: '#D9D9D9',
-  setGlobalBackground: (globalBackground: GlobalBackgroundType) => set(() => ({ globalBackground })),
-
-  objectAdjusting: null,
-  setObjectAdjusting: (objectAdjusting: ObjectAdjustingType | null) => set(() => ({ objectAdjusting })),
 }))

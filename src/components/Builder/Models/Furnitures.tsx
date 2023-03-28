@@ -24,9 +24,7 @@ const Furniture = (props: FurnitureProps) => {
 
   const isModelClicked = useRef<boolean>(false)
   const modelRef = useRef<Group>(null)
-  const xU = useRef(0)
-  const yU = useRef(INITIAL_Y)
-  const zU = useRef(0)
+  const yP = useRef(INITIAL_Y)
   const groundRef = useRef<Group | null>(null)
 
   const [hovered, setHovered] = useState(false)
@@ -42,7 +40,7 @@ const Furniture = (props: FurnitureProps) => {
       isModelClicked.current = true
       animate(INITIAL_Y, HIGHEST_Y, {
         onUpdate: (latest) => {
-          yU.current = latest
+          yP.current = latest
         },
       })
     },
@@ -51,16 +49,17 @@ const Furniture = (props: FurnitureProps) => {
 
   const pointerMove = (e: ThreeEvent<PointerEvent>) => {
     if (isModelClicked.current && modelRef.current) {
-      xU.current = e.point.x
-      zU.current = e.point.z
+      modelRef.current.position.x = e.point.x
+      modelRef.current.position.z = e.point.z
+
       updateModel({
         uuid: props.uuid,
         id: props.id,
         name: props.name,
         position: {
-          x: modelRef.current.position.x,
+          x: e.point.x,
           y: 0,
-          z: modelRef.current.position.z,
+          z: e.point.z,
         },
         rotation: {
           x: modelRef.current.rotation.x,
@@ -74,9 +73,9 @@ const Furniture = (props: FurnitureProps) => {
   const pointerUp = () => {
     if (isModelClicked.current && modelRef.current) {
       isModelClicked.current = false
-      animate(yU.current, INITIAL_Y, {
+      animate(yP.current, INITIAL_Y, {
         onUpdate: (latest) => {
-          yU.current = latest
+          yP.current = latest
         },
       })
       setIsEditing(false)
@@ -87,12 +86,7 @@ const Furniture = (props: FurnitureProps) => {
 
   useFrame(() => {
     if (modelRef.current) {
-      modelRef.current.position.y = yU.current
-    }
-
-    if (modelRef.current && isModelClicked.current) {
-      modelRef.current.position.x = xU.current
-      modelRef.current.position.z = zU.current
+      modelRef.current.position.y = yP.current
     }
   })
 
@@ -127,7 +121,6 @@ const Furniture = (props: FurnitureProps) => {
       <group ref={groundRef} name="ground" position={[0, -0.5, 0]} visible={false} onPointerMove={pointerMove}>
         <mesh>
           <boxGeometry args={[100, 1, 100]} />
-          <meshBasicMaterial color="green" />
         </mesh>
       </group>
     </>

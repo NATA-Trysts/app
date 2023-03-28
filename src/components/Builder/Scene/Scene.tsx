@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { GizmoHelper, GizmoViewcube, GizmoViewport, OrbitControls } from '@react-three/drei'
+import { GizmoHelper, GizmoViewcube, GizmoViewport, OrbitControls, Stats } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { EffectComposer, Outline, Selection } from '@react-three/postprocessing'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -55,6 +55,7 @@ export const Scene = () => {
       <Canvas performance={{ min: 0.1 }}>
         <Control />
         {/* <Perf /> */}
+        <Stats />
 
         <group name="light">
           <ambientLight intensity={1} />
