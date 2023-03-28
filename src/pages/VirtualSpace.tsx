@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -111,9 +110,9 @@ const VirtualSpace = () => {
     },
   }
 
-  useEffect(() => {
-    document.title = 'Trysts | Summer Open Call'
-  }, [])
+  // useEffect(() => {
+  //   document.title = 'Trysts | Summer Open Call'
+  // }, [])
 
   return (
     <CustomableContainer customColor={customColor}>

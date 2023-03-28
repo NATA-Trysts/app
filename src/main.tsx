@@ -14,6 +14,7 @@ import { PersistLogin, RequireAuth } from './components/Authentication'
 import { MobileDetect } from './components/MobileDetect'
 import { AuthProvider } from './context/AuthProvider'
 import NotAuthorize from './pages/NotAuthorize'
+import { Page } from './pages/Page'
 
 const Builder = lazy(() => import('@/pages/Builder'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
@@ -40,11 +41,13 @@ const Guard = () => {
         <Route
           element={
             <Suspense fallback={<span>loading</span>}>
-              <HMSRoomProvider>
-                <MobileDetect>
-                  <VirtualSpace />
-                </MobileDetect>
-              </HMSRoomProvider>
+              <Page>
+                <HMSRoomProvider>
+                  <MobileDetect>
+                    <VirtualSpace />
+                  </MobileDetect>
+                </HMSRoomProvider>
+              </Page>
             </Suspense>
           }
           path="/:spaceId"
@@ -102,9 +105,11 @@ const Guard = () => {
         </Route>
         <Route
           element={
-            <MobileDetect>
-              <MarketPlace />
-            </MobileDetect>
+            <Page title="Market Place">
+              <MobileDetect>
+                <MarketPlace />
+              </MobileDetect>
+            </Page>
           }
           path="/marketplace"
         />
