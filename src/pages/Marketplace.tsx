@@ -149,7 +149,7 @@ const MarketPlace = () => {
     fetch('http://localhost:3000/api/payment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: [{ id: item.id, name: item.name, price: item.price * 100 }] }),
+      body: JSON.stringify({ items: { id: item.id, name: item.name, price: item.price * 100 } }),
     })
       .then((res) => res.json())
       .then((data) => {
