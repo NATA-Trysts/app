@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export type CategoryType = 'chair' | 'table'
+export type CategoryType = 'chair' | 'table' | null
 
 export type ModelResolution = {
   low: string
@@ -40,6 +40,8 @@ export type Vec3 = {
 }
 
 type ObjectAdjustingType = {
+  uuid: string
+  id: string
   name: string
   modifiers: {
     name: string
@@ -51,10 +53,11 @@ type ObjectAdjustingType = {
 export type MousePosition = Omit<Vec3, 'y'>
 
 export type SpaceModel = {
+  uuid: string // unique
+  name: string
   id: string
-  position: Vec3
-  rotation: Vec3
-  scale: Vec3
+  position: ModifierValueType
+  rotation: ModifierValueType
 }
 
 type BuilderState = {
@@ -87,21 +90,20 @@ type BuilderState = {
   globalBackground: GlobalBackgroundType
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => void
 
-  objectAdjusting: ObjectAdjustingType
-  setObjectAdjusting: (objectAdjusting: ObjectAdjustingType) => void
-
   models: SpaceModel[]
   addModel: (model: SpaceModel) => void
-  // updateModel: (payload: any) => void
+  updateModel: (modelUpdate: SpaceModel) => void
+  updateModelByField: (property: string, field: string, value: number) => void
+  deleteModel: (modelUuid: string) => void
 
   isEditing: boolean
   setIsEditing: (isEditing: boolean) => void
 
-  mousePosition: MousePosition
-  updateMousePosition: (mousePosition: MousePosition) => void
+  selectedModelUuid: string | null
+  setSelectedModelUuid: (selectedModelUuid: string | null) => void
 }
 
-export const useBuilderStore = create<BuilderState>((set) => ({
+export const useBuilderStore = create<BuilderState>()((set) => ({
   selectedCategoryName: 'chair',
   setSelectedCategory: (categoryName: CategoryType) => set(() => ({ selectedCategoryName: categoryName })),
 
@@ -158,52 +160,43 @@ export const useBuilderStore = create<BuilderState>((set) => ({
   globalBackground: '#D9D9D9',
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => set(() => ({ globalBackground })),
 
-  objectAdjusting: {
-    name: 'Computer',
-    modifiers: [
-      {
-        name: 'position',
-        values: { x: 0, y: 0, z: 0 },
-        canBeNegative: true,
-      },
-      {
-        name: 'rotation',
-        values: { x: 0, y: 0, z: 0 },
-        canBeNegative: true,
-      },
-      {
-        name: 'scale',
-        values: { x: 1, y: 1, z: 1 },
-        canBeNegative: false,
-      },
-    ],
-  },
-  setObjectAdjusting: (objectAdjusting: ObjectAdjustingType) => set(() => ({ objectAdjusting })),
-
   models: [],
-  addModel: (newModel: SpaceModel) => set((state) => ({ models: [...state.models, newModel] })),
-  // updateModel: (payload) =>
-  //   set((state) => {
-  //     const allModels = [...state.models]
-
-  //     allModels[payload.id].position = payload.position
-
-  //     return allModels
-  //   }),
+  addModel: (newModel: SpaceModel) =>
+    set((state) => ({ models: [...state.models, newModel], selectedModelUuid: newModel.uuid })),
+  updateModel: (modelUpdate: SpaceModel) =>
+    set((state) => ({
+      models: state.models.map((model) => (model.uuid === modelUpdate.uuid ? { ...model, ...modelUpdate } : model)),
+    })),
+  updateModelByField: (property: string, field: string, value: number) =>
+    set((state) => ({
+      models: state.models.map((model) =>
+        model.uuid === state.selectedModelUuid
+          ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], [field]: value } }
+          : model,
+      ),
+    })),
+  deleteModel: (modelUuid: string) =>
+    set((state) => ({ models: state.models.filter((model) => model.uuid !== modelUuid), selectedModelUuid: null })),
 
   isEditing: false,
   setIsEditing: (isEdit) => set(() => ({ isEditing: isEdit })),
 
-  mousePosition: { x: 0, z: 0 },
-  updateMousePosition: (updatedPosition: MousePosition) => set({ mousePosition: updatedPosition }),
+  selectedModelUuid: null,
+  setSelectedModelUuid: (selectedModelUuid: string | null) => set(() => ({ selectedModelUuid })),
 }))
 
 type EditorState = {
-  mousePosition: MousePosition
-  updateMousePosition: (mousePosition: MousePosition) => void
+  objectAdjusting: ObjectAdjustingType | null
+  setObjectAdjusting: (objectAdjusting: ObjectAdjustingType | null) => void
+
+  globalBackground: GlobalBackgroundType
+  setGlobalBackground: (globalBackground: GlobalBackgroundType) => void
 }
 
 export const useEditorStore = create<EditorState>()((set) => ({
-  mousePosition: { x: 0, z: 0 },
-  updateMousePosition: (mousePosition: MousePosition) => set(() => ({ mousePosition })),
+  globalBackground: '#D9D9D9',
+  setGlobalBackground: (globalBackground: GlobalBackgroundType) => set(() => ({ globalBackground })),
+
+  objectAdjusting: null,
+  setObjectAdjusting: (objectAdjusting: ObjectAdjustingType | null) => set(() => ({ objectAdjusting })),
 }))

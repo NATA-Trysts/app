@@ -23,26 +23,19 @@ const BuilderSettingsContainer = styled.div`
   z-index: 999;
 `
 
-type ISettingOption = {
-  space: 'space'
-  object: 'object'
-}
-
 export const BuilderSettings = () => {
-  // re-render cause be setSettingOption => removed
-  const settingOption = useBuilderStore((state) => state.settingOption)
+  const selectedModelUuid = useBuilderStore((state) => state.selectedModelUuid)
 
   const components = useMemo(() => {
-    return {
-      space: (
-        <>
-          <SpaceInformationSection />
-          <GlobalSection />
-        </>
-      ),
-      object: <ObjectSection />,
-    }
-  }, [])
+    return selectedModelUuid ? (
+      <ObjectSection />
+    ) : (
+      <>
+        <SpaceInformationSection />
+        <GlobalSection />
+      </>
+    )
+  }, [selectedModelUuid])
 
-  return <BuilderSettingsContainer>{components[settingOption as keyof ISettingOption]}</BuilderSettingsContainer>
+  return <BuilderSettingsContainer>{components}</BuilderSettingsContainer>
 }

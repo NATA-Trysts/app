@@ -1,6 +1,5 @@
 import { Canvas } from '@react-three/fiber'
 import { Physics, RigidBody } from '@react-three/rapier'
-import { Perf } from 'r3f-perf'
 import { Suspense } from 'react'
 
 import { Hint } from '@/components/Hint'
@@ -16,7 +15,6 @@ export const Scene = () => {
     <Container>
       <Canvas>
         <Suspense fallback={<Loading />}>
-          <Perf />
           <ambientLight intensity={1} />
           <pointLight castShadow receiveShadow intensity={1} position={[0, 4, 0]} />
           <Physics gravity={[0, -9.82, 0]}>
