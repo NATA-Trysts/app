@@ -16,6 +16,7 @@ const Container = styled.div<{ isMine: boolean }>`
 const AvatarContainer = styled.div`
   width: 32px;
   height: 32px;
+  margin: 0 4px;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
