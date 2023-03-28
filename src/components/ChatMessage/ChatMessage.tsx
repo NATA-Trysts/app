@@ -2,8 +2,8 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
+import { RedirectLink } from '@/components/Redirect'
 import { isValidUrl } from '@/libs/utils'
-import { RedirectLink } from '@/Redirect'
 
 const Container = styled.div<{ isMine: boolean }>`
   width: 100%;
@@ -16,6 +16,7 @@ const Container = styled.div<{ isMine: boolean }>`
 const AvatarContainer = styled.div`
   width: 32px;
   height: 32px;
+  margin: 0 4px;
   border-radius: 50%;
   overflow: hidden;
   display: flex;

@@ -8,7 +8,7 @@ import { listTattoos } from './dummyData'
 import { PlanOverlay } from './PlanOverlay'
 
 const TattooSectionContainer = styled.div`
-  margin: 16px 0;
+  /* margin: 16px 0; */
   transition: opacity 0.2s ease;
   position: relative;
 `

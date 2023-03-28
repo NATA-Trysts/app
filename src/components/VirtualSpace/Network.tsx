@@ -21,102 +21,106 @@ export const Network = (props: { spaceId: string | undefined }) => {
 
   const [addMessage] = useVirtualSpaceStore((state) => [state.addMessage])
 
-  const handler = async () => {
-    if (!props.spaceId) return
+  useEffect(() => {
+    let room: typeof Room = null
 
-    const client = new Client(MULTIPLAYER_SERVICE_ENDPOINT)
+    const handler = async () => {
+      if (!props.spaceId) return
 
-    if (!client) throw Error('Client not connected')
+      const client = new Client(MULTIPLAYER_SERVICE_ENDPOINT)
 
-    try {
-      let room: typeof Room = null
+      if (!client) throw Error('Client not connected')
 
       try {
-        room = await client.joinById(props.spaceId, {})
-      } catch (error) {
-        if (error.message === `room "${props.spaceId}" not found`) {
-          try {
-            room = await client.create(WORLD_NAME, {
-              spaceId: props.spaceId,
+        try {
+          room = await client.joinById(props.spaceId, {})
+        } catch (error) {
+          if (error.message === `room "${props.spaceId}" not found`) {
+            try {
+              room = await client.create(WORLD_NAME, {
+                spaceId: props.spaceId,
+              })
+            } catch (error) {
+              throw Error('Join room failed!')
+            }
+          }
+        }
+
+        room.state.members.onAdd = (member: Member, sessionId: string) => {
+          if (sessionId === room.sessionId) {
+            setMainMember({
+              id: member.id,
+              position: {
+                x: member.position.x,
+                y: member.position.y,
+                z: member.position.z,
+              },
+              quaternion: {
+                x: member.quaternion.x,
+                y: member.quaternion.y,
+                z: member.quaternion.z,
+                w: member.quaternion.w,
+              },
+              action: '',
             })
-          } catch (error) {
-            throw Error('Join room failed!')
+          } else {
+            addOtherMembers(sessionId, {
+              id: member.id,
+              position: {
+                x: member.position.x,
+                y: member.position.y,
+                z: member.position.z,
+              },
+              quaternion: {
+                x: member.quaternion.x,
+                y: member.quaternion.y,
+                z: member.quaternion.z,
+                w: member.quaternion.w,
+              },
+              action: '',
+            })
+          }
+
+          member.onChange = function () {
+            if (sessionId !== room.sessionId) {
+              updateOtherMembers(
+                sessionId,
+                {
+                  x: member.position.x as number,
+                  y: member.position.y as number,
+                  z: member.position.z as number,
+                },
+                {
+                  x: member.quaternion.x as number,
+                  y: member.quaternion.y as number,
+                  z: member.quaternion.z as number,
+                  w: member.quaternion.w as number,
+                },
+              )
+              updateActionOtherMember(sessionId, member.action)
+            }
           }
         }
-      }
 
-      room.state.members.onAdd = (member: Member, sessionId: string) => {
-        if (sessionId === room.sessionId) {
-          setMainMember({
-            id: member.id,
-            position: {
-              x: member.position.x,
-              y: member.position.y,
-              z: member.position.z,
-            },
-            quaternion: {
-              x: member.quaternion.x,
-              y: member.quaternion.y,
-              z: member.quaternion.z,
-              w: member.quaternion.w,
-            },
-            action: '',
-          })
-        } else {
-          addOtherMembers(sessionId, {
-            id: member.id,
-            position: {
-              x: member.position.x,
-              y: member.position.y,
-              z: member.position.z,
-            },
-            quaternion: {
-              x: member.quaternion.x,
-              y: member.quaternion.y,
-              z: member.quaternion.z,
-              w: member.quaternion.w,
-            },
-            action: '',
-          })
+        room.state.members.onRemove = (_, sessionId: string) => {
+          removeOtherMembers(sessionId)
         }
 
-        member.onChange = function () {
-          if (sessionId !== room.sessionId) {
-            updateOtherMembers(
-              sessionId,
-              {
-                x: member.position.x as number,
-                y: member.position.y as number,
-                z: member.position.z as number,
-              },
-              {
-                x: member.quaternion.x as number,
-                y: member.quaternion.y as number,
-                z: member.quaternion.z as number,
-                w: member.quaternion.w as number,
-              },
-            )
-            updateActionOtherMember(sessionId, member.action)
-          }
+        room.state.messages.onAdd = (message: Message) => {
+          addMessage(message)
         }
-      }
 
-      room.state.members.onRemove = (_, sessionId: string) => {
-        removeOtherMembers(sessionId)
+        setRoomInstance(room)
+      } catch (e) {
+        throw Error('Join room failed!')
       }
-
-      room.state.messages.onAdd = (message: Message) => {
-        addMessage(message)
-      }
-
-      setRoomInstance(room)
-    } catch (e) {
-      throw Error('Join room failed!')
     }
-  }
 
-  useEffect(() => {
     handler()
+
+    return () => {
+      room?.leave()
+    }
   }, [])
 
   return null

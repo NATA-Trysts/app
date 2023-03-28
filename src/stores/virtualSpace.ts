@@ -3,7 +3,7 @@ import { create } from 'zustand'
 
 import { CustomColor } from '@/components/Commons'
 
-type UltilityType = 'chat' | 'member' | 'info' | 'setting' | null
+type UltilityType = 'chat' | 'member' | 'setting' | null
 
 export type Message = {
   id: string
@@ -78,7 +78,7 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
   setVideoLayout: (videoLayout: string) => set(() => ({ videoLayout })),
 
   isEditAvatar: false,
-  setIsEditAvatar: (isEditAvatar: boolean) => set({ isEditAvatar }),
+  setIsEditAvatar: (isEditAvatar: boolean) => set({ isEditAvatar, selectedUltility: null }),
 
   isFirstTime: true,
   setIsFirstTime: (isFirstTime: boolean) => set({ isFirstTime }),

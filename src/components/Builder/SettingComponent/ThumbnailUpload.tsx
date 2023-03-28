@@ -83,7 +83,7 @@ const ThumbnailImage = styled.img`
 
 export const ThumbnailUpload = () => {
   const [image, setImage] = useState(
-    'https://s3-alpha-sig.figma.com/img/b98f/5cbc/7ee7ad86e00fc614602856b17b864095?Expires=1678665600&Signature=HbJ7HW7bpCSn15l1skRWxnso-bEHf7Pj-flEPMNlFLi-uomOqytpoa13G7h0d-WVZGcBgnGkfsgJ8lFswrbr-gDqRto1bwBK0dG36Z~F88v23yAhlAfULkikP4SvNGo7v6GJfjr06dy2lcp45emP56zViOzUVlHesUyDcKkmg3lW~aoS9wsfNsp-iTWOPUL8P7x0b2taXIZlLYOWiWyQwDVG~AjER0dHxugcPycT1QtWrpHsEEQfbxtFTpTfx5X1rxcEh0UXG22sFTlMDXLzw-z1h53ndJ5elvgsSsGjrGMnObWPtWvxCa8pwbN0qABOoO7~LRL0~BRRmMpwguOlAQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
+    'https://imageio.forbes.com/specials-images/imageserve/61f9a4549faaf4bcb6435f23/gathertownhero/0x0.jpg?format=jpg&height=964&width=1920&fit=crop',
   )
 
   const { addNotification } = useNotification()

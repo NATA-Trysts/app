@@ -29,7 +29,6 @@ const CustomToolbarItem = styled(ToolbarItem)`
 
 export const ToolbarMiddle = () => {
   const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
-  const [interactable, setInteractable] = useVirtualSpaceStore((state) => [state.interactable, state.setInteractable])
   const hmsActions = useHMSActions()
 
   const audioEnabled = useHMSStore(selectIsLocalAudioEnabled)
@@ -135,7 +134,6 @@ export const ToolbarMiddle = () => {
           style={{
             marginLeft: 8,
           }}
-          onClick={() => setInteractable(!interactable)}
         >
           <Popover
             align="center"

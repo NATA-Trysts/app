@@ -1,4 +1,4 @@
-import { selectLocalPeer, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
+import { selectRemotePeers, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
 import { useTexture } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useEffect, useRef, useState } from 'react'
@@ -13,7 +13,7 @@ type OtherProps = {
   position: [number, number, number]
   quaternion: [number, number, number, number]
   action: string
-  id: string
+  peerId: string
 }
 
 const VIDEO_WIDTH = 2
@@ -32,18 +32,19 @@ export const Other = (props: OtherProps) => {
   ])
 
   const hmsActions = useHMSActions()
-  const peers = useHMSStore(selectLocalPeer)
+  const remotePeers = useHMSStore(selectRemotePeers)
 
   useEffect(() => {
-    const videoElement = document.getElementById(`video-ref-${props.id}`) as HTMLVideoElement
+    const videoElement = document.getElementById(`video-ref-${props.peerId}`) as HTMLVideoElement
+    const filteredRemotePeer = remotePeers.filter((peer) => peer.id === props.peerId)[0]
 
-    if (peers && peers.videoTrack && videoElement) {
-      hmsActions.attachVideo(peers.videoTrack, videoElement)
+    if (filteredRemotePeer && filteredRemotePeer.videoTrack && videoElement) {
+      hmsActions.attachVideo(filteredRemotePeer.videoTrack, videoElement)
       setVideoTexture(new VideoTexture(videoElement))
     }
-  }, [peers])
+  }, [remotePeers])
 
-  useFrame(({ gl, scene, camera }) => {
+  useFrame(({ camera }) => {
     if (playerRef.current) {
       nextPosition.fromArray(props.position)
       nextQuaternion.fromArray(props.quaternion)
@@ -51,9 +52,7 @@ export const Other = (props: OtherProps) => {
       playerRef.current.quaternion.rotateTowards(nextQuaternion, 0.4)
     }
     if (videoFrame.current) videoFrame.current.lookAt(camera.position)
-
-    gl.render(scene, camera)
-  }, 3)
+  })
 
   return (
     <>
@@ -61,7 +60,7 @@ export const Other = (props: OtherProps) => {
         <BaseCharacter action={props.action} />
         <mesh ref={videoFrame} position={[0, 4.5, 0]}>
           <planeGeometry args={[VIDEO_WIDTH, (VIDEO_WIDTH * 3) / 4]} />
-          <meshBasicMaterial transparent map={videoTexture || tempTexture} />
+          <meshBasicMaterial map={videoTexture || tempTexture} toneMapped={true} />
         </mesh>
       </group>
     </>

@@ -1,3 +1,5 @@
+import { Elements } from '@stripe/react-stripe-js'
+import { Appearance, StripeElementsOptions } from '@stripe/stripe-js'
 import { useCallback, useMemo, useRef, useState } from 'react'
 
 import ItemImageWebp from '@/assets/marketplace-item.webp'
@@ -40,7 +42,9 @@ import {
   PreviewText,
   ToogleContainer,
 } from '@/components/Marketplace'
+import CheckoutForm from '@/components/Marketplace/CheckoutForm'
 import { SubCategoryToggle } from '@/components/SubcategoryToggle'
+import { stripePromise } from '@/libs/stripe'
 import { Model } from '@/models/Model'
 
 type PreviewItem = {
@@ -65,6 +69,7 @@ function createModels(modelCollections: Array<{ amount: number; collection: stri
         materials: { primary: null, secondary: null },
         resolutions: { low: 'low', medium: 'medium' },
         thumbnail: ItemImageWebp,
+        price: 20,
       }
     })
 
@@ -130,24 +135,56 @@ function convertItemsToMansonryColumn(items: any[], columnLength: number): Previ
 const MarketPlace = () => {
   const [filter, setFilter] = useState('All')
   const dialogRef = useRef<DialogRef>(null)
+  const stripeDialogRef = useRef<DialogRef>(null)
 
-  const handleItemPreview = useCallback(() => {
+  const appearance: Appearance = {
+    theme: 'night',
+    variables: {
+      fontFamily: 'GeneralSans-Variable, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
+      fontWeightNormal: '500',
+    },
+  }
+
+  const handleBuyItem = (item: Model) => {
+    fetch('http://localhost:3000/api/payment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: [{ id: item.id, name: item.name, price: item.price * 100 }] }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+
+        const options: StripeElementsOptions = {
+          clientSecret: data.clientSecret,
+          appearance,
+        }
+
+        stripeDialogRef.current?.open?.(
+          <Elements options={options} stripe={stripePromise}>
+            <CheckoutForm total={item.price} />
+          </Elements>,
+        )
+      })
+  }
+
+  const handleItemPreview = useCallback((item: Model) => {
     const columnElements = convertItemsToMansonryColumn(previewItems, 4).map((col, colIndex) => {
       return (
         <PreviewItemColumn key={`preview-col-${colIndex}`}>
-          {col.map((item, index) => {
+          {col.map((colItem, index) => {
             return (
               <PreviewItemCard key={`preview-col-${colIndex}-${index}`}>
                 <PreviewItemImage src={PreviewItemImageWebp} />
                 <PreviewItemInfo>
                   <PreviewItemTitle>
                     <PreviewItemText size="medium" weight="normal">
-                      {item.title}
+                      {colItem.title}
                     </PreviewItemText>
                   </PreviewItemTitle>
                   <PreviewItemDescription>
                     <PreviewItemText size="small" weight="lighter">
-                      {item.description}
+                      {colItem.description}
                     </PreviewItemText>
                   </PreviewItemDescription>
                 </PreviewItemInfo>
@@ -158,15 +195,15 @@ const MarketPlace = () => {
       )
     })
 
-    dialogRef.current?.open(
+    dialogRef.current?.open?.(
       <>
         <MarketDialogTitle>
           <MarketDialogText>Nha Trang inspiration</MarketDialogText>
           <Chip color="hsla(68, 41%, 79%, 1)">Popular</Chip>
         </MarketDialogTitle>
         <MarketDialogDescription>
-          <MarketDialogText>$100</MarketDialogText>
-          <GradientButton>Buy</GradientButton>
+          <MarketDialogText>${item.price}</MarketDialogText>
+          <GradientButton onClick={() => handleBuyItem(item)}>Buy</GradientButton>
         </MarketDialogDescription>
         <PreviewItemContainer>{columnElements}</PreviewItemContainer>
       </>,
@@ -196,8 +233,8 @@ const MarketPlace = () => {
                   <Chip color="hsla(0, 82%, 59%, 1)">Hot 🔥</Chip>
                   <Chip color="hsla(0, 32%, 71%, 1)">-25%</Chip>
                 </ItemChipGroup>
-                <BuyButton>Buy</BuyButton>
-                <ItemImageMask onClick={handleItemPreview}>
+                <BuyButton onClick={() => handleBuyItem(model)}>Buy</BuyButton>
+                <ItemImageMask onClick={() => handleItemPreview(model)}>
                   <PreviewIcon>
                     <EyeIcon />
                     <PreviewText size="small" weight="normal">
@@ -245,6 +282,7 @@ const MarketPlace = () => {
       </Content>
 
       <Dialog ref={dialogRef}></Dialog>
+      <Dialog ref={stripeDialogRef}></Dialog>
     </MarketPlacePage>
   )
 }

@@ -1,31 +1,22 @@
-import { useHMSActions } from '@100mslive/react-sdk'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { ChatInput } from '@/components/ChatInput'
-import { ChatMessage } from '@/components/ChatMessage'
 import { CustomableContainer } from '@/components/Commons'
-import { KeyboardModal } from '@/components/KeyboardMapping'
 import { MultitabDetect, MultiTabWarning } from '@/components/MultitabDetect'
 import { UtilitySection } from '@/components/UtilitySection'
 import {
-  BackgroundMusicSelect,
   CustomCharacterPanel,
-  KeyboardMapping,
+  HMSNetwork,
+  MultiplayerNetwork,
   MyInformationCard,
   MyVideo,
-  Network,
-  QualitySelect,
   Scene,
-  SingleMemberCard,
   ToolbarMiddle,
   ToolbarRight,
-  VideoLayout,
 } from '@/components/VirtualSpace'
-import { truncateText } from '@/libs'
-import { MESSAGES } from '@/libs/constants'
-import { useAppStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
+import { Chat, Members, Setting } from '@/components/VirtualSpace/Ultilities'
+import { useAppStore, useVirtualSpaceStore } from '@/stores'
 
 import { Header } from './Header'
 
@@ -90,34 +81,6 @@ const RightSideContainer = styled.section`
   gap: 6px;
 `
 
-const ChatMessageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  overflow-x: auto;
-  height: 100%;
-  width: 100%;
-  border-radius: 8px;
-  gap: 8px;
-`
-
-const ChatContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  max-height: calc(100vh - 16px * 2 - 48px - 6px - 16px - 52px);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  justify-content: flex-end;
-`
-
-const MemberContainer = styled(ChatContainer)`
-  overflow: auto;
-  justify-content: flex-start;
-`
-
-const SettingContainer = styled(MemberContainer)``
-
 const LeftSideWrapper = styled.div`
   height: 100%;
   display: flex;
@@ -128,19 +91,10 @@ const LeftSideWrapper = styled.div`
 
 //#endregion
 
-const SAMPLE_MEMBER_DATA = {
-  handler: 'sonhaaa#1234',
-  avatarUri: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
-  name: 'Nguyen Son Ha',
-}
-
 const VirtualSpace = () => {
   const customColor = useAppStore((state) => state.customColor)
-  const roomInstance = useNetworkStore((state) => state.roomInstance)
-  const [selectedUltility, chatMessages] = useVirtualSpaceStore((state) => [state.selectedUltility, state.chatMessages])
+  const [selectedUltility] = useVirtualSpaceStore((state) => [state.selectedUltility])
   const { spaceId } = useParams()
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const chatBottomRef = useRef<HTMLDivElement>(null)
 
   const ultilityMapping = {
     chat: {
@@ -155,69 +109,18 @@ const VirtualSpace = () => {
       name: 'Setting',
       width: '60%',
     },
-    info: {
-      name: 'Info',
-      width: '60%',
-    },
-  }
-
-  const hmsActions = useHMSActions()
-
-  const join = async () => {
-    const response = await fetch('https://prod-in2.100ms.live/hmsapi/shtest.app.100ms.live/api/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        // eslint-disable-next-line camelcase
-        room_id: '638968d0aee54625da649a38',
-        role: 'student',
-        // eslint-disable-next-line camelcase
-        user_id: Date.now().toString(),
-      }),
-    })
-    const a = await response.json()
-    const config = {
-      userName: 'SH',
-      authToken: a.token,
-      settings: {
-        isAudioMuted: true,
-        isVideoMuted: false,
-      },
-      metaData: JSON.stringify({ city: 'Da Nang' }),
-      rememberDeviceSelection: true,
-    }
-
-    await hmsActions.join(config)
   }
 
   useEffect(() => {
-    join()
-
-    return () => {
-      hmsActions.leave()
-    }
+    document.title = 'Trysts | Summer Open Call'
   }, [])
-
-  useEffect(() => {
-    chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-  })
-
-  const dispatchMessage = (message: string) => {
-    roomInstance?.send(MESSAGES.MEMBER.SEND_MESSAGE, {
-      name: roomInstance.sessionId,
-      avatar: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
-      timestamp: Date.now(),
-      content: message.trim(),
-    })
-  }
 
   return (
     <CustomableContainer customColor={customColor}>
       <MultitabDetect fallback={<MultiTabWarning />}>
         <Container customColor={customColor}>
-          <Network spaceId={spaceId} />
+          <MultiplayerNetwork spaceId={spaceId} />
+          <HMSNetwork />
           <Scene />
           <OverlayContainer>
             <Header />
@@ -226,7 +129,7 @@ const VirtualSpace = () => {
                 <MyVideo />
                 <MyInformationCard
                   avatar="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
-                  handler="sasonhaaa#1234"
+                  handler="sonhaaa#1234"
                   name="Hoang Tien Thinh"
                 />
               </LeftSideWrapper>
@@ -242,53 +145,9 @@ const VirtualSpace = () => {
                 >
                   {
                     {
-                      chat: (
-                        <ChatContainer>
-                          <ChatMessageContainer>
-                            {Object.values(chatMessages).map((message) => {
-                              return (
-                                <ChatMessage
-                                  key={message.id}
-                                  author={truncateText(message.name, 15)}
-                                  avatarUri={message.avatar}
-                                  isMine={roomInstance?.sessionId === message.sessionId}
-                                  message={message.content}
-                                  time={new Date(message.timestamp).toLocaleString('vn-VI', {
-                                    hour12: true,
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                  })}
-                                />
-                              )
-                            })}
-                            <div ref={chatBottomRef}></div>
-                          </ChatMessageContainer>
-                          <ChatInput onSendMessage={dispatchMessage} />
-                        </ChatContainer>
-                      ),
-                      member: (
-                        <MemberContainer>
-                          {Array(20)
-                            .fill(SAMPLE_MEMBER_DATA)
-                            .map((member: typeof SAMPLE_MEMBER_DATA, index) => (
-                              <SingleMemberCard
-                                key={index}
-                                avatar={member.avatarUri}
-                                handler={member.handler}
-                                name={member.name}
-                              />
-                            ))}
-                        </MemberContainer>
-                      ),
-                      info: <></>,
-                      setting: (
-                        <SettingContainer>
-                          <QualitySelect />
-                          <BackgroundMusicSelect />
-                          <VideoLayout />
-                          <KeyboardMapping setIsModalOpen={setIsModalOpen} />
-                        </SettingContainer>
-                      ),
+                      chat: <Chat />,
+                      member: <Members />,
+                      setting: <Setting />,
                     }[selectedUltility]
                   }
                 </UtilitySection>
@@ -301,7 +160,6 @@ const VirtualSpace = () => {
             <CustomCharacterPanel />
           </OverlayContainer>
         </Container>
-        <KeyboardModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
       </MultitabDetect>
     </CustomableContainer>
   )

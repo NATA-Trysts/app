@@ -1,13 +1,20 @@
 import { create } from 'zustand'
 
-export type CategoryType = 'Animal' | 'ThreeJS'
+export type CategoryType = 'chair' | 'table' | null
+
+export type ModelResolution = {
+  low: string
+  medium: string
+}
 
 export type SubCategoryItem = {
-  id: number
+  id: string
   name: string
   description: string
   img: string
   category: CategoryType
+  collection: string
+  resolutions: ModelResolution
 }
 
 type SpaceInformationType = {
@@ -26,13 +33,20 @@ export type ModifierValueType = {
   z: number | string
 }
 
-type ObjectAdjustingType = {
+export type Vec3 = {
+  x: number
+  y: number
+  z: number
+}
+
+export type MousePosition = Omit<Vec3, 'y'>
+
+export type SpaceModel = {
+  uuid: string // unique
   name: string
-  modifiers: {
-    name: string
-    values: ModifierValueType
-    canBeNegative: boolean
-  }[]
+  id: string
+  position: ModifierValueType
+  rotation: ModifierValueType
 }
 
 type BuilderState = {
@@ -65,12 +79,21 @@ type BuilderState = {
   globalBackground: GlobalBackgroundType
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => void
 
-  objectAdjusting: ObjectAdjustingType
-  setObjectAdjusting: (objectAdjusting: ObjectAdjustingType) => void
+  models: SpaceModel[]
+  addModel: (model: SpaceModel) => void
+  updateModel: (modelUpdate: SpaceModel) => void
+  updateModelByField: (property: string, field: string, value: number) => void
+  deleteModel: (modelUuid: string) => void
+
+  isEditing: boolean
+  setIsEditing: (isEditing: boolean) => void
+
+  selectedModelUuid: string | null
+  setSelectedModelUuid: (selectedModelUuid: string | null) => void
 }
 
-export const useBuilderStore = create<BuilderState>((set) => ({
-  selectedCategoryName: 'Animal',
+export const useBuilderStore = create<BuilderState>()((set) => ({
+  selectedCategoryName: 'chair',
   setSelectedCategory: (categoryName: CategoryType) => set(() => ({ selectedCategoryName: categoryName })),
 
   subCategoryItems: new Map(),
@@ -89,8 +112,8 @@ export const useBuilderStore = create<BuilderState>((set) => ({
     }),
 
   scrollPosition: new Map([
-    ['Animal', 0],
-    ['ThreeJS', 0],
+    ['chair', 0],
+    ['table', 0],
   ]),
   setScrollPosition: (scrollPosition: Map<CategoryType, number>) => set(() => ({ scrollPosition })),
 
@@ -110,7 +133,7 @@ export const useBuilderStore = create<BuilderState>((set) => ({
   globalSettings: new Map([
     ['wireframe', { values: [true, false], selected: false }],
     ['grid', { values: [true, false], selected: true }],
-    ['gizmo', { values: ['cube', 'port'], selected: 'cube' }],
+    ['gizmo', { values: ['cube', 'port'], selected: 'port' }],
   ]),
   setGlobalSettings: (globalSettings: GlobalSettingsType) => set(() => ({ globalSettings })),
   updateGlobalSettings: (key: string, value: boolean | string) =>
@@ -126,25 +149,27 @@ export const useBuilderStore = create<BuilderState>((set) => ({
   globalBackground: '#D9D9D9',
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => set(() => ({ globalBackground })),
 
-  objectAdjusting: {
-    name: 'Computer',
-    modifiers: [
-      {
-        name: 'position',
-        values: { x: 0, y: 0, z: 0 },
-        canBeNegative: true,
-      },
-      {
-        name: 'rotation',
-        values: { x: 0, y: 0, z: 0 },
-        canBeNegative: true,
-      },
-      {
-        name: 'scale',
-        values: { x: 1, y: 1, z: 1 },
-        canBeNegative: false,
-      },
-    ],
-  },
-  setObjectAdjusting: (objectAdjusting: ObjectAdjustingType) => set(() => ({ objectAdjusting })),
+  models: [],
+  addModel: (newModel: SpaceModel) =>
+    set((state) => ({ models: [...state.models, newModel], selectedModelUuid: newModel.uuid })),
+  updateModel: (modelUpdate: SpaceModel) =>
+    set((state) => ({
+      models: state.models.map((model) => (model.uuid === modelUpdate.uuid ? { ...model, ...modelUpdate } : model)),
+    })),
+  updateModelByField: (property: string, field: string, value: number) =>
+    set((state) => ({
+      models: state.models.map((model) =>
+        model.uuid === state.selectedModelUuid
+          ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], [field]: value } }
+          : model,
+      ),
+    })),
+  deleteModel: (modelUuid: string) =>
+    set((state) => ({ models: state.models.filter((model) => model.uuid !== modelUuid), selectedModelUuid: null })),
+
+  isEditing: false,
+  setIsEditing: (isEdit) => set(() => ({ isEditing: isEdit })),
+
+  selectedModelUuid: null,
+  setSelectedModelUuid: (selectedModelUuid: string | null) => set(() => ({ selectedModelUuid })),
 }))

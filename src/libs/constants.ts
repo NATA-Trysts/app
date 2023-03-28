@@ -114,6 +114,8 @@ const PLAN_ICON_FILTER = {
     'brightness(0) saturate(100%) invert(61%) sepia(12%) saturate(2012%) hue-rotate(171deg) brightness(109%) contrast(107%)',
 }
 
+const STRIPE_API_KEY = import.meta.env.VITE_STRIPE_PUBLIC_KEY
+
 export {
   COLOR_PICKER_LIST,
   FILTER_ICON_TO_WHITE,
@@ -127,6 +129,7 @@ export {
   PLAN_BUTTON_COLOR,
   PLAN_ICON_FILTER,
   PLAN_NAME_BACKGROUND_TEXT,
+  STRIPE_API_KEY,
   TAB_CATEGORY_COLOR,
   TRYSTS_EMAIL_LOGIN,
 }

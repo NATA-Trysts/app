@@ -40,7 +40,7 @@ export const KeyButton = ({
 }: KeyButtonProps) => {
   const convertKeyNameOfMac = (keyName: string) => {
     if (keyName === 'ctrl' && navigator.platform.toUpperCase().indexOf('MAC') >= 0) {
-      return '⌘Cmd'
+      return '⌘ cmd'
     }
 
     return keyName

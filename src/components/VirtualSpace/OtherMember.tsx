@@ -13,7 +13,7 @@ export const OtherMember = () => {
             <Other
               key={player.id}
               action={player.action}
-              id={player.id}
+              peerId={player.peerId}
               position={[player.position.x, player.position.y, player.position.z]}
               quaternion={[player.quaternion.x, player.quaternion.y, player.quaternion.z, player.quaternion.w]}
             />

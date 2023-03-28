@@ -43,7 +43,8 @@ export const ContentBody = styled.section`
 `
 
 export const ToogleContainer = styled.div`
-  width: fit-content;
+  display: flex;
+  justify-content: center;
   background: hsla(260, 77%, 7%, 1);
   margin: 0 auto;
   padding: 1px 0 24px;

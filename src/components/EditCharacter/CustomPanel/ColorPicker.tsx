@@ -11,7 +11,7 @@ import { PlanOverlay } from './PlanOverlay'
 const ColorPickerContainer = styled.div`
   width: 100%;
   transition: opacity 0.2s ease;
-  margin-top: 32px;
+  /* margin-top: 32px; */
   position: relative;
 
   .react-colorful {
