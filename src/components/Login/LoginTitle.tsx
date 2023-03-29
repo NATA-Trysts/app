@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
 import { Logo } from '@/components/Commons/Logo'
-import { useLoginStore } from '@/stores'
+import { useLoginStore, useStepStore } from '@/stores'
 
 const LoginTitleContainer = styled.div<{ isSecondStep: boolean }>`
   position: absolute;
@@ -39,7 +39,8 @@ const ResendCode = styled.span`
 `
 
 export const LoginTitle = () => {
-  const [email, step] = useLoginStore((state) => [state.email, state.step])
+  const [email] = useLoginStore((state) => [state.email])
+  const [step] = useStepStore((state) => [state.step])
 
   const handleResendCode = () => {}
 

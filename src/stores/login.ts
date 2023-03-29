@@ -10,6 +10,11 @@ type LoginState = {
   emailInputStatus: EmailInputStatusType
   setEmailInputStatus: (status: EmailInputStatusType) => void
 
+  fullHash: string
+  setFullHash: (fullHash: string) => void
+}
+
+type StepState = {
   step: number
   setStep: (step: number) => void
 }
@@ -23,11 +28,16 @@ export const useLoginStore = create<LoginState>()(
       emailInputStatus: 'empty',
       setEmailInputStatus: (status: EmailInputStatusType) => set(() => ({ emailInputStatus: status })),
 
-      step: 1,
-      setStep: (step: number) => set(() => ({ step })),
+      fullHash: '',
+      setFullHash: (fullHash: string) => set(() => ({ fullHash })),
     }),
     {
       name: 'login-storage',
     },
   ),
 )
+
+export const useStepStore = create<StepState>()((set) => ({
+  step: 1,
+  setStep: (step: number) => set(() => ({ step })),
+}))
