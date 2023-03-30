@@ -5,10 +5,11 @@ type VideoReferenceProps = {
 }
 
 const Container = styled.video`
-  width: 0;
-  height: 0;
-  position: absolute;
-  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* position: absolute; */
+  /* z-index: -1; */
 `
 
 export const VideoReference = (props: VideoReferenceProps) => {
