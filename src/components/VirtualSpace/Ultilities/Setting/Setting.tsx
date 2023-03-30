@@ -15,7 +15,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  justify-content: flex-end;
 `
 
 export const Setting = () => {
