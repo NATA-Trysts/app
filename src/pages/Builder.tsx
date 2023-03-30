@@ -14,8 +14,6 @@ const BuilderPage = styled.div`
 
 const Builder = () => {
   useEffect(() => {
-    sessionStorage.setItem('history', JSON.stringify([[]]))
-    sessionStorage.setItem('historyIndex', JSON.stringify(0))
     document.title = '🔨 Summer Open Call | Trysts'
   }, [])
 
