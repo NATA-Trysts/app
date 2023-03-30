@@ -66,6 +66,7 @@ const Furniture = (props: FurnitureProps) => {
           y: modelRef.current.rotation.y,
           z: modelRef.current.rotation.z,
         },
+        color: props.color,
       })
     }
   }
@@ -112,7 +113,7 @@ const Furniture = (props: FurnitureProps) => {
         <Select enabled={hovered || selectedModelUuid === props.uuid}>
           {
             {
-              1: <Chair scale={[0.01, 0.01, 0.01]} wireframe={props.wireframe} />,
+              1: <Chair color={props.color} scale={[0.01, 0.01, 0.01]} wireframe={props.wireframe} />,
               2: <Desk scale={[0.01, 0.01, 0.01]} />,
             }[props.id]
           }
@@ -152,6 +153,7 @@ export const Furnitures = () => {
         models.map((model, index) => (
           <Furniture
             key={index}
+            color={model.color}
             id={model.id}
             name={model.name}
             position={{

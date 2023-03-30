@@ -79,16 +79,16 @@ const Guard = () => {
               path="/dashboard"
             />
           </Route>
-          <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
-            <Route
-              element={
-                <Suspense fallback={<span>loading</span>}>
-                  <Builder />
-                </Suspense>
-              }
-              path="/files/:fileId"
-            />
-          </Route>
+          {/* <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}> */}
+          <Route
+            element={
+              <Suspense fallback={<span>loading</span>}>
+                <Builder />
+              </Suspense>
+            }
+            path="/files/:fileId"
+          />
+          {/* </Route> */}
           <Route>
             <Route
               element={

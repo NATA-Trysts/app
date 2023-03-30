@@ -47,6 +47,7 @@ export type SpaceModel = {
   id: string
   position: ModifierValueType
   rotation: ModifierValueType
+  color: string
 }
 
 type BuilderState = {
