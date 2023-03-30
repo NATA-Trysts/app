@@ -27,8 +27,6 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
     let room: typeof Room = null
 
     const handler = async () => {
-      console.log('::: localPeerId: ', localPeerId)
-
       if (!props.spaceId) return
 
       const client = new Client(MULTIPLAYER_SERVICE_ENDPOINT)

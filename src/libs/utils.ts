@@ -26,3 +26,6 @@ export function isOnlyWhitespace(str: string) {
 }
 
 export const approximatelyEqual = (a: number, b: number, epsilon = 0.001) => Math.abs(a - b) < epsilon
+
+export const convertCustomFormatedResponseToObject = (str: string) =>
+  JSON.parse(`{${str.match(/{([^}]+)}/)?.[1]?.replace(/'/g, '"')}}`)

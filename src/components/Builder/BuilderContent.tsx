@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 import { SubCategoryItem, useBuilderStore } from '@/stores'
 
+import GPTButton from '../Button/GPTButton/GPTButton'
 import { BuilderSubCategory } from './BuilderSubCategory'
 import { useBuilder } from './hooks/useBuilder'
 import { ModelPreview } from './ModelPreview'
@@ -40,6 +41,7 @@ export const BuilderContent = ({ isLoading }: BuilderContentProps) => {
         selectedId={selectedSubCategoryItems.get(selectedCategoryName)?.id}
         onClickItem={handleSelectSubCategory}
       />
+      <GPTButton />
     </BuilderContentContainer>
   )
 }
