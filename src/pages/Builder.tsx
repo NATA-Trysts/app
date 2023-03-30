@@ -12,6 +12,9 @@ const BuilderPage = styled.div`
   user-select: none;
 `
 
+sessionStorage.setItem('history', JSON.stringify([]))
+sessionStorage.setItem('historyIndex', JSON.stringify(0))
+
 const Builder = () => {
   useEffect(() => {
     document.title = '🔨 Summer Open Call | Trysts'

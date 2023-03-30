@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
-import { SpaceModel, useBuilderStore } from '@/stores'
+import { SpaceModel, useBuilderStore, useSessionBuilderStore } from '@/stores'
 
 import { Modifier } from './Modifier'
 
@@ -25,6 +25,7 @@ export const ObjectSection = () => {
     (current, prev) => current !== prev,
   )
   const updateModelByField = useBuilderStore((state) => state.updateModelByField)
+  const updateSessionModelByField = useSessionBuilderStore((state) => state.updateSessionModelByField)
   const setIsInputFocus = useBuilderStore((state) => state.setIsInputFocus)
   const models = useBuilderStore((state) => state.models)
   const filteredModel = useMemo(() => {
@@ -39,6 +40,7 @@ export const ObjectSection = () => {
 
   const handleChange = (property: string, axis: string, value: number | string) => {
     filteredModel && updateModelByField(property, axis, value as number)
+    filteredModel && updateSessionModelByField(selectedModelUuid, property, axis, value as number)
   }
 
   return (

@@ -80,9 +80,11 @@ type BuilderState = {
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => void
 
   models: SpaceModel[]
+  setModels: (models: SpaceModel[]) => void
   addModel: (model: SpaceModel) => void
   updateModel: (modelUpdate: SpaceModel) => void
   updateModelByField: (property: string, field: string, value: number) => void
+  updateModelById: (uuid: string, property: string, value: ModifierValueType) => void
   deleteModel: (modelUuid: string) => void
 
   isEditing: boolean
@@ -93,6 +95,16 @@ type BuilderState = {
 
   isInputFocus: boolean
   setIsInputFocus: (isInputFocus: boolean) => void
+}
+
+type SessionBuilderState = {
+  sessionModels: SpaceModel[]
+  setSessionModels: (sessionModels: SpaceModel[]) => void
+  addSessionModel: (model: SpaceModel) => void
+  updateSessionModel: (modelUpdate: SpaceModel) => void
+  updateSessionModelByField: (uuid: string, property: string, field: string, value: number) => void
+  updateSessionModelById: (uuid: string, property: string, value: ModifierValueType) => void
+  deleteSessionModel: (modelUuid: string) => void
 }
 
 export const useBuilderStore = create<BuilderState>()((set) => ({
@@ -153,6 +165,18 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => set(() => ({ globalBackground })),
 
   models: [],
+  setModels: (sessionModels: SpaceModel[]) =>
+    set((state) => {
+      // combine models with session models. if there is a same model, use session model, otherwise use model
+      const models = sessionModels.map((sessionModel) => {
+        // const model = modelsData.find((model: SpaceModel) => model.id === sessionModel.id)
+        const model = state.models.find((model: SpaceModel) => model.id === sessionModel.id)
+
+        return { ...model, ...sessionModel }
+      })
+
+      return { models }
+    }),
   addModel: (newModel: SpaceModel) =>
     set((state) => ({ models: [...state.models, newModel], selectedModelUuid: newModel.uuid })),
   updateModel: (modelUpdate: SpaceModel) =>
@@ -167,6 +191,14 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
           : model,
       ),
     })),
+  updateModelById: (uuid: string, property: string, value: ModifierValueType) =>
+    set((state) => ({
+      models: state.models.map((model) =>
+        model.uuid === uuid
+          ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], ...value } }
+          : model,
+      ),
+    })),
   deleteModel: (modelUuid: string) =>
     set((state) => ({ models: state.models.filter((model) => model.uuid !== modelUuid), selectedModelUuid: null })),
 
@@ -178,4 +210,36 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
 
   isInputFocus: false,
   setIsInputFocus: (isInputFocus: boolean) => set(() => ({ isInputFocus })),
+}))
+
+export const useSessionBuilderStore = create<SessionBuilderState>((set) => ({
+  sessionModels: [],
+  addSessionModel: (model: SpaceModel) => set((state) => ({ sessionModels: [...state.sessionModels, model] })),
+
+  setSessionModels: (sessionModels: SpaceModel[]) => set(() => ({ sessionModels })),
+
+  updateSessionModel: (modelUpdate: SpaceModel) =>
+    set((state) => ({
+      sessionModels: state.sessionModels.map((model) =>
+        model.uuid === modelUpdate.uuid ? { ...model, ...modelUpdate } : model,
+      ),
+    })),
+  updateSessionModelByField: (uuid: string, property: string, field: string, value: number) =>
+    set((state) => ({
+      sessionModels: state.sessionModels.map((model) =>
+        model.uuid === uuid
+          ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], [field]: value } }
+          : model,
+      ),
+    })),
+  updateSessionModelById: (uuid: string, property: string, value: ModifierValueType) =>
+    set((state) => ({
+      sessionModels: state.sessionModels.map((model) =>
+        model.uuid === uuid
+          ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], ...value } }
+          : model,
+      ),
+    })),
+  deleteSessionModel: (modelUuid: string) =>
+    set((state) => ({ sessionModels: state.sessionModels.filter((model) => model.uuid !== modelUuid) })),
 }))
