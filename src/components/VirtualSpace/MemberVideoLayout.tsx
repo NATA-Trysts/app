@@ -151,10 +151,11 @@ export const MemberVideoLayout = ({ ...props }: MemberVideoLayoutProps) => {
   const otherMembers = useMemberStore((state) => state.otherMembers)
 
   return (
-    <VideoContainer {...props}>
-      <VideoSlider>
-        {!isEmpty(otherMembers)
-          ? Object.values(otherMembers).map((player) => (
+    <>
+      {!isEmpty(otherMembers) ? (
+        <VideoContainer {...props}>
+          <VideoSlider>
+            {Object.values(otherMembers).map((player) => (
               <MemberVideo key={player.id}>
                 <VideoReference key={player.peerId} id={`video-ref-${player.peerId}`} />
                 <MemberName>{`melvin_virus_${crypto.randomUUID()}`}</MemberName>
@@ -162,10 +163,13 @@ export const MemberVideoLayout = ({ ...props }: MemberVideoLayoutProps) => {
                   <Micro height={10} width={10} />
                 </MemberIcon>
               </MemberVideo>
-            ))
-          : null}
-      </VideoSlider>
-    </VideoContainer>
+            ))}
+          </VideoSlider>
+        </VideoContainer>
+      ) : (
+        <></>
+      )}
+    </>
   )
 }
 
