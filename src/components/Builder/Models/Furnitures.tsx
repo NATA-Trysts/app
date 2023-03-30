@@ -21,8 +21,11 @@ const Furniture = (props: FurnitureProps) => {
   const setSelectedModelUuid = useBuilderStore((state) => state.setSelectedModelUuid)
   const selectedModelUuid = useBuilderStore((state) => state.selectedModelUuid)
   const setIsEditing = useBuilderStore((state) => state.setIsEditing)
-  const updateModel = useBuilderStore((state) => state.updateModel)
-  const updateSessionModel = useSessionBuilderStore((state) => state.updateSessionModel)
+  // const updateModel = useBuilderStore((state) => state.updateModel)
+  const [sessionModels, updateSessionModel] = useSessionBuilderStore((state) => [
+    state.sessionModels,
+    state.updateSessionModel,
+  ])
   const isModelClicked = useRef<boolean>(false)
   const modelRef = useRef<Group>(null)
   const yP = useRef(INITIAL_Y)
@@ -53,7 +56,7 @@ const Furniture = (props: FurnitureProps) => {
       modelRef.current.position.x = e.point.x
       modelRef.current.position.z = e.point.z
 
-      updateModel({
+      updateSessionModel({
         uuid: props.uuid,
         id: props.id,
         name: props.name,
@@ -68,45 +71,17 @@ const Furniture = (props: FurnitureProps) => {
           z: modelRef.current.rotation.z,
         },
       })
-
-      // updateSessionModel({
-      //   uuid: props.uuid,
-      //   id: props.id,
-      //   name: props.name,
-      //   position: {
-      //     x: e.point.x,
-      //     y: 0,
-      //     z: e.point.z,
-      //   },
-      //   rotation: {
-      //     x: modelRef.current.rotation.x,
-      //     y: modelRef.current.rotation.y,
-      //     z: modelRef.current.rotation.z,
-      //   },
-      // })
     }
   }
 
   const pointerUp = () => {
     if (isModelClicked.current && modelRef.current) {
+      const history = JSON.parse(sessionStorage.getItem('history') as string)
       const historyIndex = JSON.parse(sessionStorage.getItem('historyIndex') as string)
 
-      updateSessionModel({
-        uuid: props.uuid,
-        id: props.id,
-        name: props.name,
-        position: {
-          x: modelRef.current.position.x,
-          y: 0,
-          z: modelRef.current.position.z,
-        },
-        rotation: {
-          x: modelRef.current.rotation.x,
-          y: modelRef.current.rotation.y,
-          z: modelRef.current.rotation.z,
-        },
-      })
+      history.push(sessionModels)
 
+      sessionStorage.setItem('history', JSON.stringify(history))
       sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex + 1))
 
       isModelClicked.current = false
@@ -171,17 +146,13 @@ const Furniture = (props: FurnitureProps) => {
 }
 
 export const Furnitures = () => {
-  const [models, setModels, globalSettings] = useBuilderStore((state) => [
-    state.models,
-    state.setModels,
-    state.globalSettings,
-  ])
+  const [models, globalSettings] = useBuilderStore((state) => [state.models, state.globalSettings])
   const [selectedModelUuid, setSelectedModelUuid] = useBuilderStore((state) => [
     state.selectedModelUuid,
     state.setSelectedModelUuid,
   ])
   const isInputFocus = useBuilderStore((state) => state.isInputFocus)
-  const deleteModel = useBuilderStore((state) => state.deleteModel)
+  // const deleteModel = useBuilderStore((state) => state.deleteModel)
 
   const [sessionModels, setSessionModels, deleteSessionModel] = useSessionBuilderStore((state) => [
     state.sessionModels,
@@ -192,9 +163,34 @@ export const Furnitures = () => {
   const [isUndo] = useKeyboardJs('ctrl + z')
   const [isRedo] = useKeyboardJs('ctrl + y')
 
-  useKeyPressEvent('Backspace', () => !isInputFocus && selectedModelUuid && deleteModel(selectedModelUuid))
-  useKeyPressEvent('Backspace', () => !isInputFocus && selectedModelUuid && deleteSessionModel(selectedModelUuid))
-  useKeyPressEvent('Delete', () => !isInputFocus && selectedModelUuid && deleteModel(selectedModelUuid))
+  // useKeyPressEvent('Backspace', () => !isInputFocus && selectedModelUuid && deleteModel(selectedModelUuid))
+  useKeyPressEvent('Backspace', () => {
+    if (!isInputFocus && selectedModelUuid) {
+      deleteSessionModel(selectedModelUuid)
+
+      const history = JSON.parse(sessionStorage.getItem('history') as string)
+      const historyIndex = JSON.parse(sessionStorage.getItem('historyIndex') as string)
+
+      history.push(sessionModels.filter((model) => model.uuid !== selectedModelUuid))
+
+      sessionStorage.setItem('history', JSON.stringify(history))
+      sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex + 1))
+    }
+  })
+  // useKeyPressEvent('Delete', () => !isInputFocus && selectedModelUuid && deleteModel(selectedModelUuid))
+  useKeyPressEvent('Delete', () => {
+    if (!isInputFocus && selectedModelUuid) {
+      deleteSessionModel(selectedModelUuid)
+
+      const history = JSON.parse(sessionStorage.getItem('history') as string)
+      const historyIndex = JSON.parse(sessionStorage.getItem('historyIndex') as string)
+
+      history.push(sessionModels.filter((model) => model.uuid !== selectedModelUuid))
+
+      sessionStorage.setItem('history', JSON.stringify(history))
+      sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex + 1))
+    }
+  })
   useKeyPressEvent('Escape', () => !isInputFocus && setSelectedModelUuid(null))
 
   useEffect(() => {
@@ -206,6 +202,7 @@ export const Furnitures = () => {
         return
       } else {
         historyIndex -= 1
+
         const previousSessionModels = history[historyIndex]
 
         setSessionModels(previousSessionModels)
@@ -219,6 +216,7 @@ export const Furnitures = () => {
         return
       } else {
         historyIndex += 1
+
         const next = history[historyIndex]
 
         setSessionModels(next)
@@ -228,24 +226,30 @@ export const Furnitures = () => {
     }
   }, [isUndo, isRedo, setSessionModels])
 
-  useEffect(() => {
-    setModels(sessionModels)
-
-    const history = JSON.parse(sessionStorage.getItem('history') as string)
-
-    if (history) {
-      if (JSON.stringify(history[history.length - 2]) !== JSON.stringify(sessionModels)) {
-        history.push(sessionModels)
-      }
-    }
-
-    sessionStorage.setItem('history', JSON.stringify(history))
-  }, [sessionModels, setModels])
-
   return (
     <>
       {models.length > 0 &&
         models.map((model, index) => (
+          <Furniture
+            key={index}
+            id={model.id}
+            name={model.name}
+            position={{
+              x: parseFloat(model.position.x as string),
+              y: parseFloat(model.position.y as string),
+              z: parseFloat(model.position.z as string),
+            }}
+            rotation={{
+              x: parseFloat(model.rotation.x as string),
+              y: parseFloat(model.rotation.y as string),
+              z: parseFloat(model.rotation.z as string),
+            }}
+            uuid={model.uuid}
+            wireframe={globalSettings.get('wireframe')?.selected as boolean}
+          />
+        ))}
+      {sessionModels.length > 0 &&
+        sessionModels.map((model, index) => (
           <Furniture
             key={index}
             id={model.id}

@@ -6,8 +6,11 @@ const useBuilder = () => {
   const setSubCategoryItems = useBuilderStore((state) => state.setSubCategoryItems)
   const setSelectedSubCategoryItems = useBuilderStore((state) => state.setSelectedSubCategoryItems)
   const updateSelectedSubCategoryItems = useBuilderStore((state) => state.updateSelectedSubCategoryItems)
-  const addModel = useBuilderStore((state) => state.addModel)
-  const addSessionModel = useSessionBuilderStore((state) => state.addSessionModel)
+  // const addModel = useBuilderStore((state) => state.addModel)
+  const [sessionModels, addSessionModel] = useSessionBuilderStore((state) => [
+    state.sessionModels,
+    state.addSessionModel,
+  ])
   // mapping data from api to map object
   const mappingData = async (listFromApi: SubCategoryItem[]) => {
     const newSubCategoryItems = new Map<CategoryType, SubCategoryItem[]>()
@@ -36,13 +39,13 @@ const useBuilder = () => {
 
     const uuid = uuidv4()
 
-    addModel({
-      uuid,
-      name: item.name,
-      id: item.id,
-      position: { x: 0, y: 0, z: 0 },
-      rotation: { x: 0, y: 0, z: 0 },
-    })
+    // addModel({
+    //   uuid,
+    //   name: item.name,
+    //   id: item.id,
+    //   position: { x: 0, y: 0, z: 0 },
+    //   rotation: { x: 0, y: 0, z: 0 },
+    // })
 
     addSessionModel({
       uuid,
@@ -52,8 +55,21 @@ const useBuilder = () => {
       rotation: { x: 0, y: 0, z: 0 },
     })
 
+    const history = JSON.parse(sessionStorage.getItem('history') || '[]')
     const historyIndex = JSON.parse(sessionStorage.getItem('historyIndex') || '0')
 
+    history.push([
+      ...sessionModels,
+      {
+        uuid,
+        name: item.name,
+        id: item.id,
+        position: { x: 0, y: 0, z: 0 },
+        rotation: { x: 0, y: 0, z: 0 },
+      },
+    ])
+
+    sessionStorage.setItem('history', JSON.stringify(history))
     sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex + 1))
   }
 

@@ -12,11 +12,10 @@ const BuilderPage = styled.div`
   user-select: none;
 `
 
-sessionStorage.setItem('history', JSON.stringify([]))
-sessionStorage.setItem('historyIndex', JSON.stringify(0))
-
 const Builder = () => {
   useEffect(() => {
+    sessionStorage.setItem('history', JSON.stringify([[]]))
+    sessionStorage.setItem('historyIndex', JSON.stringify(0))
     document.title = '🔨 Summer Open Call | Trysts'
   }, [])
 

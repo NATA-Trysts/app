@@ -164,7 +164,15 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
   globalBackground: '#D9D9D9',
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => set(() => ({ globalBackground })),
 
-  models: [],
+  models: [
+    {
+      id: '1',
+      name: 'Orchid Chair',
+      position: { x: 3, y: 0, z: 1 },
+      rotation: { x: 0, y: 0, z: 0 },
+      uuid: '926ebb98-b027-413d-9992-1b079ef03b3d',
+    },
+  ],
   setModels: (sessionModels: SpaceModel[]) =>
     set((state) => {
       // combine models with session models. if there is a same model, use session model, otherwise use model
