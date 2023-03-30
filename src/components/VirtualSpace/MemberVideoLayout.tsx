@@ -1,90 +1,22 @@
-import { isEmpty } from 'lodash-es'
-import { Children, ReactNode, RefObject, useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
+import { isEmpty, size } from 'lodash-es'
+import { Children, ReactNode, useEffect, useRef, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 
 import { ReactComponent as Micro } from '@/assets/icons/mic.svg'
 import { ReactComponent as ArrowLeft } from '@/assets/icons/slider-arrow-left.svg'
 import { ReactComponent as ArrowRight } from '@/assets/icons/slider-arrow-right.svg'
+import { Text } from '@/components/Commons'
+import { VideoReference } from '@/components/VideoCall'
+import { useHorizontalDragScroll, useHorizontalScroll } from '@/hooks'
 import { useMemberStore } from '@/stores'
-
-import { Text } from '../Commons'
-import { VideoReference } from '../VideoCall'
-
-function useHorizontalScroll<T extends HTMLElement>(elRef: RefObject<T>): void {
-  useEffect(() => {
-    const el = elRef.current
-
-    if (el) {
-      const onWheel = (e: WheelEvent) => {
-        if (e.deltaY === 0) return
-        e.preventDefault()
-        el.scrollTo({
-          left: el.scrollLeft + e.deltaY * 2.5 /*scroll-fast*/,
-          behavior: 'smooth',
-        })
-      }
-
-      el.addEventListener('wheel', onWheel)
-
-      return () => el.removeEventListener('wheel', onWheel)
-    }
-  }, [elRef])
-}
-
-export type useHorizontalDragScrollOptions = {
-  onDrag?: () => void
-  onLeave?: () => void
-}
-
-function useHorizontalDragScroll<T extends HTMLElement>(elRef: RefObject<T>, options?: useHorizontalDragScrollOptions) {
-  useEffect(() => {
-    const slider = elRef.current
-    let isDown = false
-    let startX: number
-    let scrollLeft: number
-
-    const toogleDrag = (isDrag: boolean) => {
-      isDown = isDrag
-      if (options) {
-        if (isDrag) options.onDrag?.()
-        else options.onLeave?.()
-      }
-    }
-
-    if (slider) {
-      slider.addEventListener('pointerdown', (e) => {
-        slider.setPointerCapture(e.pointerId)
-        document.body.style.cursor = 'grabbing'
-        toogleDrag(true)
-        startX = e.pageX - slider.offsetLeft
-        scrollLeft = slider.scrollLeft
-      })
-      slider.addEventListener('pointerleave', () => {
-        toogleDrag(false)
-      })
-      slider.addEventListener('pointerup', (e) => {
-        slider.releasePointerCapture(e.pointerId)
-        document.body.style.cursor = 'auto'
-        toogleDrag(false)
-      })
-      slider.addEventListener('pointermove', (e) => {
-        if (!isDown) return
-        e.preventDefault()
-        const x = e.pageX - slider.offsetLeft
-        const walk = (x - startX) * 1 //scroll-fast
-
-        slider.scrollLeft = scrollLeft - walk
-        // console.log(walk)
-      })
-    }
-  }, [elRef, options])
-}
 
 export type VideoSliderProps = {
   children?: ReactNode
+  memberCount: number
 }
 
-export const VideoSlider = ({ children }: VideoSliderProps) => {
+export const VideoSlider = ({ children, memberCount }: VideoSliderProps) => {
   const videoSliderContentRef = useRef<HTMLDivElement>(null)
 
   const [isGrabbing, setGrabbing] = useState(false)
@@ -111,7 +43,7 @@ export const VideoSlider = ({ children }: VideoSliderProps) => {
 
   return (
     <VideoSliderContainer>
-      <SliderContent ref={videoSliderContentRef} grabbing={isGrabbing}>
+      <SliderContent ref={videoSliderContentRef} columnCount={memberCount} grabbing={isGrabbing}>
         {children}
       </SliderContent>
 
@@ -152,28 +84,31 @@ export const MemberVideoLayout = ({ ...props }: MemberVideoLayoutProps) => {
 
   return (
     <>
-      {!isEmpty(otherMembers) ? (
-        <VideoContainer {...props}>
-          <VideoSlider>
-            {Object.values(otherMembers).map((player) => (
+      <VideoContainer
+        animate={{
+          opacity: !isEmpty(otherMembers) ? 1 : 0,
+          width: !isEmpty(otherMembers) ? 'auto' : 0,
+        }}
+        {...props}
+      >
+        <VideoSlider memberCount={size(otherMembers)}>
+          {!isEmpty(otherMembers) &&
+            Object.values(otherMembers).map((player) => (
               <MemberVideo key={player.id}>
                 <VideoReference key={player.peerId} id={`video-ref-${player.peerId}`} />
-                <MemberName>{`melvin_virus_${crypto.randomUUID()}`}</MemberName>
+                <MemberName>{player.id}</MemberName>
                 <MemberIcon>
                   <Micro height={10} width={10} />
                 </MemberIcon>
               </MemberVideo>
             ))}
-          </VideoSlider>
-        </VideoContainer>
-      ) : (
-        <></>
-      )}
+        </VideoSlider>
+      </VideoContainer>
     </>
   )
 }
 
-const VideoContainer = styled.section`
+const VideoContainer = styled(motion.section)`
   max-width: 998px;
   height: 144px;
   padding: 8px;
@@ -183,7 +118,7 @@ const VideoContainer = styled.section`
   position: absolute;
   top: 60px;
   left: 50%;
-  transform: translate(-50%, 0) scale(0.75);
+  transform: translate(-50%, 0);
 
   pointer-events: auto;
   z-index: 9;
@@ -193,8 +128,10 @@ const VideoSliderContainer = styled.div`
   position: relative;
 `
 
-const SliderContent = styled.div<{ grabbing: boolean }>`
-  display: flex;
+const SliderContent = styled.div<{ grabbing: boolean; columnCount: number }>`
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: ${(props) => `repeat(${props.columnCount}, 1fr)`};
   gap: 8px;
   border-radius: 8px;
   overflow-x: scroll;
@@ -212,8 +149,6 @@ const SliderContent = styled.div<{ grabbing: boolean }>`
 const SliderDirection = styled.div<{ direction?: 'left' | 'right' }>`
   height: 100%;
   width: 58px;
-  /* padding: 8px 0; */
-  /* ${(props) => `padding-${props.direction}`}: 8px; */
   border-radius: ${(props) => (props.direction == 'left' ? '8px 0 0 8px' : '0 8px 8px 0')};
   background: ${(props) =>
     props.direction === 'left'
@@ -255,7 +190,7 @@ const MemberVideo = styled.div`
 const MemberName = styled.div`
   max-width: 152px;
   height: 27px;
-  padding: 4px;
+  padding: 4px 8px 4px 4px;
   border-radius: 0px 8px 0px 0px;
   background-color: var(--color-6);
 
