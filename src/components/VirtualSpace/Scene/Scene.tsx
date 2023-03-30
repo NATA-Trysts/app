@@ -6,6 +6,7 @@ import { Hint } from '@/components/Hint'
 import { MainMember } from '@/components/Member'
 import { Container } from '@/layouts/common'
 
+import { MemberVideoLayout } from '../MemberVideoLayout'
 import { MemberVideoReference } from '../MemberVideoReference'
 import { OtherMember } from '../OtherMember'
 import { Loading } from './Loading'
@@ -13,6 +14,15 @@ import { Loading } from './Loading'
 export const Scene = () => {
   return (
     <Container>
+      <MemberVideoLayout
+        items={[...Array(10)].map((_, index) => (
+          <img
+            key={index}
+            src="https://media.discordapp.net/attachments/594555226036371477/1037064483497054298/20221021_121712.jpg?width=701&height=701"
+            style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
+          ></img>
+        ))}
+      />
       <Canvas>
         <Suspense fallback={<Loading />}>
           <ambientLight intensity={1} />
