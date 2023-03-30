@@ -1,7 +1,9 @@
 import { createContext, ReactNode, useState } from 'react'
 
+import { AuthUser } from '@/models/User'
+
 export type Auth = {
-  user: any
+  user: AuthUser
   roles: number[]
   accessToken: string
 }

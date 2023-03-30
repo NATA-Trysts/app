@@ -26,9 +26,9 @@ const Gap = styled.div`
 `
 
 type MyInformationCardProps = {
-  name: string
-  handler: string
-  avatar: string
+  name?: string
+  handler?: string
+  avatar?: string
 }
 
 const CustomInformationCard = styled(motion.div)`
@@ -57,7 +57,11 @@ const CustomOption = styled(Option)<{ hoverBackground?: string; textColor: strin
 `
 //#endregion
 
-export const MyInformationCard: FC<MyInformationCardProps> = ({ name, handler, avatar }) => {
+export const MyInformationCard: FC<MyInformationCardProps> = ({
+  name = 'Anonymous',
+  handler = 'Anonymous#0000',
+  avatar = 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
+}) => {
   const color = useAppStore((state) => state.customColor)
   const [isEditAvatar, setIsEditAvatar] = useVirtualSpaceStore((state) => [state.isEditAvatar, state.setIsEditAvatar])
 
