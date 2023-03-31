@@ -98,8 +98,6 @@ const VirtualSpace = () => {
   const { spaceId } = useParams()
   const { auth } = useAuth()
 
-  console.log(auth)
-
   const ultilityMapping = {
     chat: {
       name: 'Chat',

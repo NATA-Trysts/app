@@ -25,14 +25,17 @@ export const MainMember = () => {
   const videoEnabled = useHMSStore(selectIsLocalVideoEnabled)
   const localPeer = useHMSStore(selectLocalPeer)
   const hmsActions = useHMSActions()
+  const videoElement = document.getElementById(`my`) as HTMLVideoElement
 
-  useEffect(() => {
-    const videoElement = document.getElementById(`my`) as HTMLVideoElement
-
+  const attachVideo = () => {
     if (localPeer && localPeer.videoTrack && videoElement) {
       hmsActions.attachVideo(localPeer.videoTrack, videoElement)
       setVideoTexture(new VideoTexture(videoElement))
     }
+  }
+
+  useEffect(() => {
+    attachVideo()
   }, [videoEnabled, isEditAvatar])
 
   const dispatchMovement = (character: Group) => {

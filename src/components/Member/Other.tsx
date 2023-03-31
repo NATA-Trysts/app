@@ -4,6 +4,8 @@ import { useFrame } from '@react-three/fiber'
 import { useEffect, useRef, useState } from 'react'
 import { Group, Mesh, Quaternion, Vector3, VideoTexture } from 'three'
 
+import { useVirtualSpaceStore } from '@/stores'
+
 import { BaseCharacter } from './BaseCharacter'
 
 const nextPosition = new Vector3()
@@ -22,6 +24,9 @@ export const Other = (props: OtherProps) => {
   const playerRef = useRef<Group>(null)
   const videoFrame = useRef<Mesh>(null)
   const [videoTexture, setVideoTexture] = useState<VideoTexture>()
+  const hmsActions = useHMSActions()
+  const remotePeers = useHMSStore(selectRemotePeers)
+  const [videoLayout, isEditAvatar] = useVirtualSpaceStore((state) => [state.videoLayout, state.isEditAvatar])
 
   useEffect(() => {
     playerRef.current?.position.set(props.position[0], props.position[1], props.position[2])
@@ -30,9 +35,6 @@ export const Other = (props: OtherProps) => {
   const [tempTexture] = useTexture([
     'https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg',
   ])
-
-  const hmsActions = useHMSActions()
-  const remotePeers = useHMSStore(selectRemotePeers)
 
   useEffect(() => {
     const videoElement = document.getElementById(`video-ref-${props.peerId}`) as HTMLVideoElement
@@ -58,10 +60,12 @@ export const Other = (props: OtherProps) => {
     <>
       <group ref={playerRef}>
         <BaseCharacter action={props.action} />
-        <mesh ref={videoFrame} position={[0, 4.5, 0]}>
-          <planeGeometry args={[VIDEO_WIDTH, (VIDEO_WIDTH * 3) / 4]} />
-          <meshBasicMaterial map={videoTexture || tempTexture} toneMapped={true} />
-        </mesh>
+        {videoLayout === 'above-head' && !isEditAvatar ? (
+          <mesh ref={videoFrame} position={[0, 4.5, 0]}>
+            <planeGeometry args={[VIDEO_WIDTH, (VIDEO_WIDTH * 3) / 4]} />
+            <meshBasicMaterial map={videoTexture || tempTexture} toneMapped={true} />
+          </mesh>
+        ) : null}
       </group>
     </>
   )

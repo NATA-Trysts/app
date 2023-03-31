@@ -1,90 +1,22 @@
-import { isEmpty } from 'lodash-es'
-import { Children, ReactNode, RefObject, useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
+import { isEmpty, size } from 'lodash-es'
+import { Children, ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 
-import { ReactComponent as Micro } from '@/assets/icons/mic.svg'
 import { ReactComponent as ArrowLeft } from '@/assets/icons/slider-arrow-left.svg'
 import { ReactComponent as ArrowRight } from '@/assets/icons/slider-arrow-right.svg'
-import { useMemberStore } from '@/stores'
+import { Text } from '@/components/Commons'
+import { useHorizontalDragScroll, useHorizontalScroll } from '@/hooks'
+import { useMemberStore, useVirtualSpaceStore } from '@/stores'
 
-import { Text } from '../Commons'
-import { VideoReference } from '../VideoCall'
-
-function useHorizontalScroll<T extends HTMLElement>(elRef: RefObject<T>): void {
-  useEffect(() => {
-    const el = elRef.current
-
-    if (el) {
-      const onWheel = (e: WheelEvent) => {
-        if (e.deltaY === 0) return
-        e.preventDefault()
-        el.scrollTo({
-          left: el.scrollLeft + e.deltaY * 2.5 /*scroll-fast*/,
-          behavior: 'smooth',
-        })
-      }
-
-      el.addEventListener('wheel', onWheel)
-
-      return () => el.removeEventListener('wheel', onWheel)
-    }
-  }, [elRef])
-}
-
-export type useHorizontalDragScrollOptions = {
-  onDrag?: () => void
-  onLeave?: () => void
-}
-
-function useHorizontalDragScroll<T extends HTMLElement>(elRef: RefObject<T>, options?: useHorizontalDragScrollOptions) {
-  useEffect(() => {
-    const slider = elRef.current
-    let isDown = false
-    let startX: number
-    let scrollLeft: number
-
-    const toogleDrag = (isDrag: boolean) => {
-      isDown = isDrag
-      if (options) {
-        if (isDrag) options.onDrag?.()
-        else options.onLeave?.()
-      }
-    }
-
-    if (slider) {
-      slider.addEventListener('pointerdown', (e) => {
-        slider.setPointerCapture(e.pointerId)
-        document.body.style.cursor = 'grabbing'
-        toogleDrag(true)
-        startX = e.pageX - slider.offsetLeft
-        scrollLeft = slider.scrollLeft
-      })
-      slider.addEventListener('pointerleave', () => {
-        toogleDrag(false)
-      })
-      slider.addEventListener('pointerup', (e) => {
-        slider.releasePointerCapture(e.pointerId)
-        document.body.style.cursor = 'auto'
-        toogleDrag(false)
-      })
-      slider.addEventListener('pointermove', (e) => {
-        if (!isDown) return
-        e.preventDefault()
-        const x = e.pageX - slider.offsetLeft
-        const walk = (x - startX) * 1 //scroll-fast
-
-        slider.scrollLeft = scrollLeft - walk
-        // console.log(walk)
-      })
-    }
-  }, [elRef, options])
-}
+import { MemberVideoCard } from './MemberVideoCard'
 
 export type VideoSliderProps = {
   children?: ReactNode
+  memberCount: number
 }
 
-export const VideoSlider = ({ children }: VideoSliderProps) => {
+export const VideoSlider = ({ children, memberCount }: VideoSliderProps) => {
   const videoSliderContentRef = useRef<HTMLDivElement>(null)
 
   const [isGrabbing, setGrabbing] = useState(false)
@@ -111,7 +43,7 @@ export const VideoSlider = ({ children }: VideoSliderProps) => {
 
   return (
     <VideoSliderContainer>
-      <SliderContent ref={videoSliderContentRef} grabbing={isGrabbing}>
+      <SliderContent ref={videoSliderContentRef} columnCount={memberCount} grabbing={isGrabbing}>
         {children}
       </SliderContent>
 
@@ -148,32 +80,33 @@ export type MemberVideoLayoutProps = {
 }
 
 export const MemberVideoLayout = ({ ...props }: MemberVideoLayoutProps) => {
+  const [videoLayout, isEditAvatar] = useVirtualSpaceStore((state) => [state.videoLayout, state.isEditAvatar])
   const otherMembers = useMemberStore((state) => state.otherMembers)
+  const memberCount = useMemo(() => (otherMembers ? size(otherMembers) : 0), [otherMembers])
+  const isOtherMember = useMemo(() => (otherMembers ? isEmpty(otherMembers) : false), [otherMembers])
 
   return (
     <>
-      {!isEmpty(otherMembers) ? (
-        <VideoContainer {...props}>
-          <VideoSlider>
+      {videoLayout === 'slide' && !isEditAvatar ? (
+        <VideoContainer
+          animate={{
+            opacity: isOtherMember ? 0 : 1,
+            width: isOtherMember ? 0 : 190 * memberCount + 8 * (memberCount + 1),
+          }}
+          {...props}
+        >
+          <VideoSlider memberCount={memberCount}>
             {Object.values(otherMembers).map((player) => (
-              <MemberVideo key={player.id}>
-                <VideoReference key={player.peerId} id={`video-ref-${player.peerId}`} />
-                <MemberName>{`melvin_virus_${crypto.randomUUID()}`}</MemberName>
-                <MemberIcon>
-                  <Micro height={10} width={10} />
-                </MemberIcon>
-              </MemberVideo>
+              <MemberVideoCard key={player.id} member={player} />
             ))}
           </VideoSlider>
         </VideoContainer>
-      ) : (
-        <></>
-      )}
+      ) : null}
     </>
   )
 }
 
-const VideoContainer = styled.section`
+const VideoContainer = styled(motion.section)`
   max-width: 998px;
   height: 144px;
   padding: 8px;
@@ -181,9 +114,9 @@ const VideoContainer = styled.section`
   background-color: var(--color-6);
 
   position: absolute;
-  top: 60px;
+  top: 68px;
   left: 50%;
-  transform: translate(-50%, 0) scale(0.75);
+  transform: translate(-50%, 0);
 
   pointer-events: auto;
   z-index: 9;
@@ -193,8 +126,10 @@ const VideoSliderContainer = styled.div`
   position: relative;
 `
 
-const SliderContent = styled.div<{ grabbing: boolean }>`
-  display: flex;
+const SliderContent = styled.div<{ grabbing: boolean; columnCount: number }>`
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: ${(props) => `repeat(${props.columnCount}, 1fr)`};
   gap: 8px;
   border-radius: 8px;
   overflow-x: scroll;
@@ -212,8 +147,6 @@ const SliderContent = styled.div<{ grabbing: boolean }>`
 const SliderDirection = styled.div<{ direction?: 'left' | 'right' }>`
   height: 100%;
   width: 58px;
-  /* padding: 8px 0; */
-  /* ${(props) => `padding-${props.direction}`}: 8px; */
   border-radius: ${(props) => (props.direction == 'left' ? '8px 0 0 8px' : '0 8px 8px 0')};
   background: ${(props) =>
     props.direction === 'left'
@@ -235,57 +168,6 @@ const SliderDirectionContent = styled.div`
   font-weight: 600;
   font-size: 20px;
   line-height: 27px;
-`
-
-const MemberVideo = styled.div`
-  width: 190px;
-  height: 128px;
-  border-radius: 8px;
-  position: relative;
-
-  > * {
-    border-radius: inherit;
-  }
-
-  img {
-    pointer-events: none;
-  }
-`
-
-const MemberName = styled.div`
-  max-width: 152px;
-  height: 27px;
-  padding: 4px;
-  border-radius: 0px 8px 0px 0px;
-  background-color: var(--color-6);
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 19px;
-  color: var(--color-2);
-
-  position: absolute;
-  bottom: 0;
-  left: -1px;
-`
-
-const MemberIcon = styled.div`
-  width: 16px;
-  height: 16px;
-  background-color: var(--color-6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-
-  position: absolute;
-  top: 4px;
-  right: 4px;
 `
 
 const arrowRight = keyframes`
