@@ -97,16 +97,6 @@ type BuilderState = {
   setIsInputFocus: (isInputFocus: boolean) => void
 }
 
-type SessionBuilderState = {
-  sessionModels: SpaceModel[]
-  setSessionModels: (sessionModels: SpaceModel[]) => void
-  addSessionModel: (model: SpaceModel) => void
-  updateSessionModel: (modelUpdate: SpaceModel) => void
-  updateSessionModelByField: (uuid: string, property: string, field: string, value: number) => void
-  updateSessionModelById: (uuid: string, property: string, value: ModifierValueType) => void
-  deleteSessionModel: (modelUuid: string) => void
-}
-
 export const useBuilderStore = create<BuilderState>()((set) => ({
   selectedCategoryName: 'chair',
   setSelectedCategory: (categoryName: CategoryType) => set(() => ({ selectedCategoryName: categoryName })),
@@ -210,36 +200,4 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
 
   isInputFocus: false,
   setIsInputFocus: (isInputFocus: boolean) => set(() => ({ isInputFocus })),
-}))
-
-export const useSessionBuilderStore = create<SessionBuilderState>((set) => ({
-  sessionModels: [],
-  addSessionModel: (model: SpaceModel) => set((state) => ({ sessionModels: [...state.sessionModels, model] })),
-
-  setSessionModels: (sessionModels: SpaceModel[]) => set(() => ({ sessionModels })),
-
-  updateSessionModel: (modelUpdate: SpaceModel) =>
-    set((state) => ({
-      sessionModels: state.sessionModels.map((model) =>
-        model.uuid === modelUpdate.uuid ? { ...model, ...modelUpdate } : model,
-      ),
-    })),
-  updateSessionModelByField: (uuid: string, property: string, field: string, value: number) =>
-    set((state) => ({
-      sessionModels: state.sessionModels.map((model) =>
-        model.uuid === uuid
-          ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], [field]: value } }
-          : model,
-      ),
-    })),
-  updateSessionModelById: (uuid: string, property: string, value: ModifierValueType) =>
-    set((state) => ({
-      sessionModels: state.sessionModels.map((model) =>
-        model.uuid === uuid
-          ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], ...value } }
-          : model,
-      ),
-    })),
-  deleteSessionModel: (modelUuid: string) =>
-    set((state) => ({ sessionModels: state.sessionModels.filter((model) => model.uuid !== modelUuid) })),
 }))
