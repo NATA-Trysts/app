@@ -1,6 +1,7 @@
-import { selectRemotePeers, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
+import { selectRemotePeers, useHMSStore } from '@100mslive/react-sdk'
 import { useTexture } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
+import { CuboidCollider, RapierRigidBody, RigidBody } from '@react-three/rapier'
 import { useEffect, useRef, useState } from 'react'
 import { Group, Mesh, Quaternion, Vector3, VideoTexture } from 'three'
 
@@ -16,6 +17,9 @@ type OtherProps = {
   quaternion: [number, number, number, number]
   action: string
   peerId: string
+  onIntersectEnter: () => void
+  onIntersectExit: () => void
+  isNearestMember: boolean
 }
 
 const VIDEO_WIDTH = 2
@@ -24,9 +28,9 @@ export const Other = (props: OtherProps) => {
   const playerRef = useRef<Group>(null)
   const videoFrame = useRef<Mesh>(null)
   const [videoTexture, setVideoTexture] = useState<VideoTexture>()
-  const hmsActions = useHMSActions()
   const remotePeers = useHMSStore(selectRemotePeers)
   const [videoLayout, isEditAvatar] = useVirtualSpaceStore((state) => [state.videoLayout, state.isEditAvatar])
+  const rigRef = useRef<RapierRigidBody>(null)
 
   useEffect(() => {
     playerRef.current?.position.set(props.position[0], props.position[1], props.position[2])
@@ -38,13 +42,10 @@ export const Other = (props: OtherProps) => {
 
   useEffect(() => {
     const videoElement = document.getElementById(`video-ref-${props.peerId}`) as HTMLVideoElement
-    const filteredRemotePeer = remotePeers.filter((peer) => peer.id === props.peerId)[0]
+    // const filteredRemotePeer = remotePeers.filter((peer) => peer.id === props.peerId)[0]
 
-    if (filteredRemotePeer && filteredRemotePeer.videoTrack && videoElement) {
-      hmsActions.attachVideo(filteredRemotePeer.videoTrack, videoElement)
-      setVideoTexture(new VideoTexture(videoElement))
-    }
-  }, [remotePeers])
+    if (videoElement && videoFrame.current) setVideoTexture(new VideoTexture(videoElement))
+  }, [remotePeers, props.peerId, props.isNearestMember])
 
   useFrame(({ camera }) => {
     if (playerRef.current) {
@@ -52,6 +53,15 @@ export const Other = (props: OtherProps) => {
       nextQuaternion.fromArray(props.quaternion)
       playerRef.current.position.lerp(nextPosition, 0.3)
       playerRef.current.quaternion.rotateTowards(nextQuaternion, 0.4)
+
+      rigRef.current?.setTranslation(
+        {
+          x: playerRef.current.position.x,
+          y: playerRef.current.position.y,
+          z: playerRef.current.position.z,
+        },
+        true,
+      )
     }
     if (videoFrame.current) videoFrame.current.lookAt(camera.position)
   })
@@ -60,13 +70,21 @@ export const Other = (props: OtherProps) => {
     <>
       <group ref={playerRef}>
         <BaseCharacter action={props.action} />
-        {videoLayout === 'above-head' && !isEditAvatar ? (
+        {props.isNearestMember && videoLayout === 'above-head' && !isEditAvatar ? (
           <mesh ref={videoFrame} position={[0, 4.5, 0]}>
             <planeGeometry args={[VIDEO_WIDTH, (VIDEO_WIDTH * 3) / 4]} />
-            <meshBasicMaterial map={videoTexture || tempTexture} toneMapped={true} />
+            <meshBasicMaterial map={videoTexture || tempTexture} />
           </mesh>
         ) : null}
       </group>
+      <RigidBody ref={rigRef} lockTranslations colliders="cuboid" type="dynamic">
+        <CuboidCollider
+          sensor
+          args={[2, 2, 2]}
+          onIntersectionEnter={props.onIntersectEnter}
+          onIntersectionExit={props.onIntersectExit}
+        />
+      </RigidBody>
     </>
   )
 }

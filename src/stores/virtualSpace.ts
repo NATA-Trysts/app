@@ -78,7 +78,7 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
   videoLayout: 'slide',
   setVideoLayout: (videoLayout: VideoLayoutType) => set(() => ({ videoLayout })),
 
-  isEditAvatar: false,
+  isEditAvatar: true,
   setIsEditAvatar: (isEditAvatar: boolean) => set({ isEditAvatar, selectedUltility: null }),
 
   isFirstTime: true,

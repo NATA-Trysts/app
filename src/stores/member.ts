@@ -19,16 +19,18 @@ export type Member = {
   action: string
 }
 
-type OtherMember = {
-  [id: string]: Member
+type OtherMember<T> = {
+  [id: string]: T
 }
+
+export type NearestMember = Omit<Member, 'position' | 'quaternion'>
 
 type MemberState = {
   mainMemberId: string
   setMainMemberId: (mainMemberId: string) => void
   mainMember: Member | null
   setMainMember: (member: Member) => void
-  otherMembers: OtherMember
+  otherMembers: OtherMember<Member>
   addOtherMembers: (sessionId: string, member: Member) => void
   removeOtherMembers: (sessionId: string) => void
   updateOtherMembers: (
@@ -37,6 +39,9 @@ type MemberState = {
     quaternion: { x: number; y: number; z: number; w: number },
   ) => void
   updateActionOtherMember: (sessionId: string, action: string) => void
+  nearestMembers: OtherMember<NearestMember>
+  addNearestMember: (sessionId: string, nearestMember: NearestMember) => void
+  removeNearestMember: (sessionId: string) => void
 }
 
 export const useMemberStore = create<MemberState>((set) => ({
@@ -67,4 +72,14 @@ export const useMemberStore = create<MemberState>((set) => ({
         state.otherMembers[sessionId].action = action
       }),
     ),
+
+  nearestMembers: {},
+  addNearestMember: (sessionId: string, nearestMember: NearestMember) =>
+    set(
+      produce((state: MemberState) => {
+        state.nearestMembers[sessionId] = nearestMember
+      }),
+    ),
+  removeNearestMember: (sessionId: string) =>
+    set((state) => ({ nearestMembers: omit(state.nearestMembers, [sessionId]) })),
 }))

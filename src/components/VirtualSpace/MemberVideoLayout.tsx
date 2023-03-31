@@ -81,30 +81,44 @@ export type MemberVideoLayoutProps = {
 
 export const MemberVideoLayout = ({ ...props }: MemberVideoLayoutProps) => {
   const [videoLayout, isEditAvatar] = useVirtualSpaceStore((state) => [state.videoLayout, state.isEditAvatar])
-  const otherMembers = useMemberStore((state) => state.otherMembers)
-  const memberCount = useMemo(() => (otherMembers ? size(otherMembers) : 0), [otherMembers])
-  const isOtherMember = useMemo(() => (otherMembers ? isEmpty(otherMembers) : false), [otherMembers])
+  const nearestMembers = useMemberStore((state) => state.nearestMembers)
+  const memberCount = useMemo(() => (nearestMembers ? size(nearestMembers) : 0), [nearestMembers])
+  const isOtherMember = useMemo(() => (nearestMembers ? isEmpty(nearestMembers) : false), [nearestMembers])
+  // const otherMembers = useMemberStore((state) => state.otherMembers)
+  // const memberCount = useMemo(() => (otherMembers ? size(otherMembers) : 0), [otherMembers])
+  // const isOtherMember = useMemo(() => (otherMembers ? isEmpty(otherMembers) : false), [otherMembers])
 
   return (
     <>
-      {videoLayout === 'slide' && !isEditAvatar ? (
+      {!isEditAvatar ? (
         <VideoContainer
           animate={{
-            opacity: isOtherMember ? 0 : 1,
-            width: isOtherMember ? 0 : 190 * memberCount + 8 * (memberCount + 1),
+            opacity: isOtherMember || videoLayout !== 'slide' ? 0 : 1,
+            width: 190 * memberCount + 8 * (memberCount + 1),
+          }}
+          initial={{
+            opacity: 0,
           }}
           {...props}
         >
           <VideoSlider memberCount={memberCount}>
-            {Object.values(otherMembers).map((player) => (
+            {Object.values(nearestMembers).map((player) => (
               <MemberVideoCard key={player.id} member={player} />
             ))}
           </VideoSlider>
         </VideoContainer>
       ) : null}
+      <Video autoPlay muted playsInline id="my-video" />
     </>
   )
 }
+
+const Video = styled.video`
+  width: 0;
+  height: 0;
+  position: absolute;
+  z-index: -1;
+`
 
 const VideoContainer = styled(motion.section)`
   max-width: 998px;

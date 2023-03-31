@@ -1,10 +1,10 @@
-import { selectIsPeerAudioEnabled, useHMSStore } from '@100mslive/react-sdk'
+import { selectIsPeerAudioEnabled, selectPeerByID, useHMSStore, useVideo } from '@100mslive/react-sdk'
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
 import { ReactComponent as AudioOff } from '@/assets/icons/video-mic-off.svg'
 import { ReactComponent as AudioOn } from '@/assets/icons/video-mic-on.svg'
-import { Member } from '@/stores'
+import { NearestMember } from '@/stores'
 
 const Video = styled.video`
   width: 100%;
@@ -64,8 +64,12 @@ const MemberIcon = styled.div`
   right: 4px;
 `
 
-export const MemberVideoCard = ({ member }: { member: Member }) => {
+export const MemberVideoCard = ({ member }: { member: NearestMember }) => {
   const isAudioOn = useHMSStore(selectIsPeerAudioEnabled(member.peerId))
+  const peer = useHMSStore(selectPeerByID(member.peerId))
+  const { videoRef } = useVideo({
+    trackId: peer?.videoTrack,
+  })
 
   return (
     <MemberVideo
@@ -79,7 +83,7 @@ export const MemberVideoCard = ({ member }: { member: Member }) => {
         delay: 0.2,
       }}
     >
-      <Video autoPlay muted playsInline id={`video-ref-${member.peerId}`} />
+      <Video ref={videoRef} autoPlay muted playsInline id={`video-ref-${member.peerId}`} />
       <MemberName>{member.id}</MemberName>
       <MemberIcon>{isAudioOn ? <AudioOn height={10} width={10} /> : <AudioOff height={10} width={10} />}</MemberIcon>
     </MemberVideo>
