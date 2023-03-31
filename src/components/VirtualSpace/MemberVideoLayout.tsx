@@ -1,15 +1,15 @@
 import { motion } from 'framer-motion'
 import { isEmpty, size } from 'lodash-es'
-import { Children, ReactNode, useEffect, useRef, useState } from 'react'
+import { Children, ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 
-import { ReactComponent as Micro } from '@/assets/icons/mic.svg'
 import { ReactComponent as ArrowLeft } from '@/assets/icons/slider-arrow-left.svg'
 import { ReactComponent as ArrowRight } from '@/assets/icons/slider-arrow-right.svg'
 import { Text } from '@/components/Commons'
-import { VideoReference } from '@/components/VideoCall'
 import { useHorizontalDragScroll, useHorizontalScroll } from '@/hooks'
-import { useMemberStore } from '@/stores'
+import { useMemberStore, useVirtualSpaceStore } from '@/stores'
+
+import { MemberVideoCard } from './MemberVideoCard'
 
 export type VideoSliderProps = {
   children?: ReactNode
@@ -80,30 +80,28 @@ export type MemberVideoLayoutProps = {
 }
 
 export const MemberVideoLayout = ({ ...props }: MemberVideoLayoutProps) => {
+  const [videoLayout, isEditAvatar] = useVirtualSpaceStore((state) => [state.videoLayout, state.isEditAvatar])
   const otherMembers = useMemberStore((state) => state.otherMembers)
+  const memberCount = useMemo(() => (otherMembers ? size(otherMembers) : 0), [otherMembers])
+  const isOtherMember = useMemo(() => (otherMembers ? isEmpty(otherMembers) : false), [otherMembers])
 
   return (
     <>
-      <VideoContainer
-        animate={{
-          opacity: !isEmpty(otherMembers) ? 1 : 0,
-          width: !isEmpty(otherMembers) ? 'auto' : 0,
-        }}
-        {...props}
-      >
-        <VideoSlider memberCount={size(otherMembers)}>
-          {!isEmpty(otherMembers) &&
-            Object.values(otherMembers).map((player) => (
-              <MemberVideo key={player.id}>
-                <VideoReference key={player.peerId} id={`video-ref-${player.peerId}`} />
-                <MemberName>{player.id}</MemberName>
-                <MemberIcon>
-                  <Micro height={10} width={10} />
-                </MemberIcon>
-              </MemberVideo>
+      {videoLayout === 'slide' && !isEditAvatar ? (
+        <VideoContainer
+          animate={{
+            opacity: isOtherMember ? 0 : 1,
+            width: isOtherMember ? 0 : 190 * memberCount + 8 * (memberCount + 1),
+          }}
+          {...props}
+        >
+          <VideoSlider memberCount={memberCount}>
+            {Object.values(otherMembers).map((player) => (
+              <MemberVideoCard key={player.id} member={player} />
             ))}
-        </VideoSlider>
-      </VideoContainer>
+          </VideoSlider>
+        </VideoContainer>
+      ) : null}
     </>
   )
 }
@@ -116,7 +114,7 @@ const VideoContainer = styled(motion.section)`
   background-color: var(--color-6);
 
   position: absolute;
-  top: 60px;
+  top: 68px;
   left: 50%;
   transform: translate(-50%, 0);
 
@@ -170,57 +168,6 @@ const SliderDirectionContent = styled.div`
   font-weight: 600;
   font-size: 20px;
   line-height: 27px;
-`
-
-const MemberVideo = styled.div`
-  width: 190px;
-  height: 128px;
-  border-radius: 8px;
-  position: relative;
-
-  > * {
-    border-radius: inherit;
-  }
-
-  img {
-    pointer-events: none;
-  }
-`
-
-const MemberName = styled.div`
-  max-width: 152px;
-  height: 27px;
-  padding: 4px 8px 4px 4px;
-  border-radius: 0px 8px 0px 0px;
-  background-color: var(--color-6);
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 19px;
-  color: var(--color-2);
-
-  position: absolute;
-  bottom: 0;
-  left: -1px;
-`
-
-const MemberIcon = styled.div`
-  width: 16px;
-  height: 16px;
-  background-color: var(--color-6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-
-  position: absolute;
-  top: 4px;
-  right: 4px;
 `
 
 const arrowRight = keyframes`

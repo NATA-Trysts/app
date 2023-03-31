@@ -170,7 +170,7 @@ export const ToolbarMiddle = () => {
                       z: 0,
                       w: 0,
                     },
-                    action: 'string',
+                    action: 'idle',
                   })
                 }}
               >

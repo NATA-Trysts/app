@@ -16,6 +16,7 @@ import {
   ToolbarRight,
 } from '@/components/VirtualSpace'
 import { Chat, Members, Setting } from '@/components/VirtualSpace/Ultilities'
+import { useAuth } from '@/hooks'
 import { useAppStore, useVirtualSpaceStore } from '@/stores'
 
 import { Header } from './Header'
@@ -95,6 +96,7 @@ const VirtualSpace = () => {
   const customColor = useAppStore((state) => state.customColor)
   const [selectedUltility] = useVirtualSpaceStore((state) => [state.selectedUltility])
   const { spaceId } = useParams()
+  const { auth } = useAuth()
 
   const ultilityMapping = {
     chat: {
@@ -129,8 +131,8 @@ const VirtualSpace = () => {
                 <MyVideo />
                 <MyInformationCard
                   avatar="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
-                  handler="sonhaaa#1234"
-                  name="Hoang Tien Thinh"
+                  handler={auth?.user.handler}
+                  name={auth?.user.username}
                 />
               </LeftSideWrapper>
             </LeftSideContainer>
