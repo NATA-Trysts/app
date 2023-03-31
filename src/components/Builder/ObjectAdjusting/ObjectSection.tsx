@@ -42,13 +42,13 @@ export const ObjectSection = () => {
   const handleChange = (property: string, axis: string, value: number | string) => {
     filteredModel && updateModelByField(property, axis, value as number)
 
-    updateHistory(
+    updateHistory((models) => {
       models.map((model) =>
         model.uuid === selectedModelUuid
           ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], [axis]: value } }
           : model,
-      ),
-    )
+      )
+    })
   }
 
   return (

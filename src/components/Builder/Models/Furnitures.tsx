@@ -25,7 +25,6 @@ const Furniture = (props: FurnitureProps) => {
   const selectedModelUuid = useBuilderStore((state) => state.selectedModelUuid)
   const setIsEditing = useBuilderStore((state) => state.setIsEditing)
   const updateModel = useBuilderStore((state) => state.updateModel)
-  const models = useBuilderStore((state) => state.models)
 
   const isModelClicked = useRef<boolean>(false)
   const modelRef = useRef<Group>(null)
@@ -93,7 +92,9 @@ const Furniture = (props: FurnitureProps) => {
         },
       }
 
-      updateHistory(models.map((model) => (model.uuid === modelUpdate.uuid ? { ...model, ...modelUpdate } : model)))
+      updateHistory((models) => {
+        return models.map((model) => (model.uuid === modelUpdate.uuid ? { ...model, ...modelUpdate } : model))
+      })
 
       isModelClicked.current = false
       animate(yP.current, INITIAL_Y, {
@@ -157,7 +158,7 @@ const Furniture = (props: FurnitureProps) => {
 }
 
 export const Furnitures = () => {
-  const { updateHistory } = useBuilder()
+  const { deleteModelBuilder } = useBuilder()
   const [models, setModels, globalSettings] = useBuilderStore((state) => [
     state.models,
     state.setModels,
@@ -168,21 +169,18 @@ export const Furnitures = () => {
     state.setSelectedModelUuid,
   ])
   const isInputFocus = useBuilderStore((state) => state.isInputFocus)
-  const deleteModel = useBuilderStore((state) => state.deleteModel)
 
   const [isUndo] = useKeyboardJs('ctrl + z')
   const [isRedo] = useKeyboardJs('ctrl + y')
 
   useKeyPressEvent('Backspace', () => {
     if (!isInputFocus && selectedModelUuid) {
-      updateHistory(models.filter((model) => model.uuid !== selectedModelUuid))
-      deleteModel(selectedModelUuid)
+      deleteModelBuilder(selectedModelUuid)
     }
   })
   useKeyPressEvent('Delete', () => {
     if (!isInputFocus && selectedModelUuid) {
-      updateHistory(models.filter((model) => model.uuid !== selectedModelUuid))
-      deleteModel(selectedModelUuid)
+      deleteModelBuilder(selectedModelUuid)
     }
   })
   useKeyPressEvent('Escape', () => !isInputFocus && setSelectedModelUuid(null))
@@ -191,7 +189,7 @@ export const Furnitures = () => {
     const history = JSON.parse(sessionStorage.getItem('history') as string)
     let historyIndex = JSON.parse(sessionStorage.getItem('historyIndex') as string)
 
-    if (isUndo) {
+    if (isUndo && history.length > 0) {
       if (historyIndex === 0) {
         return
       } else {
@@ -206,7 +204,7 @@ export const Furnitures = () => {
       }
     }
 
-    if (isRedo) {
+    if (isRedo && history.length > 0) {
       if (historyIndex === history.length - 1) {
         return
       } else {

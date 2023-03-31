@@ -1,12 +1,13 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { CategoryType, SubCategoryItem, useBuilderStore } from '@/stores'
+import { CategoryType, SpaceModel, SubCategoryItem, useBuilderStore } from '@/stores'
 
 const useBuilder = () => {
   const setSubCategoryItems = useBuilderStore((state) => state.setSubCategoryItems)
   const setSelectedSubCategoryItems = useBuilderStore((state) => state.setSelectedSubCategoryItems)
   const updateSelectedSubCategoryItems = useBuilderStore((state) => state.updateSelectedSubCategoryItems)
   const addModel = useBuilderStore((state) => state.addModel)
+  const deleteModel = useBuilderStore((state) => state.deleteModel)
   const models = useBuilderStore((state) => state.models)
   // mapping data from api to map object
   const mappingData = async (listFromApi: SubCategoryItem[]) => {
@@ -32,7 +33,7 @@ const useBuilder = () => {
   }
 
   // undo redo
-  const updateHistory = (newHistory: any[]) => {
+  const updateHistory = (action: (models: SpaceModel[]) => void) => {
     const history = JSON.parse(sessionStorage.getItem('history') || '[]')
     const historyIndex = JSON.parse(sessionStorage.getItem('historyIndex') || '0')
 
@@ -41,10 +42,19 @@ const useBuilder = () => {
       history.splice(historyIndex + 1, history.length - historyIndex)
     }
 
-    history.push(newHistory)
+    const newModels = action(models)
+
+    history.push(newModels)
 
     sessionStorage.setItem('history', JSON.stringify(history))
     sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex + 1))
+  }
+
+  const deleteModelBuilder = (uuid: string) => {
+    deleteModel(uuid)
+    updateHistory((models) => {
+      return models.filter((model) => model.uuid !== uuid)
+    })
   }
 
   const clickSubCategory = (item: SubCategoryItem) => {
@@ -60,16 +70,18 @@ const useBuilder = () => {
       rotation: { x: 0, y: 0, z: 0 },
     })
 
-    updateHistory([
-      ...models,
-      {
-        uuid,
-        name: item.name,
-        id: item.id,
-        position: { x: 0, y: 0, z: 0 },
-        rotation: { x: 0, y: 0, z: 0 },
-      },
-    ])
+    updateHistory((models) => {
+      return [
+        ...models,
+        {
+          uuid,
+          name: item.name,
+          id: item.id,
+          position: { x: 0, y: 0, z: 0 },
+          rotation: { x: 0, y: 0, z: 0 },
+        },
+      ]
+    })
   }
 
   const removeLeadingZero = (value: string) => {
@@ -89,7 +101,7 @@ const useBuilder = () => {
     })
   }
 
-  return { clickSubCategory, convertValuesToOptions, updateHistory, mappingData, removeLeadingZero }
+  return { clickSubCategory, convertValuesToOptions, deleteModelBuilder, updateHistory, mappingData, removeLeadingZero }
 }
 
 export { useBuilder }
