@@ -84,7 +84,6 @@ type BuilderState = {
   addModel: (model: SpaceModel) => void
   updateModel: (modelUpdate: SpaceModel) => void
   updateModelByField: (property: string, field: string, value: number) => void
-  updateModelById: (uuid: string, property: string, value: ModifierValueType) => void
   deleteModel: (modelUuid: string) => void
 
   isEditing: boolean
@@ -178,14 +177,6 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
       models: state.models.map((model) =>
         model.uuid === state.selectedModelUuid
           ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], [field]: value } }
-          : model,
-      ),
-    })),
-  updateModelById: (uuid: string, property: string, value: ModifierValueType) =>
-    set((state) => ({
-      models: state.models.map((model) =>
-        model.uuid === uuid
-          ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], ...value } }
           : model,
       ),
     })),
