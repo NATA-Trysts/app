@@ -42,9 +42,9 @@ const Guard = () => {
             element={
               <Suspense fallback={<span>loading</span>}>
                 <HMSRoomProvider>
-                  <MobileDetect>
-                    <VirtualSpace />
-                  </MobileDetect>
+                  {/* <MobileDetect> */}
+                  <VirtualSpace />
+                  {/* </MobileDetect> */}
                 </HMSRoomProvider>
               </Suspense>
             }

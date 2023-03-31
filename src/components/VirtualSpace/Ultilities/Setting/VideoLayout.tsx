@@ -1,7 +1,7 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
+import { useVirtualSpaceStore, VideoLayoutType } from '@/stores'
 
 const Container = styled.div`
   display: flex;
@@ -38,16 +38,18 @@ const LayoutOptionImage = styled.img`
 const listLayout = [
   {
     id: 1,
+    type: 'above-head' as VideoLayoutType,
     img: 'https://a.pinatafarm.com/1092x612/d47afa3656/coughing-cat-dcbc3e50b235f7aa3793bfa07959fb7a-meme.jpeg',
   },
   {
     id: 2,
+    type: 'slide' as VideoLayoutType,
     img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvui8g67c6OlpRUVI8n_BKt0guaL0gMdCNQNzoRNKf&s',
   },
-]
+] as const
 
 export const VideoLayout = () => {
-  const [selectedLayout, setSelectedLayout] = useState(listLayout[0])
+  const [videoLayout, setVideoLayout] = useVirtualSpaceStore((state) => [state.videoLayout, state.setVideoLayout])
 
   return (
     <Container>
@@ -57,8 +59,8 @@ export const VideoLayout = () => {
       {listLayout.map((layout) => (
         <LayoutOption
           key={layout.id}
-          isActive={selectedLayout.id === layout.id}
-          onClick={() => setSelectedLayout(layout)}
+          isActive={videoLayout === layout.type}
+          onClick={() => setVideoLayout(layout.type)}
         >
           <LayoutOptionImage src={layout.img} />
         </LayoutOption>

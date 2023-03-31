@@ -4,6 +4,7 @@ import { create } from 'zustand'
 import { CustomColor } from '@/components/Commons'
 
 type UltilityType = 'chat' | 'member' | 'setting' | null
+export type VideoLayoutType = 'above-head' | 'slide'
 
 export type Message = {
   id: string
@@ -33,8 +34,8 @@ type VirtualSpaceState = {
   setQuality: (quality: string) => void
   backgroundMusic: boolean
   setBackgroundMusic: (backgroundMusic: boolean) => void
-  videoLayout: string
-  setVideoLayout: (videoLayout: string) => void
+  videoLayout: VideoLayoutType
+  setVideoLayout: (videoLayout: VideoLayoutType) => void
 
   authToken: string
   setAuthToken: (authToken: string) => void
@@ -74,10 +75,10 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
   backgroundMusic: true,
   setBackgroundMusic: (backgroundMusic: boolean) => set(() => ({ backgroundMusic })),
 
-  videoLayout: 'grid',
-  setVideoLayout: (videoLayout: string) => set(() => ({ videoLayout })),
+  videoLayout: 'slide',
+  setVideoLayout: (videoLayout: VideoLayoutType) => set(() => ({ videoLayout })),
 
-  isEditAvatar: false,
+  isEditAvatar: true,
   setIsEditAvatar: (isEditAvatar: boolean) => set({ isEditAvatar, selectedUltility: null }),
 
   isFirstTime: true,

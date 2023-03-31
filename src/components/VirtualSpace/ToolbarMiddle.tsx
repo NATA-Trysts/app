@@ -1,6 +1,6 @@
 import { selectIsLocalAudioEnabled, selectIsLocalVideoEnabled, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as ArrowUp } from '@/assets/icons/arrow-up.svg'
@@ -16,7 +16,7 @@ import { EmojiContent } from '@/components/EmojiContent'
 import { ListAudio, ListCamera } from '@/components/ListDevice'
 import { Popover } from '@/components/Popover'
 import { AnimatedToolbarContainer, ToolbarItem, WithTooltip } from '@/components/Toolbar'
-import { useVirtualSpaceStore } from '@/stores'
+import { useMemberStore, useVirtualSpaceStore } from '@/stores'
 
 const Condition = styled(motion.div)`
   display: flex;
@@ -29,8 +29,11 @@ const CustomToolbarItem = styled(ToolbarItem)`
 
 export const ToolbarMiddle = () => {
   const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
-  const hmsActions = useHMSActions()
+  const addOtherMembers = useMemberStore((state) => state.addOtherMembers)
+  const removeOtherMembers = useMemberStore((state) => state.removeOtherMembers)
+  const otherMembers = useMemberStore((state) => state.otherMembers)
 
+  const hmsActions = useHMSActions()
   const audioEnabled = useHMSStore(selectIsLocalAudioEnabled)
   const videoEnabled = useHMSStore(selectIsLocalVideoEnabled)
 
@@ -49,6 +52,10 @@ export const ToolbarMiddle = () => {
       console.error(error)
     }
   }
+
+  const updatedOtherMemberIds = useMemo(() => {
+    return Object.keys(otherMembers)
+  }, [otherMembers])
 
   return (
     <>
@@ -138,14 +145,62 @@ export const ToolbarMiddle = () => {
           <Popover
             align="center"
             content={<EmojiContent setIsPopoverOpen={setIsOpenEmoji} />}
-            handleClickTrigger={() => setIsOpenEmoji(!isOpenEmoji)} // ISSUE: does not close
+            // handleClickTrigger={() => setIsOpenEmoji(!isOpenEmoji)} // ISSUE: does not close
             handleInteractOutside={() => setIsOpenEmoji(false)}
             isPopoverOpen={isOpenEmoji}
             side="top"
             sideOffset={10}
           >
             <div>
-              <WithTooltip content="Emoji" id="emoji">
+              <WithTooltip
+                content="Emoji"
+                id="emoji"
+                onClick={() => {
+                  addOtherMembers(Math.random().toString(), {
+                    id: Math.random().toString(),
+                    peerId: Math.random().toString(),
+                    position: {
+                      x: 0,
+                      y: 0,
+                      z: 0,
+                    },
+                    quaternion: {
+                      x: 0,
+                      y: 0,
+                      z: 0,
+                      w: 0,
+                    },
+                    action: 'idle',
+                  })
+                }}
+              >
+                <Emoji />
+              </WithTooltip>
+            </div>
+          </Popover>
+        </CustomToolbarItem>
+        <CustomToolbarItem
+          style={{
+            marginLeft: 8,
+          }}
+        >
+          <Popover
+            align="center"
+            content={<EmojiContent setIsPopoverOpen={setIsOpenEmoji} />}
+            // handleClickTrigger={() => setIsOpenEmoji(!isOpenEmoji)} // ISSUE: does not close
+            handleInteractOutside={() => setIsOpenEmoji(false)}
+            isPopoverOpen={isOpenEmoji}
+            side="top"
+            sideOffset={10}
+          >
+            <div>
+              <WithTooltip
+                content="Emoji"
+                id="emoji"
+                onClick={() => {
+                  removeOtherMembers(updatedOtherMemberIds[Math.floor(Math.random() * updatedOtherMemberIds.length)])
+                }}
+              >
                 <Emoji />
               </WithTooltip>
             </div>

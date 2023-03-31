@@ -25,15 +25,18 @@ export const MainMember = () => {
   const videoEnabled = useHMSStore(selectIsLocalVideoEnabled)
   const localPeer = useHMSStore(selectLocalPeer)
   const hmsActions = useHMSActions()
+  const videoElement = document.getElementById('my-video') as HTMLVideoElement
 
-  useEffect(() => {
-    const videoElement = document.getElementById(`my`) as HTMLVideoElement
-
+  const attachVideo = () => {
     if (localPeer && localPeer.videoTrack && videoElement) {
       hmsActions.attachVideo(localPeer.videoTrack, videoElement)
       setVideoTexture(new VideoTexture(videoElement))
     }
-  }, [videoEnabled, isEditAvatar])
+  }
+
+  useEffect(() => {
+    attachVideo()
+  }, [videoEnabled, isEditAvatar, localPeer])
 
   const dispatchMovement = (character: Group) => {
     roomInstance?.send(MESSAGES.MEMBER.MOVE, {
@@ -65,7 +68,7 @@ export const MainMember = () => {
     <CharacterControl
       cameraPosition={[20, 6, 20]}
       canControl={!isInputFocus}
-      collider={[1.5, 2, 1.5]}
+      collider={[1.25, 2, 1.25]}
       initialPosition={[0, 5, 0]}
       polarAngle={[0.5, Math.PI / 2]}
       speed={6}
