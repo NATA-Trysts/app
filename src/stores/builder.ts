@@ -81,6 +81,7 @@ type BuilderState = {
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => void
 
   models: SpaceModel[]
+  setModels: (models: SpaceModel[]) => void
   addModel: (model: SpaceModel) => void
   updateModel: (modelUpdate: SpaceModel) => void
   updateModelByField: (property: string, field: string, value: number) => void
@@ -154,6 +155,7 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => set(() => ({ globalBackground })),
 
   models: [],
+  setModels: (models: SpaceModel[]) => set(() => ({ models })),
   addModel: (newModel: SpaceModel) =>
     set((state) => ({ models: [...state.models, newModel], selectedModelUuid: newModel.uuid })),
   updateModel: (modelUpdate: SpaceModel) =>
