@@ -10,6 +10,8 @@ import { Chair, Desk } from '@/components/Furniture'
 import { useDoubleClickAndHold } from '@/hooks'
 import { SpaceModel, useBuilderStore } from '@/stores'
 
+import { useBuilder } from '../hooks/useBuilder'
+
 type FurnitureProps = SpaceModel & {
   wireframe: boolean
 }
@@ -18,6 +20,7 @@ const INITIAL_Y = 0
 const HIGHEST_Y = 1
 
 const Furniture = (props: FurnitureProps) => {
+  const { updateHistory } = useBuilder()
   const setSelectedModelUuid = useBuilderStore((state) => state.setSelectedModelUuid)
   const selectedModelUuid = useBuilderStore((state) => state.selectedModelUuid)
   const setIsEditing = useBuilderStore((state) => state.setIsEditing)
@@ -74,9 +77,6 @@ const Furniture = (props: FurnitureProps) => {
 
   const pointerUp = () => {
     if (isModelClicked.current && modelRef.current) {
-      const history = JSON.parse(sessionStorage.getItem('history') as string)
-      const historyIndex = JSON.parse(sessionStorage.getItem('historyIndex') as string)
-
       const modelUpdate = {
         uuid: props.uuid,
         id: props.id,
@@ -93,10 +93,7 @@ const Furniture = (props: FurnitureProps) => {
         },
       }
 
-      history.push(models.map((model) => (model.uuid === modelUpdate.uuid ? { ...model, ...modelUpdate } : model)))
-
-      sessionStorage.setItem('history', JSON.stringify(history))
-      sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex + 1))
+      updateHistory(models.map((model) => (model.uuid === modelUpdate.uuid ? { ...model, ...modelUpdate } : model)))
 
       isModelClicked.current = false
       animate(yP.current, INITIAL_Y, {
@@ -160,6 +157,7 @@ const Furniture = (props: FurnitureProps) => {
 }
 
 export const Furnitures = () => {
+  const { updateHistory } = useBuilder()
   const [models, setModels, globalSettings] = useBuilderStore((state) => [
     state.models,
     state.setModels,
@@ -175,34 +173,16 @@ export const Furnitures = () => {
   const [isUndo] = useKeyboardJs('ctrl + z')
   const [isRedo] = useKeyboardJs('ctrl + y')
 
-  // useKeyPressEvent('Backspace', () => !isInputFocus && selectedModelUuid && deleteModel(selectedModelUuid))
   useKeyPressEvent('Backspace', () => {
     if (!isInputFocus && selectedModelUuid) {
-      const history = JSON.parse(sessionStorage.getItem('history') as string)
-      let historyIndex = JSON.parse(sessionStorage.getItem('historyIndex') as string)
-
-      history.push(models.filter((model) => model.uuid !== selectedModelUuid))
-      historyIndex += 1
-
+      updateHistory(models.filter((model) => model.uuid !== selectedModelUuid))
       deleteModel(selectedModelUuid)
-
-      sessionStorage.setItem('history', JSON.stringify(history))
-      sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex))
     }
   })
-  // useKeyPressEvent('Delete', () => !isInputFocus && selectedModelUuid && deleteModel(selectedModelUuid))
   useKeyPressEvent('Delete', () => {
     if (!isInputFocus && selectedModelUuid) {
-      const history = JSON.parse(sessionStorage.getItem('history') as string)
-      let historyIndex = JSON.parse(sessionStorage.getItem('historyIndex') as string)
-
-      history.push(models.filter((model) => model.uuid !== selectedModelUuid))
-      historyIndex += 1
-
+      updateHistory(models.filter((model) => model.uuid !== selectedModelUuid))
       deleteModel(selectedModelUuid)
-
-      sessionStorage.setItem('history', JSON.stringify(history))
-      sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex))
     }
   })
   useKeyPressEvent('Escape', () => !isInputFocus && setSelectedModelUuid(null))
@@ -240,7 +220,7 @@ export const Furnitures = () => {
         sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex))
       }
     }
-  }, [isUndo, isRedo, setModels])
+  }, [isUndo, isRedo, setModels, setSelectedModelUuid])
 
   useEffect(() => {
     sessionStorage.setItem('history', JSON.stringify([models]))

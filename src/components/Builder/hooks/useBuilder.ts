@@ -31,6 +31,22 @@ const useBuilder = () => {
     setSelectedSubCategoryItems(newSelectedSubCategoryItems)
   }
 
+  // undo redo
+  const updateHistory = (newHistory: any[]) => {
+    const history = JSON.parse(sessionStorage.getItem('history') || '[]')
+    const historyIndex = JSON.parse(sessionStorage.getItem('historyIndex') || '0')
+
+    if (historyIndex < history.length) {
+      // delete all of the element from historyIndex + 1 to the end
+      history.splice(historyIndex + 1, history.length - historyIndex)
+    }
+
+    history.push(newHistory)
+
+    sessionStorage.setItem('history', JSON.stringify(history))
+    sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex + 1))
+  }
+
   const clickSubCategory = (item: SubCategoryItem) => {
     updateSelectedSubCategoryItems(item.category, item)
 
@@ -44,10 +60,7 @@ const useBuilder = () => {
       rotation: { x: 0, y: 0, z: 0 },
     })
 
-    const history = JSON.parse(sessionStorage.getItem('history') || '[]')
-    const historyIndex = JSON.parse(sessionStorage.getItem('historyIndex') || '0')
-
-    history.push([
+    updateHistory([
       ...models,
       {
         uuid,
@@ -57,9 +70,6 @@ const useBuilder = () => {
         rotation: { x: 0, y: 0, z: 0 },
       },
     ])
-
-    sessionStorage.setItem('history', JSON.stringify(history))
-    sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex + 1))
   }
 
   const removeLeadingZero = (value: string) => {
@@ -79,7 +89,7 @@ const useBuilder = () => {
     })
   }
 
-  return { clickSubCategory, convertValuesToOptions, mappingData, removeLeadingZero }
+  return { clickSubCategory, convertValuesToOptions, updateHistory, mappingData, removeLeadingZero }
 }
 
 export { useBuilder }

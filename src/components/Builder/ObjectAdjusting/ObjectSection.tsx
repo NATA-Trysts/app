@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Text } from '@/components/Commons'
 import { SpaceModel, useBuilderStore } from '@/stores'
 
+import { useBuilder } from '../hooks/useBuilder'
 import { Modifier } from './Modifier'
 
 const Container = styled.div`
@@ -20,6 +21,7 @@ const Container = styled.div`
 `
 
 export const ObjectSection = () => {
+  const { updateHistory } = useBuilder()
   const selectedModelUuid = useBuilderStore(
     (state) => state.selectedModelUuid,
     (current, prev) => current !== prev,
@@ -40,19 +42,13 @@ export const ObjectSection = () => {
   const handleChange = (property: string, axis: string, value: number | string) => {
     filteredModel && updateModelByField(property, axis, value as number)
 
-    const history = JSON.parse(sessionStorage.getItem('history') as string)
-    const historyIndex = JSON.parse(sessionStorage.getItem('historyIndex') as string)
-
-    history.push(
+    updateHistory(
       models.map((model) =>
         model.uuid === selectedModelUuid
           ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], [axis]: value } }
           : model,
       ),
     )
-
-    sessionStorage.setItem('history', JSON.stringify(history))
-    sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex + 1))
   }
 
   return (
