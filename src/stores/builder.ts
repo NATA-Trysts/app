@@ -154,18 +154,7 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
   setGlobalBackground: (globalBackground: GlobalBackgroundType) => set(() => ({ globalBackground })),
 
   models: [],
-  setModels: (sessionModels: SpaceModel[]) =>
-    set((state) => {
-      // combine models with session models. if there is a same model, use session model, otherwise use model
-      const models = sessionModels.map((sessionModel) => {
-        // const model = modelsData.find((model: SpaceModel) => model.id === sessionModel.id)
-        const model = state.models.find((model: SpaceModel) => model.id === sessionModel.id)
-
-        return { ...model, ...sessionModel }
-      })
-
-      return { models }
-    }),
+  setModels: (models: SpaceModel[]) => set(() => ({ models })),
   addModel: (newModel: SpaceModel) =>
     set((state) => ({ models: [...state.models, newModel], selectedModelUuid: newModel.uuid })),
   updateModel: (modelUpdate: SpaceModel) =>
