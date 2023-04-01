@@ -1,3 +1,4 @@
+export * from './useAnonymous'
 export * from './useAuth'
 export * from './useAxiosPrivate'
 export * from './useColorPicker'

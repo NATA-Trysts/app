@@ -60,9 +60,9 @@ const InformationContainer = styled.div`
 `
 
 type MemberCardProps = {
-  avatar: string
-  name: string
-  handler: string
+  avatar?: string
+  name?: string
+  handler?: string
   maxNameCharacter?: number
   maxHandlerCharacter?: number
   onClick?: () => void

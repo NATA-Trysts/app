@@ -1,3 +1,4 @@
+import { random } from 'lodash-es'
 import React from 'react'
 
 export const useIsomorphicLayoutEffect =
@@ -29,3 +30,15 @@ export const approximatelyEqual = (a: number, b: number, epsilon = 0.001) => Mat
 
 export const convertCustomFormatedResponseToObject = (str: string) =>
   JSON.parse(`{${str.match(/{([^}]+)}/)?.[1]?.replace(/'/g, '"')}}`)
+
+export function generateNumberCode(length?: number): string {
+  length = length || 4
+
+  let code = ''
+
+  while (code.length < length) {
+    code += random(9)
+  }
+
+  return code
+}

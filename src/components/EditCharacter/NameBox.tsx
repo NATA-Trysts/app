@@ -2,7 +2,9 @@ import { motion } from 'framer-motion'
 import { useRef, useState } from 'react'
 import styled from 'styled-components'
 
-import { useEditCharacterStore } from '@/stores'
+import { useAnonymous, useAuth } from '@/hooks'
+import { MESSAGES } from '@/libs/constants'
+import { useEditCharacterStore, useNetworkStore } from '@/stores'
 
 const NameBoxContainer = styled(motion.div)`
   width: 232px;
@@ -55,14 +57,32 @@ export const NameBox = ({ name, isEdit = false }: NameBoxProps) => {
   const [nameInput, setNameInput] = useState(name)
   const inputRef = useRef<HTMLInputElement>(null)
   const setIsInputFocus = useEditCharacterStore((state) => state.setIsInputFocus)
+  const roomInstance = useNetworkStore((state) => state.roomInstance)
+  const { auth, isAuthenticated } = useAuth()
+  const { setName } = useAnonymous()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNameInput(e.target.value)
   }
 
+  const dispatchChangeNickname = (name: string) => {
+    roomInstance?.send(MESSAGES.MEMBER.CHANGE_NAME, {
+      name: name,
+    })
+  }
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value
+
     if (e.key === 'Enter' || e.key === 'Escape') {
       inputRef.current?.blur()
+
+      if (e.key === 'Enter') {
+        if (isAuthenticated(auth.user)) {
+          setName(value)
+          dispatchChangeNickname(value)
+        }
+      }
     }
   }
 

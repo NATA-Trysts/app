@@ -5,7 +5,7 @@ export const CustomCharacterPanel = () => {
   const [isEditAvatar, setIsEditAvatar] = useVirtualSpaceStore((state) => [state.isEditAvatar, state.setIsEditAvatar])
 
   const join = () => {
-    setIsEditAvatar(false)
+    setIsEditAvatar(true)
   }
 
   const back = () => {

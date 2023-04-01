@@ -23,9 +23,9 @@ const Gap = styled.div`
 `
 
 type SingleMemberCardProps = {
-  name: string
-  handler: string
-  avatar: string
+  name?: string
+  handler?: string
+  avatar?: string
 }
 
 const CustomOption = styled(Option)<{ hoverBackground?: string; textColor: string }>`

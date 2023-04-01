@@ -4,26 +4,44 @@ import { selectLocalPeerID, useHMSStore } from '@100mslive/react-sdk'
 import { Client, Room } from 'colyseus.js'
 import { useEffect } from 'react'
 
-import { Member, Message, useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
+import { useAuth } from '@/hooks'
+import { Message, useMemberStore, useNetworkStore, User, useVirtualSpaceStore } from '@/stores'
 
 const MULTIPLAYER_SERVICE_ENDPOINT = import.meta.env.VITE_MULTIPLAYER_SERVICE_ENDPOINT
 const WORLD_NAME = import.meta.env.VITE_WORLD_NAME
 
 export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
   const [setRoomInstance, isJoinedHMS] = useNetworkStore((state) => [state.setRoomInstance, state.isJoinedHMS])
-  const [setMainMember, addOtherMembers, removeOtherMembers, updateOtherMembers, updateActionOtherMember] =
-    useMemberStore((state) => [
-      state.setMainMember,
-      state.addOtherMembers,
-      state.removeOtherMembers,
-      state.updateOtherMembers,
-      state.updateActionOtherMember,
-    ])
+  const [
+    setMainMember,
+    addOtherMembers,
+    removeOtherMembers,
+    updateOtherMembers,
+    updateActionOtherMember,
+    setMemberName,
+  ] = useMemberStore((state) => [
+    state.setMainMember,
+    state.addOtherMembers,
+    state.removeOtherMembers,
+    state.updateOtherMembers,
+    state.updateActionOtherMember,
+    state.setMemberName,
+  ])
 
-  const [addMessage] = useVirtualSpaceStore((state) => [state.addMessage])
+  const [addMessage] = useVirtualSpaceStore((state) => [state.addMessage, state.addNickname])
   const localPeerId = useHMSStore(selectLocalPeerID)
+  const { auth } = useAuth()
 
   useEffect(() => {
+    const user: User = {
+      userId: auth?.user.id,
+      name: auth?.user.name,
+      handler: auth?.user.handler,
+      avatar: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
+    }
+
+    console.log(auth, user)
+
     let room: typeof Room = null
 
     const handler = async () => {
@@ -37,6 +55,7 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
         try {
           room = await client.joinById(props.spaceId, {
             peerId: localPeerId,
+            user: user,
           })
         } catch (error) {
           if (error.message === `room "${props.spaceId}" not found`) {
@@ -44,6 +63,7 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
               room = await client.create(WORLD_NAME, {
                 spaceId: props.spaceId,
                 peerId: localPeerId,
+                user: user,
               })
             } catch (error) {
               throw Error('Join room failed!')
@@ -51,11 +71,21 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
           }
         }
 
-        room.state.members.onAdd = (member: Member, sessionId: string) => {
+        room.state.members.onAdd = (member, sessionId: string) => {
+          console.log(member)
+
+          member.user.listen('name', (value) => setMemberName(sessionId, value))
+
           if (sessionId === room.sessionId) {
             setMainMember({
               id: member.id,
               peerId: member.peerId,
+              user: {
+                userId: member.user.userId,
+                name: member.user.name,
+                avatar: member.user.avatar,
+                handler: member.user.handler,
+              },
               position: {
                 x: member.position.x,
                 y: member.position.y,
@@ -73,6 +103,12 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
             addOtherMembers(sessionId, {
               id: member.id,
               peerId: member.peerId,
+              user: {
+                userId: member.user.userId,
+                name: member.user.name,
+                avatar: member.user.avatar,
+                handler: member.user.handler,
+              },
               position: {
                 x: member.position.x,
                 y: member.position.y,

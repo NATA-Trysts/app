@@ -1,10 +1,12 @@
+import { isEmpty } from 'lodash-es'
+
 import { ReactComponent as Chat } from '@/assets/icons/chat.svg'
 import { ReactComponent as Logout } from '@/assets/icons/logout.svg'
 import { ReactComponent as People } from '@/assets/icons/people.svg'
 import { ReactComponent as Settingc } from '@/assets/icons/setting-c.svg'
 import { Text } from '@/components/Commons'
 import { AnimatedToolbarContainer, CustomToolbarItem, ToolbarItem, WithTooltip } from '@/components/Toolbar'
-import { useVirtualSpaceStore } from '@/stores'
+import { useMemberStore, useVirtualSpaceStore } from '@/stores'
 
 export const ToolbarRight = () => {
   const [selectedUltility, setSelectedUltility, isEditAvatar] = useVirtualSpaceStore((state) => [
@@ -12,6 +14,10 @@ export const ToolbarRight = () => {
     state.setSelectedUltility,
     state.isEditAvatar,
   ])
+
+  const [others] = useMemberStore((state) => [state.otherMembers])
+
+  const memberLength = isEmpty(others) ? 1 : Object.keys(others).length + 1
 
   return (
     <AnimatedToolbarContainer
@@ -38,7 +44,7 @@ export const ToolbarRight = () => {
         >
           <People />
           <Text size="medium" style={{ height: 16, lineHeight: '16px' }} weight="normal">
-            888
+            {memberLength}
           </Text>
         </WithTooltip>
       </CustomToolbarItem>

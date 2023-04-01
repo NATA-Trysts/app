@@ -2,9 +2,17 @@ import produce from 'immer'
 import { omit } from 'lodash-es'
 import { create } from 'zustand'
 
+export type User = {
+  userId?: string
+  name?: string
+  handler?: string
+  avatar?: string
+}
+
 export type Member = {
   id: string
   peerId: string
+  user: User
   position: {
     x: number
     y: number
@@ -42,6 +50,7 @@ type MemberState = {
   nearestMembers: OtherMember<NearestMember>
   addNearestMember: (sessionId: string, nearestMember: NearestMember) => void
   removeNearestMember: (sessionId: string) => void
+  setMemberName: (sessionId: string, name: string) => void
 }
 
 export const useMemberStore = create<MemberState>((set) => ({
@@ -82,4 +91,12 @@ export const useMemberStore = create<MemberState>((set) => ({
     ),
   removeNearestMember: (sessionId: string) =>
     set((state) => ({ nearestMembers: omit(state.nearestMembers, [sessionId]) })),
+  setMemberName: (sessionId: string, name: string) => {
+    set(
+      produce((state: MemberState) => {
+        if (sessionId === state.mainMember?.id) state.mainMember.user.name = name
+        else state.otherMembers[sessionId].user.name = name
+      }),
+    )
+  },
 }))

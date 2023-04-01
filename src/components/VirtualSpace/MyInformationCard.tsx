@@ -58,8 +58,8 @@ const CustomOption = styled(Option)<{ hoverBackground?: string; textColor: strin
 //#endregion
 
 export const MyInformationCard: FC<MyInformationCardProps> = ({
-  name = 'Anonymous',
-  handler = 'Anonymous#0000',
+  name = 'none',
+  handler = 'none',
   avatar = 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
 }) => {
   const color = useAppStore((state) => state.customColor)
