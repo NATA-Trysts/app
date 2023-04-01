@@ -193,8 +193,10 @@ export const LoginCodeInput = () => {
               setCheckStatus('success')
               setAuth({
                 user: {
-                  id: user._id,
+                  _id: user._id,
                   email: user.email,
+                  username: user.username,
+                  handler: user.handler,
                 },
                 roles: [1000],
                 accessToken,
@@ -203,7 +205,7 @@ export const LoginCodeInput = () => {
               setUsername(user.username)
               setHandler(user.handler)
               setEmail(user.email)
-              navigate('/dashboard', { replace: true })
+              navigate('/files/13', { replace: true })
             } else {
               setIsCompleted(false)
               setCheckStatus('failed')
