@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { useDebounce } from 'react-use'
 import styled from 'styled-components'
 
 import axios from '@/api/axios'
@@ -34,20 +35,18 @@ export const BuilderToolbar = () => {
     })
   }
 
-  useEffect(() => {
-    const timer = setInterval(() => {
+  useDebounce(
+    () => {
       axios.put(`/spaces/${'olrWFR6VXN389Pzq'}`, {
         space: {
           name: spaceInformation.name,
           password: spaceInformation.isProtected ? spaceInformation.password : '',
         },
       })
-    }, 20000)
-
-    return () => {
-      clearInterval(timer)
-    }
-  })
+    },
+    2000,
+    [spaceInformation],
+  )
 
   return (
     <Container>
