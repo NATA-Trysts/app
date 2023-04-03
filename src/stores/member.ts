@@ -2,12 +2,7 @@ import produce from 'immer'
 import { omit } from 'lodash-es'
 import { create } from 'zustand'
 
-export type User = {
-  userId?: string
-  name?: string
-  handler?: string
-  avatar?: string
-}
+import { User } from './user'
 
 export type Member = {
   id: string

@@ -16,17 +16,14 @@ export const PersistLogin = () => {
         await refresh()
       } catch (error) {
         console.error(error)
+
+        generateAnonymous()
       } finally {
         isMounted && setIsLoading(false)
       }
     }
 
-    const createAnonymous = () => {
-      generateAnonymous()
-      setIsLoading(false)
-    }
-
-    auth?.accessToken ? verifyRefreshToken() : createAnonymous()
+    !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false)
 
     return () => {
       isMounted = false

@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash-es'
 import { useContext } from 'react'
 
 import AuthContext from '@/context/AuthProvider'
@@ -8,7 +9,7 @@ export const useAuth = () => {
   const { auth, setAuth } = useContext(AuthContext)
 
   const isAuthenticated = (user: AuthUser | Anonymous): user is AuthUser => {
-    return user !== undefined && !('members' in user)
+    return user !== undefined && !isEmpty(auth.accessToken)
   }
 
   return { auth, setAuth, isAuthenticated }

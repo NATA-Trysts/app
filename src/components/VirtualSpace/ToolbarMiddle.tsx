@@ -31,7 +31,7 @@ export const ToolbarMiddle = () => {
   const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
   const addOtherMembers = useMemberStore((state) => state.addOtherMembers)
   const removeOtherMembers = useMemberStore((state) => state.removeOtherMembers)
-  const otherMembers = useMemberStore((state) => state.otherMembers)
+  const [mainMember, otherMembers] = useMemberStore((state) => [state.mainMember, state.otherMembers])
 
   const hmsActions = useHMSActions()
   const audioEnabled = useHMSStore(selectIsLocalAudioEnabled)
@@ -159,6 +159,7 @@ export const ToolbarMiddle = () => {
                   addOtherMembers(Math.random().toString(), {
                     id: Math.random().toString(),
                     peerId: Math.random().toString(),
+                    user: {},
                     position: {
                       x: 0,
                       y: 0,
@@ -207,7 +208,7 @@ export const ToolbarMiddle = () => {
           </Popover>
         </CustomToolbarItem>
       </AnimatedToolbarContainer>
-      <NameBox isEdit={isEditAvatar} name="abc" />
+      <NameBox isEdit={isEditAvatar} name={mainMember?.user.name} />
     </>
   )
 }

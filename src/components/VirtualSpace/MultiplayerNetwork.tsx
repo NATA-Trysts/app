@@ -34,8 +34,8 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
 
   useEffect(() => {
     const user: User = {
-      userId: auth?.user.id,
-      name: auth?.user.name,
+      _id: auth?.user._id,
+      name: auth?.user.username,
       handler: auth?.user.handler,
       avatar: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
     }
@@ -81,7 +81,7 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
               id: member.id,
               peerId: member.peerId,
               user: {
-                userId: member.user.userId,
+                _id: member.user.userId,
                 name: member.user.name,
                 avatar: member.user.avatar,
                 handler: member.user.handler,
@@ -104,7 +104,7 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
               id: member.id,
               peerId: member.peerId,
               user: {
-                userId: member.user.userId,
+                _id: member.user.userId,
                 name: member.user.name,
                 avatar: member.user.avatar,
                 handler: member.user.handler,

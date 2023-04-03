@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
+import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 
 import { useAnonymous, useAuth } from '@/hooks'
 import { MESSAGES } from '@/libs/constants'
-import { useEditCharacterStore, useNetworkStore } from '@/stores'
+import { useEditCharacterStore, useMemberStore, useNetworkStore } from '@/stores'
 
 const NameBoxContainer = styled(motion.div)`
   width: 232px;
@@ -49,27 +50,33 @@ const NameInput = styled.input`
 `
 
 type NameBoxProps = {
-  name: string
+  name?: string
   isEdit?: boolean
 }
 
 export const NameBox = ({ name, isEdit = false }: NameBoxProps) => {
-  const [nameInput, setNameInput] = useState(name)
+  const roomInstance = useNetworkStore((state) => state.roomInstance)
+  const { auth } = useAuth()
+  const { setName } = useAnonymous()
+  const { register, setValue } = useForm()
+  const mainMember = useMemberStore((state) => state.mainMember)
+
   const inputRef = useRef<HTMLInputElement>(null)
   const setIsInputFocus = useEditCharacterStore((state) => state.setIsInputFocus)
-  const roomInstance = useNetworkStore((state) => state.roomInstance)
-  const { auth, isAuthenticated } = useAuth()
-  const { setName } = useAnonymous()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNameInput(e.target.value)
-  }
+  useEffect(() => {
+    if (mainMember) setValue('name', mainMember.user.name)
+  }, [mainMember?.user.name])
 
-  const dispatchChangeNickname = (name: string) => {
+  const dispatchChangeName = (name: string) => {
     roomInstance?.send(MESSAGES.MEMBER.CHANGE_NAME, {
       name: name,
     })
   }
+
+  useEffect(() => {
+    console.log('auth name change', auth.user.username)
+  }, [auth.user.username])
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value
@@ -78,10 +85,8 @@ export const NameBox = ({ name, isEdit = false }: NameBoxProps) => {
       inputRef.current?.blur()
 
       if (e.key === 'Enter') {
-        if (isAuthenticated(auth.user)) {
-          setName(value)
-          dispatchChangeNickname(value)
-        }
+        setName(value)
+        dispatchChangeName(value)
       }
     }
   }
@@ -107,11 +112,9 @@ export const NameBox = ({ name, isEdit = false }: NameBoxProps) => {
     >
       <NameWrapper>
         <NameInput
-          ref={inputRef}
           placeholder="What's your name?"
-          value={nameInput}
+          {...register('name', { value: name })}
           onBlur={() => setIsInputFocus(false)}
-          onChange={handleChange}
           onFocus={() => setIsInputFocus(true)}
           onKeyDown={handleKeyDown}
         />

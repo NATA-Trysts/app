@@ -1,37 +1,46 @@
+import produce from 'immer'
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 
-type UserState = {
-  id: string
-  setId: (id: string) => void
-
-  username: string
-  setUsername: (username: string) => void
-
-  handler: string
-  setHandler: (handler: string) => void
-
-  email: string
-  setEmail: (email: string) => void
+export type User = {
+  _id?: string
+  name?: string
+  handler?: string
+  avatar?: string
+  email?: string
 }
 
-export const useUserStore = create<UserState>()(
-  persist(
-    (set) => ({
-      id: '',
-      setId: (id: string) => set(() => ({ id })),
+type UserState = {
+  user: User
+  setUser: (user: User) => void
+  setName: (username: string) => void
+  setHandler: (handler: string) => void
+  setAvatar: (avatar: string) => void
+}
 
-      username: '',
-      setUsername: (username: string) => set(() => ({ username })),
+export const useUserStore = create<UserState>()((set) => ({
+  user: {},
+  setUser: (user) =>
+    set(() => ({
+      user,
+    })),
+  setName: (name: string) =>
+    set(
+      produce((state: UserState) => {
+        state.user.name = name
+      }),
+    ),
 
-      handler: '',
-      setHandler: (handler: string) => set(() => ({ handler })),
+  setHandler: (handler: string) =>
+    set(
+      produce((state: UserState) => {
+        state.user.handler = handler
+      }),
+    ),
 
-      email: '',
-      setEmail: (email: string) => set(() => ({ email })),
-    }),
-    {
-      name: 'user-storage',
-    },
-  ),
-)
+  setAvatar: (avatar: string) =>
+    set(
+      produce((state: UserState) => {
+        state.user.avatar = avatar
+      }),
+    ),
+}))

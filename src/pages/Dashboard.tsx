@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { HeaderDashboard, SpaceSection } from '@/components/Dashboard'
 import { NavigationPanel } from '@/components/Navigation'
 import { NotificationStack } from '@/components/Notification'
+import { useAuth } from '@/hooks'
 
 const DashboardPage = styled.div`
   width: 100vw;
@@ -20,6 +21,10 @@ const Body = styled.div`
 `
 
 const Dashboard = () => {
+  const { auth } = useAuth()
+
+  console.log(auth)
+
   return (
     <>
       <DashboardPage>

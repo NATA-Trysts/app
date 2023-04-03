@@ -44,8 +44,8 @@ const MyAvatar = styled.img`
 
 type MyInformationCardProps = {
   avatar: string
-  name: string
-  handler: string
+  name?: string
+  handler?: string
   maxNameCharacter?: number
   maxHandlerCharacter?: number
 }

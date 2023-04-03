@@ -6,9 +6,9 @@ import axios from '@/api/axios'
 import { ReactComponent as GmailIcon } from '@/assets/icons/gmail.svg'
 import { ReactComponent as OutlookIcon } from '@/assets/icons/outlook.svg'
 import { Text } from '@/components/Commons'
-import { useAuth, useNotification } from '@/hooks'
+import { useAnonymous, useAuth, useNotification } from '@/hooks'
 import { TRYSTS_EMAIL_LOGIN } from '@/libs/constants'
-import { useLoginStore, useStepStore, useUserStore } from '@/stores'
+import { useLoginStore, useStepStore } from '@/stores'
 
 import { CodeField } from './CodeField'
 import { MailDirect } from './MailDirect'
@@ -108,12 +108,12 @@ export const LoginCodeInput = () => {
   const { addNotification } = useNotification()
   const [email, fullHash] = useLoginStore((state) => [state.email, state.fullHash])
   const setStep = useStepStore((state) => state.setStep)
-  const [setUsername, setHandler, setEmail, setId] = useUserStore((state) => [
-    state.setUsername,
-    state.setHandler,
-    state.setEmail,
-    state.setId,
-  ])
+  // const [setUsername, setHandler, setEmail, setId] = useUserStore((state) => [
+  //   state.setUsername,
+  //   state.setHandler,
+  //   state.setEmail,
+  //   state.setId,
+  // ])
 
   const handleCancel = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -152,6 +152,7 @@ export const LoginCodeInput = () => {
   const navigate = useNavigate()
   const from = location.state?.from.pathname || '/dashboard'
   const { setAuth } = useAuth()
+  const { resetAnonymous } = useAnonymous()
 
   const ok = (e: { preventDefault: () => void }) => {
     e.preventDefault()
@@ -187,22 +188,24 @@ export const LoginCodeInput = () => {
         .then((res) => {
           if (!ignore) {
             if (res.status === 200) {
-              const user = res.data.user
-              const { accessToken } = res.data
+              const { accessToken, user } = res.data
+
+              console.log('res: ', res.data)
 
               setCheckStatus('success')
               setAuth({
-                user: {
-                  id: user._id,
-                  email: user.email,
-                },
+                user: user,
                 roles: [1000],
-                accessToken,
+                accessToken: accessToken,
               })
-              setId(user._id)
-              setUsername(user.username)
-              setHandler(user.handler)
-              setEmail(user.email)
+
+              resetAnonymous()
+
+              // setId(user._id)
+              // setUsername(user.username)
+              // setHandler(user.handler)
+              // setEmail(user.email)
+
               navigate('/dashboard', { replace: true })
             } else {
               setIsCompleted(false)

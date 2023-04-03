@@ -13,13 +13,13 @@ export const useRefreshToken = () => {
       },
     })
 
-    const { _id, username, handler, email, avatar, ...others } = response.data.user
+    const user = response.data.user
 
     // @ts-ignore
     setAuth((prev: any) => {
       return {
         ...prev,
-        user: { id: _id, name: username, handler: handler, email: email, avatar: avatar, ...others },
+        user: user,
         roles: [1000],
         accessToken: response.data.accessToken,
       }

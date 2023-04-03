@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { MyInformationCard } from '@/components/MyInformationCard'
-import { useDashboardStore, useUserStore } from '@/stores'
+import { useAuth } from '@/hooks'
+import { useDashboardStore } from '@/stores'
 
 const NavigationProfileContainer = styled.div`
   width: 100%;
@@ -45,7 +46,10 @@ export const NavigationProfile = () => {
     name: 'Nguyen Son Ha',
   }
 
-  const [username, handler] = useUserStore((state) => [state.username, state.handler])
+  // const [username, handler] = useUserStore((state) => [state.username, state.handler])
+  const {
+    auth: { user },
+  } = useAuth()
 
   const isExpanded = useDashboardStore((state) => state.isExpanded)
   const [isDisplayed, setIsDisplayed] = useState(false)
@@ -63,7 +67,7 @@ export const NavigationProfile = () => {
     <NavigationProfileContainer>
       {isDisplayed ? (
         <>
-          <MyInformationCard avatar={userInfo.avatar} handler={handler} name={username} />
+          <MyInformationCard avatar={userInfo.avatar} handler={user.username} name={user.username} />
           <ProfileCharacter>
             <ProfileCharacterCanvas>
               <OrbitControls />
