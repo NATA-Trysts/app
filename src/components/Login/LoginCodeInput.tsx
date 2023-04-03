@@ -6,7 +6,7 @@ import axios from '@/api/axios'
 import { ReactComponent as GmailIcon } from '@/assets/icons/gmail.svg'
 import { ReactComponent as OutlookIcon } from '@/assets/icons/outlook.svg'
 import { Text } from '@/components/Commons'
-import { useAnonymous, useAuth, useNotification } from '@/hooks'
+import { useAuth, useNotification } from '@/hooks'
 import { TRYSTS_EMAIL_LOGIN } from '@/libs/constants'
 import { useLoginStore, useStepStore } from '@/stores'
 
@@ -113,7 +113,6 @@ export const LoginCodeInput = () => {
     setAuth,
     isAuthenticated,
   } = useAuth()
-  const { resetAnonymous } = useAnonymous()
   // const [setUsername, setHandler, setEmail, setId] = useUserStore((state) => [
   //   state.setUsername,
   //   state.setHandler,
@@ -201,8 +200,6 @@ export const LoginCodeInput = () => {
                 roles: [1000],
                 accessToken: accessToken,
               })
-
-              resetAnonymous()
 
               // setId(user._id)
               // setUsername(user.username)
