@@ -47,32 +47,32 @@ const CategoryItem = styled.div<{ isActive: boolean }>`
 export const Category = () => {
   const categories = [
     {
-      id: 1,
+      type: 'skin',
       name: 'skin',
       icon: <AllApplication />,
     },
     {
-      id: 2,
+      type: 'hair',
       name: 'hair',
       icon: <SmileFace />,
     },
     {
-      id: 3,
-      name: 'shoes',
-      icon: <SmileFace />,
-    },
-    {
-      id: 4,
+      type: 'upper',
       name: 'upper',
       icon: <SmileFace />,
     },
     {
-      id: 5,
+      type: 'lower',
       name: 'lower',
       icon: <SmileFace />,
     },
     {
-      id: 6,
+      type: 'shoe',
+      name: 'shoes',
+      icon: <SmileFace />,
+    },
+    {
+      type: 'accessory',
       name: 'accessories',
       icon: <SmileFace />,
     },
@@ -88,9 +88,9 @@ export const Category = () => {
       {categories.map((category) => {
         return (
           <CategoryItem
-            key={category.id}
-            isActive={category.id === categorySelectedId}
-            onClick={() => setCategorySelectedId(category.id)}
+            key={category.type}
+            isActive={category.type === categorySelectedId}
+            onClick={() => setCategorySelectedId(category.type)}
           >
             <WithTooltip active={true} content={category.name} id={category.name} offset={30} place="left">
               {category.icon}

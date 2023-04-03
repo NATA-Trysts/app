@@ -14,6 +14,7 @@ const VIDEO_WIDTH = 2
 
 export const MainMember = () => {
   const isInputFocus = useEditCharacterStore((state) => state.isInputFocus)
+  const categorySelectedItemIds = useEditCharacterStore((state) => state.categorySelectedItemIds)
   const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
   const roomInstance = useNetworkStore((state) => state.roomInstance)
   const anim = useCharacterControl(['idle', 'walk'])
@@ -75,7 +76,15 @@ export const MainMember = () => {
       onAnimationChange={dispatchAction}
       onCharacterMove={dispatchMovement}
     >
-      <BaseCharacter action={anim} />
+      <BaseCharacter
+        accessory={categorySelectedItemIds.get('accessory')}
+        action={anim}
+        hair={categorySelectedItemIds.get('hair')}
+        lower={categorySelectedItemIds.get('lower')}
+        shoe={categorySelectedItemIds.get('shoe')}
+        skin={categorySelectedItemIds.get('skin')}
+        upper={categorySelectedItemIds.get('upper')}
+      />
       {isEditAvatar && videoEnabled && (
         <mesh ref={videoFrame} position={[0, 4.5, 0]}>
           <planeGeometry args={[VIDEO_WIDTH, (VIDEO_WIDTH * 3) / 4]} />

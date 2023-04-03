@@ -6,6 +6,9 @@ import { useEffect, useMemo, useRef } from 'react'
 import { Group } from 'three'
 import { GLTF, SkeletonUtils } from 'three-stdlib'
 
+import { CHARACTER_CONFIG_VALUE_MAPPING } from '@/libs/constants'
+import { SubcategoryActiveItem } from '@/stores'
+
 type GLTFResult = GLTF & {
   nodes: {
     body: THREE.SkinnedMesh
@@ -58,10 +61,24 @@ type GLTFActions = Record<ActionName, THREE.AnimationAction>
 
 type ModelProps = {
   action: string
+  skin?: SubcategoryActiveItem[]
+  hair?: SubcategoryActiveItem[]
+  upper?: SubcategoryActiveItem[]
+  lower?: SubcategoryActiveItem[]
+  shoe?: SubcategoryActiveItem[]
+  accessory?: SubcategoryActiveItem[]
 } & JSX.IntrinsicElements['group']
 
-export function BaseCharacter(props: ModelProps) {
-  const group = useRef<Group>()
+export function BaseCharacter({
+  skin = [],
+  hair = [],
+  upper = [],
+  lower = [],
+  shoe = [],
+  accessory = [],
+  ...props
+}: ModelProps) {
+  const group = useRef<Group>(null)
   const { scene, materials, animations } = useGLTF('/models/character.glb') as GLTFResult
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes } = useGraph(clone) as GLTFResult
@@ -84,67 +101,72 @@ export function BaseCharacter(props: ModelProps) {
           <primitive object={nodes.mixamorigHips} />
 
           {/* BASE PARTS */}
-          <skinnedMesh geometry={nodes.body.geometry} skeleton={nodes.body.skeleton}>
-            <meshBasicMaterial map={tattooCircle} />
-          </skinnedMesh>
+          {skin.map((s) => (
+            <skinnedMesh key={s.id} geometry={nodes.body.geometry} skeleton={nodes.body.skeleton}>
+              <meshStandardMaterial
+                color={CHARACTER_CONFIG_VALUE_MAPPING[s.itemId]}
+                map={tattooCircle}
+                metalness={0}
+                roughness={1}
+              />
+            </skinnedMesh>
+          ))}
           <skinnedMesh geometry={nodes.Cube020.geometry} material={materials.head} skeleton={nodes.Cube020.skeleton} />
           <skinnedMesh
             geometry={nodes.Cube020_1.geometry}
             material={materials.ear}
             skeleton={nodes.Cube020_1.skeleton}
           />
-          {/* <skinnedMesh geometry={nodes.neck.geometry} material={nodes.neck.material} skeleton={nodes.neck.skeleton} /> */}
 
           {/* HAIR PARTS */}
-          {/* <skinnedMesh geometry={nodes.hair001.geometry} material={materials.hair} skeleton={nodes.hair001.skeleton} /> */}
-          <skinnedMesh
-            geometry={nodes.hair002.geometry}
-            material={materials.Material}
-            skeleton={nodes.hair002.skeleton}
-          />
-
-          {/* HAT PARTS */}
-          {/* <skinnedMesh
-            geometry={nodes.hat001.geometry}
-            material={nodes.hat001.material}
-            skeleton={nodes.hat001.skeleton}
-          />
-          <skinnedMesh
-            geometry={nodes.hat002.geometry}
-            material={nodes.hat002.material}
-            skeleton={nodes.hat002.skeleton}
-          /> */}
+          {hair.map((h) => (
+            <skinnedMesh
+              key={h.id}
+              geometry={nodes[CHARACTER_CONFIG_VALUE_MAPPING[h.itemId]].geometry}
+              material={materials.hair}
+              skeleton={nodes[CHARACTER_CONFIG_VALUE_MAPPING[h.itemId]].skeleton}
+            />
+          ))}
 
           {/* UPPER PARTS */}
-          {/* <skinnedMesh
-            geometry={nodes.upper001.geometry}
-            material={nodes.upper001.material}
-            skeleton={nodes.upper001.skeleton}
-          /> */}
-          {/* <skinnedMesh
-            geometry={nodes.upper002.geometry}
-            material={nodes.upper002.material}
-            skeleton={nodes.upper002.skeleton}
-          /> */}
+          {upper.map((u) => (
+            <skinnedMesh
+              key={u.id}
+              geometry={nodes[CHARACTER_CONFIG_VALUE_MAPPING[u.itemId]].geometry}
+              material={nodes.upper001001.material}
+              skeleton={nodes[CHARACTER_CONFIG_VALUE_MAPPING[u.itemId]].skeleton}
+            />
+          ))}
 
           {/* LOWER PARTS */}
-          <skinnedMesh
-            geometry={nodes.lower001.geometry}
-            material={nodes.lower001.material}
-            skeleton={nodes.lower001.skeleton}
-          />
-          {/* <skinnedMesh
-            geometry={nodes.lower002.geometry}
-            material={nodes.lower002.material}
-            skeleton={nodes.lower002.skeleton}
-          /> */}
+          {lower.map((l) => (
+            <skinnedMesh
+              key={l.id}
+              geometry={nodes[CHARACTER_CONFIG_VALUE_MAPPING[l.itemId]].geometry}
+              material={nodes.lower001001.material}
+              skeleton={nodes[CHARACTER_CONFIG_VALUE_MAPPING[l.itemId]].skeleton}
+            />
+          ))}
 
           {/* SHOE PARTS */}
-          <skinnedMesh
-            geometry={nodes.shoe001.geometry}
-            material={nodes.shoe001.material}
-            skeleton={nodes.shoe001.skeleton}
-          />
+          {shoe.map((s) => (
+            <skinnedMesh
+              key={s.id}
+              geometry={nodes[CHARACTER_CONFIG_VALUE_MAPPING[s.itemId]].geometry}
+              material={nodes.shoe001001.material}
+              skeleton={nodes[CHARACTER_CONFIG_VALUE_MAPPING[s.itemId]].skeleton}
+            />
+          ))}
+
+          {/* SHOE PARTS */}
+          {accessory.map((a) => (
+            <skinnedMesh
+              key={a.id}
+              geometry={nodes[CHARACTER_CONFIG_VALUE_MAPPING[a.itemId]].geometry}
+              material={nodes.accessory001001.material}
+              skeleton={nodes[CHARACTER_CONFIG_VALUE_MAPPING[a.itemId]].skeleton}
+            />
+          ))}
         </group>
       </group>
     </group>
