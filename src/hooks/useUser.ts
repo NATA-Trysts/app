@@ -12,7 +12,7 @@ export const useUser = () => {
   const axiosPrivate = useAxiosPrivate()
 
   const generateAnonymous = () => {
-    if (isEmpty(userStore.user._id)) {
+    if (isEmpty(userStore.user._id) || !userStore.user._id?.startsWith('anonymous')) {
       const name = `Anonymous_${generateNumberCode()}`
 
       userStore.setUser({
