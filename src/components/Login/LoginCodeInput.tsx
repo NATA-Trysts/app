@@ -205,7 +205,7 @@ export const LoginCodeInput = () => {
               setUsername(user.username)
               setHandler(user.handler)
               setEmail(user.email)
-              navigate('/files/13', { replace: true })
+              navigate('/dashboard', { replace: true })
             } else {
               setIsCompleted(false)
               setCheckStatus('failed')
