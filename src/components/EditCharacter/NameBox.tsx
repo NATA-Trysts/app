@@ -1,11 +1,10 @@
 import { motion } from 'framer-motion'
 import { useEffect, useRef } from 'react'
-import { useForm } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import styled from 'styled-components'
 
-import { useAnonymous, useAuth } from '@/hooks'
-import { MESSAGES } from '@/libs/constants'
-import { useEditCharacterStore, useMemberStore, useNetworkStore } from '@/stores'
+import { useUser } from '@/hooks'
+import { useEditCharacterStore } from '@/stores'
 
 const NameBoxContainer = styled(motion.div)`
   width: 232px;
@@ -55,39 +54,19 @@ type NameBoxProps = {
 }
 
 export const NameBox = ({ name, isEdit = false }: NameBoxProps) => {
-  const roomInstance = useNetworkStore((state) => state.roomInstance)
-  const { auth } = useAuth()
-  const { setName } = useAnonymous()
-  const { register, setValue } = useForm()
-  const mainMember = useMemberStore((state) => state.mainMember)
+  const { register, setValue } = useFormContext()
+  const { user } = useUser()
 
   const inputRef = useRef<HTMLInputElement>(null)
   const setIsInputFocus = useEditCharacterStore((state) => state.setIsInputFocus)
 
   useEffect(() => {
-    if (mainMember) setValue('name', mainMember.user.name)
-  }, [mainMember?.user.name])
-
-  const dispatchChangeName = (name: string) => {
-    roomInstance?.send(MESSAGES.MEMBER.CHANGE_NAME, {
-      name: name,
-    })
-  }
-
-  useEffect(() => {
-    console.log('auth name change', auth.user.username)
-  }, [auth.user.username])
+    setValue('name', user.username)
+  }, [user.username])
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value
-
     if (e.key === 'Enter' || e.key === 'Escape') {
       inputRef.current?.blur()
-
-      if (e.key === 'Enter') {
-        setName(value)
-        dispatchChangeName(value)
-      }
     }
   }
 

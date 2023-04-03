@@ -10,6 +10,8 @@ export const useAxiosPrivate = () => {
   const { auth } = useAuth()
 
   useEffect(() => {
+    console.log('reload auth')
+
     const requestIntercept = axiosPrivate.interceptors.request.use(
       (config) => {
         if (!config.headers['Authorization']) {

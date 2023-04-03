@@ -34,9 +34,9 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
 
   useEffect(() => {
     const user: User = {
-      _id: auth?.user._id,
-      name: auth?.user.username,
-      handler: auth?.user.handler,
+      _id: auth.user._id,
+      username: auth.user.username,
+      handler: auth.user.handler,
       avatar: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
     }
 
@@ -74,7 +74,7 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
         room.state.members.onAdd = (member, sessionId: string) => {
           console.log(member)
 
-          member.user.listen('name', (value) => setMemberName(sessionId, value))
+          member.user.listen('username', (value) => setMemberName(sessionId, value))
 
           if (sessionId === room.sessionId) {
             setMainMember({
@@ -82,7 +82,7 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
               peerId: member.peerId,
               user: {
                 _id: member.user.userId,
-                name: member.user.name,
+                username: member.user.username,
                 avatar: member.user.avatar,
                 handler: member.user.handler,
               },
@@ -105,7 +105,7 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
               peerId: member.peerId,
               user: {
                 _id: member.user.userId,
-                name: member.user.name,
+                username: member.user.username,
                 avatar: member.user.avatar,
                 handler: member.user.handler,
               },

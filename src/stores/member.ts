@@ -89,8 +89,8 @@ export const useMemberStore = create<MemberState>((set) => ({
   setMemberName: (sessionId: string, name: string) => {
     set(
       produce((state: MemberState) => {
-        if (sessionId === state.mainMember?.id) state.mainMember.user.name = name
-        else state.otherMembers[sessionId].user.name = name
+        if (sessionId === state.mainMember?.id) state.mainMember.user.username = name
+        else state.otherMembers[sessionId].user.username = name
       }),
     )
   },

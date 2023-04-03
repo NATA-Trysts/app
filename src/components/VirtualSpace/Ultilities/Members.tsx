@@ -43,7 +43,12 @@ export const Members = () => {
       const user = member.user
 
       return (
-        <SingleMemberCard key={`member-${index}`} avatar={user.avatar} handler={user.handler} name={member.user.name} />
+        <SingleMemberCard
+          key={`member-${index}`}
+          avatar={user.avatar}
+          handler={user.handler}
+          name={member.user.username}
+        />
       )
     })
   }, [members])

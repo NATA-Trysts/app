@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { useAnonymous, useAuth, useRefreshToken } from '@/hooks'
+import { useAuth, useRefreshToken, useUser } from '@/hooks'
 
 export const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true)
   const refresh = useRefreshToken()
   const { auth } = useAuth()
-  const { generateAnonymous } = useAnonymous()
+  const { generateAnonymous } = useUser()
 
   useEffect(() => {
     let isMounted = true
@@ -16,7 +16,6 @@ export const PersistLogin = () => {
         await refresh()
       } catch (error) {
         console.error(error)
-
         generateAnonymous()
       } finally {
         isMounted && setIsLoading(false)

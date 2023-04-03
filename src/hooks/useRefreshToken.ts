@@ -15,15 +15,7 @@ export const useRefreshToken = () => {
 
     const user = response.data.user
 
-    // @ts-ignore
-    setAuth((prev: any) => {
-      return {
-        ...prev,
-        user: user,
-        roles: [1000],
-        accessToken: response.data.accessToken,
-      }
-    })
+    setAuth({ user, roles: [1000], accessToken: response.data.accessToken })
 
     return response.data.accessToken
   }

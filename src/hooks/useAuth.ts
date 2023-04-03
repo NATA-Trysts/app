@@ -1,16 +1,17 @@
-import { isEmpty } from 'lodash-es'
 import { useContext } from 'react'
 
-import AuthContext from '@/context/AuthProvider'
-import { AuthUser } from '@/models/AuthUser'
-import { Anonymous } from '@/stores'
+import AuthContext, { Auth } from '@/context/AuthProvider'
+import { useUserStore } from '@/stores'
 
 export const useAuth = () => {
-  const { auth, setAuth } = useContext(AuthContext)
+  const authContext = useContext(AuthContext)
+  const userStore = useUserStore((state) => state)
 
-  const isAuthenticated = (user: AuthUser | Anonymous): user is AuthUser => {
-    return user !== undefined && !isEmpty(auth.accessToken)
+  const setAuth = (auth: Auth) => {
+    userStore.setUser(auth.user)
+    authContext.setAccessToken(auth.accessToken)
+    authContext.setRoles(auth.roles)
   }
 
-  return { auth, setAuth, isAuthenticated }
+  return { ...authContext, setAuth }
 }

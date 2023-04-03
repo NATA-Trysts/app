@@ -1,4 +1,3 @@
-export * from './anonymous'
 export * from './app'
 export * from './builder'
 export * from './dashboard'

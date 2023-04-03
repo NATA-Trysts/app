@@ -9,7 +9,7 @@ export const RequireAuth = ({ allowedRoles }: { allowedRoles: number[] }) => {
 
   console.log(auth.user)
 
-  return isAuthenticated(auth.user) ? (
+  return isAuthenticated ? (
     auth.roles.find((role) => allowedRoles?.includes(role)) ? (
       <Outlet />
     ) : (

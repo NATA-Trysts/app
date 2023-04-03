@@ -1,9 +1,10 @@
 import produce from 'immer'
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 export type User = {
   _id?: string
-  name?: string
+  username?: string
   handler?: string
   avatar?: string
   email?: string
@@ -12,35 +13,40 @@ export type User = {
 type UserState = {
   user: User
   setUser: (user: User) => void
-  setName: (username: string) => void
+  setUsername: (username: string) => void
   setHandler: (handler: string) => void
   setAvatar: (avatar: string) => void
 }
 
-export const useUserStore = create<UserState>()((set) => ({
-  user: {},
-  setUser: (user) =>
-    set(() => ({
-      user,
-    })),
-  setName: (name: string) =>
-    set(
-      produce((state: UserState) => {
-        state.user.name = name
-      }),
-    ),
+export const useUserStore = create<UserState>()(
+  persist(
+    (set) => ({
+      user: { _id: '', username: '', handler: '', avatar: '', email: '' },
+      setUser: (user) =>
+        set(() => ({
+          user,
+        })),
+      setUsername: (username: string) =>
+        set(
+          produce((state: UserState) => {
+            state.user.username = username
+          }),
+        ),
 
-  setHandler: (handler: string) =>
-    set(
-      produce((state: UserState) => {
-        state.user.handler = handler
-      }),
-    ),
+      setHandler: (handler: string) =>
+        set(
+          produce((state: UserState) => {
+            state.user.handler = handler
+          }),
+        ),
 
-  setAvatar: (avatar: string) =>
-    set(
-      produce((state: UserState) => {
-        state.user.avatar = avatar
-      }),
-    ),
-}))
+      setAvatar: (avatar: string) =>
+        set(
+          produce((state: UserState) => {
+            state.user.avatar = avatar
+          }),
+        ),
+    }),
+    { name: 'user-storage' },
+  ),
+)

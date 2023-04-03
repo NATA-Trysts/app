@@ -11,7 +11,6 @@ import { ReactComponent as Micro } from '@/assets/icons/mic.svg'
 import { ReactComponent as MicroOff } from '@/assets/icons/mic-off.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
 import { ReactComponent as Whiteboard } from '@/assets/icons/whiteboard.svg'
-import { NameBox } from '@/components/EditCharacter'
 import { EmojiContent } from '@/components/EmojiContent'
 import { ListAudio, ListCamera } from '@/components/ListDevice'
 import { Popover } from '@/components/Popover'
@@ -31,7 +30,7 @@ export const ToolbarMiddle = () => {
   const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
   const addOtherMembers = useMemberStore((state) => state.addOtherMembers)
   const removeOtherMembers = useMemberStore((state) => state.removeOtherMembers)
-  const [mainMember, otherMembers] = useMemberStore((state) => [state.mainMember, state.otherMembers])
+  const [otherMembers] = useMemberStore((state) => [state.otherMembers])
 
   const hmsActions = useHMSActions()
   const audioEnabled = useHMSStore(selectIsLocalAudioEnabled)
@@ -208,7 +207,6 @@ export const ToolbarMiddle = () => {
           </Popover>
         </CustomToolbarItem>
       </AnimatedToolbarContainer>
-      <NameBox isEdit={isEditAvatar} name={mainMember?.user.name} />
     </>
   )
 }

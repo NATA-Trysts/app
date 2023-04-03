@@ -1,35 +1,50 @@
 import { isEmpty } from 'lodash-es'
-import { createContext, ReactNode, useEffect, useState } from 'react'
+import { createContext, ReactNode, useState } from 'react'
 
-import { useAnonymous } from '@/hooks'
-import { AuthUser } from '@/models/AuthUser'
-import { Anonymous } from '@/stores'
+import { User, useUserStore } from '@/stores'
 
 export type Auth = {
-  user: AuthUser | Anonymous
+  user: User
   roles: number[]
   accessToken?: string
 }
 
 export type AuthContextType = {
   auth: Auth
-  setAuth: (auth: Auth) => void
+  setUser: (user: User) => void
+  setAccessToken: (token?: string) => void
+  setRoles: (roles: number[]) => void
+  isAuthenticated: boolean
 }
 
 const AuthContext = createContext<AuthContextType>({
   auth: { user: {}, roles: [] },
-  setAuth: () => {},
+  setUser: () => {},
+  setAccessToken: () => {},
+  setRoles: () => {},
+  isAuthenticated: false,
 })
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { anonymous } = useAnonymous()
-  const [auth, setAuth] = useState<Auth>({ user: anonymous, roles: [] })
+  const [user, setUser] = useUserStore((state) => [state.user, state.setUser])
+  const [accessToken, setAccessToken] = useState<string | undefined>('')
+  const [roles, setRoles] = useState<number[]>([])
 
-  useEffect(() => {
-    if (isEmpty(auth.accessToken)) setAuth({ ...auth, user: anonymous })
-  }, [anonymous, auth.accessToken])
+  const isAuthenticated = !isEmpty(user) && !isEmpty(accessToken)
 
-  return <AuthContext.Provider value={{ auth, setAuth }}>{children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider
+      value={{
+        auth: { user: user, roles: roles, accessToken: accessToken },
+        setAccessToken,
+        setUser,
+        setRoles,
+        isAuthenticated,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export default AuthContext

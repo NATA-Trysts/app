@@ -183,9 +183,7 @@ export const LoginCodeInput = () => {
           {
             otp,
             email,
-            anonymous: isAuthenticated(user)
-              ? {}
-              : { name: user.username, handler: user.handler, avatar: user.handler },
+            anonymous: isAuthenticated ? {} : { name: user.username, handler: user.handler, avatar: user.handler },
             hash: fullHash,
           },
           {

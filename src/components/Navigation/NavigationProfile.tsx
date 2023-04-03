@@ -67,7 +67,7 @@ export const NavigationProfile = () => {
     <NavigationProfileContainer>
       {isDisplayed ? (
         <>
-          <MyInformationCard avatar={userInfo.avatar} handler={user.username} name={user.username} />
+          <MyInformationCard avatar={userInfo.avatar} handler={user.handler} name={user.username} />
           <ProfileCharacter>
             <ProfileCharacterCanvas>
               <OrbitControls />
