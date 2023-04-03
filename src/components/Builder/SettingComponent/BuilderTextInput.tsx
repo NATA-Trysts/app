@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const Input = styled.input`
@@ -29,6 +29,11 @@ type BuilderTextInputProps = {
 
 export const BuilderTextInput = ({ value, setValue, type }: BuilderTextInputProps) => {
   const [tempValue, setTempValue] = useState<string>(value)
+
+  // set tempValue to value when value changes
+  useEffect(() => {
+    setTempValue(value)
+  }, [value])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTempValue(e.target.value)

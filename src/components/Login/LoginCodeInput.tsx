@@ -193,8 +193,10 @@ export const LoginCodeInput = () => {
               setCheckStatus('success')
               setAuth({
                 user: {
-                  id: user._id,
+                  _id: user._id,
                   email: user.email,
+                  username: user.username,
+                  handler: user.handler,
                 },
                 roles: [1000],
                 accessToken,
