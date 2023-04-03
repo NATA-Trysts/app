@@ -24,28 +24,32 @@ const Container = styled.div`
 `
 
 export const BuilderToolbar = () => {
-  const [spaceInformation] = useBuilderStore((state) => [state.spaceInformation])
+  const [spaceInformation, models] = useBuilderStore((state) => [state.spaceInformation, state.models])
 
   const handleSave = () => {
-    axios.put(`/spaces/${'olrWFR6VXN389Pzq'}`, {
+    // temp fixed id
+    axios.put(`/spaces/${'Dvhq09IY6CFwpj75'}`, {
       space: {
         name: spaceInformation.name,
         password: spaceInformation.isProtected ? spaceInformation.password : '',
+        models: models,
       },
     })
   }
 
   useDebounce(
     () => {
-      axios.put(`/spaces/${'olrWFR6VXN389Pzq'}`, {
+      // temp fixed id
+      axios.put(`/spaces/${'Dvhq09IY6CFwpj75'}`, {
         space: {
           name: spaceInformation.name,
           password: spaceInformation.isProtected ? spaceInformation.password : '',
+          models: models,
         },
       })
     },
     2000,
-    [spaceInformation],
+    [spaceInformation, models],
   )
 
   return (
