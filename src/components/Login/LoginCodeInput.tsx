@@ -108,6 +108,12 @@ export const LoginCodeInput = () => {
   const { addNotification } = useNotification()
   const [email, fullHash] = useLoginStore((state) => [state.email, state.fullHash])
   const setStep = useStepStore((state) => state.setStep)
+  const {
+    auth: { user },
+    setAuth,
+    isAuthenticated,
+  } = useAuth()
+  const { resetAnonymous } = useAnonymous()
   // const [setUsername, setHandler, setEmail, setId] = useUserStore((state) => [
   //   state.setUsername,
   //   state.setHandler,
@@ -151,8 +157,6 @@ export const LoginCodeInput = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const from = location.state?.from.pathname || '/dashboard'
-  const { setAuth } = useAuth()
-  const { resetAnonymous } = useAnonymous()
 
   const ok = (e: { preventDefault: () => void }) => {
     e.preventDefault()
@@ -179,6 +183,9 @@ export const LoginCodeInput = () => {
           {
             otp,
             email,
+            anonymous: isAuthenticated(user)
+              ? {}
+              : { name: user.username, handler: user.handler, avatar: user.handler },
             hash: fullHash,
           },
           {
