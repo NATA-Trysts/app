@@ -7,8 +7,6 @@ export const RequireAuth = ({ allowedRoles }: { allowedRoles: number[] }) => {
   const { auth, isAuthenticated } = useAuth()
   const location = useLocation()
 
-  console.log(auth.user)
-
   return isAuthenticated ? (
     auth.roles.find((role) => allowedRoles?.includes(role)) ? (
       <Outlet />

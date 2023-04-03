@@ -30,8 +30,6 @@ export const useUser = () => {
         axiosPrivate
           .put(`users/name`, { username: username })
           .then((res) => {
-            console.log(res)
-
             if (res.status === 200) {
               userStore.setUsername(username)
               resolve(true)

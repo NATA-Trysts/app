@@ -195,8 +195,6 @@ export const LoginCodeInput = () => {
             if (res.status === 200) {
               const { accessToken, user } = res.data
 
-              console.log('res: ', res.data)
-
               setCheckStatus('success')
               setAuth({
                 user: user,

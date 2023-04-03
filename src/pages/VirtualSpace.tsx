@@ -97,8 +97,6 @@ const VirtualSpace = () => {
   const [mainMember] = useMemberStore((state) => [state.mainMember])
   const { spaceId } = useParams()
 
-  console.log(mainMember)
-
   const ultilityMapping = {
     chat: {
       name: 'Chat',

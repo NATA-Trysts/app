@@ -23,8 +23,6 @@ export const CustomCharacterPanel = () => {
 
     methods.handleSubmit((data) => {
       setUserName(data.name).then((success) => {
-        console.log('success', success)
-
         if (success) dispatchChangeName(data.name)
       })
     })()

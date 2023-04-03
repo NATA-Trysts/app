@@ -72,8 +72,6 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
         }
 
         room.state.members.onAdd = (member, sessionId: string) => {
-          console.log(member)
-
           member.user.listen('username', (value) => setMemberName(sessionId, value))
 
           if (sessionId === room.sessionId) {
