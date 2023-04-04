@@ -59,6 +59,7 @@ export const Scene = () => {
 
         <group name="light">
           <ambientLight intensity={1} />
+          <pointLight intensity={1} position={[0, 2, 0]} />
         </group>
 
         {globalSettings.get('grid')?.selected && <gridHelper ref={gridHelperRef} position={[0, 0, 0]} />}

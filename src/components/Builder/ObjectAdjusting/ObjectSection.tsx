@@ -5,7 +5,10 @@ import { Text } from '@/components/Commons'
 import { SpaceModel, useBuilderStore } from '@/stores'
 
 import { useBuilder } from '../hooks/useBuilder'
+import { ColorPicker } from './ColorPicker'
+import { Material } from './Material'
 import { Modifier } from './Modifier'
+import { Slider } from './Slider'
 
 const Container = styled.div`
   width: 100%;
@@ -15,9 +18,15 @@ const Container = styled.div`
   transition: background-color 0.2s ease;
   user-select: none;
 
-  &:hover {
+  /* &:hover {
     background-color: #272728;
-  }
+  } */
+`
+
+const Adjusting = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `
 
 export const ObjectSection = () => {
@@ -28,6 +37,8 @@ export const ObjectSection = () => {
   )
   const updateModelByField = useBuilderStore((state) => state.updateModelByField)
   const setIsInputFocus = useBuilderStore((state) => state.setIsInputFocus)
+  const updateModelRoughness = useBuilderStore((state) => state.updateModelRoughness)
+  const updateModelMetalness = useBuilderStore((state) => state.updateModelMetalness)
   const models = useBuilderStore((state) => state.models)
   const filteredModel = useMemo(() => {
     let a: SpaceModel[] | null = null
@@ -55,25 +66,31 @@ export const ObjectSection = () => {
     <>
       {filteredModel ? (
         <Container>
-          <Text size="small" weight="normal">
-            {filteredModel.name}
-          </Text>
-          <Modifier
-            canBeNegative={true}
-            name="position"
-            values={filteredModel.position}
-            onBlur={() => setIsInputFocus(false)}
-            onChange={handleChange}
-            onFocus={() => setIsInputFocus(true)}
-          />
-          <Modifier
-            canBeNegative={false}
-            name="rotation"
-            values={filteredModel.rotation}
-            onBlur={() => setIsInputFocus(false)}
-            onChange={handleChange}
-            onFocus={() => setIsInputFocus(true)}
-          />
+          <Adjusting>
+            <Text size="small" weight="normal">
+              {filteredModel.name}
+            </Text>
+            <Modifier
+              canBeNegative={true}
+              name="position"
+              values={filteredModel.position}
+              onBlur={() => setIsInputFocus(false)}
+              onChange={handleChange}
+              onFocus={() => setIsInputFocus(true)}
+            />
+            <Modifier
+              canBeNegative={false}
+              name="rotation"
+              values={filteredModel.rotation}
+              onBlur={() => setIsInputFocus(false)}
+              onChange={handleChange}
+              onFocus={() => setIsInputFocus(true)}
+            />
+          </Adjusting>
+          <ColorPicker isFilteredModel={filteredModel !== null} />
+          <Material />
+          <Slider setValue={(value) => updateModelMetalness(value)} title="Metalness" />
+          <Slider setValue={(value) => updateModelRoughness(value)} title="Roughness" />
         </Container>
       ) : null}
     </>
