@@ -31,10 +31,7 @@ const Adjusting = styled.div`
 
 export const ObjectSection = () => {
   const { updateHistory } = useBuilder()
-  const selectedModelUuid = useBuilderStore(
-    (state) => state.selectedModelUuid,
-    (current, prev) => current !== prev,
-  )
+  const selectedModelUuid = useBuilderStore((state) => state.selectedModelUuid)
   const updateModelByField = useBuilderStore((state) => state.updateModelByField)
   const setIsInputFocus = useBuilderStore((state) => state.setIsInputFocus)
   const updateModelRoughness = useBuilderStore((state) => state.updateModelRoughness)
@@ -59,12 +56,6 @@ export const ObjectSection = () => {
           ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], [axis]: value } }
           : model,
       )
-    })
-  }
-
-  const handleUpdateHistory = (property: 'metalness' | 'roughness', value: number) => {
-    updateHistory((models) => {
-      return models.map((model) => (model.uuid === selectedModelUuid ? { ...model, property: value } : model))
     })
   }
 
@@ -93,16 +84,16 @@ export const ObjectSection = () => {
               onFocus={() => setIsInputFocus(true)}
             />
           </Adjusting>
-          <ColorPicker isFilteredModel={filteredModel !== null} />
+          <ColorPicker filteredModel={filteredModel} modelColor={filteredModel.color} />
           <Material />
           <Slider
-            handleUpdateHistory={handleUpdateHistory}
-            setValue={(value) => updateModelMetalness(value)}
+            modelValue={filteredModel.metalness}
+            setModelValue={(value) => updateModelMetalness(value)}
             title="metalness"
           />
           <Slider
-            handleUpdateHistory={handleUpdateHistory}
-            setValue={(value) => updateModelRoughness(value)}
+            modelValue={filteredModel.roughness}
+            setModelValue={(value) => updateModelRoughness(value)}
             title="roughness"
           />
         </Container>

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
 import { useColorPicker } from '@/hooks'
-import { useBuilderStore } from '@/stores'
+import { SpaceModel, useBuilderStore } from '@/stores'
 
 import { useBuilder } from '../hooks/useBuilder'
 
@@ -36,26 +36,28 @@ const HexInput = styled.input`
 `
 
 type ColorPickerProps = {
-  isFilteredModel: boolean
+  modelColor: string | undefined
+  filteredModel: SpaceModel
 }
 
-export const ColorPicker = ({ isFilteredModel }: ColorPickerProps) => {
+export const ColorPicker = ({ modelColor, filteredModel }: ColorPickerProps) => {
   const { updateHistory } = useBuilder()
 
-  const [updateModelColor] = useBuilderStore((state) => [state.updateModelColor])
+  const [updateModelColor, setIsInputFocus] = useBuilderStore((state) => [
+    state.updateModelColor,
+    state.setIsInputFocus,
+  ])
 
-  const selectedModelUuid = useBuilderStore(
-    (state) => state.selectedModelUuid,
-    (current, prev) => current !== prev,
-  )
+  const selectedModelUuid = useBuilderStore((state) => state.selectedModelUuid)
 
-  const [color, setColor] = useState('#ff00ff')
+  const [color, setColor] = useState(modelColor || '#ff00ff')
+  const [prevColor, setPrevColor] = useState(modelColor || '#ff00ff')
   const [colorInput, setColorInput] = useState(color)
 
   const { applyPatternToString, checkValidHex, formatHex } = useColorPicker()
 
   const handlePickColor = (color: string) => {
-    if (isFilteredModel) {
+    if (filteredModel) {
       setColor(color)
       setColorInput(color)
       updateModelColor(color)
@@ -88,6 +90,8 @@ export const ColorPicker = ({ isFilteredModel }: ColorPickerProps) => {
     } else {
       setColorInput(formatHex(color))
     }
+
+    setIsInputFocus(false)
   }
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -107,7 +111,16 @@ export const ColorPicker = ({ isFilteredModel }: ColorPickerProps) => {
       } else {
         setColorInput(formatHex(color))
       }
+
+      setIsInputFocus(false)
     }
+  }
+
+  // compare model color with prev color
+  if (modelColor !== prevColor) {
+    setColor(modelColor || '#ff00ff')
+    setPrevColor(modelColor || '#ff00ff')
+    setColorInput(modelColor || '#ff00ff')
   }
 
   return (
@@ -116,7 +129,16 @@ export const ColorPicker = ({ isFilteredModel }: ColorPickerProps) => {
         Color
       </Title>
       <HexColorPicker color={color} onChange={handlePickColor} onMouseUp={handleUp} />
-      <HexInput type="text" value={colorInput} onBlur={handleBlur} onChange={handleChangeHex} onKeyDown={handleEnter} />
+      <HexInput
+        type="text"
+        value={colorInput}
+        onBlur={handleBlur}
+        onChange={handleChangeHex}
+        onFocus={() => {
+          setIsInputFocus(true)
+        }}
+        onKeyDown={handleEnter}
+      />
     </ColorPickerContainer>
   )
 }

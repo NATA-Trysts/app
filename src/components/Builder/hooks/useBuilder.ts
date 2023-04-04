@@ -69,8 +69,8 @@ const useBuilder = () => {
       position: { x: 0, y: 0, z: 0 },
       rotation: { x: 0, y: 0, z: 0 },
       color: '#ff00ff',
-      roughness: 0.5,
-      metalness: 0.5,
+      roughness: 1,
+      metalness: 0,
     })
 
     updateHistory((models) => {
@@ -83,8 +83,8 @@ const useBuilder = () => {
           position: { x: 0, y: 0, z: 0 },
           rotation: { x: 0, y: 0, z: 0 },
           color: '#ff00ff',
-          roughness: 0.5,
-          metalness: 0.5,
+          roughness: 1,
+          metalness: 0,
         },
       ]
     })

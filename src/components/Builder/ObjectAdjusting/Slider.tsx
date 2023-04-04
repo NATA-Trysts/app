@@ -1,4 +1,5 @@
 import * as SliderRadix from '@radix-ui/react-slider'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
@@ -59,11 +60,15 @@ const Thumb = styled(SliderRadix.Thumb)`
 
 type SliderProps = {
   title: 'roughness' | 'metalness'
-  setValue: (value: number) => void
-  handleUpdateHistory: (property: 'roughness' | 'metalness', value: number) => void
+  modelValue: number
+  setModelValue: (value: number) => void
 }
 
-export const Slider = ({ title, setValue, handleUpdateHistory }: SliderProps) => {
+export const Slider = ({ title, modelValue, setModelValue }: SliderProps) => {
+  const [value, setValue] = useState(modelValue)
+
+  if (modelValue !== value) setValue(modelValue)
+
   return (
     <Container>
       <Title size="small" weight="normal">
@@ -72,11 +77,11 @@ export const Slider = ({ title, setValue, handleUpdateHistory }: SliderProps) =>
       <SliderWrapper>
         <Root
           aria-label={title}
-          defaultValue={[0.5]}
+          defaultValue={[value]}
           max={1}
           step={0.1}
-          onValueChange={(value) => setValue(value[0])}
-          onValueCommit={(value) => handleUpdateHistory(title, value[0])}
+          value={[value]}
+          onValueChange={(value) => setModelValue(value[0])}
         >
           <Track>
             <Range />
