@@ -50,6 +50,7 @@ export type SpaceModel = {
   color: string
   roughness: number
   metalness: number
+  texture: string
 }
 
 type BuilderState = {
@@ -90,6 +91,7 @@ type BuilderState = {
   updateModelColor: (color: string) => void
   updateModelRoughness: (roughness: number) => void
   updateModelMetalness: (metalness: number) => void
+  updateModelTexture: (texture: string) => void
   deleteModel: (modelUuid: string) => void
 
   isEditing: boolean
@@ -186,6 +188,10 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
   updateModelMetalness: (metalness: number) =>
     set((state) => ({
       models: state.models.map((model) => (model.uuid === state.selectedModelUuid ? { ...model, metalness } : model)),
+    })),
+  updateModelTexture: (texture: string) =>
+    set((state) => ({
+      models: state.models.map((model) => (model.uuid === state.selectedModelUuid ? { ...model, texture } : model)),
     })),
   deleteModel: (modelUuid: string) =>
     set((state) => ({ models: state.models.filter((model) => model.uuid !== modelUuid), selectedModelUuid: null })),
