@@ -67,11 +67,11 @@ export const Content = () => {
     state.setCategorySelectedItemIds,
   ])
 
-  const handleClickItem = (categoryId: number, subcategoryId: string, itemId: number) => {
+  const handleClickItem = (categoryId: string, subcategoryId: string, itemId: string) => {
     setCategorySelectedItemIds(categoryId, subcategoryId, itemId)
   }
 
-  const checkActive = (categoryId: number, subcategoryId: string, itemId: number) => {
+  const checkActive = (categoryId: string, subcategoryId: string, itemId: string) => {
     const category = categorySelectedItemIds.get(categoryId)
 
     if (category) {

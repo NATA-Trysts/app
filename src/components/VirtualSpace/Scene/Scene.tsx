@@ -19,7 +19,10 @@ export const Scene = () => {
         <Stats />
 
         <Suspense fallback={<Loading />}>
-          <Environment files="/hdrs/adamsbridge.hdr" />
+          <Environment
+            preset="city"
+            // files="/hdrs/adamsbridge.hdr"
+          />
           <ambientLight intensity={0.7} />
 
           <Physics gravity={[0, -9.82, 0]}>

@@ -1,39 +1,44 @@
 const list = new Map([
   [
-    1,
+    'skin',
     [
       {
-        id: 'a',
-        title: 'skin 1',
+        id: 'skin-001',
+        title: 'Skin Color',
         values: [
           {
-            id: 1,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+            id: 'skin.001.001',
+            img: 'https://htmlcolorcodes.com/assets/images/colors/light-blue-color-solid-background-1920x1080.png',
           },
           {
-            id: 2,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+            id: 'skin.001.002',
+            img: 'https://htmlcolorcodes.com/assets/images/colors/dark-red-color-solid-background-1920x1080.png',
           },
           {
-            id: 3,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+            id: 'skin.001.003',
+            img: 'https://htmlcolorcodes.com/assets/images/colors/powder-blue-color-solid-background-1920x1080.png',
           },
           {
-            id: 4,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+            id: 'skin.001.004',
+            img: 'https://htmlcolorcodes.com/assets/images/colors/brass-color-solid-background-1920x1080.png',
           },
         ],
       },
+    ],
+  ],
+  [
+    'hair',
+    [
       {
-        id: 'b',
-        title: 'skin 2',
+        id: 'hair-001',
+        title: 'Hairstyles',
         values: [
           {
-            id: 5,
+            id: 'hair.001.001',
             img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
           {
-            id: 6,
+            id: 'hair.001.002',
             img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
         ],
@@ -41,44 +46,24 @@ const list = new Map([
     ],
   ],
   [
-    2,
+    'upper',
     [
       {
-        id: 'c',
-        title: 'hair 1',
+        id: 'upper-001',
+        title: 'Shirt',
         values: [
           {
-            id: 7,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 8,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 9,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 10,
+            id: 'upper.001.001',
             img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
         ],
       },
       {
-        id: 'd',
-        title: 'hair 2',
+        id: 'upper-002',
+        title: 'Jacket',
         values: [
           {
-            id: 11,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 12,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 13,
+            id: 'upper.002.001',
             img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
         ],
@@ -86,22 +71,46 @@ const list = new Map([
     ],
   ],
   [
-    3,
+    'lower',
     [
       {
-        id: 'e',
-        title: 'shoes',
+        id: 'lower-001',
+        title: 'Short',
         values: [
           {
-            id: 14,
+            id: 'lower.001.001',
             img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
           {
-            id: 15,
+            id: 'lower.001.002',
+            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+          },
+        ],
+      },
+      {
+        id: 'lower-002',
+        title: 'Jean',
+        values: [
+          {
+            id: 'lower.002.001',
             img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
           {
-            id: 16,
+            id: 'lower.002.002',
+            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+          },
+        ],
+      },
+      {
+        id: 'lower-003',
+        title: 'Skirt',
+        values: [
+          {
+            id: 'lower.003.001',
+            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+          },
+          {
+            id: 'lower.003.002',
             img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
         ],
@@ -109,18 +118,32 @@ const list = new Map([
     ],
   ],
   [
-    4,
+    'shoe',
     [
       {
-        id: 'f',
-        title: 'upper',
+        id: 'shoe-001',
+        title: 'Sliper',
         values: [
           {
-            id: 17,
+            id: 'shoe.001.001',
             img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
           {
-            id: 18,
+            id: 'shoe.001.002',
+            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+          },
+        ],
+      },
+      {
+        id: 'shoe-002',
+        title: 'Sneaker',
+        values: [
+          {
+            id: 'shoe.002.001',
+            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+          },
+          {
+            id: 'shoe.002.002',
             img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
         ],
@@ -128,65 +151,18 @@ const list = new Map([
     ],
   ],
   [
-    5,
+    'accessory',
     [
       {
-        id: 'g',
-        title: 'lower',
+        id: 'accessory-001',
+        title: 'Hat',
         values: [
           {
-            id: 19,
+            id: 'accessory.001.001',
             img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
           {
-            id: 20,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-        ],
-      },
-    ],
-  ],
-  [
-    6,
-    [
-      {
-        id: 'h',
-        title: 'glasses',
-        values: [
-          {
-            id: 21,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 22,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-        ],
-      },
-      {
-        id: 'i',
-        title: 'necklace',
-        values: [
-          {
-            id: 23,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 24,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-        ],
-      },
-      {
-        id: 'j',
-        title: 'earring',
-        values: [
-          {
-            id: 25,
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 26,
+            id: 'accessory.001.002',
             img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
         ],

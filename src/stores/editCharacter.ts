@@ -1,8 +1,8 @@
 import { create } from 'zustand'
 
-type SubcategoryActiveItem = {
+export type SubcategoryActiveItem = {
   id: string
-  itemId: number
+  itemId: string
 }
 
 export type AnimationType = {
@@ -10,14 +10,14 @@ export type AnimationType = {
   name: string
 }
 
-type CategorySelectedItemId = Map<number, SubcategoryActiveItem[]>
+export type CategorySelectedItemId = Map<string, SubcategoryActiveItem[]>
 
 type EditCharacterState = {
-  categorySelectedId: number
-  setCategorySelectedId: (id: number) => void
+  categorySelectedId: string
+  setCategorySelectedId: (id: string) => void
 
   categorySelectedItemIds: CategorySelectedItemId
-  setCategorySelectedItemIds: (categoryId: number, subcategoryId: string, itemId: number) => void
+  setCategorySelectedItemIds: (categoryId: string, subcategoryId: string, itemId: string) => void
 
   tattooSelectedId: number
   setTattooSelectedId: (id: number) => void
@@ -48,16 +48,64 @@ type EditCharacterState = {
 }
 
 export const useEditCharacterStore = create<EditCharacterState>((set) => ({
-  categorySelectedId: 1,
+  categorySelectedId: 'skin',
   setCategorySelectedId: (id) => set(() => ({ categorySelectedId: id })),
 
   categorySelectedItemIds: new Map([
-    [1, []],
-    [2, []],
-    [3, []],
-    [4, []],
-    [5, []],
-    [6, []],
+    [
+      'skin',
+      [
+        {
+          id: 'skin-001',
+          itemId: 'skin.001.001',
+        },
+      ],
+    ],
+    [
+      'hair',
+      [
+        // {
+        //   id: 'hair-001',
+        //   itemId: 'hair.001.001',
+        // },
+      ],
+    ],
+    [
+      'upper',
+      [
+        // {
+        //   id: 'upper-001',
+        //   itemId: 'upper.001.001',
+        // },
+      ],
+    ],
+    [
+      'lower',
+      [
+        // {
+        //   id: 'lower-001',
+        //   itemId: 'lower.001.001',
+        // },
+      ],
+    ],
+    [
+      'shoe',
+      [
+        // {
+        //   id: 'shoe-001',
+        //   itemId: 'shoe.001.001',
+        // },
+      ],
+    ],
+    [
+      'accessory',
+      [
+        // {
+        //   id: 'accessory-001',
+        //   itemId: 'accessory.001.001',
+        // },
+      ],
+    ],
   ]),
   setCategorySelectedItemIds: (categoryId, subcategoryId, itemId) =>
     set((state) => {

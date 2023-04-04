@@ -116,7 +116,32 @@ const PLAN_ICON_FILTER = {
 
 const STRIPE_API_KEY = import.meta.env.VITE_STRIPE_PUBLIC_KEY
 
+type IValueMapping = {
+  [key: string]: string
+}
+
+const CHARACTER_CONFIG_VALUE_MAPPING: IValueMapping = {
+  'skin.001.001': '#2b9148',
+  'skin.001.002': '#120ead',
+  'skin.001.003': '#6e106a',
+  'skin.001.004': '#d09789',
+  'hair.001.001': 'hair001001',
+  'hair.001.002': 'hair001002',
+  'upper.001.001': 'upper001001',
+  'upper.001.002': 'upper001002',
+  'upper.002.001': 'upper002001',
+  'upper.002.002': 'upper002002',
+  'lower.001.001': 'lower001001',
+  'lower.001.002': 'lower001002',
+  'lower.002.001': 'lower002001',
+  'lower.002.002': 'lower002002',
+  'shoe.001.001': 'shoe001001',
+  'accessory.001.001': 'accessory001001',
+  'accessory.001.002': 'accessory001002',
+}
+
 export {
+  CHARACTER_CONFIG_VALUE_MAPPING,
   COLOR_PICKER_LIST,
   FILTER_ICON_TO_WHITE,
   INPUT_BORDER,
