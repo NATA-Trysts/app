@@ -62,6 +62,12 @@ export const ObjectSection = () => {
     })
   }
 
+  const handleUpdateHistory = (property: 'metalness' | 'roughness', value: number) => {
+    updateHistory((models) => {
+      return models.map((model) => (model.uuid === selectedModelUuid ? { ...model, property: value } : model))
+    })
+  }
+
   return (
     <>
       {filteredModel ? (
@@ -89,8 +95,16 @@ export const ObjectSection = () => {
           </Adjusting>
           <ColorPicker isFilteredModel={filteredModel !== null} />
           <Material />
-          <Slider setValue={(value) => updateModelMetalness(value)} title="Metalness" />
-          <Slider setValue={(value) => updateModelRoughness(value)} title="Roughness" />
+          <Slider
+            handleUpdateHistory={handleUpdateHistory}
+            setValue={(value) => updateModelMetalness(value)}
+            title="metalness"
+          />
+          <Slider
+            handleUpdateHistory={handleUpdateHistory}
+            setValue={(value) => updateModelRoughness(value)}
+            title="roughness"
+          />
         </Container>
       ) : null}
     </>

@@ -12,6 +12,7 @@ const Container = styled.div`
 const Title = styled(Text)`
   display: inline-block;
   margin-bottom: 8px;
+  text-transform: capitalize;
 `
 
 const SliderWrapper = styled.div`
@@ -57,18 +58,26 @@ const Thumb = styled(SliderRadix.Thumb)`
 `
 
 type SliderProps = {
-  title: string
+  title: 'roughness' | 'metalness'
   setValue: (value: number) => void
+  handleUpdateHistory: (property: 'roughness' | 'metalness', value: number) => void
 }
 
-export const Slider = ({ title, setValue }: SliderProps) => {
+export const Slider = ({ title, setValue, handleUpdateHistory }: SliderProps) => {
   return (
     <Container>
       <Title size="small" weight="normal">
         {title}
       </Title>
       <SliderWrapper>
-        <Root aria-label={title} defaultValue={[0.5]} max={1} step={0.1} onValueChange={(value) => setValue(value[0])}>
+        <Root
+          aria-label={title}
+          defaultValue={[0.5]}
+          max={1}
+          step={0.1}
+          onValueChange={(value) => setValue(value[0])}
+          onValueCommit={(value) => handleUpdateHistory(title, value[0])}
+        >
           <Track>
             <Range />
           </Track>
