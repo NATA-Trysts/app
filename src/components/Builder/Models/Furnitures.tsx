@@ -71,6 +71,8 @@ const Furniture = (props: FurnitureProps) => {
           z: modelRef.current.rotation.z,
         },
         color: props.color,
+        roughness: props.roughness,
+        metalness: props.metalness,
       })
     }
   }
@@ -91,6 +93,9 @@ const Furniture = (props: FurnitureProps) => {
           y: modelRef.current.rotation.y,
           z: modelRef.current.rotation.z,
         },
+        color: props.color,
+        roughness: props.roughness,
+        metalness: props.metalness,
       }
 
       updateHistory((models) => {
@@ -137,7 +142,15 @@ const Furniture = (props: FurnitureProps) => {
         <Select enabled={hovered || selectedModelUuid === props.uuid}>
           {
             {
-              1: <Chair color={props.color} scale={[0.01, 0.01, 0.01]} wireframe={props.wireframe} />,
+              1: (
+                <Chair
+                  color={props.color}
+                  metalness={props.metalness}
+                  roughness={props.roughness}
+                  scale={[0.01, 0.01, 0.01]}
+                  wireframe={props.wireframe}
+                />
+              ),
               2: <Desk scale={[0.01, 0.01, 0.01]} />,
             }[props.id]
           }
@@ -234,6 +247,7 @@ export const Furnitures = () => {
             key={index}
             color={model.color}
             id={model.id}
+            metalness={model.metalness}
             name={model.name}
             position={{
               x: parseFloat(model.position.x as string),
@@ -245,6 +259,7 @@ export const Furnitures = () => {
               y: parseFloat(model.rotation.y as string),
               z: parseFloat(model.rotation.z as string),
             }}
+            roughness={model.roughness}
             uuid={model.uuid}
             wireframe={globalSettings.get('wireframe')?.selected as boolean}
           />

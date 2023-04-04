@@ -11,7 +11,14 @@ type GLTFResult = GLTF & {
   }
 }
 
-export function Chair(props: JSX.IntrinsicElements['group'] & { wireframe: boolean; color: string }) {
+export function Chair(
+  props: JSX.IntrinsicElements['group'] & {
+    wireframe: boolean
+    color: string
+    roughness: number
+    metalness: number
+  },
+) {
   const { nodes } = useGLTF(
     'https://cdn.jsdelivr.net/gh/NATA-Trysts/cdn@master/models-transform/chair-transformed.glb',
   ) as GLTFResult
@@ -19,7 +26,12 @@ export function Chair(props: JSX.IntrinsicElements['group'] & { wireframe: boole
   return (
     <group {...props} dispose={null} name="chair">
       <mesh geometry={nodes.chair.geometry} rotation={[-Math.PI, 0, -Math.PI]}>
-        <meshStandardMaterial color={props.color} wireframe={props.wireframe} />
+        <meshStandardMaterial
+          color={props.color}
+          metalness={props.metalness}
+          roughness={props.roughness}
+          wireframe={props.wireframe}
+        />
       </mesh>
     </group>
   )

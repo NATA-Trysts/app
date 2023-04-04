@@ -48,6 +48,8 @@ export type SpaceModel = {
   position: ModifierValueType
   rotation: ModifierValueType
   color: string
+  roughness: number
+  metalness: number
 }
 
 type BuilderState = {
@@ -85,6 +87,9 @@ type BuilderState = {
   addModel: (model: SpaceModel) => void
   updateModel: (modelUpdate: SpaceModel) => void
   updateModelByField: (property: string, field: string, value: number) => void
+  updateModelColor: (color: string) => void
+  updateModelRoughness: (roughness: number) => void
+  updateModelMetalness: (metalness: number) => void
   deleteModel: (modelUuid: string) => void
 
   isEditing: boolean
@@ -169,6 +174,18 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
           ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], [field]: value } }
           : model,
       ),
+    })),
+  updateModelColor: (color: string) =>
+    set((state) => ({
+      models: state.models.map((model) => (model.uuid === state.selectedModelUuid ? { ...model, color } : model)),
+    })),
+  updateModelRoughness: (roughness: number) =>
+    set((state) => ({
+      models: state.models.map((model) => (model.uuid === state.selectedModelUuid ? { ...model, roughness } : model)),
+    })),
+  updateModelMetalness: (metalness: number) =>
+    set((state) => ({
+      models: state.models.map((model) => (model.uuid === state.selectedModelUuid ? { ...model, metalness } : model)),
     })),
   deleteModel: (modelUuid: string) =>
     set((state) => ({ models: state.models.filter((model) => model.uuid !== modelUuid), selectedModelUuid: null })),
