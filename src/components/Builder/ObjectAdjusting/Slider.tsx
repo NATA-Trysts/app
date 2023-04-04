@@ -7,6 +7,7 @@ import { Text } from '@/components/Commons'
 const Container = styled.div`
   width: 100%;
   transition: opacity 0.2s ease;
+  padding: 8px 0;
   position: relative;
 `
 
@@ -47,8 +48,8 @@ const Range = styled(SliderRadix.Range)`
 
 const Thumb = styled(SliderRadix.Thumb)`
   display: block;
-  width: 20px;
-  height: 20px;
+  width: 12px;
+  height: 12px;
   background-color: white;
   /* box-shadow: 0 2px 10px var(--blackA7); */
   border-radius: 10px;

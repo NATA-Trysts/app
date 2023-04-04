@@ -6,7 +6,6 @@ import { SpaceModel, useBuilderStore } from '@/stores'
 
 import { useBuilder } from '../hooks/useBuilder'
 import { ColorPicker } from './ColorPicker'
-import { Material } from './Material'
 import { Modifier } from './Modifier'
 import { Slider } from './Slider'
 
@@ -64,7 +63,7 @@ export const ObjectSection = () => {
       {filteredModel ? (
         <Container>
           <Adjusting>
-            <Text size="small" weight="normal">
+            <Text size="medium" weight="normal">
               {filteredModel.name}
             </Text>
             <Modifier
@@ -85,7 +84,6 @@ export const ObjectSection = () => {
             />
           </Adjusting>
           <ColorPicker filteredModel={filteredModel} modelColor={filteredModel.color} />
-          <Material />
           <Slider
             modelValue={filteredModel.metalness}
             setModelValue={(value) => updateModelMetalness(value)}

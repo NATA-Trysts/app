@@ -13,6 +13,8 @@ const ColorPickerContainer = styled.div`
   transition: opacity 0.2s ease;
   /* margin-top: 32px; */
   position: relative;
+  padding-top: 12px;
+  padding-bottom: 12px;
 
   .react-colorful {
     width: 100%;

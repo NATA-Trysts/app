@@ -73,7 +73,6 @@ const Furniture = (props: FurnitureProps) => {
         color: props.color,
         roughness: props.roughness,
         metalness: props.metalness,
-        texture: props.texture,
       })
     }
   }
@@ -97,7 +96,6 @@ const Furniture = (props: FurnitureProps) => {
         color: props.color,
         roughness: props.roughness,
         metalness: props.metalness,
-        texture: props.texture,
       }
 
       updateHistory((models) => {
@@ -150,7 +148,6 @@ const Furniture = (props: FurnitureProps) => {
                   metalness={props.metalness}
                   roughness={props.roughness}
                   scale={[0.01, 0.01, 0.01]}
-                  texture={props.texture}
                   wireframe={props.wireframe}
                 />
               ),
@@ -263,10 +260,6 @@ export const Furnitures = () => {
               z: parseFloat(model.rotation.z as string),
             }}
             roughness={model.roughness}
-            texture={
-              model.texture ||
-              'https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-mediumSquareAt3X-v2.jpg'
-            }
             uuid={model.uuid}
             wireframe={globalSettings.get('wireframe')?.selected as boolean}
           />
