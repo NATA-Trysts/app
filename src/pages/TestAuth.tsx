@@ -11,8 +11,10 @@ const TestAuth = () => {
 
   useEffect(() => {
     const user = {
-      name: 'sonhaaa',
+      username: 'sonhaaa',
       email: 'nguyensonha.hanz@gmail.com',
+      handler: '123',
+      _id: '123',
     }
     const roles = [1000, 2000]
     const accessToken = '124'

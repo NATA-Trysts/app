@@ -157,8 +157,10 @@ export const LoginCodeInput = () => {
     e.preventDefault()
     // pretent that user is authenticated
     const user = {
-      name: 'sonha',
+      username: 'sonha',
       email: '@gmail',
+      _id: '123',
+      handler: '123',
     }
     const roles = [1000]
     const accessToken = '123'
