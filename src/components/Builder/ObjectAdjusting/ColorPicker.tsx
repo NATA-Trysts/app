@@ -49,7 +49,7 @@ export const ColorPicker = ({ isFilteredModel }: ColorPickerProps) => {
     (current, prev) => current !== prev,
   )
 
-  const [color, setColor] = useState('#A67BC2')
+  const [color, setColor] = useState('#ff00ff')
   const [colorInput, setColorInput] = useState(color)
 
   const { applyPatternToString, checkValidHex, formatHex } = useColorPicker()
