@@ -1,11 +1,12 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 import { useDebounce } from 'react-use'
 import styled from 'styled-components'
 
-import axios from '@/api/axios'
 import { ReactComponent as Play } from '@/assets/icons/play.svg'
 import { ReactComponent as Save } from '@/assets/icons/save.svg'
 import { ToolbarContainer, ToolbarItem, WithTooltip } from '@/components/Toolbar'
+import { useAxiosPrivate } from '@/hooks'
 import { useBuilderStore } from '@/stores'
 
 import { ZoomTool } from './ZoomTool'
@@ -25,10 +26,11 @@ const Container = styled.div`
 
 export const BuilderToolbar = () => {
   const [spaceInformation, models] = useBuilderStore((state) => [state.spaceInformation, state.models])
+  const { fileId } = useParams()
+  const axiosPrivate = useAxiosPrivate()
 
   const handleSave = () => {
-    // temp fixed id
-    axios.put(`/spaces/${'Dvhq09IY6CFwpj75'}`, {
+    axiosPrivate.put(`/spaces/${fileId}`, {
       space: {
         name: spaceInformation.name,
         password: spaceInformation.isProtected ? spaceInformation.password : '',
@@ -39,8 +41,7 @@ export const BuilderToolbar = () => {
 
   useDebounce(
     () => {
-      // temp fixed id
-      axios.put(`/spaces/${'Dvhq09IY6CFwpj75'}`, {
+      axiosPrivate.put(`/spaces/${fileId}`, {
         space: {
           name: spaceInformation.name,
           password: spaceInformation.isProtected ? spaceInformation.password : '',

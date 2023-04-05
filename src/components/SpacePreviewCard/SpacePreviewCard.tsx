@@ -60,7 +60,7 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
         imageUrl={imageUrl}
         isActive={item._id === selectedSpacePreview?._id}
         isHovered={isHovered}
-        spaceAuthorId={item.author || '1234'} // temp
+        spaceAuthorId={(item.author as any)._id}
         spaceId={item._id}
         subtitle={subtitle}
         title={title}
