@@ -1,6 +1,7 @@
 import produce from 'immer'
 import { omit } from 'lodash-es'
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 export type Member = {
   id: string
@@ -19,6 +20,22 @@ export type Member = {
   action: string
 }
 
+export type ModelMaterial = {
+  type: 'color' | 'texture' | 'shader'
+  value: string
+}
+
+export type AvatarModel = {
+  id: string
+  material: ModelMaterial | null
+}
+
+export type User = {
+  id?: string
+  username: string
+  handler: string
+}
+
 type OtherMember<T> = {
   [id: string]: T
 }
@@ -26,8 +43,10 @@ type OtherMember<T> = {
 export type NearestMember = Omit<Member, 'position' | 'quaternion'>
 
 type MemberState = {
-  mainMemberId: string
-  setMainMemberId: (mainMemberId: string) => void
+  user: User
+  setUser: (user: User) => void
+  // Use for character multiplayer
+  // TODO: refactor - combine to user
   mainMember: Member | null
   setMainMember: (member: Member) => void
   otherMembers: OtherMember<Member>
@@ -44,42 +63,54 @@ type MemberState = {
   removeNearestMember: (sessionId: string) => void
 }
 
-export const useMemberStore = create<MemberState>((set) => ({
-  mainMemberId: '',
-  setMainMemberId: (mainMemberId: string) => set({ mainMemberId }),
+export const useMemberStore = create<MemberState>()(
+  persist(
+    (set) => ({
+      user: {
+        username: 'Random Name',
+        handler: 'randomname#1234',
+      },
+      setUser: (user: User) => set(() => ({ user })),
 
-  mainMember: null,
-  setMainMember: (member: Member) => set(() => ({ mainMember: member })),
+      mainMember: null,
+      setMainMember: (member: Member) => set(() => ({ mainMember: member })),
 
-  otherMembers: {},
-  addOtherMembers: (sessionId, member) =>
-    set(
-      produce((state: MemberState) => {
-        state.otherMembers[sessionId] = member
-      }),
-    ),
-  removeOtherMembers: (sessionId: string) => set((state) => ({ otherMembers: omit(state.otherMembers, [sessionId]) })),
-  updateOtherMembers: (sessionId, position, quaternion) =>
-    set(
-      produce((state: MemberState) => {
-        state.otherMembers[sessionId].position = { x: position.x, y: position.y, z: position.z }
-        state.otherMembers[sessionId].quaternion = quaternion
-      }),
-    ),
-  updateActionOtherMember: (sessionId, action) =>
-    set(
-      produce((state: MemberState) => {
-        state.otherMembers[sessionId].action = action
-      }),
-    ),
+      otherMembers: {},
+      addOtherMembers: (sessionId, member) =>
+        set(
+          produce((state: MemberState) => {
+            state.otherMembers[sessionId] = member
+          }),
+        ),
+      removeOtherMembers: (sessionId: string) =>
+        set((state) => ({ otherMembers: omit(state.otherMembers, [sessionId]) })),
+      updateOtherMembers: (sessionId, position, quaternion) =>
+        set(
+          produce((state: MemberState) => {
+            state.otherMembers[sessionId].position = { x: position.x, y: position.y, z: position.z }
+            state.otherMembers[sessionId].quaternion = quaternion
+          }),
+        ),
+      updateActionOtherMember: (sessionId, action) =>
+        set(
+          produce((state: MemberState) => {
+            state.otherMembers[sessionId].action = action
+          }),
+        ),
 
-  nearestMembers: {},
-  addNearestMember: (sessionId: string, nearestMember: NearestMember) =>
-    set(
-      produce((state: MemberState) => {
-        state.nearestMembers[sessionId] = nearestMember
-      }),
-    ),
-  removeNearestMember: (sessionId: string) =>
-    set((state) => ({ nearestMembers: omit(state.nearestMembers, [sessionId]) })),
-}))
+      nearestMembers: {},
+      addNearestMember: (sessionId: string, nearestMember: NearestMember) =>
+        set(
+          produce((state: MemberState) => {
+            state.nearestMembers[sessionId] = nearestMember
+          }),
+        ),
+      removeNearestMember: (sessionId: string) =>
+        set((state) => ({ nearestMembers: omit(state.nearestMembers, [sessionId]) })),
+    }),
+    {
+      name: 'member-storage',
+      partialize: (state) => ({ user: state.user }),
+    },
+  ),
+)
