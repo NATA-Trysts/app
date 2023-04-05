@@ -5,11 +5,12 @@ import { SingleMemberCard } from '../SingleMemberCard'
 const MemberContainer = styled.div`
   width: 100%;
   height: 100%;
+  padding-right: 8px;
+  overflow-y: auto;
   max-height: calc(100vh - 16px * 2 - 48px - 6px - 16px - 52px);
   display: flex;
   flex-direction: column;
   gap: 8px;
-  justify-content: flex-end;
 `
 
 const SAMPLE_MEMBER_DATA = {

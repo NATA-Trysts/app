@@ -30,10 +30,26 @@ export type AvatarModel = {
   material: ModelMaterial | null
 }
 
+export type AvatarAccessoryModel = {
+  hat: AvatarModel
+}
+
+export type Avatar = {
+  skin: AvatarModel[]
+  hair: AvatarModel[]
+  shoe: AvatarModel[]
+  upper: AvatarModel[]
+  lower: AvatarModel[]
+  accessory: AvatarAccessoryModel
+  image: string
+}
+
 export type User = {
   id?: string
   username: string
   handler: string
+  email?: string
+  avatar: Avatar
 }
 
 type OtherMember<T> = {
@@ -69,6 +85,63 @@ export const useMemberStore = create<MemberState>()(
       user: {
         username: 'Random Name',
         handler: 'randomname#1234',
+        avatar: {
+          skin: [
+            {
+              id: 'skin.001.001',
+              material: {
+                type: 'color',
+                value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
+              },
+            },
+          ],
+          hair: [
+            {
+              id: 'hair.001.001',
+              material: {
+                type: 'color',
+                value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
+              },
+            },
+          ],
+          shoe: [
+            {
+              id: 'shoe.001.001',
+              material: {
+                type: 'color',
+                value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
+              },
+            },
+          ],
+          upper: [
+            {
+              id: 'upper.001.001',
+              material: {
+                type: 'color',
+                value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
+              },
+            },
+          ],
+          lower: [
+            {
+              id: 'lower.001.001',
+              material: {
+                type: 'color',
+                value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
+              },
+            },
+          ],
+          accessory: {
+            hat: {
+              id: 'accessory.001.001',
+              material: {
+                type: 'color',
+                value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
+              },
+            },
+          },
+          image: 'https://i.pravatar.cc/500',
+        },
       },
       setUser: (user: User) => set(() => ({ user })),
 

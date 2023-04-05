@@ -207,7 +207,7 @@ export const ToolbarMiddle = () => {
           </Popover>
         </CustomToolbarItem>
       </AnimatedToolbarContainer>
-      <NameBox isEdit={isEditAvatar} name="abc" />
+      <NameBox isEdit={isEditAvatar} />
     </>
   )
 }
