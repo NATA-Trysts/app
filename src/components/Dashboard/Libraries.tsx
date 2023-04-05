@@ -71,11 +71,11 @@ export const Libraries = ({ librarySpaces }: LibrariesProps) => {
         <List>
           {listLibrarySpaces.map((item) => (
             <SpacePreviewCard
-              key={item.id}
-              imageUrl={item.imageUrl}
+              key={item._id}
+              imageUrl={item.thumbnail}
               item={item}
-              subtitle={`Created by ${item.author}`}
-              title={item.title}
+              subtitle={`Created by ${(item.author as any).username}`}
+              title={item.name}
             />
           ))}
         </List>

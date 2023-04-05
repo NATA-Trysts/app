@@ -45,11 +45,11 @@ export const Recents = ({ spaces }: RecentsProps) => {
             <List>
               {recentSpaces.map((item) => (
                 <SpacePreviewCard
-                  key={item.id}
-                  imageUrl={item.imageUrl}
+                  key={item._id}
+                  imageUrl={item.thumbnail}
                   item={item}
-                  subtitle={`Edited ${calculateTimeAgo(item.timeStamp)}`}
-                  title={item.title}
+                  subtitle={`Edited ${calculateTimeAgo(item.latestEdited)}`}
+                  title={item.name}
                 />
               ))}
             </List>

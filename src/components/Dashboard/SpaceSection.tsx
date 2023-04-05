@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 
+import axios from '@/api/axios'
 import { Space as SpaceType, useDashboardStore, useNavigationStore } from '@/stores'
 
-import { exploreSpacesFromApi, librariesSpacesFromApi, mySpacesFromApi } from './dummyData'
+import { exploreSpacesFromApi } from './dummyData'
 import { Explores } from './Explores'
 import { useDashboard } from './hooks/useDashboard'
 import { Libraries } from './Libraries'
@@ -58,16 +59,31 @@ const fetchData = (data: SpaceType[]) => {
   return wrapPromise(promise)
 }
 
-const mySpacesResource = fetchData(mySpacesFromApi)
+const fetchDataApi = (url: string) => {
+  const promise = new Promise((resolve) => {
+    axios
+      .get(url)
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((err) => {
+        resolve(err)
+      })
+  })
+
+  return wrapPromise(promise)
+}
+
+const mySpacesResourceApi = fetchDataApi('/spaces/user/x1JHPP7pqxB4e45v')
 const exploreSpacesResource = fetchData(exploreSpacesFromApi)
-const librariesSpacesResource = fetchData(librariesSpacesFromApi)
+const librariesSpacesResource = fetchDataApi('/spaces')
 
 export const SpaceSection = () => {
   const [isExpanded] = useDashboardStore((state) => [state.isExpanded])
   const [dashboardOption] = useNavigationStore((state) => [state.dashboardOption])
   const { convertArrayToMap } = useDashboard()
 
-  const mySpace = mySpacesResource.read()
+  const mySpace = mySpacesResourceApi.read()
   const exploreSpace = exploreSpacesResource.read()
   const librariesSpaceMap = convertArrayToMap(librariesSpacesResource.read())
 
