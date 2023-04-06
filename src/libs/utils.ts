@@ -1,3 +1,4 @@
+import { random } from 'lodash-es'
 import React from 'react'
 
 export const useIsomorphicLayoutEffect =
@@ -37,3 +38,5 @@ export const generateRandomNumber = (length: number) => {
 
   return digits.join('').slice(0, length)
 }
+
+export const generateAnimationString = (str: string, max: number) => `${str}.${String(random(max)).padStart(3, '0')}`
