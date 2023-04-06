@@ -1,5 +1,6 @@
+// @ts-nocheck
 import { useAnimations, useGLTF } from '@react-three/drei'
-import React, { forwardRef, useEffect } from 'react'
+import { forwardRef, useEffect } from 'react'
 import * as THREE from 'three'
 import { Group } from 'three'
 import { GLTF } from 'three-stdlib'

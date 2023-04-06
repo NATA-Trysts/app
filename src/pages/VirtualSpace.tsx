@@ -16,7 +16,6 @@ import {
   ToolbarRight,
 } from '@/components/VirtualSpace'
 import { Chat, Members, Setting } from '@/components/VirtualSpace/Ultilities'
-import { useAuth } from '@/hooks'
 import { MESSAGES } from '@/libs/constants'
 import { useAppStore, useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
@@ -96,16 +95,11 @@ const LeftSideWrapper = styled.div`
 const VirtualSpace = () => {
   const customColor = useAppStore((state) => state.customColor)
   const [selectedUltility] = useVirtualSpaceStore((state) => [state.selectedUltility])
-  const [user, setUser] = useMemberStore((state) => [state.user, state.setUser])
+  const [user] = useMemberStore((state) => [state.user])
   const roomInstance = useNetworkStore((state) => state.roomInstance)
   const addWhiteBoardMember = useVirtualSpaceStore((state) => state.addWhiteBoardMember)
   const removeWhiteBoardMember = useVirtualSpaceStore((state) => state.removeWhiteBoardMember)
   const { spaceId } = useParams()
-  const { auth } = useAuth()
-
-  useEffect(() => {
-    auth && setUser({ ...user, username: auth.user.username, handler: auth.user.handler })
-  }, [auth])
 
   const ultilityMapping = {
     chat: {

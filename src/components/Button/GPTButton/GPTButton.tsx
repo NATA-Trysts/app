@@ -140,6 +140,8 @@ const GPTButton = () => {
         position: { x: 0, y: 0, z: 0 },
         rotation: { x: 0, y: 0, z: 0 },
         color: generatedModel.color,
+        roughness: 1,
+        metalness: 0,
       })
 
       setLoading(false)
