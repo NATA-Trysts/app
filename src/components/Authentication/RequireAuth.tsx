@@ -7,10 +7,16 @@ export const RequireAuth = ({ allowedRoles }: { allowedRoles: number[] }) => {
   const { auth } = useAuth()
   const location = useLocation()
 
+  // return auth?.roles?.find((role) => allowedRoles?.includes(role)) ? (
+  //   <Outlet />
+  // ) : auth?.user ? (
+  //   <Navigate replace state={{ from: location }} to="/unauth" />
+  // ) : (
+  //   <Navigate replace state={{ from: location }} to="/login" />
+  // )
+
   return auth?.roles?.find((role) => allowedRoles?.includes(role)) ? (
     <Outlet />
-  ) : auth?.user ? (
-    <Navigate replace state={{ from: location }} to="/unauth" />
   ) : (
     <Navigate replace state={{ from: location }} to="/login" />
   )
