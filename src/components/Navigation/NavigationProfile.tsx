@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { MyInformationCard } from '@/components/MyInformationCard'
-import { useDashboardStore, useUserStore } from '@/stores'
+import { useGetMe } from '@/hooks'
+import { useDashboardStore } from '@/stores'
 
 const NavigationProfileContainer = styled.div`
   width: 100%;
@@ -38,17 +39,9 @@ const ProfileAvatar = styled.img`
 `
 
 export const NavigationProfile = () => {
-  // temporary data
-  const userInfo = {
-    avatar: 'https://i.pinimg.com/originals/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg',
-    handler: 'sonha#1234',
-    name: 'Nguyen Son Ha',
-  }
-
-  const [username, handler] = useUserStore((state) => [state.username, state.handler])
-
   const isExpanded = useDashboardStore((state) => state.isExpanded)
   const [isDisplayed, setIsDisplayed] = useState(false)
+  const { result, isLoading, error } = useGetMe()
 
   // delay display of help title to prevent flickering
   useEffect(() => {
@@ -61,22 +54,32 @@ export const NavigationProfile = () => {
 
   return (
     <NavigationProfileContainer>
-      {isDisplayed ? (
-        <>
-          <MyInformationCard avatar={userInfo.avatar} handler={handler} name={username} />
-          <ProfileCharacter>
-            <ProfileCharacterCanvas>
-              <OrbitControls />
-              <mesh>
-                <boxGeometry args={[1, 1, 1]} />
-                <meshNormalMaterial />
-              </mesh>
-            </ProfileCharacterCanvas>
-          </ProfileCharacter>
-        </>
-      ) : (
-        <ProfileAvatar src={userInfo.avatar} />
-      )}
+      <>
+        {!isLoading && !error && (
+          <>
+            {isDisplayed ? (
+              <>
+                <MyInformationCard
+                  avatar={'https://i.pinimg.com/originals/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg'}
+                  handler={result.handler}
+                  name={result.username}
+                />
+                <ProfileCharacter>
+                  <ProfileCharacterCanvas>
+                    <OrbitControls />
+                    <mesh>
+                      <boxGeometry args={[1, 1, 1]} />
+                      <meshNormalMaterial />
+                    </mesh>
+                  </ProfileCharacterCanvas>
+                </ProfileCharacter>
+              </>
+            ) : (
+              <ProfileAvatar src={'https://i.pinimg.com/originals/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg'} />
+            )}
+          </>
+        )}
+      </>
     </NavigationProfileContainer>
   )
 }
