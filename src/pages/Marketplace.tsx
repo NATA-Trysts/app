@@ -1,7 +1,8 @@
 import { Elements } from '@stripe/react-stripe-js'
 import { Appearance, StripeElementsOptions } from '@stripe/stripe-js'
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import axios from '@/api/axios'
 import ItemImageWebp from '@/assets/marketplace-item.webp'
 import PreviewItemImageWebp from '@/assets/marketplace-preview-item.webp'
 import { GradientButton } from '@/components/Button'
@@ -45,44 +46,43 @@ import {
 import CheckoutForm from '@/components/Marketplace/CheckoutForm'
 import { SubCategoryToggle } from '@/components/SubcategoryToggle'
 import { stripePromise } from '@/libs/stripe'
-import { Model } from '@/models/Model'
+import { Collection } from '@/models/Collection'
 
 type PreviewItem = {
   title: string
   description: string
 }
 
-function createModels(modelCollections: Array<{ amount: number; collection: string }>): Model[] {
-  let currentIndex = 0
+// function createModels(modelCollections: Array<{ amount: number; collection: string }>): Model[] {
+//   let currentIndex = 0
 
-  return modelCollections.reduce<Model[]>((models, current) => {
-    const collectionModels = [...Array(current.amount)].map<Model>(() => {
-      currentIndex++
+//   return modelCollections.reduce<Model[]>((models, current) => {
+//     const collectionModels = [...Array(current.amount)].map<Model>(() => {
+//       currentIndex++
 
-      return {
-        id: currentIndex,
-        name: `${current.collection} inspiration`,
-        category: 'category 1',
-        collection: current.collection,
-        description: 'Very nice item, please trust me bro',
-        customable: { primary: 'primary', secondary: 'secondary' },
-        materials: { primary: null, secondary: null },
-        resolutions: { low: 'low', medium: 'medium' },
-        thumbnail: ItemImageWebp,
-        price: 20,
-      }
-    })
+//       return {
+//         _id: currentIndex.toString(),
+//         name: `${current.collection} inspiration`,
+//         category: 'category 1',
+//         // eslint-disable-next-line camelcase
+//         collection_id: current.collection,
+//         description: 'Very nice item, please trust me bro',
+//         materials: { primary: null, secondary: null },
+//         thumbnail: ItemImageWebp,
+//         price: 20,
+//       }
+//     })
 
-    return [...models, ...collectionModels]
-  }, [])
-}
+//     return [...models, ...collectionModels]
+//   }, [])
+// }
 
-const models: Model[] = createModels([
-  { amount: 3, collection: 'Nha Trang' },
-  { amount: 5, collection: 'Hoi An' },
-  { amount: 7, collection: 'Da Lat' },
-  { amount: 2, collection: 'Da Nang' },
-])
+// const models: Model[] = createModels([
+//   { amount: 3, collection: 'Nha Trang' },
+//   { amount: 5, collection: 'Hoi An' },
+//   { amount: 7, collection: 'Da Lat' },
+//   { amount: 2, collection: 'Da Nang' },
+// ])
 
 const previewItems: PreviewItem[] = [
   { title: 'Duma Chair', description: 'The perfect blend of comfort and ' },
@@ -136,8 +136,17 @@ const MarketPlace = () => {
   const [filter, setFilter] = useState('All')
   const dialogRef = useRef<DialogRef>(null)
   const stripeDialogRef = useRef<DialogRef>(null)
+  const [collections, setCollections] = useState<Collection[]>([])
 
-  const appearance: Appearance = {
+  useEffect(() => {
+    axios.get('collections').then((res) => {
+      const collections = res.data as Collection[]
+
+      setCollections(collections.slice(0, 1000))
+    })
+  }, [])
+
+  const stripeAppearance: Appearance = {
     theme: 'night',
     variables: {
       fontFamily: 'GeneralSans-Variable, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
@@ -145,11 +154,11 @@ const MarketPlace = () => {
     },
   }
 
-  const handleBuyItem = (item: Model) => {
+  const handleBuyItem = (item: Collection) => {
     fetch('http://localhost:3000/api/payment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: { id: item.id, name: item.name, price: item.price * 100 } }),
+      body: JSON.stringify({ items: { id: item._id, name: item.name, price: item.price * 100 } }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -157,7 +166,7 @@ const MarketPlace = () => {
 
         const options: StripeElementsOptions = {
           clientSecret: data.clientSecret,
-          appearance,
+          appearance: stripeAppearance,
         }
 
         stripeDialogRef.current?.open?.(
@@ -168,7 +177,7 @@ const MarketPlace = () => {
       })
   }
 
-  const handleItemPreview = useCallback((item: Model) => {
+  const handleItemPreview = useCallback((item: Collection) => {
     const columnElements = convertItemsToMansonryColumn(previewItems, 4).map((col, colIndex) => {
       return (
         <PreviewItemColumn key={`preview-col-${colIndex}`}>
@@ -211,21 +220,21 @@ const MarketPlace = () => {
   }, [])
 
   const collectionToogleOptions = useMemo(() => {
-    //use Set to remove duplicate collections
-    const collections = [...new Set(models.map((model) => model.collection))]
-    const collectionOptions = collections.map<MultiToggleOption>((collection) => {
-      return { value: collection, display: collection }
+    //use Set to remove duplicate collection name
+    const collectionNames = [...new Set(collections.map((c) => c.name))]
+    const collectionOptions = collectionNames.map<MultiToggleOption>((name) => {
+      return { value: name, display: name }
     })
 
     return [{ value: 'All', display: 'All' }, ...collectionOptions]
-  }, [])
+  }, [collections])
 
   const items = useMemo(() => {
-    return models
-      .filter((model) => filter === 'All' || model.collection === filter)
-      .map((model) => {
+    return collections
+      .filter((collection) => filter === 'All' || collection.name === filter)
+      .map((collection) => {
         return (
-          <ItemCard key={`item-${model.id}`}>
+          <ItemCard key={`item-${collection._id}`}>
             <ItemImageContainer>
               <ItemImage src={ItemImageWebp} />
               <ItemImageOverlay>
@@ -233,8 +242,8 @@ const MarketPlace = () => {
                   <Chip color="hsla(0, 82%, 59%, 1)">Hot 🔥</Chip>
                   <Chip color="hsla(0, 32%, 71%, 1)">-25%</Chip>
                 </ItemChipGroup>
-                <BuyButton onClick={() => handleBuyItem(model)}>Buy</BuyButton>
-                <ItemImageMask onClick={() => handleItemPreview(model)}>
+                <BuyButton onClick={() => handleBuyItem(collection)}>Buy</BuyButton>
+                <ItemImageMask onClick={() => handleItemPreview(collection)}>
                   <PreviewIcon>
                     <EyeIcon />
                     <PreviewText size="small" weight="normal">
@@ -246,7 +255,7 @@ const MarketPlace = () => {
 
               <ItemDescription>
                 <MarketPlaceText size="medium" weight="normal">
-                  {model.name}
+                  {collection.name}
                 </MarketPlaceText>
                 <ItemPrice>
                   <MarketPlaceText size="medium" weight="normal">
@@ -258,7 +267,7 @@ const MarketPlace = () => {
           </ItemCard>
         )
       })
-  }, [handleItemPreview, filter])
+  }, [handleItemPreview, filter, collections])
 
   return (
     <MarketPlacePage>
