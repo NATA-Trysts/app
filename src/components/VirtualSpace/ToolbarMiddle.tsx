@@ -11,6 +11,7 @@ import { ReactComponent as Micro } from '@/assets/icons/mic.svg'
 import { ReactComponent as MicroOff } from '@/assets/icons/mic-off.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
 import { ReactComponent as Whiteboard } from '@/assets/icons/whiteboard.svg'
+import { ReactComponent as Writing } from '@/assets/icons/writing.svg'
 import { NameBox } from '@/components/EditCharacter'
 import { EmojiContent } from '@/components/EmojiContent'
 import { ListAudio, ListCamera } from '@/components/ListDevice'
@@ -238,13 +239,13 @@ export const ToolbarMiddle = () => {
                 setIsOpenWhiteBoard(!isOpenWhiteBoard)
               }}
             >
-              <Emoji />
+              <Writing />
             </WithTooltip>
           </div>
         </CustomToolbarItem>
       </AnimatedToolbarContainer>
       <NameBox isEdit={isEditAvatar} name="abc" />
-      {isOpenWhiteBoard ? (
+      {isOpenWhiteBoard && (
         <WhiteBoard
           close={() => {
             leaveWhiteBoard()
@@ -252,8 +253,6 @@ export const ToolbarMiddle = () => {
           }}
           id={roomInstance?.id || ''}
         />
-      ) : (
-        <></>
       )}
     </>
   )

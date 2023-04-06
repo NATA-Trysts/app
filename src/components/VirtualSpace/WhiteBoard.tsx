@@ -12,7 +12,6 @@ const Overlay = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0;
   transition: opacity 0.3s ease;
   z-index: 999999;
   pointer-events: auto;
@@ -62,7 +61,7 @@ export const WhiteBoard = (props: { id: string; close: () => void }) => {
         >
           <Cross color="#b792be" height={16} width={16} />
         </IconWrapper>
-        <iframe src={`https://beta.tldraw.com/r/${props.id}?nonce=${Date.now()}`}></iframe>
+        <iframe src={`https://beta.tldraw.com/r/${props.id}`}></iframe>
         <WhiteBoardMembers></WhiteBoardMembers>
       </IframeContainer>
     </Overlay>
