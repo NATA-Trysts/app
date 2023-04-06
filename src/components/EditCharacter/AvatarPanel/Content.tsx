@@ -99,7 +99,7 @@ export const Content = () => {
                 isActive={checkActive(categorySelectedId, item.id, value.id)}
                 onClick={() => handleClickItem(categorySelectedId, item.id, value.id)}
               >
-                <ItemImg src={value.img} />
+                <ItemImg src={value.thumbnail} />
               </Item>
             ))}
           </ListItem>

@@ -29,3 +29,11 @@ export const approximatelyEqual = (a: number, b: number, epsilon = 0.001) => Mat
 
 export const convertCustomFormatedResponseToObject = (str: string) =>
   JSON.parse(`{${str.match(/{([^}]+)}/)?.[1]?.replace(/'/g, '"')}}`)
+
+export const generateRandomNumber = (length: number) => {
+  const digits = new Uint8Array(length)
+
+  crypto.getRandomValues(digits)
+
+  return digits.join('').slice(0, length)
+}

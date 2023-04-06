@@ -1,7 +1,10 @@
 import produce from 'immer'
+import { omit } from 'lodash-es'
 import { create } from 'zustand'
 
 import { CustomColor } from '@/components/Commons'
+
+import { Member } from './member'
 
 type UltilityType = 'chat' | 'member' | 'setting' | null
 export type VideoLayoutType = 'above-head' | 'slide'
@@ -51,6 +54,12 @@ type VirtualSpaceState = {
 
   intersectId: string | null
   setIntersectId: (intersectId: string) => void
+
+  whiteBoardMembers: {
+    [id: string]: Member
+  }
+  addWhiteBoardMember: (member: Member) => void
+  removeWhiteBoardMember: (member: Member) => void
 }
 
 export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
@@ -97,4 +106,16 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
 
   intersectId: null,
   setIntersectId: (intersectId: string) => set({ intersectId }),
+
+  whiteBoardMembers: {},
+  addWhiteBoardMember: (member: Member) =>
+    set(
+      produce((state: VirtualSpaceState) => {
+        state.whiteBoardMembers[member.id] = member
+      }),
+    ),
+  removeWhiteBoardMember: (member: Member) =>
+    set((state) => ({
+      whiteBoardMembers: omit(state.whiteBoardMembers, [member.id]),
+    })),
 }))

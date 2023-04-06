@@ -64,46 +64,46 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
     [
       'hair',
       [
-        // {
-        //   id: 'hair-001',
-        //   itemId: 'hair.001.001',
-        // },
+        {
+          id: 'hair-001',
+          itemId: 'hair.001.001',
+        },
       ],
     ],
     [
       'upper',
       [
-        // {
-        //   id: 'upper-001',
-        //   itemId: 'upper.001.001',
-        // },
+        {
+          id: 'upper-001',
+          itemId: 'upper.001.001',
+        },
       ],
     ],
     [
       'lower',
       [
-        // {
-        //   id: 'lower-001',
-        //   itemId: 'lower.001.001',
-        // },
+        {
+          id: 'lower-001',
+          itemId: 'lower.001.001',
+        },
       ],
     ],
     [
       'shoe',
       [
-        // {
-        //   id: 'shoe-001',
-        //   itemId: 'shoe.001.001',
-        // },
+        {
+          id: 'shoe-001',
+          itemId: 'shoe.001.001',
+        },
       ],
     ],
     [
       'accessory',
       [
-        // {
-        //   id: 'accessory-001',
-        //   itemId: 'accessory.001.001',
-        // },
+        {
+          id: 'accessory-001',
+          itemId: 'accessory.001.001',
+        },
       ],
     ],
   ]),

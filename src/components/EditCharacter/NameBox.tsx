@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import styled from 'styled-components'
 
-import { useEditCharacterStore } from '@/stores'
+import { generateRandomNumber } from '@/libs/utils'
+import { useEditCharacterStore, useMemberStore } from '@/stores'
 
 const NameBoxContainer = styled(motion.div)`
   width: 232px;
@@ -47,21 +48,23 @@ const NameInput = styled.input`
 `
 
 type NameBoxProps = {
-  name: string
   isEdit?: boolean
 }
 
-export const NameBox = ({ name, isEdit = false }: NameBoxProps) => {
-  const [nameInput, setNameInput] = useState(name)
+export const NameBox = ({ isEdit = false }: NameBoxProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const setIsInputFocus = useEditCharacterStore((state) => state.setIsInputFocus)
+  const [user, setUser] = useMemberStore((state) => [state.user, state.setUser])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNameInput(e.target.value)
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setUser({
+      ...user,
+      handler: `${e.target.value.replace(/\s+/g, '').toLowerCase()}#${generateRandomNumber(4)}`,
+      username: e.target.value,
+    })
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' || e.key === 'Escape') {
+    if (inputRef.current && (e.key === 'Enter' || e.key === 'Escape')) {
       inputRef.current?.blur()
     }
   }
@@ -89,7 +92,7 @@ export const NameBox = ({ name, isEdit = false }: NameBoxProps) => {
         <NameInput
           ref={inputRef}
           placeholder="What's your name?"
-          value={nameInput}
+          value={user.username}
           onBlur={() => setIsInputFocus(false)}
           onChange={handleChange}
           onFocus={() => setIsInputFocus(true)}

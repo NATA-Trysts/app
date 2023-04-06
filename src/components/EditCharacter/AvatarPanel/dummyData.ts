@@ -8,19 +8,21 @@ const list = new Map([
         values: [
           {
             id: 'skin.001.001',
-            img: 'https://htmlcolorcodes.com/assets/images/colors/light-blue-color-solid-background-1920x1080.png',
+            thumbnail:
+              'https://htmlcolorcodes.com/assets/images/colors/light-blue-color-solid-background-1920x1080.png',
           },
           {
             id: 'skin.001.002',
-            img: 'https://htmlcolorcodes.com/assets/images/colors/dark-red-color-solid-background-1920x1080.png',
+            thumbnail: 'https://htmlcolorcodes.com/assets/images/colors/dark-red-color-solid-background-1920x1080.png',
           },
           {
             id: 'skin.001.003',
-            img: 'https://htmlcolorcodes.com/assets/images/colors/powder-blue-color-solid-background-1920x1080.png',
+            thumbnail:
+              'https://htmlcolorcodes.com/assets/images/colors/powder-blue-color-solid-background-1920x1080.png',
           },
           {
             id: 'skin.001.004',
-            img: 'https://htmlcolorcodes.com/assets/images/colors/brass-color-solid-background-1920x1080.png',
+            thumbnail: 'https://htmlcolorcodes.com/assets/images/colors/brass-color-solid-background-1920x1080.png',
           },
         ],
       },
@@ -35,11 +37,11 @@ const list = new Map([
         values: [
           {
             id: 'hair.001.001',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
           {
             id: 'hair.001.002',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
         ],
       },
@@ -54,7 +56,7 @@ const list = new Map([
         values: [
           {
             id: 'upper.001.001',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
         ],
       },
@@ -64,7 +66,7 @@ const list = new Map([
         values: [
           {
             id: 'upper.002.001',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
         ],
       },
@@ -79,11 +81,7 @@ const list = new Map([
         values: [
           {
             id: 'lower.001.001',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 'lower.001.002',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
         ],
       },
@@ -93,25 +91,7 @@ const list = new Map([
         values: [
           {
             id: 'lower.002.001',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 'lower.002.002',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-        ],
-      },
-      {
-        id: 'lower-003',
-        title: 'Skirt',
-        values: [
-          {
-            id: 'lower.003.001',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 'lower.003.002',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
         ],
       },
@@ -122,29 +102,11 @@ const list = new Map([
     [
       {
         id: 'shoe-001',
-        title: 'Sliper',
-        values: [
-          {
-            id: 'shoe.001.001',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 'shoe.001.002',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-        ],
-      },
-      {
-        id: 'shoe-002',
         title: 'Sneaker',
         values: [
           {
-            id: 'shoe.002.001',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 'shoe.002.002',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+            id: 'shoe.001.001',
+            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
         ],
       },
@@ -159,11 +121,11 @@ const list = new Map([
         values: [
           {
             id: 'accessory.001.001',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
           {
             id: 'accessory.001.002',
-            img: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
           },
         ],
       },
