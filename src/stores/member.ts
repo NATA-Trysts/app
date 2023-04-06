@@ -77,6 +77,9 @@ type MemberState = {
   nearestMembers: OtherMember<NearestMember>
   addNearestMember: (sessionId: string, nearestMember: NearestMember) => void
   removeNearestMember: (sessionId: string) => void
+
+  mainMemberAnimation: string
+  setMainMemberAnimation: (mainMemberAnimation: string) => void
 }
 
 export const useMemberStore = create<MemberState>()(
@@ -140,6 +143,13 @@ export const useMemberStore = create<MemberState>()(
               },
             },
           },
+          tattoo: {
+            id: 'tattoo.001.001',
+            material: {
+              type: 'texture',
+              value: '/textures/t.tattoo.001.001.png',
+            },
+          },
           image: 'https://i.pravatar.cc/500',
         },
       },
@@ -180,6 +190,9 @@ export const useMemberStore = create<MemberState>()(
         ),
       removeNearestMember: (sessionId: string) =>
         set((state) => ({ nearestMembers: omit(state.nearestMembers, [sessionId]) })),
+
+      mainMemberAnimation: 'idle',
+      setMainMemberAnimation: (mainMemberAnimation: string) => set(() => ({ mainMemberAnimation })),
     }),
     {
       name: 'member-storage',

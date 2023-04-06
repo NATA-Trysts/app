@@ -19,8 +19,8 @@ type EditCharacterState = {
   categorySelectedItemIds: CategorySelectedItemId
   setCategorySelectedItemIds: (categoryId: string, subcategoryId: string, itemId: string) => void
 
-  tattooSelectedId: number
-  setTattooSelectedId: (id: number) => void
+  tattooSelectedId: string
+  setTattooSelectedId: (id: string) => void
 
   color: string
   setColor: (color: string) => void
@@ -129,7 +129,7 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
       }
     }),
 
-  tattooSelectedId: -1,
+  tattooSelectedId: '',
   setTattooSelectedId: (id) => set(() => ({ tattooSelectedId: id })),
 
   color: '#A67BC2',

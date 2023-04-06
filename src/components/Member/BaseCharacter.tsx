@@ -1,9 +1,7 @@
-// @ts-nocheck
-
-import { useAnimations, useGLTF, useTexture } from '@react-three/drei'
+import { useAnimations, useGLTF } from '@react-three/drei'
 import { useGraph } from '@react-three/fiber'
 import { useEffect, useMemo, useRef } from 'react'
-import { Group } from 'three'
+import { Group, SkinnedMesh, Texture } from 'three'
 import { GLTF, SkeletonUtils } from 'three-stdlib'
 
 import { CHARACTER_CONFIG_VALUE_MAPPING } from '@/libs/constants'
@@ -67,6 +65,7 @@ type ModelProps = {
   lower?: SubcategoryActiveItem[]
   shoe?: SubcategoryActiveItem[]
   accessory?: SubcategoryActiveItem[]
+  tattoo?: Texture
 } & JSX.IntrinsicElements['group']
 
 export function BaseCharacter({
@@ -76,6 +75,7 @@ export function BaseCharacter({
   lower = [],
   shoe = [],
   accessory = [],
+  tattoo,
   ...props
 }: ModelProps) {
   const group = useRef<Group>(null)
@@ -83,10 +83,14 @@ export function BaseCharacter({
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes } = useGraph(clone) as GLTFResult
   const { actions } = useAnimations<GLTFActions>(animations, group)
+  const tattooRef = useRef<SkinnedMesh>(null)
 
-  const [tattooCircle] = useTexture(['/textures/t.tattoo.001.png'], (textures) => {
-    textures.map((t) => (t.flipY = false))
-  })
+  useEffect(() => {
+    if (tattooRef.current) {
+      tattooRef.current.material.map = tattoo
+      tattooRef.current.material.needsUpdate = true
+    }
+  }, [tattoo])
 
   useEffect(() => {
     props.action && actions[props.action].reset().fadeIn(0.2).play()
@@ -102,13 +106,8 @@ export function BaseCharacter({
 
           {/* BASE PARTS */}
           {skin.map((s) => (
-            <skinnedMesh key={s.id} geometry={nodes.body.geometry} skeleton={nodes.body.skeleton}>
-              <meshStandardMaterial
-                color={CHARACTER_CONFIG_VALUE_MAPPING[s.itemId]}
-                map={tattooCircle}
-                metalness={0}
-                roughness={1}
-              />
+            <skinnedMesh key={s.id} ref={tattooRef} geometry={nodes.body.geometry} skeleton={nodes.body.skeleton}>
+              <meshStandardMaterial color={CHARACTER_CONFIG_VALUE_MAPPING[s.itemId]} metalness={0} roughness={1} />
             </skinnedMesh>
           ))}
           <skinnedMesh geometry={nodes.Cube020.geometry} material={materials.head} skeleton={nodes.Cube020.skeleton} />
