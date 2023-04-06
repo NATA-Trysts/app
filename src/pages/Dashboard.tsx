@@ -1,8 +1,10 @@
 import styled from 'styled-components'
+import useSWR from 'swr'
 
-import { HeaderDashboard, SpaceSection } from '@/components/Dashboard'
+import { DashboardSkeleton, HeaderDashboard, SpaceSection } from '@/components/Dashboard'
 import { NavigationPanel } from '@/components/Navigation'
 import { NotificationStack } from '@/components/Notification'
+import { useAxiosPrivate } from '@/hooks'
 
 const DashboardPage = styled.div`
   width: 100vw;
@@ -20,13 +22,23 @@ const Body = styled.div`
 `
 
 const Dashboard = () => {
+  const axiosPrivate = useAxiosPrivate()
+  const fetcher = (url: string) => axiosPrivate.get(url).then((res) => res.data)
+
+  const mySpaces = useSWR('/spaces/user/x1JHPP7pqxB4e45v', fetcher)
+  const librarySpaces = useSWR('/spaces', fetcher)
+
+  if (mySpaces.error || librarySpaces.error) return <div>failed to load</div>
+
+  if (mySpaces.isLoading || librarySpaces.isLoading) return <DashboardSkeleton />
+
   return (
     <>
       <DashboardPage>
         <HeaderDashboard />
         <Body>
           <NavigationPanel />
-          <SpaceSection />
+          <SpaceSection librarySpaces={librarySpaces.data} mySpaces={mySpaces.data} />
         </Body>
       </DashboardPage>
       <NotificationStack />
