@@ -25,12 +25,6 @@ const Gap = styled.div`
   width: 2px;
 `
 
-type MyInformationCardProps = {
-  name?: string
-  handler?: string
-  avatar?: string
-}
-
 const CustomInformationCard = styled(motion.div)`
   display: flex;
   width: 200px;
@@ -57,17 +51,19 @@ const CustomOption = styled(Option)<{ hoverBackground?: string; textColor: strin
 `
 //#endregion
 
-export const MyInformationCard: FC<MyInformationCardProps> = ({
-  name = 'Anonymous',
-  handler = 'Anonymous#0000',
-  avatar = 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
-}) => {
+type MyInformationCardProps = {
+  name: string
+  handler: string
+  avatar: string
+}
+
+export const MyInformationCard: FC<MyInformationCardProps> = (props) => {
   const color = useAppStore((state) => state.customColor)
   const [isEditAvatar, setIsEditAvatar] = useVirtualSpaceStore((state) => [state.isEditAvatar, state.setIsEditAvatar])
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
 
-  const h = () => {
+  const openEditAvatar = () => {
     setIsEditAvatar(!isEditAvatar)
     setIsPopoverOpen(false)
   }
@@ -88,14 +84,14 @@ export const MyInformationCard: FC<MyInformationCardProps> = ({
           </CharacterPreviewContainer>
           <Gap />
           <MemberHandler size="medium" weight="normal">
-            {handler}
+            {props.handler}
           </MemberHandler>
           <Gap />
           <CustomOption
             hoverBackground={`hsla(${customColorHueMapping[color]}, 65%, 66%, 1)`}
             textColor={`hsla(${customColorHueMapping[color]},  25%, 66%, 1)`}
             title="Edit avatar"
-            onClick={h}
+            onClick={openEditAvatar}
           />
           <CustomOption
             customHoverBackgroundColor="#FC677B"
@@ -116,7 +112,7 @@ export const MyInformationCard: FC<MyInformationCardProps> = ({
           y: isEditAvatar ? 100 : 0,
         }}
       >
-        <InformationCard avatar={avatar} handler={handler} name={name} />
+        <InformationCard avatar={props.avatar} handler={props.handler} name={props.name} />
       </CustomInformationCard>
     </Popover>
   )

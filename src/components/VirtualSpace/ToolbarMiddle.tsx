@@ -244,7 +244,7 @@ export const ToolbarMiddle = () => {
           </div>
         </CustomToolbarItem>
       </AnimatedToolbarContainer>
-      <NameBox isEdit={isEditAvatar} name="abc" />
+      <NameBox isEdit={isEditAvatar} />
       {isOpenWhiteBoard && (
         <WhiteBoard
           close={() => {
