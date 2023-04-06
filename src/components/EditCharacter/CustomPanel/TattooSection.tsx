@@ -48,8 +48,8 @@ export const TattooSection = forwardRef<any>(function TattooSection(props, ref) 
     state.setTattooSelectedId,
   ])
 
-  const handleSelectTattoo = (id: number) => {
-    setTattooSelectedId(tattooSelectedId === id ? -1 : id)
+  const handleSelectTattoo = (id: string) => {
+    setTattooSelectedId(tattooSelectedId === id ? '' : id)
   }
 
   return (
