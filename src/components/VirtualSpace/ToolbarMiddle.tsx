@@ -11,12 +11,16 @@ import { ReactComponent as Micro } from '@/assets/icons/mic.svg'
 import { ReactComponent as MicroOff } from '@/assets/icons/mic-off.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
 import { ReactComponent as Whiteboard } from '@/assets/icons/whiteboard.svg'
+import { ReactComponent as Writing } from '@/assets/icons/writing.svg'
 import { NameBox } from '@/components/EditCharacter'
 import { EmojiContent } from '@/components/EmojiContent'
 import { ListAudio, ListCamera } from '@/components/ListDevice'
 import { Popover } from '@/components/Popover'
 import { AnimatedToolbarContainer, ToolbarItem, WithTooltip } from '@/components/Toolbar'
-import { useMemberStore, useVirtualSpaceStore } from '@/stores'
+import { MESSAGES } from '@/libs/constants'
+import { useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
+
+import { WhiteBoard } from './WhiteBoard'
 
 const Condition = styled(motion.div)`
   display: flex;
@@ -32,6 +36,8 @@ export const ToolbarMiddle = () => {
   const addOtherMembers = useMemberStore((state) => state.addOtherMembers)
   const removeOtherMembers = useMemberStore((state) => state.removeOtherMembers)
   const otherMembers = useMemberStore((state) => state.otherMembers)
+  const mainMember = useMemberStore((state) => state.mainMember)
+  const roomInstance = useNetworkStore((state) => state.roomInstance)
 
   const hmsActions = useHMSActions()
   const audioEnabled = useHMSStore(selectIsLocalAudioEnabled)
@@ -40,6 +46,7 @@ export const ToolbarMiddle = () => {
   const [isOpenCameraSetting, setIsOpenCameraSetting] = useState(false)
   const [isOpenMicSetting, setIsOpenMicSetting] = useState(false)
   const [isOpenEmoji, setIsOpenEmoji] = useState(false)
+  const [isOpenWhiteBoard, setIsOpenWhiteBoard] = useState(false)
 
   const toggleAudio = async () => await hmsActions.setLocalAudioEnabled(!audioEnabled)
 
@@ -56,6 +63,18 @@ export const ToolbarMiddle = () => {
   const updatedOtherMemberIds = useMemo(() => {
     return Object.keys(otherMembers)
   }, [otherMembers])
+
+  const joinWhiteBoard = () => {
+    roomInstance?.send(MESSAGES.WHITEBOARD.JOIN, {
+      member: mainMember,
+    })
+  }
+
+  const leaveWhiteBoard = () => {
+    roomInstance?.send(MESSAGES.WHITEBOARD.LEAVE, {
+      member: mainMember,
+    })
+  }
 
   return (
     <>
@@ -206,8 +225,35 @@ export const ToolbarMiddle = () => {
             </div>
           </Popover>
         </CustomToolbarItem>
+        <CustomToolbarItem
+          style={{
+            marginLeft: 8,
+          }}
+        >
+          <div>
+            <WithTooltip
+              content="White Board"
+              id="white-board"
+              onClick={() => {
+                joinWhiteBoard()
+                setIsOpenWhiteBoard(!isOpenWhiteBoard)
+              }}
+            >
+              <Writing />
+            </WithTooltip>
+          </div>
+        </CustomToolbarItem>
       </AnimatedToolbarContainer>
       <NameBox isEdit={isEditAvatar} />
+      {isOpenWhiteBoard && (
+        <WhiteBoard
+          close={() => {
+            leaveWhiteBoard()
+            setIsOpenWhiteBoard(false)
+          }}
+          id={roomInstance?.id || ''}
+        />
+      )}
     </>
   )
 }
