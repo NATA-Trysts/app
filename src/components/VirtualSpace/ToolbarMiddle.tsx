@@ -1,6 +1,6 @@
 import { selectIsLocalAudioEnabled, selectIsLocalVideoEnabled, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
 import { motion } from 'framer-motion'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as ArrowUp } from '@/assets/icons/arrow-up.svg'
@@ -31,8 +31,23 @@ const CustomToolbarItem = styled(ToolbarItem)`
   margin-left: 8px;
 `
 
+const OpeningWhiteBoardNotification = styled.div`
+  transform: translateY(-72px);
+  width: 310px;
+  height: 40px;
+  border-radius: 16px;
+  background-color: #2d0634;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  font-size: 12px;
+`
+
 export const ToolbarMiddle = () => {
   const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
+  // TODO: Calling api to retrieve isHost
+  const isHost = true
   const addOtherMembers = useMemberStore((state) => state.addOtherMembers)
   const removeOtherMembers = useMemberStore((state) => state.removeOtherMembers)
   const otherMembers = useMemberStore((state) => state.otherMembers)
@@ -47,6 +62,7 @@ export const ToolbarMiddle = () => {
   const [isOpenMicSetting, setIsOpenMicSetting] = useState(false)
   const [isOpenEmoji, setIsOpenEmoji] = useState(false)
   const [isOpenWhiteBoard, setIsOpenWhiteBoard] = useState(false)
+  const [isHostOpeningWhiteBoard, setIsHostOpeningWhiteBoard] = useState(false)
 
   const toggleAudio = async () => await hmsActions.setLocalAudioEnabled(!audioEnabled)
 
@@ -76,8 +92,52 @@ export const ToolbarMiddle = () => {
     })
   }
 
+  const openWhiteBoard = () => {
+    if (isHost) {
+      roomInstance?.send(MESSAGES.WHITEBOARD.HOST_OPEN)
+    }
+    joinWhiteBoard()
+    setIsOpenWhiteBoard(!isOpenWhiteBoard)
+  }
+
+  const closeWhiteBoard = () => {
+    if (isHost) {
+      roomInstance?.send(MESSAGES.WHITEBOARD.HOST_CLOSE)
+    }
+    leaveWhiteBoard()
+    setIsOpenWhiteBoard(false)
+  }
+
+  const onPressZToOpenWhiteBoard = (e: KeyboardEvent) => {
+    if (e.key === 'z') {
+      openWhiteBoard()
+    }
+  }
+
+  useEffect(() => {
+    roomInstance?.onMessage(MESSAGES.WHITEBOARD.HOST_OPEN, () => {
+      // TODO: Do we need to send host information here?
+      setIsHostOpeningWhiteBoard(true)
+
+      window.addEventListener('keypress', onPressZToOpenWhiteBoard)
+    })
+
+    roomInstance?.onMessage(MESSAGES.WHITEBOARD.HOST_CLOSE, () => {
+      setIsHostOpeningWhiteBoard(false)
+
+      window.removeEventListener('keypress', onPressZToOpenWhiteBoard)
+    })
+  }, [roomInstance])
+
   return (
     <>
+      {isHostOpeningWhiteBoard && (
+        <OpeningWhiteBoardNotification>
+          <span>
+            The host is opening a white board, press <b>Z</b> to join
+          </span>
+        </OpeningWhiteBoardNotification>
+      )}
       <AnimatedToolbarContainer
         layout
         transition={{
@@ -225,31 +285,25 @@ export const ToolbarMiddle = () => {
             </div>
           </Popover>
         </CustomToolbarItem>
-        <CustomToolbarItem
-          style={{
-            marginLeft: 8,
-          }}
-        >
-          <div>
-            <WithTooltip
-              content="White Board"
-              id="white-board"
-              onClick={() => {
-                joinWhiteBoard()
-                setIsOpenWhiteBoard(!isOpenWhiteBoard)
-              }}
-            >
-              <Writing />
-            </WithTooltip>
-          </div>
-        </CustomToolbarItem>
+        {isHost && (
+          <CustomToolbarItem
+            style={{
+              marginLeft: 8,
+            }}
+          >
+            <div>
+              <WithTooltip content="White Board" id="white-board" onClick={() => openWhiteBoard()}>
+                <Writing />
+              </WithTooltip>
+            </div>
+          </CustomToolbarItem>
+        )}
       </AnimatedToolbarContainer>
       <NameBox isEdit={isEditAvatar} />
       {isOpenWhiteBoard && (
         <WhiteBoard
           close={() => {
-            leaveWhiteBoard()
-            setIsOpenWhiteBoard(false)
+            closeWhiteBoard()
           }}
           id={roomInstance?.id || ''}
         />

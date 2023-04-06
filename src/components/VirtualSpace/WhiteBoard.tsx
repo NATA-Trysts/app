@@ -48,6 +48,16 @@ const IconWrapper = styled.div.attrs({
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  z-index: 1;
+`
+
+const SharedButtonMask = styled.div`
+  position: absolute;
+  top: 4px;
+  right: 0;
+  width: 100px;
+  height: 52px;
+  background: #f9fafb;
 `
 
 export const WhiteBoard = (props: { id: string; close: () => void }) => {
@@ -61,6 +71,7 @@ export const WhiteBoard = (props: { id: string; close: () => void }) => {
         >
           <Cross color="#b792be" height={16} width={16} />
         </IconWrapper>
+        <SharedButtonMask></SharedButtonMask>
         <iframe src={`https://beta.tldraw.com/r/${props.id}`}></iframe>
         <WhiteBoardMembers></WhiteBoardMembers>
       </IframeContainer>
