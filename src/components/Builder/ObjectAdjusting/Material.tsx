@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import { ReactComponent as UploadIcon } from '@/assets/icons/thumbnail-upload.svg'
 import { Text } from '@/components/Commons'
-import { useBuilderStore } from '@/stores'
 
 const MaterialSectionContainer = styled.div`
   width: 100%;
@@ -72,7 +71,6 @@ const imageTemp =
   'https://p.turbosquid.com/ts-thumb/C3/gTzWfL/mr/proceduralmaterialpack5/jpg/1642958199/600x600/fit_q87/fd1a0c74d3e2829a3b04846dac6b7ea3fd370a97/proceduralmaterialpack5.jpg'
 
 export const Material = () => {
-  const updateModelTexture = useBuilderStore((state) => state.updateModelTexture)
   const [image, setImage] = useState(imageTemp)
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +81,6 @@ export const Material = () => {
 
       reader.readAsDataURL(file)
       reader.onload = () => {
-        updateModelTexture(reader.result as string)
         setImage(reader.result as string)
       }
     }

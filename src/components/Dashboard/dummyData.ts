@@ -1,194 +1,84 @@
 import { Space as SpaceType } from '@/stores'
 
-export const mySpacesFromApi: SpaceType[] = [
-  {
-    _id: '1',
-    name: 'Nguyen Son Ha Wedding 1',
-    subtitle: 'Edited 14 hours ago',
-    thumbnail: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
-    latestEdited: 1677675600000,
-    author: 'Tien Thinh',
-    authorId: '1234',
-    category: 'families',
-  },
-  {
-    _id: '2',
-    name: 'Nguyen Son Ha Wedding 2',
-    subtitle: 'Edited 14 hours ago',
-    thumbnail: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
-    latestEdited: 1677639600000,
-    author: 'Tien Thinh',
-    authorId: '1234',
-    category: 'families',
-  },
-  {
-    _id: '3',
-    name: 'Nguyen Son Ha Wedding 3',
-    subtitle: 'Edited 14 hours ago',
-    thumbnail: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
-    latestEdited: 1672542000000,
-    author: 'Tien Thinh',
-    authorId: '1234',
-    category: 'families',
-  },
-  {
-    _id: '4',
-    name: 'Nguyen Son Ha Wedding 4',
-    subtitle: 'Edited 14 hours ago',
-    thumbnail: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
-    latestEdited: 1675220400000,
-    author: 'Tien Thinh',
-    authorId: '1234',
-    category: 'families',
-  },
-  {
-    _id: '13',
-    name: 'Space Latest',
-    subtitle: 'Edited 14 hours ago',
-    thumbnail: 'https://www.boredpanda.com/blog/wp-content/uploads/2022/09/cat-memes-catslovecatnip-cover_800.png',
-    latestEdited: 1677679680000,
-    author: 'Tien Thinh',
-    authorId: '1234',
-    category: 'families',
-  },
-]
-
 export const exploreSpacesFromApi: SpaceType[] = [
   {
     _id: '5',
     name: 'Nguyen Son Ha Wedding',
-    subtitle: 'Edited 14 hours ago',
+
     thumbnail: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     latestEdited: 1672628400000,
-    author: 'Son Ha',
-    authorId: '5678',
+
+    author: '5678',
     category: 'families',
   },
   {
     _id: '6',
     name: 'Nguyen Son Ha Wedding',
-    subtitle: 'Edited 14 hours ago',
+
     thumbnail: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     latestEdited: 1672714800000,
-    author: 'Son Ha',
-    authorId: '5678',
+
+    author: '5678',
     category: 'families',
   },
   {
     _id: '7',
     name: 'Nguyen Son Ha Wedding',
-    subtitle: 'Edited 14 hours ago',
+
     thumbnail: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     latestEdited: 1672887600000,
-    author: 'Son Ha',
-    authorId: '5678',
+
+    author: '5678',
     category: 'families',
   },
   {
     _id: '8',
     name: 'Nguyen Son Ha Wedding',
-    subtitle: 'Edited 14 hours ago',
+
     thumbnail: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     latestEdited: 1675566000000,
-    author: 'Son Ha',
-    authorId: '5678',
+
+    author: '5678',
     category: 'families',
   },
   {
     _id: '9',
     name: 'Nguyen Son Ha Wedding',
-    subtitle: 'Edited 14 hours ago',
+
     thumbnail: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     latestEdited: 1675998000000,
-    author: 'Son Ha',
-    authorId: '5678',
+
+    author: '5678',
     category: 'families',
   },
   {
     _id: '10',
     name: 'Nguyen Son Ha Wedding',
-    subtitle: 'Edited 14 hours ago',
+
     thumbnail: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     latestEdited: 1614556800000,
-    author: 'Son Ha',
-    authorId: '5678',
+
+    author: '5678',
     category: 'families',
   },
   {
     _id: '11',
     name: 'Nguyen Son Ha Wedding',
-    subtitle: 'Edited 14 hours ago',
+
     thumbnail: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     latestEdited: 1614556800000,
-    author: 'Son Ha',
-    authorId: '5678',
+
+    author: '5678',
     category: 'families',
   },
   {
     _id: '12',
     name: 'Nguyen Son Ha Wedding',
-    subtitle: 'Edited 14 hours ago',
-    thumbnail: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
-    latestEdited: 1614556800000,
-    author: 'Son Ha',
-    authorId: '5678',
-    category: 'families',
-  },
-]
 
-export const librariesSpacesFromApi: SpaceType[] = [
-  {
-    _id: '14',
-    name: 'Nguyen Son Ha Wedding',
-    subtitle: 'Edited 14 hours ago',
     thumbnail: 'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg',
     latestEdited: 1614556800000,
-    author: 'Son Ha',
-    category: 'offices',
-  },
-  {
-    _id: '15',
-    name: 'Tien Thinh Home',
-    subtitle: 'Edited 14 hours ago',
-    thumbnail: 'https://www.boredpanda.com/blog/wp-content/uploads/2022/09/cat-memes-catslovecatnip-cover_800.png',
-    latestEdited: 1614556800000,
-    author: 'Tien Thinh',
-    category: 'families',
-  },
-  {
-    _id: '16',
-    name: 'Tien Thinh Home',
-    subtitle: 'Edited 14 hours ago',
-    thumbnail: 'https://www.boredpanda.com/blog/wp-content/uploads/2022/09/cat-memes-catslovecatnip-cover_800.png',
-    latestEdited: 1614556800000,
-    author: 'Tien Thinh',
-    category: 'families',
-  },
-  {
-    _id: '17',
-    name: 'Tien Thinh Home',
-    subtitle: 'Edited 14 hours ago',
-    thumbnail: 'https://www.boredpanda.com/blog/wp-content/uploads/2022/09/cat-memes-catslovecatnip-cover_800.png',
-    latestEdited: 1614556800000,
-    author: 'Tien Thinh',
-    category: 'families',
-  },
-  {
-    _id: '18',
-    name: 'Tien Thinh Home',
-    subtitle: 'Edited 14 hours ago',
-    thumbnail: 'https://www.boredpanda.com/blog/wp-content/uploads/2022/09/cat-memes-catslovecatnip-cover_800.png',
-    latestEdited: 1614556800000,
-    author: 'Tien Thinh',
-    category: 'families',
-  },
-  {
-    _id: '19',
-    name: 'Tien Thinh Home',
-    subtitle: 'Edited 14 hours ago',
-    thumbnail: 'https://www.boredpanda.com/blog/wp-content/uploads/2022/09/cat-memes-catslovecatnip-cover_800.png',
-    latestEdited: 1614556800000,
-    author: 'Tien Thinh',
+
+    author: '5678',
     category: 'families',
   },
 ]
