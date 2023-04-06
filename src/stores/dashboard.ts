@@ -2,13 +2,11 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 export type Space = {
-  id: string
-  title: string
-  subtitle: string
-  imageUrl: string
-  timeStamp: number
+  _id: string
+  name: string
+  thumbnail: string
+  latestEdited: number
   author: string
-  authorId?: string
   category: string
 }
 

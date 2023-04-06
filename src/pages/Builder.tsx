@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
-import axios from '@/api/axios'
 import { BuilderPanel, BuilderSettings, BuilderToolbar, Scene as BuilderScene } from '@/components/Builder'
-// import { BuilderSettings, BuilderToolbar } from '@/components/Builder'
 import { NotificationStack } from '@/components/Notification'
-import { SpaceModel, useBuilderStore } from '@/stores'
+import { useAxiosPrivate } from '@/hooks'
+import { useBuilderStore } from '@/stores'
 
 const BuilderPage = styled.div`
   position: relative;
@@ -15,37 +15,39 @@ const BuilderPage = styled.div`
   user-select: none;
 `
 
-const tempSpaceId = 'Dvhq09IY6CFwpj75'
-
-const space = {
-  name: '',
-  password: '',
-  isProtected: false,
-}
-let models: SpaceModel[] = []
-
-axios
-  .get(`/spaces/${tempSpaceId}`)
-  .then((res) => {
-    const spaceData = res.data
-
-    document.title = `🔨 ${spaceData.name} | Trysts`
-
-    space.name = spaceData.name
-    space.password = spaceData.password
-    space.isProtected = spaceData.password !== ''
-    models = [...spaceData.models]
-  })
-  .catch((err) => {
-    console.error(err)
-  })
-
 const Builder = () => {
   const [setSpaceInformation, setModels] = useBuilderStore((state) => [state.setSpaceInformation, state.setModels])
+  const { fileId } = useParams()
+  const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
-    setSpaceInformation(space)
-    setModels(models as SpaceModel[])
+    let ignore = false
+
+    axiosPrivate
+      .get(`/spaces/${fileId}`)
+      .then((res) => {
+        if (ignore) return
+        const spaceData = res.data
+
+        document.title = `🔨 ${spaceData.name} | Trysts`
+
+        setSpaceInformation({
+          name: spaceData.name,
+          password: spaceData.password,
+          isProtected: spaceData.password !== '',
+        })
+        setModels([...spaceData.models])
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+
+    // setSpaceInformation(space)
+    // setModels(models as SpaceModel[])
+
+    return () => {
+      ignore = true
+    }
   }, [])
 
   return (

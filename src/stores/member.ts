@@ -45,7 +45,7 @@ export type Avatar = {
 }
 
 export type User = {
-  id?: string
+  _id?: string
   username: string
   handler: string
   email?: string

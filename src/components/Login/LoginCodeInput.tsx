@@ -8,7 +8,7 @@ import { ReactComponent as OutlookIcon } from '@/assets/icons/outlook.svg'
 import { Text } from '@/components/Commons'
 import { useAuth, useNotification } from '@/hooks'
 import { TRYSTS_EMAIL_LOGIN } from '@/libs/constants'
-import { useLoginStore, useStepStore, useUserStore } from '@/stores'
+import { useLoginStore, useMemberStore, useStepStore } from '@/stores'
 
 import { CodeField } from './CodeField'
 import { MailDirect } from './MailDirect'
@@ -108,12 +108,7 @@ export const LoginCodeInput = () => {
   const { addNotification } = useNotification()
   const [email, fullHash] = useLoginStore((state) => [state.email, state.fullHash])
   const setStep = useStepStore((state) => state.setStep)
-  const [setUsername, setHandler, setEmail, setId] = useUserStore((state) => [
-    state.setUsername,
-    state.setHandler,
-    state.setEmail,
-    state.setId,
-  ])
+  const [user, setUser] = useMemberStore((state) => [state.user, state.setUser])
 
   const handleCancel = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -156,7 +151,7 @@ export const LoginCodeInput = () => {
   const ok = (e: { preventDefault: () => void }) => {
     e.preventDefault()
     // pretent that user is authenticated
-    const user = {
+    const userTemp = {
       username: 'sonha',
       email: '@gmail',
       _id: '123',
@@ -165,7 +160,11 @@ export const LoginCodeInput = () => {
     const roles = [1000]
     const accessToken = '123'
 
-    setAuth({ user, roles, accessToken })
+    setAuth({ roles, accessToken })
+    setUser({
+      ...userTemp,
+      ...user,
+    })
     navigate(from, { replace: true })
   }
 
@@ -189,7 +188,7 @@ export const LoginCodeInput = () => {
         .then((res) => {
           if (!ignore) {
             if (res.status === 200) {
-              const user = res.data.user
+              const userFromApi = res.data.user
               const { accessToken } = res.data
 
               setCheckStatus('success')
@@ -197,10 +196,10 @@ export const LoginCodeInput = () => {
                 roles: [1000],
                 accessToken,
               })
-              setId(user._id)
-              setUsername(user.username)
-              setHandler(user.handler)
-              setEmail(user.email)
+              setUser({
+                ...userFromApi,
+                ...user,
+              })
               navigate('/dashboard', { replace: true })
             } else {
               setIsCompleted(false)

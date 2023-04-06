@@ -1,8 +1,11 @@
+import { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { HeaderDashboard, SpaceSection } from '@/components/Dashboard'
+import { exploreSpacesFromApi, HeaderDashboard, SpaceSection } from '@/components/Dashboard'
 import { NavigationPanel } from '@/components/Navigation'
 import { NotificationStack } from '@/components/Notification'
+import { useAxiosPrivate } from '@/hooks'
+import { useDashboardStore, useMemberStore } from '@/stores'
 
 const DashboardPage = styled.div`
   width: 100vw;
@@ -20,6 +23,29 @@ const Body = styled.div`
 `
 
 const Dashboard = () => {
+  const [user] = useMemberStore((state) => [state.user])
+  const [setMySpaces, setExploreSpaces, setLibrarySpaces] = useDashboardStore((state) => [
+    state.setMySpaces,
+    state.setExploreSpaces,
+    state.setLibrarySpaces,
+  ])
+
+  const axiosPrivate = useAxiosPrivate()
+
+  useEffect(() => {
+    // temporary using data, will be replaced with api call
+    setExploreSpaces(exploreSpacesFromApi)
+
+    // define promise and using promise all to fetch spaces
+    const mySpacesPromise = axiosPrivate.get(`/spaces/user/${user._id}`)
+    const librarySpacesPromise = axiosPrivate.get(`/spaces`)
+
+    Promise.all([mySpacesPromise, librarySpacesPromise]).then((res) => {
+      setMySpaces(res[0].data)
+      setLibrarySpaces(res[1].data)
+    })
+  }, [])
+
   return (
     <>
       <DashboardPage>

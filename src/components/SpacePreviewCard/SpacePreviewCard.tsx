@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { Space as SpaceType, useDashboardStore } from '@/stores'
+import { Space as SpaceType, useDashboardStore, useMemberStore } from '@/stores'
 
 import { CardBackgroundShadow } from './CardBackgroundShadow'
 import { PreviewCardContent } from './PreviewCardContent'
@@ -21,9 +21,6 @@ type SpacePreviewCardProps = {
   isActive?: boolean
 }
 
-// temp
-const currentUserId = '1234'
-
 export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePreviewCardProps) => {
   const [selectedSpacePreview, setSelectedSpacePreview] = useDashboardStore((state) => [
     state.selectedSpacePreview,
@@ -31,9 +28,10 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
   ])
   const [isHovered, setIsHovered] = useState(false)
   const navigate = useNavigate()
+  const [user] = useMemberStore((state) => [state.user])
 
   const handleClick = () => {
-    if (item.id === selectedSpacePreview?.id) {
+    if (item._id === selectedSpacePreview?._id) {
       setSelectedSpacePreview(null)
     } else {
       setSelectedSpacePreview(item)
@@ -41,10 +39,10 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
   }
 
   const handleDoubleClick = () => {
-    if (item.authorId === currentUserId) {
-      navigate(`/files/${item.id}`)
+    if (item.author === user._id) {
+      navigate(`/files/${item._id}`)
     } else {
-      navigate(`/${item.id}`)
+      navigate(`/${item._id}`)
     }
   }
 
@@ -55,13 +53,13 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <CardBackgroundShadow isActive={item.id === selectedSpacePreview?.id} isHovered={isHovered} />
+      <CardBackgroundShadow isActive={item._id === selectedSpacePreview?._id} isHovered={isHovered} />
       <PreviewCardContent
         imageUrl={imageUrl}
-        isActive={item.id === selectedSpacePreview?.id}
+        isActive={item._id === selectedSpacePreview?._id}
         isHovered={isHovered}
-        spaceAuthorId={item.authorId || '1234'} // temp
-        spaceId={item.id}
+        spaceAuthorId={(item.author as any)._id}
+        spaceId={item._id}
         subtitle={subtitle}
         title={title}
         onClickThreeDots={(e) => {
