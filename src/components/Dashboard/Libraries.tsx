@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { SpacePreviewCard } from '@/components/SpacePreviewCard'
 import { SubCategoryToggle } from '@/components/SubcategoryToggle'
-import { Space as SpaceType } from '@/stores'
+import { Space as SpaceType, useDashboardStore } from '@/stores'
 
 const LibrariesContainer = styled.div`
   width: 100%;
@@ -25,22 +25,17 @@ const List = styled.div`
   margin: 8px 0;
 `
 
-type LibrariesProps = {
-  librarySpaces: Map<string, SpaceType[]>
-}
+export const Libraries = () => {
+  const [librarySpaces] = useDashboardStore((state) => [state.librarySpaces])
 
-export const Libraries = ({ librarySpaces }: LibrariesProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [listLibrarySpaces, setListLibrarySpaces] = useState<SpaceType[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
 
-  const handleChange = (data: any) => {
+  const handleChange = useCallback((data: any) => {
     setSelectedCategory(data)
-  }
+  }, [])
 
   useEffect(() => {
-    if (isLoading) return
-
     const myArray = Array.from(librarySpaces.values())
 
     if (selectedCategory === 'all') {
@@ -48,13 +43,7 @@ export const Libraries = ({ librarySpaces }: LibrariesProps) => {
     } else {
       setListLibrarySpaces(librarySpaces.get(selectedCategory) || [])
     }
-  }, [selectedCategory, librarySpaces, isLoading])
-
-  useEffect(() => {
-    if (librarySpaces.size > 0) {
-      setIsLoading(false)
-    }
-  }, [librarySpaces])
+  }, [selectedCategory])
 
   return (
     <LibrariesContainer>

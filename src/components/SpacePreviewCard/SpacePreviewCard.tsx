@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { useAuth } from '@/hooks'
-import { Space as SpaceType, useDashboardStore } from '@/stores'
+import { Space as SpaceType, useDashboardStore, useMemberStore } from '@/stores'
 
 import { CardBackgroundShadow } from './CardBackgroundShadow'
 import { PreviewCardContent } from './PreviewCardContent'
@@ -29,8 +28,7 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
   ])
   const [isHovered, setIsHovered] = useState(false)
   const navigate = useNavigate()
-
-  const { auth } = useAuth()
+  const [user] = useMemberStore((state) => [state.user])
 
   const handleClick = () => {
     if (item._id === selectedSpacePreview?._id) {
@@ -41,7 +39,7 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
   }
 
   const handleDoubleClick = () => {
-    if (item.author === auth?.user._id) {
+    if (item.author === user._id) {
       navigate(`/files/${item._id}`)
     } else {
       navigate(`/${item._id}`)

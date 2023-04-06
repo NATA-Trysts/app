@@ -4,7 +4,8 @@ import styled from 'styled-components'
 
 import { ReactComponent as ThreeDot } from '@/assets/icons/three-dot.svg'
 import { Option, Popover } from '@/components/Popover'
-import { useAuth, useCopyToClipboard } from '@/hooks'
+import { useCopyToClipboard } from '@/hooks'
+import { useMemberStore } from '@/stores'
 
 const MemberContainer = styled.div`
   padding: 8px;
@@ -30,7 +31,7 @@ type Owner = 'owner' | 'guest'
 export const CardOptions = ({ spaceAuthorId, spaceId, onClickThreeDots }: CardOptionsProps) => {
   const navigate = useNavigate()
   const { copy } = useCopyToClipboard()
-  const { auth } = useAuth()
+  const [user] = useMemberStore((state) => [state.user])
 
   const handleHostClick = () => {
     navigate(`/${spaceId}`)
@@ -72,7 +73,7 @@ export const CardOptions = ({ spaceAuthorId, spaceId, onClickThreeDots }: CardOp
   const [ownerStatus, setOwnerStatus] = useState<Owner>('owner')
 
   useEffect(() => {
-    setOwnerStatus(spaceAuthorId === auth?.user._id ? 'owner' : 'guest')
+    setOwnerStatus(spaceAuthorId === user._id ? 'owner' : 'guest')
   }, [spaceAuthorId])
 
   return (

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
 import { SpacePreviewCard } from '@/components/SpacePreviewCard'
-import { Space as SpaceType } from '@/stores'
+import { useDashboardStore } from '@/stores'
 
 import { useDashboard } from './hooks/useDashboard'
 
@@ -23,11 +23,9 @@ const List = styled.div`
   margin: 8px 0;
 `
 
-type ExploresProps = {
-  spaces: SpaceType[]
-}
+export const Explores = () => {
+  const [spaces] = useDashboardStore((state) => [state.exploreSpaces])
 
-export const Explores = ({ spaces }: ExploresProps) => {
   const { calculateTimeAgo } = useDashboard()
 
   return (

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import { SpacePreviewCard } from '@/components/SpacePreviewCard'
-import { Space as SpaceType } from '@/stores'
+import { useDashboardStore } from '@/stores'
 
 import { useDashboard } from './hooks/useDashboard'
 
@@ -18,11 +18,9 @@ const List = styled.div`
   margin: 8px 0;
 `
 
-type MyFilesProps = {
-  spaces: SpaceType[]
-}
+export const MyFiles = () => {
+  const [spaces] = useDashboardStore((state) => [state.mySpaces])
 
-export const MyFiles = ({ spaces }: MyFilesProps) => {
   const { calculateTimeAgo } = useDashboard()
 
   return (

@@ -1,10 +1,11 @@
+import { useEffect } from 'react'
 import styled from 'styled-components'
-import useSWR from 'swr'
 
-import { DashboardSkeleton, HeaderDashboard, SpaceSection } from '@/components/Dashboard'
+import { exploreSpacesFromApi, HeaderDashboard, SpaceSection } from '@/components/Dashboard'
 import { NavigationPanel } from '@/components/Navigation'
 import { NotificationStack } from '@/components/Notification'
 import { useAxiosPrivate } from '@/hooks'
+import { useDashboardStore, useMemberStore } from '@/stores'
 
 const DashboardPage = styled.div`
   width: 100vw;
@@ -22,15 +23,28 @@ const Body = styled.div`
 `
 
 const Dashboard = () => {
+  const [user] = useMemberStore((state) => [state.user])
+  const [setMySpaces, setExploreSpaces, setLibrarySpaces] = useDashboardStore((state) => [
+    state.setMySpaces,
+    state.setExploreSpaces,
+    state.setLibrarySpaces,
+  ])
+
   const axiosPrivate = useAxiosPrivate()
-  const fetcher = (url: string) => axiosPrivate.get(url).then((res) => res.data)
 
-  const mySpaces = useSWR('/spaces/user/x1JHPP7pqxB4e45v', fetcher)
-  const librarySpaces = useSWR('/spaces', fetcher)
+  useEffect(() => {
+    // temporary using data, will be replaced with api call
+    setExploreSpaces(exploreSpacesFromApi)
 
-  if (mySpaces.error || librarySpaces.error) return <div>failed to load</div>
+    // define promise and using promise all to fetch spaces
+    const mySpacesPromise = axiosPrivate.get(`/spaces/user/${user._id}`)
+    const librarySpacesPromise = axiosPrivate.get(`/spaces`)
 
-  if (mySpaces.isLoading || librarySpaces.isLoading) return <DashboardSkeleton />
+    Promise.all([mySpacesPromise, librarySpacesPromise]).then((res) => {
+      setMySpaces(res[0].data)
+      setLibrarySpaces(res[1].data)
+    })
+  }, [])
 
   return (
     <>
@@ -38,7 +52,7 @@ const Dashboard = () => {
         <HeaderDashboard />
         <Body>
           <NavigationPanel />
-          <SpaceSection librarySpaces={librarySpaces.data} mySpaces={mySpaces.data} />
+          <SpaceSection />
         </Body>
       </DashboardPage>
       <NotificationStack />
