@@ -1,10 +1,5 @@
-export type ModelResolution = {
-  low: string
-  medium: string
-}
-
 export type Material = {
-  type: 'color' | 'texture' | 'shader'
+  type: 'texture' | 'shader'
   value: string | null
 }
 
@@ -13,20 +8,13 @@ export type ModelMaterial = {
   secondary: Material | null
 }
 
-export type ModelCustomable = {
-  primary: string
-  secondary: string
-}
-
 export type Model = {
-  id: number
+  _id: string
   name: string
   category: string
-  collection: string
+  collection_id: string
   description: string
   thumbnail: string
-  resolutions: ModelResolution
   materials: ModelMaterial
-  customable: ModelCustomable
   price: number
 }

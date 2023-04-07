@@ -144,6 +144,10 @@ export const BuyButton = styled(GradientButton)`
   ${ItemImageOverlay}:hover &:not(:disabled) {
     opacity: 1;
   }
+
+  :disabled {
+    opacity: 1;
+  }
 `
 
 export const ItemImageContainer = styled.div`
