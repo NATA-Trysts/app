@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 
-import { Header } from '@/components/Header'
+import { Header } from '@/components/Commons/Header'
 import { PayButtons, Plans, PricingTitle } from '@/components/Pricing'
 import { PricingModal } from '@/components/Pricing/PricingModal'
 

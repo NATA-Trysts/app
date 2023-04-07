@@ -76,6 +76,7 @@ const Spinner = () => {
 
 type CheckoutFormProp = {
   total: number
+  onSucceed?: () => void
 }
 
 export default function CheckoutForm(props: CheckoutFormProp) {
@@ -142,6 +143,7 @@ export default function CheckoutForm(props: CheckoutFormProp) {
       case 'succeeded':
         setReponsed(true)
         setMessage('Payment succeeded!')
+        props.onSucceed?.()
         break
       case 'processing':
         setReponsed(true)
