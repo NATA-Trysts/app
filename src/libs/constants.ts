@@ -122,11 +122,11 @@ const PLAN_ICON_FILTER = {
 
 const STRIPE_API_KEY = import.meta.env.VITE_STRIPE_PUBLIC_KEY
 
-type IValueMapping = {
-  [key: string]: string
+type ValueMapping<T> = {
+  [key: string]: T
 }
 
-const CHARACTER_CONFIG_VALUE_MAPPING: IValueMapping = {
+const CHARACTER_CONFIG_VALUE_MAPPING: ValueMapping<string> = {
   'skin.001.001': '#2b9148',
   'skin.001.002': '#120ead',
   'skin.001.003': '#6e106a',
@@ -146,7 +146,29 @@ const CHARACTER_CONFIG_VALUE_MAPPING: IValueMapping = {
   'accessory.001.002': 'accessory001002',
 }
 
+const ANIMATION_COUNT_MAPPING: ValueMapping<number> = {
+  angry: 1,
+  bow: 1,
+  cheer: 1,
+  clap: 1,
+  dance: 1,
+  discuss: 1,
+  fall: 3,
+  hit: 3,
+  idle: 5,
+  kick: 4,
+  lay: 1,
+  punch: 3,
+  run: 1,
+  sad: 2,
+  sit: 4,
+  victory: 1,
+  wave: 1,
+  walk: 1,
+}
+
 export {
+  ANIMATION_COUNT_MAPPING,
   CHARACTER_CONFIG_VALUE_MAPPING,
   COLOR_PICKER_LIST,
   FILTER_ICON_TO_WHITE,
@@ -164,4 +186,4 @@ export {
   TAB_CATEGORY_COLOR,
   TRYSTS_EMAIL_LOGIN,
 }
-export type { NotificationType }
+export type { NotificationType, ValueMapping }
