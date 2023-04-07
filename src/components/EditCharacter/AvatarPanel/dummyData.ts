@@ -162,7 +162,7 @@ const dummyData = {
                 },
               },
               {
-                id: 'skin.001.003',
+                id: 'skin.001.001.003',
                 thumbnail:
                   'https://htmlcolorcodes.com/assets/images/colors/powder-blue-color-solid-background-1920x1080.png',
                 material: {
@@ -171,7 +171,7 @@ const dummyData = {
                 },
               },
               {
-                id: 'skin.001.004',
+                id: 'skin.001.001.004',
                 thumbnail: 'https://htmlcolorcodes.com/assets/images/colors/brass-color-solid-background-1920x1080.png',
                 material: {
                   type: 'texture',

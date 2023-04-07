@@ -155,7 +155,7 @@ export function BaseCharacter({
             <skinnedMesh
               key={u.id}
               geometry={nodes[CHARACTER_CONFIG_VALUE_MAPPING[u.itemId]].geometry}
-              material={nodes.upper001001.material}
+              material={nodes.upper001001001.material}
               skeleton={nodes[CHARACTER_CONFIG_VALUE_MAPPING[u.itemId]].skeleton}
             />
           ))}
@@ -165,7 +165,7 @@ export function BaseCharacter({
             <skinnedMesh
               key={l.id}
               geometry={nodes[CHARACTER_CONFIG_VALUE_MAPPING[l.itemId]].geometry}
-              material={nodes.lower001001.material}
+              material={nodes.lower001001001.material}
               skeleton={nodes[CHARACTER_CONFIG_VALUE_MAPPING[l.itemId]].skeleton}
             />
           ))}
@@ -175,7 +175,7 @@ export function BaseCharacter({
             <skinnedMesh
               key={s.id}
               geometry={nodes[CHARACTER_CONFIG_VALUE_MAPPING[s.itemId]].geometry}
-              material={nodes.shoe001001.material}
+              material={nodes.shoe001001001.material}
               skeleton={nodes[CHARACTER_CONFIG_VALUE_MAPPING[s.itemId]].skeleton}
             />
           ))}
@@ -185,7 +185,7 @@ export function BaseCharacter({
             <skinnedMesh
               key={a.id}
               geometry={nodes[CHARACTER_CONFIG_VALUE_MAPPING[a.itemId]].geometry}
-              material={nodes.accessory001001.material}
+              material={nodes.accessory001001001.material}
               skeleton={nodes[CHARACTER_CONFIG_VALUE_MAPPING[a.itemId]].skeleton}
             />
           ))}
