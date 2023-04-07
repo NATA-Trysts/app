@@ -56,7 +56,7 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
       'skin',
       [
         {
-          id: 'skin-001',
+          id: 'skin.001',
           itemId: 'skin.001.001',
         },
       ],
@@ -65,7 +65,7 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
       'hair',
       [
         {
-          id: 'hair-001',
+          id: 'hair.001',
           itemId: 'hair.001.001',
         },
       ],
@@ -74,7 +74,7 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
       'upper',
       [
         {
-          id: 'upper-001',
+          id: 'upper.001',
           itemId: 'upper.001.001',
         },
       ],
@@ -83,7 +83,7 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
       'lower',
       [
         {
-          id: 'lower-001',
+          id: 'lower.001',
           itemId: 'lower.001.001',
         },
       ],
@@ -92,7 +92,7 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
       'shoe',
       [
         {
-          id: 'shoe-001',
+          id: 'shoe.001',
           itemId: 'shoe.001.001',
         },
       ],
@@ -101,7 +101,7 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
       'accessory',
       [
         {
-          id: 'accessory-001',
+          id: 'accessory.001',
           itemId: 'accessory.001.001',
         },
       ],
