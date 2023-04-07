@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useMemberStore } from '@/stores'
+import { useMemberStore, User } from '@/stores'
 
 import { useAuth } from './useAuth'
 import { useAxiosPrivate } from './useAxiosPrivate'
@@ -10,7 +10,7 @@ export const useGetMe = () => {
   const axiosPrivate = useAxiosPrivate()
   const [user, setUser] = useMemberStore((state) => [state.user, state.setUser])
 
-  const [result, setResult] = useState<any>(null)
+  const [result, setResult] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<string>('')
 

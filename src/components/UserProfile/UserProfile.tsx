@@ -1,17 +1,20 @@
 import styled from 'styled-components'
 
 import userImg from '@/assets/trysts.png'
+import { useGetMe } from '@/hooks'
 
 export type UserProfileProps = {
   className?: string
 }
 
 export const UserProfile = ({ ...props }: UserProfileProps) => {
+  const { result: user } = useGetMe()
+
   return (
     <UserProfileContainer {...props}>
       <UserNameTag>
-        <UserName>Trysts</UserName>
-        <UserTag>trysts#1234</UserTag>
+        <UserName>{user?.username}</UserName>
+        <UserTag>{user?.handler}</UserTag>
       </UserNameTag>
       <ProfileImage src={userImg}></ProfileImage>
     </UserProfileContainer>
@@ -19,7 +22,6 @@ export const UserProfile = ({ ...props }: UserProfileProps) => {
 }
 
 export const UserProfileContainer = styled.section`
-  width: 168px;
   height: 44px;
 
   display: flex;

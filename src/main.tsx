@@ -51,21 +51,25 @@ const Guard = () => {
             path="/:spaceId"
           />
         </Route>
+        <Route element={<PersistLogin />}>
+          <Route
+            element={
+              <Suspense fallback={<span>loading</span>}>
+                <MobileDetect>
+                  <Create />
+                </MobileDetect>
+              </Suspense>
+            }
+            path="/create"
+          />
+        </Route>
         <Route
           element={
             <Suspense fallback={<span>loading</span>}>
               <MobileDetect>
-                <Create />
+                <Login />
               </MobileDetect>
             </Suspense>
-          }
-          path="/create"
-        />
-        <Route
-          element={
-            <MobileDetect>
-              <Login />
-            </MobileDetect>
           }
           path="/login"
         />
@@ -105,9 +109,11 @@ const Guard = () => {
         <Route element={<PersistLogin />}>
           <Route
             element={
-              <MobileDetect>
-                <MarketPlace />
-              </MobileDetect>
+              <Suspense fallback={<span>loading</span>}>
+                <MobileDetect>
+                  <MarketPlace />
+                </MobileDetect>
+              </Suspense>
             }
             path="/marketplace"
           />
