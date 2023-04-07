@@ -1,6 +1,7 @@
 export * from './Button/Button'
 export * from './Button/models/ButtonProps'
 export * from './CustomableContainer'
+export * from './Header'
 export * from './Icon/Icon'
 export * from './Stepper'
 export * from './Text'

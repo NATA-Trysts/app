@@ -9,7 +9,6 @@ import { Text } from '@/components/Commons'
 import { Chip } from '@/components/Commons/Chip'
 import { Dialog, DialogRef } from '@/components/Commons/Dialog'
 import { MultiToggleOption } from '@/components/Commons/MultiToggle'
-import { Header } from '@/components/Header'
 import {
   BuyButton,
   Content,
@@ -28,6 +27,7 @@ import {
   MarketDialogDescription,
   MarketDialogText,
   MarketDialogTitle,
+  MarketPlaceHeader,
   MarketPlacePage,
   MarketPlaceText,
   PreviewIcon,
@@ -52,37 +52,6 @@ type PreviewItem = {
   title: string
   description: string
 }
-
-// function createModels(modelCollections: Array<{ amount: number; collection: string }>): Model[] {
-//   let currentIndex = 0
-
-//   return modelCollections.reduce<Model[]>((models, current) => {
-//     const collectionModels = [...Array(current.amount)].map<Model>(() => {
-//       currentIndex++
-
-//       return {
-//         _id: currentIndex.toString(),
-//         name: `${current.collection} inspiration`,
-//         category: 'category 1',
-//         // eslint-disable-next-line camelcase
-//         collection_id: current.collection,
-//         description: 'Very nice item, please trust me bro',
-//         materials: { primary: null, secondary: null },
-//         thumbnail: ItemImageWebp,
-//         price: 20,
-//       }
-//     })
-
-//     return [...models, ...collectionModels]
-//   }, [])
-// }
-
-// const models: Model[] = createModels([
-//   { amount: 3, collection: 'Nha Trang' },
-//   { amount: 5, collection: 'Hoi An' },
-//   { amount: 7, collection: 'Da Lat' },
-//   { amount: 2, collection: 'Da Nang' },
-// ])
 
 const previewItems: PreviewItem[] = [
   { title: 'Duma Chair', description: 'The perfect blend of comfort and ' },
@@ -149,8 +118,6 @@ const MarketPlace = () => {
       setCollections(collections.slice(0, 1000))
     })
   }, [])
-
-  console.log(boughtCollections)
 
   const stripeAppearance: Appearance = {
     theme: 'night',
@@ -296,7 +263,7 @@ const MarketPlace = () => {
 
   return (
     <MarketPlacePage>
-      <Header />
+      <MarketPlaceHeader />
       <Content>
         <ContentHeader>
           <Text size="x-large" weight="normal">
