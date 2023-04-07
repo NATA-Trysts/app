@@ -191,7 +191,7 @@ export const useMemberStore = create<MemberState>()(
       removeNearestMember: (sessionId: string) =>
         set((state) => ({ nearestMembers: omit(state.nearestMembers, [sessionId]) })),
 
-      mainMemberAnimation: 'idle',
+      mainMemberAnimation: 'idle.000',
       setMainMemberAnimation: (mainMemberAnimation: string) => set(() => ({ mainMemberAnimation })),
     }),
     {

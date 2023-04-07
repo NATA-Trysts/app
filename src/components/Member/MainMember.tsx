@@ -4,22 +4,52 @@ import { useFrame } from '@react-three/fiber'
 import { CharacterControl, useCharacterControl } from '@sonhaaa/3d-playground'
 import { useEffect, useRef, useState } from 'react'
 import { useKeyPressEvent } from 'react-use'
-import { Group, Mesh, Quaternion, Texture, Vector3, VideoTexture } from 'three'
+import {
+  Group,
+  Mesh,
+  // Quaternion,
+  Texture,
+  // Vector3,
+  VideoTexture,
+} from 'three'
 
 import { MESSAGES } from '@/libs/constants'
+import { generateAnimationString } from '@/libs/utils'
 import { useEditCharacterStore, useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
-import { Pug } from '../Pet'
+// import { Pug } from '../Pet'
 import { BaseCharacter } from './BaseCharacter'
 
 const VIDEO_WIDTH = 2
 
-const pV = new Vector3(1, -2, 2)
-const pQ = new Quaternion()
-const pP = new Vector3(0, -2, 0)
+// const pV = new Vector3(1, -2, 2)
+// const pQ = new Quaternion()
+// const pP = new Vector3(0, -2, 0)
 
-type TextureMapping = {
-  [id: string]: Texture
+type StringMapping<T> = {
+  [id: string]: T
+}
+
+const ANIMATION_COUNT_MAPPING: StringMapping<number> = {
+  angry: 1,
+  bow: 1,
+  cheer: 1,
+  clap: 1,
+  dance: 1,
+  discuss: 1,
+  fall: 3,
+  hit: 3,
+  idle: 5,
+  // idle: 1,
+  kick: 4,
+  lay: 1,
+  punch: 3,
+  run: 1,
+  sad: 2,
+  sit: 4,
+  victory: 1,
+  wave: 1,
+  walk: 1,
 }
 
 export const MainMember = () => {
@@ -41,7 +71,7 @@ export const MainMember = () => {
     },
   )
 
-  const TATTOO_MAPPING: TextureMapping = {
+  const TATTOO_MAPPING: StringMapping<Texture> = {
     'tattoo.001.001': tattooSpot,
     'tattoo.001.002': tattooDragon,
     'tattoo.001.003': tattooRing,
@@ -55,8 +85,8 @@ export const MainMember = () => {
     state.mainMemberAnimation,
     state.setMainMemberAnimation,
   ])
-  const pugRef = useRef<Group>(null)
-  const pugRunTime = useRef(0)
+  // const pugRef = useRef<Group>(null)
+  // const pugRunTime = useRef(0)
 
   const attachVideo = () => {
     if (localPeer && localPeer.videoTrack && videoElement) {
@@ -83,59 +113,51 @@ export const MainMember = () => {
         w: character.quaternion.w,
       },
     })
+
+    // pV.set(character.position.x - 2, -2, character.position.z - 2)
+    // pQ.setFromEuler(character.rotation)
   }
 
-  const dispatchAction = () => {
-    roomInstance?.send(MESSAGES.MEMBER.ACTION, {
-      action: anim,
-    })
-
-    setMainMemberAnimation(anim)
-  }
-
-  const handleOnMove = (character: Group) => {
-    dispatchMovement(character)
-    pV.set(character.position.x - 2, -2, character.position.z - 2)
-    pQ.setFromEuler(character.rotation)
-  }
-
-  useFrame(({ camera }, delta) => {
+  useFrame(({ camera }) => {
     if (videoFrame.current) videoFrame.current.lookAt(camera.position)
 
-    if (anim == 'walk') {
-      pugRunTime.current += delta
-    } else {
-      pugRunTime.current = 0
-    }
+    // if (anim == 'walk') {
+    //   pugRunTime.current += delta
+    // } else {
+    //   pugRunTime.current = 0
+    // }
 
-    pP.set(pV.x, pV.y, pV.z)
+    // pP.set(pV.x, pV.y, pV.z)
 
-    pP.setX(pP.x + Math.sin(2 * pugRunTime.current))
-    pP.setZ(pP.z + Math.sin(2 * pugRunTime.current))
+    // pP.setX(pP.x + Math.sin(2 * pugRunTime.current))
+    // pP.setZ(pP.z + Math.sin(2 * pugRunTime.current))
 
-    pugRef.current?.position.lerp(pP, 0.05)
-    pugRef.current?.quaternion.slerp(pQ, 0.2)
+    // pugRef.current?.position.lerp(pP, 0.05)
+    // pugRef.current?.quaternion.slerp(pQ, 0.2)
   })
 
-  const changeAnimationOnPress = (animation: string) => {
-    setMainMemberAnimation(animation)
+  const changeAnimation = (animation: string) => {
+    const randomAnimation: string = generateAnimationString(animation, ANIMATION_COUNT_MAPPING[animation] - 1)
+
+    setMainMemberAnimation(randomAnimation)
     roomInstance?.send(MESSAGES.MEMBER.ACTION, {
-      action: animation,
+      action: randomAnimation,
     })
   }
 
-  const bow = () => changeAnimationOnPress('bow')
-  const cheer = () => changeAnimationOnPress('cheer')
-  const clap = () => changeAnimationOnPress('clap')
-  const dance = () => changeAnimationOnPress('dance')
-  const discuss = () => changeAnimationOnPress('discuss')
-  const lay = () => changeAnimationOnPress('lay')
-  const victory = () => changeAnimationOnPress('victory')
-  const wave = () => changeAnimationOnPress('wave')
-  // const punch = () => changeAnimationOnPress('punch')
-  // const sit = () => changeAnimationOnPress('sit')
-  // const kick = () => changeAnimationOnPress('kick')
-  // const hit = () => changeAnimationOnPress('hit')
+  const bow = () => changeAnimation('bow')
+  const cheer = () => changeAnimation('cheer')
+  const clap = () => changeAnimation('clap')
+  const dance = () => changeAnimation('dance')
+  const discuss = () => changeAnimation('discuss')
+  const lay = () => changeAnimation('lay')
+  const angry = () => changeAnimation('angry')
+  const wave = () => changeAnimation('wave')
+  const sad = () => changeAnimation('sad')
+  // const punch = () => changeAnimation('punch')
+  // const sit = () => changeAnimation('sit')
+  // const kick = () => changeAnimation('kick')
+  // const hit = () => changeAnimation('hit')
 
   useKeyPressEvent('1', wave)
   useKeyPressEvent('2', bow)
@@ -144,8 +166,8 @@ export const MainMember = () => {
   useKeyPressEvent('5', discuss)
   useKeyPressEvent('6', lay)
   useKeyPressEvent('7', clap)
-  useKeyPressEvent('8', victory)
-  useKeyPressEvent('9', victory)
+  useKeyPressEvent('8', sad)
+  useKeyPressEvent('9', angry)
 
   return (
     <>
@@ -156,8 +178,8 @@ export const MainMember = () => {
         initialPosition={[0, 5, 0]}
         polarAngle={[0.5, Math.PI / 2]}
         speed={6}
-        onAnimationChange={dispatchAction}
-        onCharacterMove={handleOnMove}
+        onAnimationChange={() => changeAnimation(anim)}
+        onCharacterMove={dispatchMovement}
       >
         <BaseCharacter
           accessory={categorySelectedItemIds.get('accessory')}
@@ -176,7 +198,7 @@ export const MainMember = () => {
           </mesh>
         )}
       </CharacterControl>
-      <Pug ref={pugRef} anim={anim === 'idle' ? 'Idle' : 'Run'} />
+      {/* <Pug ref={pugRef} anim={anim === 'idle.000' ? 'Idle' : 'Run'} /> */}
     </>
   )
 }
