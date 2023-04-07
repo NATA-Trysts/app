@@ -2,6 +2,8 @@ import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { GLTF } from 'three-stdlib'
 
+import { JSDELIVR_URL } from '@/libs/constants'
+
 type GLTFResult = GLTF & {
   nodes: {
     chair: THREE.Mesh
@@ -19,9 +21,7 @@ export function Chair(
     metalness: number
   },
 ) {
-  const { nodes } = useGLTF(
-    'https://cdn.jsdelivr.net/gh/NATA-Trysts/cdn@master/models-transform/chair-transformed.glb',
-  ) as GLTFResult
+  const { nodes } = useGLTF(`${JSDELIVR_URL}/models-transform/chair.glb`) as GLTFResult
 
   return (
     <group {...props} dispose={null} name="chair">
@@ -37,4 +37,4 @@ export function Chair(
   )
 }
 
-useGLTF.preload('https://cdn.jsdelivr.net/gh/NATA-Trysts/cdn@master/models-transform/chair-transformed.glb')
+useGLTF.preload(`${JSDELIVR_URL}/models-transform/chair.glb`)

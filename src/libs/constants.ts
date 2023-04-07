@@ -122,36 +122,60 @@ const PLAN_ICON_FILTER = {
 
 const STRIPE_API_KEY = import.meta.env.VITE_STRIPE_PUBLIC_KEY
 
-type IValueMapping = {
-  [key: string]: string
+type ValueMapping<T> = {
+  [key: string]: T
 }
 
-const CHARACTER_CONFIG_VALUE_MAPPING: IValueMapping = {
+const CHARACTER_CONFIG_VALUE_MAPPING: ValueMapping<string> = {
   'skin.001.001': '#2b9148',
   'skin.001.002': '#120ead',
   'skin.001.003': '#6e106a',
   'skin.001.004': '#d09789',
-  'hair.001.001': 'hair001001',
-  'hair.001.002': 'hair001002',
-  'upper.001.001': 'upper001001',
-  'upper.001.002': 'upper001002',
-  'upper.002.001': 'upper002001',
-  'upper.002.002': 'upper002002',
-  'lower.001.001': 'lower001001',
-  'lower.001.002': 'lower001002',
-  'lower.002.001': 'lower002001',
-  'lower.002.002': 'lower002002',
-  'shoe.001.001': 'shoe001001',
-  'accessory.001.001': 'accessory001001',
-  'accessory.001.002': 'accessory001002',
+  'hair.001.001': 'hair001001001',
+  'hair.001.002': 'hair001002001',
+  'upper.001.001': 'upper001001001',
+  'upper.001.002': 'upper001001002',
+  'upper.002.001': 'upper002001001',
+  'lower.001.001': 'lower001001001',
+  'lower.001.002': 'lower001002001',
+  'lower.002.001': 'lower002001001',
+  'lower.002.002': 'lower003001001',
+  'shoe.001.001': 'shoe001001001',
+  'accessory.001.001': 'accessory001001001',
+  'accessory.001.002': 'accessory001002001',
 }
 
+const ANIMATION_COUNT_MAPPING: ValueMapping<number> = {
+  angry: 1,
+  bow: 1,
+  cheer: 1,
+  clap: 1,
+  dance: 1,
+  discuss: 1,
+  fall: 3,
+  hit: 3,
+  idle: 5,
+  kick: 4,
+  lay: 1,
+  punch: 3,
+  run: 1,
+  sad: 2,
+  sit: 4,
+  victory: 1,
+  wave: 1,
+  walk: 1,
+}
+
+const JSDELIVR_URL = 'https://cdn.jsdelivr.net/gh/NATA-Trysts/cdn@main'
+
 export {
+  ANIMATION_COUNT_MAPPING,
   CHARACTER_CONFIG_VALUE_MAPPING,
   COLOR_PICKER_LIST,
   FILTER_ICON_TO_WHITE,
   INPUT_BORDER,
   INPUT_DROP_SHADOW,
+  JSDELIVR_URL,
   MESSAGES,
   NOTIFICATION_CLOSE_COLOR,
   NOTIFICATION_COLOR,
@@ -164,4 +188,4 @@ export {
   TAB_CATEGORY_COLOR,
   TRYSTS_EMAIL_LOGIN,
 }
-export type { NotificationType }
+export type { NotificationType, ValueMapping }
