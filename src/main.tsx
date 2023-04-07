@@ -102,14 +102,16 @@ const Guard = () => {
             />
           </Route>
         </Route>
-        <Route
-          element={
-            <MobileDetect>
-              <MarketPlace />
-            </MobileDetect>
-          }
-          path="/marketplace"
-        />
+        <Route element={<PersistLogin />}>
+          <Route
+            element={
+              <MobileDetect>
+                <MarketPlace />
+              </MobileDetect>
+            }
+            path="/marketplace"
+          />
+        </Route>
         <Route element={<Redirect />} path="/l" />
         <Route element={<NotAuthorize />} path="/unauth" />
         <Route element={<NotFound />} path="*" />

@@ -2,7 +2,6 @@ import { Elements } from '@stripe/react-stripe-js'
 import { Appearance, StripeElementsOptions } from '@stripe/stripe-js'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import axios from '@/api/axios'
 import ItemImageWebp from '@/assets/marketplace-item.webp'
 import PreviewItemImageWebp from '@/assets/marketplace-preview-item.webp'
 import { GradientButton } from '@/components/Button'
@@ -45,6 +44,7 @@ import {
 } from '@/components/Marketplace'
 import CheckoutForm from '@/components/Marketplace/CheckoutForm'
 import { SubCategoryToggle } from '@/components/SubcategoryToggle'
+import { useAxiosPrivate } from '@/hooks'
 import { stripePromise } from '@/libs/stripe'
 import { Collection } from '@/models/Collection'
 
@@ -137,14 +137,20 @@ const MarketPlace = () => {
   const dialogRef = useRef<DialogRef>(null)
   const stripeDialogRef = useRef<DialogRef>(null)
   const [collections, setCollections] = useState<Collection[]>([])
+  const [boughtCollections, setBoughtCollections] = useState<string[]>([])
+  const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
-    axios.get('collections').then((res) => {
-      const collections = res.data as Collection[]
+    axiosPrivate.get('collections').then((res) => {
+      const collections = res.data.collections as Collection[]
+
+      setBoughtCollections(res.data.bought_collection)
 
       setCollections(collections.slice(0, 1000))
     })
   }, [])
+
+  console.log(boughtCollections)
 
   const stripeAppearance: Appearance = {
     theme: 'night',
@@ -152,6 +158,10 @@ const MarketPlace = () => {
       fontFamily: 'GeneralSans-Variable, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
       fontWeightNormal: '500',
     },
+  }
+
+  const isBougth = (collectionId: string) => {
+    return boughtCollections.includes(collectionId)
   }
 
   const handleBuyItem = (item: Collection) => {
@@ -171,53 +181,66 @@ const MarketPlace = () => {
 
         stripeDialogRef.current?.open?.(
           <Elements options={options} stripe={stripePromise}>
-            <CheckoutForm total={item.price} />
+            <CheckoutForm total={item.price} onSucceed={() => handlePaymentSucceed(item._id)} />
           </Elements>,
         )
       })
   }
 
-  const handleItemPreview = useCallback((item: Collection) => {
-    const columnElements = convertItemsToMansonryColumn(previewItems, 4).map((col, colIndex) => {
-      return (
-        <PreviewItemColumn key={`preview-col-${colIndex}`}>
-          {col.map((colItem, index) => {
-            return (
-              <PreviewItemCard key={`preview-col-${colIndex}-${index}`}>
-                <PreviewItemImage src={PreviewItemImageWebp} />
-                <PreviewItemInfo>
-                  <PreviewItemTitle>
-                    <PreviewItemText size="medium" weight="normal">
-                      {colItem.title}
-                    </PreviewItemText>
-                  </PreviewItemTitle>
-                  <PreviewItemDescription>
-                    <PreviewItemText size="small" weight="lighter">
-                      {colItem.description}
-                    </PreviewItemText>
-                  </PreviewItemDescription>
-                </PreviewItemInfo>
-              </PreviewItemCard>
-            )
-          })}
-        </PreviewItemColumn>
-      )
+  const handlePaymentSucceed = (collectionId: string) => {
+    axiosPrivate.post('/users/collections', { collection: collectionId }).then((res) => {
+      setBoughtCollections(res.data.collections)
     })
+  }
 
-    dialogRef.current?.open?.(
-      <>
-        <MarketDialogTitle>
-          <MarketDialogText>Nha Trang inspiration</MarketDialogText>
-          <Chip color="hsla(68, 41%, 79%, 1)">Popular</Chip>
-        </MarketDialogTitle>
-        <MarketDialogDescription>
-          <MarketDialogText>${item.price}</MarketDialogText>
-          <GradientButton onClick={() => handleBuyItem(item)}>Buy</GradientButton>
-        </MarketDialogDescription>
-        <PreviewItemContainer>{columnElements}</PreviewItemContainer>
-      </>,
-    )
-  }, [])
+  const handleItemPreview = useCallback(
+    (collection: Collection) => {
+      const columnElements = convertItemsToMansonryColumn(previewItems, 4).map((col, colIndex) => {
+        return (
+          <PreviewItemColumn key={`preview-col-${colIndex}`}>
+            {col.map((colItem, index) => {
+              return (
+                <PreviewItemCard key={`preview-col-${colIndex}-${index}`}>
+                  <PreviewItemImage src={PreviewItemImageWebp} />
+                  <PreviewItemInfo>
+                    <PreviewItemTitle>
+                      <PreviewItemText size="medium" weight="normal">
+                        {colItem.title}
+                      </PreviewItemText>
+                    </PreviewItemTitle>
+                    <PreviewItemDescription>
+                      <PreviewItemText size="small" weight="lighter">
+                        {colItem.description}
+                      </PreviewItemText>
+                    </PreviewItemDescription>
+                  </PreviewItemInfo>
+                </PreviewItemCard>
+              )
+            })}
+          </PreviewItemColumn>
+        )
+      })
+
+      dialogRef.current?.open?.(
+        <>
+          <MarketDialogTitle>
+            <MarketDialogText>Nha Trang inspiration</MarketDialogText>
+            <Chip color="hsla(68, 41%, 79%, 1)">Popular</Chip>
+          </MarketDialogTitle>
+          <MarketDialogDescription>
+            <MarketDialogText>${collection.price}</MarketDialogText>
+            {isBougth(collection._id) ? (
+              ''
+            ) : (
+              <GradientButton onClick={() => handleBuyItem(collection)}>Buy</GradientButton>
+            )}
+          </MarketDialogDescription>
+          <PreviewItemContainer>{columnElements}</PreviewItemContainer>
+        </>,
+      )
+    },
+    [isBougth],
+  )
 
   const collectionToogleOptions = useMemo(() => {
     //use Set to remove duplicate collection name
@@ -242,7 +265,9 @@ const MarketPlace = () => {
                   <Chip color="hsla(0, 82%, 59%, 1)">Hot 🔥</Chip>
                   <Chip color="hsla(0, 32%, 71%, 1)">-25%</Chip>
                 </ItemChipGroup>
-                <BuyButton onClick={() => handleBuyItem(collection)}>Buy</BuyButton>
+                <BuyButton disabled={isBougth(collection._id)} onClick={() => handleBuyItem(collection)}>
+                  {isBougth(collection._id) ? 'Purchased' : 'Buy'}
+                </BuyButton>
                 <ItemImageMask onClick={() => handleItemPreview(collection)}>
                   <PreviewIcon>
                     <EyeIcon />
@@ -259,7 +284,7 @@ const MarketPlace = () => {
                 </MarketPlaceText>
                 <ItemPrice>
                   <MarketPlaceText size="medium" weight="normal">
-                    $20
+                    ${collection.price}
                   </MarketPlaceText>
                 </ItemPrice>
               </ItemDescription>
@@ -267,7 +292,7 @@ const MarketPlace = () => {
           </ItemCard>
         )
       })
-  }, [handleItemPreview, filter, collections])
+  }, [handleItemPreview, filter, collections, isBougth])
 
   return (
     <MarketPlacePage>
