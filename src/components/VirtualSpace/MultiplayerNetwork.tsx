@@ -67,7 +67,7 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
                 z: member.quaternion.z,
                 w: member.quaternion.w,
               },
-              action: '',
+              action: member.action,
             })
           } else {
             addOtherMembers(sessionId, {
@@ -84,7 +84,7 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
                 z: member.quaternion.z,
                 w: member.quaternion.w,
               },
-              action: '',
+              action: member.action,
             })
           }
 
