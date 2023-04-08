@@ -5,6 +5,7 @@ import {
   Physics,
   RigidBody,
 } from '@react-three/rapier'
+import { Perf } from 'r3f-perf'
 import { Suspense } from 'react'
 
 import { Hint } from '@/components/Hint'
@@ -19,7 +20,8 @@ export const Scene = () => {
   return (
     <Container>
       <MemberVideoLayout />
-      <Canvas dpr={[0.5, 1]}>
+      <Canvas dpr={[0.25, 0.25]}>
+        <Perf />
         <Stats />
 
         <Suspense fallback={<Loading />}>

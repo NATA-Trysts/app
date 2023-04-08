@@ -78,8 +78,8 @@ type MemberState = {
   addNearestMember: (sessionId: string, nearestMember: NearestMember) => void
   removeNearestMember: (sessionId: string) => void
 
-  mainMemberAnimation: string
-  setMainMemberAnimation: (mainMemberAnimation: string) => void
+  mainMemberAnimation: [string, boolean]
+  setMainMemberAnimation: (mainMemberAnimation: [string, boolean]) => void
 }
 
 export const useMemberStore = create<MemberState>()(
@@ -191,8 +191,8 @@ export const useMemberStore = create<MemberState>()(
       removeNearestMember: (sessionId: string) =>
         set((state) => ({ nearestMembers: omit(state.nearestMembers, [sessionId]) })),
 
-      mainMemberAnimation: 'idle.000',
-      setMainMemberAnimation: (mainMemberAnimation: string) => set(() => ({ mainMemberAnimation })),
+      mainMemberAnimation: ['idle.000', false],
+      setMainMemberAnimation: (mainMemberAnimation: [string, boolean]) => set(() => ({ mainMemberAnimation })),
     }),
     {
       name: 'member-storage',
