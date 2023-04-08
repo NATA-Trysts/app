@@ -59,6 +59,7 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
     ['lower', []],
     ['shoe', []],
     ['accessory', []],
+    ['tattoo', []],
   ]),
   setCategorySelectedItemIds: (categoryId, subcategoryId, itemId) =>
     set((state) => {

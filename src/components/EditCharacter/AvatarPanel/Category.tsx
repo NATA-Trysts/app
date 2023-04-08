@@ -76,6 +76,11 @@ export const Category = () => {
       name: 'accessories',
       icon: <SmileFace />,
     },
+    {
+      type: 'tattoo',
+      name: 'tattoo',
+      icon: <SmileFace />,
+    },
   ]
 
   const [categorySelectedId, setCategorySelectedId] = useEditCharacterStore((state) => [

@@ -23,8 +23,7 @@ export const useGetMe = () => {
 
           const avatarFromApi = { ...data.avatar }
 
-          delete (avatarFromApi as any).image
-          delete (avatarFromApi as any).tattoo
+          delete (avatarFromApi as any).image // TEMPORARY
 
           setCategorySelectedFromApi(new Map(Object.entries(avatarFromApi)))
 

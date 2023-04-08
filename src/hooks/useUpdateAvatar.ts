@@ -16,9 +16,6 @@ const useUpdateAvatar = () => {
 
     const newAvatar: AvatarType = {
       ...objectAvatar,
-      tattoo: {
-        id: 'tattoo.001.001',
-      },
       image: 'https://i.pinimg.com/originals/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg',
     }
 
