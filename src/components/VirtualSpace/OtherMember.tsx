@@ -5,10 +5,10 @@ import { useMemberStore } from '@/stores'
 
 export const OtherMember = () => {
   const otherMembers = useMemberStore((state) => state.otherMembers)
-  const [nearestMembers, addNearestMember, removeNearestMember] = useMemberStore((state) => [
-    state.nearestMembers,
-    state.addNearestMember,
-    state.removeNearestMember,
+  const [nearestMemberIds, addNearestMemberId, removeNearestMemberId] = useMemberStore((state) => [
+    state.nearestMemberIds,
+    state.addNearestMemberId,
+    state.removeNearestMemberId,
   ])
 
   return (
@@ -18,12 +18,16 @@ export const OtherMember = () => {
             <Other
               key={player.id}
               action={player.action}
-              isNearestMember={!!nearestMembers[player.id]}
+              isNearestMember={nearestMemberIds.includes(player.id)}
               peerId={player.peerId}
               position={[player.position.x, player.position.y, player.position.z]}
               quaternion={[player.quaternion.x, player.quaternion.y, player.quaternion.z, player.quaternion.w]}
-              onIntersectEnter={() => addNearestMember(player.id, player)}
-              onIntersectExit={() => removeNearestMember(player.id)}
+              onIntersectEnter={() => {
+                addNearestMemberId(player.id)
+              }}
+              onIntersectExit={() => {
+                removeNearestMemberId(player.id)
+              }}
             />
           ))
         : null}
