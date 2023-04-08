@@ -3,11 +3,13 @@
 import { useAnimations, useGLTF } from '@react-three/drei'
 import { useGraph } from '@react-three/fiber'
 import { useEffect, useMemo, useRef } from 'react'
-import { Group, SkinnedMesh, Texture } from 'three'
+import { Group, LoopOnce, SkinnedMesh, Texture } from 'three'
 import { GLTF, SkeletonUtils } from 'three-stdlib'
 
 import { CHARACTER_CONFIG_VALUE_MAPPING, JSDELIVR_URL } from '@/libs/constants'
 import { SubcategoryActiveItem } from '@/stores'
+
+//#region
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -76,8 +78,11 @@ type ActionName =
   | 'wave.000'
 type GLTFActions = Record<ActionName, THREE.AnimationAction>
 
+//#endregion
+
 type ModelProps = {
-  action: string
+  action: [string, boolean]
+  onAnimationFinished?: () => void
   skin?: SubcategoryActiveItem[]
   hair?: SubcategoryActiveItem[]
   upper?: SubcategoryActiveItem[]
@@ -112,14 +117,23 @@ export function BaseCharacter({
   }, [tattoo])
 
   useEffect(() => {
-    props.action && actions[props.action].reset().fadeIn(0.2).play()
-    mixer.addEventListener('finished', (e) => console.log('end', e))
+    if (!props.action[1]) {
+      actions[props.action[0]].reset().fadeIn(0.2).play()
+    }
+    if (props.action[1]) {
+      actions[props.action[0]].setLoop(LoopOnce)
+      actions[props.action[0]].clampWhenFinished = true
+      actions[props.action[0]].enable = false
+      actions[props.action[0]].reset().fadeIn(0.2).play()
+      mixer.addEventListener('finished', props.onAnimationFinished)
+    }
 
     return () => {
-      // mixer.removeEventListener('finished', fn)
-      actions[props.action] && actions[props.action].fadeOut(0.2)
+      mixer.removeEventListener('finished', props.onAnimationFinished)
+
+      props.action[0] && actions[props.action[0]].fadeOut(0.2)
     }
-  }, [props.action])
+  }, [props.action, mixer])
 
   return (
     <group ref={group} {...props} dispose={null}>

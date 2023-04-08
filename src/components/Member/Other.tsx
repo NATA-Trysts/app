@@ -7,7 +7,8 @@ import { Group, Mesh, Quaternion, Vector3, VideoTexture } from 'three'
 
 import { useVirtualSpaceStore } from '@/stores'
 
-import { BaseCharacter } from './BaseCharacter'
+import { OtherCharacter } from './OtherCharacter'
+// import { BaseCharacter } from './BaseCharacter'
 
 const nextPosition = new Vector3()
 const nextQuaternion = new Quaternion()
@@ -42,7 +43,6 @@ export const Other = (props: OtherProps) => {
 
   useEffect(() => {
     const videoElement = document.getElementById(`video-ref-${props.peerId}`) as HTMLVideoElement
-    // const filteredRemotePeer = remotePeers.filter((peer) => peer.id === props.peerId)[0]
 
     if (videoElement && videoFrame.current) setVideoTexture(new VideoTexture(videoElement))
   }, [remotePeers, props.peerId, props.isNearestMember])
@@ -69,7 +69,7 @@ export const Other = (props: OtherProps) => {
   return (
     <>
       <group ref={playerRef}>
-        <BaseCharacter action={props.action} />
+        <OtherCharacter action={props.action} />
         {props.isNearestMember && videoLayout === 'above-head' && !isEditAvatar ? (
           <mesh ref={videoFrame} position={[0, 4.5, 0]}>
             <planeGeometry args={[VIDEO_WIDTH, (VIDEO_WIDTH * 3) / 4]} />

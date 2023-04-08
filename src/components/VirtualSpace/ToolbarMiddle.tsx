@@ -249,7 +249,7 @@ export const ToolbarMiddle = () => {
                       z: 0,
                       w: 0,
                     },
-                    action: 'idle',
+                    action: 'idle.000',
                   })
                 }}
               >
