@@ -1,6 +1,4 @@
-// import { AvatarPanel, BackButton, JoinButton, ThemePicker } from '@/components/EditCharacter'
-
-import { AvatarPanel, BackButton, JoinButton } from '@/components/EditCharacter'
+import { AvatarPanel, BackButton, JoinButton, ThemePicker } from '@/components/EditCharacter'
 import { useUpdateAvatar } from '@/hooks'
 import { useVirtualSpaceStore } from '@/stores'
 
@@ -21,7 +19,7 @@ export const CustomCharacterPanel = () => {
       <BackButton isEdit={isEditAvatar} onClickBack={back} />
       <AvatarPanel isEdit={isEditAvatar} />
       <JoinButton isEdit={isEditAvatar} onClick={join} />
-      {/* <ThemePicker isEdit={isEditAvatar} /> */}
+      <ThemePicker isEdit={isEditAvatar} />
     </>
   )
 }

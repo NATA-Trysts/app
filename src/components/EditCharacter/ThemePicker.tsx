@@ -1,31 +1,37 @@
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
+import { Text } from '@/components/Commons'
 import { useAppStore } from '@/stores'
 
 import { CustomColor } from '../Commons'
 
 const ThemePickerContainer = styled(motion.div)`
   position: absolute;
-  left: 120px;
+  right: 100px;
   pointer-events: auto;
-  top: 687px;
+  top: 96px;
 
   width: 300px;
-  height: 72px;
+  height: 580px;
   background-color: #191a1d;
   border-radius: 16px;
+  padding: 0 20px;
+`
+
+const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr;
-  grid-template-areas: 'theme1 theme2 theme3 theme4 theme5';
+  grid-template-areas: 'theme1 theme2 theme3 theme4';
   align-items: center;
   justify-items: center;
+  grid-gap: 16px;
 `
 
 const Theme = styled.div<{ backgroundColor: string; active: boolean }>`
-  width: 40px;
-  height: 40px;
+  width: 52px;
+  height: 52px;
   background: ${({ backgroundColor }) => backgroundColor};
   border: 3px solid transparent;
   border-radius: 8px;
@@ -43,6 +49,13 @@ const Theme = styled.div<{ backgroundColor: string; active: boolean }>`
   `}
 `
 
+const Title = styled(Text)`
+  font-size: 16px;
+  padding-top: 16px;
+  padding-bottom: 12px;
+  display: block;
+`
+
 type ThemePickerProps = {
   isEdit?: boolean
 }
@@ -56,14 +69,19 @@ export const ThemePicker = ({ isEdit = false }: ThemePickerProps) => {
   return (
     <ThemePickerContainer
       animate={{
-        x: isEdit ? 0 : -500,
+        x: isEdit ? 0 : 500,
       }}
     >
-      <Theme active={customColor === 'pink'} backgroundColor="#C771E1" onClick={() => handleClickTheme('pink')} />
-      <Theme active={customColor === 'green'} backgroundColor="#71E191" onClick={() => handleClickTheme('green')} />
-      <Theme active={customColor === 'blue'} backgroundColor="#719EE1" onClick={() => handleClickTheme('blue')} />
-      <Theme active={customColor === 'yellow'} backgroundColor="#E1B471" onClick={() => handleClickTheme('yellow')} />
-      <Theme active={customColor === 'purple'} backgroundColor="#8E71E1" onClick={() => handleClickTheme('purple')} />
+      <Title size="medium" weight="normal">
+        Theme
+      </Title>
+      <Wrapper>
+        <Theme active={customColor === 'pink'} backgroundColor="#C771E1" onClick={() => handleClickTheme('pink')} />
+        <Theme active={customColor === 'green'} backgroundColor="#71E191" onClick={() => handleClickTheme('green')} />
+        <Theme active={customColor === 'blue'} backgroundColor="#719EE1" onClick={() => handleClickTheme('blue')} />
+        <Theme active={customColor === 'yellow'} backgroundColor="#E1B471" onClick={() => handleClickTheme('yellow')} />
+        <Theme active={customColor === 'purple'} backgroundColor="#8E71E1" onClick={() => handleClickTheme('purple')} />
+      </Wrapper>
     </ThemePickerContainer>
   )
 }

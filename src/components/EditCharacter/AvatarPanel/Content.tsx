@@ -28,7 +28,18 @@ const Wrapper = styled.div`
 `
 
 const Title = styled(Text)`
+  font-size: 16px;
   text-transform: capitalize;
+  padding-bottom: 8px;
+  display: block;
+`
+
+const Subtitle = styled(Text)`
+  font-size: 14px;
+  text-transform: capitalize;
+  padding-bottom: 12px;
+  display: block;
+  color: #acacac;
 `
 
 const ListItem = styled.div`
@@ -95,9 +106,9 @@ export const Content = () => {
           <div>
             {Object.values((subCategory as any).list).map((item, index) => (
               <div key={index}>
-                <Text size="small" weight="normal">
+                <Subtitle size="small" weight="normal">
                   {(item as any).title}
-                </Text>
+                </Subtitle>
                 <ListItem>
                   {(item as any).values.map((value: any) => (
                     <Item
