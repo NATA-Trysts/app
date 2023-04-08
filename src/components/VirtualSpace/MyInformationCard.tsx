@@ -1,13 +1,13 @@
 import { OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { motion } from 'framer-motion'
-import { FC, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import { customColorHueMapping, Text } from '@/components/Commons'
 import { MyInformationCard as InformationCard } from '@/components/MyInformationCard'
 import { Option, Popover } from '@/components/Popover'
-import { useAppStore, useVirtualSpaceStore } from '@/stores'
+import { useAppStore, useMemberStore, useVirtualSpaceStore } from '@/stores'
 
 //#region STYLES
 const MemberInforContainer = styled.div<{ background: string }>`
@@ -51,15 +51,10 @@ const CustomOption = styled(Option)<{ hoverBackground?: string; textColor: strin
 `
 //#endregion
 
-type MyInformationCardProps = {
-  name: string
-  handler: string
-  avatar: string
-}
-
-export const MyInformationCard: FC<MyInformationCardProps> = (props) => {
+export const MyInformationCard = () => {
   const color = useAppStore((state) => state.customColor)
   const [isEditAvatar, setIsEditAvatar] = useVirtualSpaceStore((state) => [state.isEditAvatar, state.setIsEditAvatar])
+  const [user] = useMemberStore((state) => [state.user])
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
 
@@ -84,7 +79,7 @@ export const MyInformationCard: FC<MyInformationCardProps> = (props) => {
           </CharacterPreviewContainer>
           <Gap />
           <MemberHandler size="medium" weight="normal">
-            {props.handler}
+            {user.handler}
           </MemberHandler>
           <Gap />
           <CustomOption
@@ -112,7 +107,7 @@ export const MyInformationCard: FC<MyInformationCardProps> = (props) => {
           y: isEditAvatar ? 100 : 0,
         }}
       >
-        <InformationCard avatar={props.avatar} handler={props.handler} name={props.name} />
+        <InformationCard avatar={user.avatar.image} handler={user.handler} name={user.username} />
       </CustomInformationCard>
     </Popover>
   )

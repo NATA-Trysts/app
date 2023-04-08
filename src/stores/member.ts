@@ -27,7 +27,7 @@ export type ModelMaterial = {
 
 export type AvatarModel = {
   id: string
-  material: ModelMaterial | null
+  // material: ModelMaterial | null
 }
 
 export type AvatarAccessoryModel = {
@@ -40,6 +40,7 @@ export type Avatar = {
   shoe: AvatarModel[]
   upper: AvatarModel[]
   lower: AvatarModel[]
+  tattoo: AvatarModel
   accessory: AvatarAccessoryModel
   image: string
 }
@@ -92,63 +93,63 @@ export const useMemberStore = create<MemberState>()(
           skin: [
             {
               id: 'skin.001.001',
-              material: {
-                type: 'color',
-                value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
-              },
+              // material: {
+              //   type: 'color',
+              //   value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
+              // },
             },
           ],
           hair: [
             {
               id: 'hair.001.001',
-              material: {
-                type: 'color',
-                value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
-              },
+              // material: {
+              //   type: 'color',
+              //   value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
+              // },
             },
           ],
           shoe: [
             {
               id: 'shoe.001.001',
-              material: {
-                type: 'color',
-                value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
-              },
+              //   material: {
+              //     type: 'color',
+              //     value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
+              //   },
             },
           ],
           upper: [
             {
               id: 'upper.001.001',
-              material: {
-                type: 'color',
-                value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
-              },
+              // material: {
+              //   type: 'color',
+              //   value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
+              // },
             },
           ],
           lower: [
             {
               id: 'lower.001.001',
-              material: {
-                type: 'color',
-                value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
-              },
+              // material: {
+              //   type: 'color',
+              //   value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
+              // },
             },
           ],
           accessory: {
             hat: {
               id: 'accessory.001.001',
-              material: {
-                type: 'color',
-                value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
-              },
+              // material: {
+              //   type: 'color',
+              //   value: JSON.stringify({ color: '#ff00ff', roughness: 1, metalness: 0 }),
+              // },
             },
           },
           tattoo: {
             id: 'tattoo.001.001',
-            material: {
-              type: 'texture',
-              value: '/textures/t.tattoo.001.001.png',
-            },
+            // material: {
+            //   type: 'texture',
+            //   value: '/textures/t.tattoo.001.001.png',
+            // },
           },
           image: 'https://i.pravatar.cc/500',
         },
