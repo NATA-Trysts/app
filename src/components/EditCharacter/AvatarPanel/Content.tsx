@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Text } from '@/components/Commons'
 import { useEditCharacterStore } from '@/stores'
 
-import { list } from './dummyData'
+import { dummyData } from './dummyData'
 
 const ContentContainer = styled.div`
   width: 100%;
@@ -28,14 +28,25 @@ const Wrapper = styled.div`
 `
 
 const Title = styled(Text)`
+  font-size: 16px;
   text-transform: capitalize;
+  padding-bottom: 8px;
+  display: block;
+`
+
+const Subtitle = styled(Text)`
+  font-size: 14px;
+  text-transform: capitalize;
+  padding-bottom: 12px;
+  display: block;
+  color: #acacac;
 `
 
 const ListItem = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   row-gap: 10px;
-  margin-bottom: 24px;
+  padding-bottom: 24px;
 `
 
 const Item = styled.div<{ isActive: boolean }>`
@@ -87,22 +98,31 @@ export const Content = () => {
 
   return (
     <ContentContainer>
-      {list.get(categorySelectedId)?.map((item) => (
-        <Wrapper key={item.id}>
+      {Object.entries((dummyData as any)[categorySelectedId].subCategories).map(([id, subCategory], index) => (
+        <Wrapper key={index}>
           <Title size="medium" weight="normal">
-            {item.title}
+            {(subCategory as any).title}
           </Title>
-          <ListItem>
-            {item.values.map((value) => (
-              <Item
-                key={value.id}
-                isActive={checkActive(categorySelectedId, item.id, value.id)}
-                onClick={() => handleClickItem(categorySelectedId, item.id, value.id)}
-              >
-                <ItemImg src={value.thumbnail} />
-              </Item>
+          <div>
+            {Object.values((subCategory as any).list).map((item, index) => (
+              <div key={index}>
+                <Subtitle size="small" weight="normal">
+                  {(item as any).title}
+                </Subtitle>
+                <ListItem>
+                  {(item as any).values.map((value: any) => (
+                    <Item
+                      key={value.id}
+                      isActive={checkActive(categorySelectedId, id, value.id)}
+                      onClick={() => handleClickItem(categorySelectedId, id, value.id)}
+                    >
+                      <ItemImg src={value.thumbnail} />
+                    </Item>
+                  ))}
+                </ListItem>
+              </div>
             ))}
-          </ListItem>
+          </div>
         </Wrapper>
       ))}
     </ContentContainer>

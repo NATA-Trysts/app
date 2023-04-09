@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 import { Text } from '@/components/Commons'
+import { useEditCharacterStore } from '@/stores'
 
 const ButtonContainer = styled(motion.button)`
   position: absolute;
@@ -25,12 +26,65 @@ const ButtonContainer = styled(motion.button)`
   }
 `
 
+const loading = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`
+
+const SpinnerContainer = styled.div`
+  & {
+    display: inline-block;
+    position: relative;
+    width: 30px;
+    height: 30px;
+  }
+
+  & div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    margin: 4px;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    animation: ${loading} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+  }
+  & div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  & div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  & div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+`
+
+const Spinner = () => {
+  return (
+    <SpinnerContainer>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </SpinnerContainer>
+  )
+}
+
 type JoinButtonProps = {
   isEdit?: boolean
   onClick?: () => void
 }
 
 export const JoinButton = ({ isEdit = false, ...otherProps }: JoinButtonProps) => {
+  const [isUpdatingAvatar] = useEditCharacterStore((state) => [state.isUpdatingAvatar])
+
   return (
     <ButtonContainer
       animate={{
@@ -38,9 +92,13 @@ export const JoinButton = ({ isEdit = false, ...otherProps }: JoinButtonProps) =
       }}
       {...otherProps}
     >
-      <Text size="medium" weight="normal">
-        Hope into space
-      </Text>
+      {isUpdatingAvatar ? (
+        <Spinner />
+      ) : (
+        <Text size="medium" weight="normal">
+          Hope into space
+        </Text>
+      )}
     </ButtonContainer>
   )
 }

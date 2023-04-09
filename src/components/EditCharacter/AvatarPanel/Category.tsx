@@ -14,8 +14,6 @@ const CategoryContainer = styled.div`
 const CategoryItem = styled.div<{ isActive: boolean }>`
   width: 100%;
   height: 40px;
-  background: ${({ isActive }) =>
-    isActive ? 'linear-gradient(90deg, #FF958A -1.56%, #FF6E88 50.54%, #FF93A7 101.56%) !important' : 'transparent'};
   margin: 8px 0;
   display: flex;
   justify-content: center;
@@ -23,24 +21,29 @@ const CategoryItem = styled.div<{ isActive: boolean }>`
   border-radius: 10px;
   cursor: pointer;
 
-  svg {
-    ${({ isActive }) =>
-      isActive
-        ? 'filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(461%) hue-rotate(210deg) brightness(117%) contrast(100%);'
-        : ''}
-  }
-
-  &:hover {
-    background: #212225;
-    svg {
-      filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(461%) hue-rotate(210deg) brightness(117%)
-        contrast(100%);
-    }
-  }
-
   .react-tooltip {
     background: #191a1d;
     text-transform: capitalize;
+  }
+
+  > button {
+    padding: 10px;
+    background: ${({ isActive }) => (isActive ? 'var(--color-3);' : '#212225')};
+    transition: background 0.2s ease;
+
+    svg {
+      ${({ isActive }) =>
+        isActive
+          ? 'filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(461%) hue-rotate(210deg) brightness(117%) contrast(100%);'
+          : ''}
+    }
+
+    &:hover {
+      svg {
+        filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(461%) hue-rotate(210deg) brightness(117%)
+          contrast(100%);
+      }
+    }
   }
 `
 
@@ -74,6 +77,11 @@ export const Category = () => {
     {
       type: 'accessory',
       name: 'accessories',
+      icon: <SmileFace />,
+    },
+    {
+      type: 'tattoo',
+      name: 'tattoo',
       icon: <SmileFace />,
     },
   ]

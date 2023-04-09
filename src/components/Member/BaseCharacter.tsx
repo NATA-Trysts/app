@@ -122,10 +122,9 @@ export const BaseCharacter = memo(
 
       return () => {
         mixer.removeEventListener('finished', props.onAnimationFinished)
-
-        props.action[0] && actions[props.action[0]].fadeOut(0.2)
+        actions[props.action] && actions[props.action].fadeOut(0.2)
       }
-    }, [props.action, mixer])
+    }, [props.action])
 
     return (
       <group ref={group} {...props} dispose={null}>
@@ -133,12 +132,22 @@ export const BaseCharacter = memo(
           <group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.015}>
             <primitive object={nodes.mixamorigHips} />
 
-            {/* BASE PARTS */}
-            {skin.map((s) => (
-              <skinnedMesh key={s.id} ref={tattooRef} geometry={nodes.body.geometry} skeleton={nodes.body.skeleton}>
-                <meshStandardMaterial color={CHARACTER_CONFIG_VALUE_MAPPING[s.itemId]} metalness={0} roughness={1} />
+            {skin.length === 0 ? (
+              <skinnedMesh ref={tattooRef} geometry={nodes.body.geometry} skeleton={nodes.body.skeleton}>
+                <meshStandardMaterial
+                  color={CHARACTER_CONFIG_VALUE_MAPPING['skin.default']}
+                  metalness={0}
+                  roughness={1}
+                />
               </skinnedMesh>
-            ))}
+            ) : (
+              skin.map((s) => (
+                <skinnedMesh key={s.id} ref={tattooRef} geometry={nodes.body.geometry} skeleton={nodes.body.skeleton}>
+                  <meshStandardMaterial color={CHARACTER_CONFIG_VALUE_MAPPING[s.itemId]} metalness={0} roughness={1} />
+                </skinnedMesh>
+              ))
+            )}
+
             <skinnedMesh
               geometry={nodes.Cube020.geometry}
               material={materials.head}
@@ -165,7 +174,7 @@ export const BaseCharacter = memo(
               <skinnedMesh
                 key={u.id}
                 geometry={nodes[CHARACTER_CONFIG_VALUE_MAPPING[u.itemId]].geometry}
-                // material={nodes.upper001001.material}
+                material={nodes.upper001001001.material}
                 skeleton={nodes[CHARACTER_CONFIG_VALUE_MAPPING[u.itemId]].skeleton}
               />
             ))}
@@ -175,7 +184,7 @@ export const BaseCharacter = memo(
               <skinnedMesh
                 key={l.id}
                 geometry={nodes[CHARACTER_CONFIG_VALUE_MAPPING[l.itemId]].geometry}
-                // material={nodes.lower001001.material}
+                material={nodes.lower001001001.material}
                 skeleton={nodes[CHARACTER_CONFIG_VALUE_MAPPING[l.itemId]].skeleton}
               />
             ))}
@@ -185,7 +194,7 @@ export const BaseCharacter = memo(
               <skinnedMesh
                 key={s.id}
                 geometry={nodes[CHARACTER_CONFIG_VALUE_MAPPING[s.itemId]].geometry}
-                // material={nodes.shoe001001.material}
+                material={nodes.shoe001001001.material}
                 skeleton={nodes[CHARACTER_CONFIG_VALUE_MAPPING[s.itemId]].skeleton}
               />
             ))}
@@ -195,7 +204,7 @@ export const BaseCharacter = memo(
               <skinnedMesh
                 key={a.id}
                 geometry={nodes[CHARACTER_CONFIG_VALUE_MAPPING[a.itemId]].geometry}
-                // material={nodes.accessory001001.material}
+                material={nodes.accessory001001001.material}
                 skeleton={nodes[CHARACTER_CONFIG_VALUE_MAPPING[a.itemId]].skeleton}
               />
             ))}

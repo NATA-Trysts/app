@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useMemberStore, User } from '@/stores'
+import { useEditCharacterStore, useMemberStore, User } from '@/stores'
 
 import { useAuth } from './useAuth'
 import { useAxiosPrivate } from './useAxiosPrivate'
@@ -8,7 +8,8 @@ import { useAxiosPrivate } from './useAxiosPrivate'
 export const useGetMe = () => {
   const { auth } = useAuth()
   const axiosPrivate = useAxiosPrivate()
-  const [user, setUser] = useMemberStore((state) => [state.user, state.setUser])
+  const [setUser] = useMemberStore((state) => [state.setUser])
+  const [setCategorySelectedFromApi] = useEditCharacterStore((state) => [state.setCategorySelectedFromApi])
 
   const [result, setResult] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -20,13 +21,17 @@ export const useGetMe = () => {
         if (auth?.accessToken) {
           const { data } = await axiosPrivate('/user')
 
+          const avatarFromApi = { ...data.avatar }
+
+          delete (avatarFromApi as any).image // TEMPORARY
+
+          setCategorySelectedFromApi(new Map(Object.entries(avatarFromApi)))
+
           setUser({
-            ...user, // TEMP for keep avatar
             ...data,
           })
 
           setResult({
-            ...user,
             ...data,
           })
         }

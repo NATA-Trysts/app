@@ -18,6 +18,7 @@ type EditCharacterState = {
 
   categorySelectedItemIds: CategorySelectedItemId
   setCategorySelectedItemIds: (categoryId: string, subcategoryId: string, itemId: string) => void
+  setCategorySelectedFromApi: (categorySelectedItemId: CategorySelectedItemId) => void
 
   tattooSelectedId: string
   setTattooSelectedId: (id: string) => void
@@ -45,6 +46,9 @@ type EditCharacterState = {
 
   isInputFocus: boolean
   setIsInputFocus: (isInputFocus: boolean) => void
+
+  isUpdatingAvatar: boolean
+  setIsUpdatingAvatar: (isUpdatingAvatar: boolean) => void
 }
 
 export const useEditCharacterStore = create<EditCharacterState>((set) => ({
@@ -52,60 +56,13 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
   setCategorySelectedId: (id) => set(() => ({ categorySelectedId: id })),
 
   categorySelectedItemIds: new Map([
-    [
-      'skin',
-      [
-        {
-          id: 'skin-001',
-          itemId: 'skin.001.001',
-        },
-      ],
-    ],
-    [
-      'hair',
-      [
-        {
-          id: 'hair-001',
-          itemId: 'hair.001.001',
-        },
-      ],
-    ],
-    [
-      'upper',
-      [
-        {
-          id: 'upper-001',
-          itemId: 'upper.001.001',
-        },
-      ],
-    ],
-    [
-      'lower',
-      [
-        {
-          id: 'lower-001',
-          itemId: 'lower.001.001',
-        },
-      ],
-    ],
-    [
-      'shoe',
-      [
-        {
-          id: 'shoe-001',
-          itemId: 'shoe.001.001',
-        },
-      ],
-    ],
-    [
-      'accessory',
-      [
-        {
-          id: 'accessory-001',
-          itemId: 'accessory.001.001',
-        },
-      ],
-    ],
+    ['skin', []],
+    ['hair', []],
+    ['upper', []],
+    ['lower', []],
+    ['shoe', []],
+    ['accessory', []],
+    ['tattoo', []],
   ]),
   setCategorySelectedItemIds: (categoryId, subcategoryId, itemId) =>
     set((state) => {
@@ -128,6 +85,8 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
         categorySelectedItemIds: new Map(state.categorySelectedItemIds).set(categoryId, subcategoryActiveItems),
       }
     }),
+  setCategorySelectedFromApi: (categorySelectedItemId) =>
+    set(() => ({ categorySelectedItemIds: categorySelectedItemId })),
 
   tattooSelectedId: '',
   setTattooSelectedId: (id) => set(() => ({ tattooSelectedId: id })),
@@ -175,4 +134,7 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
 
   isInputFocus: false,
   setIsInputFocus: (isInputFocus: boolean) => set(() => ({ isInputFocus })),
+
+  isUpdatingAvatar: false,
+  setIsUpdatingAvatar: (isUpdatingAvatar: boolean) => set(() => ({ isUpdatingAvatar })),
 }))

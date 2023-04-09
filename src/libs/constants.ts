@@ -127,22 +127,22 @@ type ValueMapping<T> = {
 }
 
 const CHARACTER_CONFIG_VALUE_MAPPING: ValueMapping<string> = {
-  'skin.001.001': '#2b9148',
-  'skin.001.002': '#120ead',
-  'skin.001.003': '#6e106a',
-  'skin.001.004': '#d09789',
-  'hair.001.001': 'hair001001001',
-  'hair.001.002': 'hair001002001',
-  'upper.001.001': 'upper001001001',
-  'upper.001.002': 'upper001001002',
-  'upper.002.001': 'upper002001001',
-  'lower.001.001': 'lower001001001',
-  'lower.001.002': 'lower001002001',
-  'lower.002.001': 'lower002001001',
-  'lower.002.002': 'lower003001001',
-  'shoe.001.001': 'shoe001001001',
-  'accessory.001.001': 'accessory001001001',
-  'accessory.001.002': 'accessory001002001',
+  'skin.default': '#E7C693',
+  'skin.001.001.001': '#2b9148',
+  'skin.001.001.002': '#120ead',
+  'skin.001.001.003': '#6e106a',
+  'skin.001.001.004': '#d09789',
+  'hair.001.001.001': 'hair001001001',
+  'hair.001.001.002': 'hair001002001',
+  'upper.001.001.001': 'upper001001001',
+  'upper.002.001.001': 'upper001001002',
+  'upper.002.002.001': 'upper002001001',
+  'upper.002.002.002': 'upper002001001',
+  'lower.001.001.001': 'lower001001001',
+  'lower.001.002.001': 'lower001002001',
+  'shoe.001.001.001': 'shoe001001001',
+  'accessory.001.001.001': 'accessory001001001',
+  'accessory.001.001.002': 'accessory001002001',
 }
 
 const ANIMATION_COUNT_MAPPING: ValueMapping<number> = {

@@ -26,7 +26,6 @@ import { Vid } from './Other'
 export const MainMember = () => {
   const isInputFocus = useEditCharacterStore((state) => state.isInputFocus)
   const categorySelectedItemIds = useEditCharacterStore((state) => state.categorySelectedItemIds)
-  const tattooSelectedId = useEditCharacterStore((state) => state.tattooSelectedId)
   const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
   const roomInstance = useNetworkStore((state) => state.roomInstance)
   const anim = useCharacterControl(['idle', 'walk'])
@@ -46,9 +45,9 @@ export const MainMember = () => {
   const prevAnim = useRef(mainMemberAnimation[0])
 
   const TATTOO_MAPPING: ValueMapping<Texture> = {
-    'tattoo.001.001': tattooSpot,
-    'tattoo.001.002': tattooDragon,
-    'tattoo.001.003': tattooRing,
+    'tattoo.001.001.001': tattooSpot,
+    'tattoo.001.001.002': tattooDragon,
+    'tattoo.001.001.003': tattooRing,
   }
 
   // const pugRef = useRef<Group>(null)
@@ -144,7 +143,13 @@ export const MainMember = () => {
           lower={categorySelectedItemIds.get('lower')}
           shoe={categorySelectedItemIds.get('shoe')}
           skin={categorySelectedItemIds.get('skin')}
-          tattoo={TATTOO_MAPPING[tattooSelectedId]}
+          tattoo={
+            TATTOO_MAPPING[
+              ((categorySelectedItemIds.get('tattoo') as any).length > 0
+                ? (categorySelectedItemIds.get('tattoo') as any)[0].itemId
+                : '') as any
+            ]
+          }
           upper={categorySelectedItemIds.get('upper')}
           onAnimationFinished={() => {
             changeAnimation('idle', false)
