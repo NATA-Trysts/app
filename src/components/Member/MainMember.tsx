@@ -187,10 +187,9 @@ export const MainMember = () => {
           lower={categorySelectedItemIds.get('lower')}
           shoe={categorySelectedItemIds.get('shoe')}
           skin={categorySelectedItemIds.get('skin')}
-          // tattoo={TATTOO_MAPPING[tattooSelectedId]}
           tattoo={
             TATTOO_MAPPING[
-              ((categorySelectedItemIds.get('tattoo') as any)
+              ((categorySelectedItemIds.get('tattoo') as any).length > 0
                 ? (categorySelectedItemIds.get('tattoo') as any)[0].itemId
                 : '') as any
             ]
