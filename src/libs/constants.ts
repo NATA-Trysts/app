@@ -127,6 +127,7 @@ type ValueMapping<T> = {
 }
 
 const CHARACTER_CONFIG_VALUE_MAPPING: ValueMapping<string> = {
+  'skin.default': '#E7C693',
   'skin.001.001.001': '#2b9148',
   'skin.001.001.002': '#120ead',
   'skin.001.001.003': '#6e106a',

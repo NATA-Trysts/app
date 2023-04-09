@@ -132,12 +132,22 @@ export const BaseCharacter = memo(
           <group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.015}>
             <primitive object={nodes.mixamorigHips} />
 
-            {/* BASE PARTS */}
-            {skin.map((s) => (
-              <skinnedMesh key={s.id} ref={tattooRef} geometry={nodes.body.geometry} skeleton={nodes.body.skeleton}>
-                <meshStandardMaterial color={CHARACTER_CONFIG_VALUE_MAPPING[s.itemId]} metalness={0} roughness={1} />
+            {skin.length === 0 ? (
+              <skinnedMesh ref={tattooRef} geometry={nodes.body.geometry} skeleton={nodes.body.skeleton}>
+                <meshStandardMaterial
+                  color={CHARACTER_CONFIG_VALUE_MAPPING['skin.default']}
+                  metalness={0}
+                  roughness={1}
+                />
               </skinnedMesh>
-            ))}
+            ) : (
+              skin.map((s) => (
+                <skinnedMesh key={s.id} ref={tattooRef} geometry={nodes.body.geometry} skeleton={nodes.body.skeleton}>
+                  <meshStandardMaterial color={CHARACTER_CONFIG_VALUE_MAPPING[s.itemId]} metalness={0} roughness={1} />
+                </skinnedMesh>
+              ))
+            )}
+
             <skinnedMesh
               geometry={nodes.Cube020.geometry}
               material={materials.head}
