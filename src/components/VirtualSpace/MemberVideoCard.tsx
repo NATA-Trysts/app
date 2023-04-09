@@ -83,7 +83,7 @@ export const MemberVideoCard = ({ member }: { member: NearestMember }) => {
         delay: 0.2,
       }}
     >
-      <Video ref={videoRef} autoPlay muted playsInline id={`video-ref-${member.peerId}`} />
+      <Video ref={videoRef} autoPlay muted playsInline />
       <MemberName>{member.id}</MemberName>
       <MemberIcon>{isAudioOn ? <AudioOn height={10} width={10} /> : <AudioOff height={10} width={10} />}</MemberIcon>
     </MemberVideo>

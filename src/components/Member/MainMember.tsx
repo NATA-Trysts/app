@@ -1,56 +1,27 @@
-import { selectIsLocalVideoEnabled, selectLocalPeer, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
+import { selectIsLocalVideoEnabled, selectLocalPeer, useHMSStore } from '@100mslive/react-sdk'
 import { useTexture } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { CharacterControl, useCharacterControl } from '@sonhaaa/3d-playground'
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import { useKeyPressEvent } from 'react-use'
 import {
   Group,
-  Mesh,
   // Quaternion,
+  // Vector3
   Texture,
-  // Vector3,
-  VideoTexture,
 } from 'three'
 
-import { MESSAGES } from '@/libs/constants'
+import { ANIMATION_COUNT_MAPPING, MESSAGES, ValueMapping } from '@/libs/constants'
 import { generateAnimationString } from '@/libs/utils'
 import { useEditCharacterStore, useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
 // import { Pug } from '../Pet'
 import { BaseCharacter } from './BaseCharacter'
-
-const VIDEO_WIDTH = 2
+import { Vid } from './Other'
 
 // const pV = new Vector3(1, -2, 2)
 // const pQ = new Quaternion()
 // const pP = new Vector3(0, -2, 0)
-
-type StringMapping<T> = {
-  [id: string]: T
-}
-
-const ANIMATION_COUNT_MAPPING: StringMapping<number> = {
-  angry: 1,
-  bow: 1,
-  cheer: 1,
-  clap: 1,
-  dance: 1,
-  discuss: 1,
-  fall: 3,
-  hit: 3,
-  idle: 5,
-  // idle: 1,
-  kick: 4,
-  lay: 1,
-  punch: 3,
-  run: 1,
-  sad: 2,
-  sit: 4,
-  victory: 1,
-  wave: 1,
-  walk: 1,
-}
 
 export const MainMember = () => {
   const isInputFocus = useEditCharacterStore((state) => state.isInputFocus)
@@ -58,45 +29,29 @@ export const MainMember = () => {
   const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
   const roomInstance = useNetworkStore((state) => state.roomInstance)
   const anim = useCharacterControl(['idle', 'walk'])
-  const videoFrame = useRef<Mesh>(null)
-  const [videoTexture, setVideoTexture] = useState<VideoTexture>()
-  const [tempTexture] = useTexture([
-    'https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg',
-  ])
   const [tattooSpot, tattooDragon, tattooRing] = useTexture(
     ['/textures/t.tattoo.001.001.png', '/textures/t.tattoo.001.002.png', '/textures/t.tattoo.001.003.png'],
     (textures) => {
       ;(textures as Texture[]).map((t) => (t.flipY = false))
     },
   )
+  const videoEnabled = useHMSStore(selectIsLocalVideoEnabled)
+  const localPeer = useHMSStore(selectLocalPeer)
 
-  const TATTOO_MAPPING: StringMapping<Texture> = {
+  const [mainMemberAnimation, setMainMemberAnimation] = useMemberStore((state) => [
+    state.mainMemberAnimation,
+    state.setMainMemberAnimation,
+  ])
+  const prevAnim = useRef(mainMemberAnimation[0])
+
+  const TATTOO_MAPPING: ValueMapping<Texture> = {
     'tattoo.001.001.001': tattooSpot,
     'tattoo.001.001.002': tattooDragon,
     'tattoo.001.001.003': tattooRing,
   }
 
-  const videoEnabled = useHMSStore(selectIsLocalVideoEnabled)
-  const localPeer = useHMSStore(selectLocalPeer)
-  const hmsActions = useHMSActions()
-  const videoElement = document.getElementById('my-video') as HTMLVideoElement
-  const [mainMemberAnimation, setMainMemberAnimation] = useMemberStore((state) => [
-    state.mainMemberAnimation,
-    state.setMainMemberAnimation,
-  ])
   // const pugRef = useRef<Group>(null)
   // const pugRunTime = useRef(0)
-
-  const attachVideo = () => {
-    if (localPeer && localPeer.videoTrack && videoElement) {
-      hmsActions.attachVideo(localPeer.videoTrack, videoElement)
-      setVideoTexture(new VideoTexture(videoElement))
-    }
-  }
-
-  useEffect(() => {
-    attachVideo()
-  }, [videoEnabled, isEditAvatar, localPeer])
 
   const dispatchMovement = (character: Group) => {
     roomInstance?.send(MESSAGES.MEMBER.MOVE, {
@@ -117,46 +72,43 @@ export const MainMember = () => {
     // pQ.setFromEuler(character.rotation)
   }
 
-  useFrame(({ camera }) => {
-    if (videoFrame.current) videoFrame.current.lookAt(camera.position)
-
-    // if (anim == 'walk') {
+  useFrame(() => {
+    // if (anim === 'walk') {
     //   pugRunTime.current += delta
     // } else {
     //   pugRunTime.current = 0
     // }
-
     // pP.set(pV.x, pV.y, pV.z)
-
     // pP.setX(pP.x + Math.sin(2 * pugRunTime.current))
     // pP.setZ(pP.z + Math.sin(2 * pugRunTime.current))
-
     // pugRef.current?.position.lerp(pP, 0.05)
     // pugRef.current?.quaternion.slerp(pQ, 0.2)
   })
 
-  const changeAnimation = (animation: string) => {
+  const changeAnimation = (animation: string, once: boolean) => {
     const randomAnimation: string = generateAnimationString(animation, ANIMATION_COUNT_MAPPING[animation] - 1)
 
-    setMainMemberAnimation(randomAnimation)
-    roomInstance?.send(MESSAGES.MEMBER.ACTION, {
-      action: randomAnimation,
-    })
+    if (prevAnim.current !== randomAnimation) {
+      setMainMemberAnimation([randomAnimation, once])
+      prevAnim.current = randomAnimation
+      roomInstance?.send(MESSAGES.MEMBER.ACTION, {
+        action: randomAnimation,
+      })
+    }
   }
 
-  const bow = () => changeAnimation('bow')
-  const cheer = () => changeAnimation('cheer')
-  const clap = () => changeAnimation('clap')
-  const dance = () => changeAnimation('dance')
-  const discuss = () => changeAnimation('discuss')
-  const lay = () => changeAnimation('lay')
-  const angry = () => changeAnimation('angry')
-  const wave = () => changeAnimation('wave')
-  const sad = () => changeAnimation('sad')
-  // const punch = () => changeAnimation('punch')
-  // const sit = () => changeAnimation('sit')
-  // const kick = () => changeAnimation('kick')
-  // const hit = () => changeAnimation('hit')
+  const bow = () => changeAnimation('bow', false)
+  const cheer = () => changeAnimation('cheer', false)
+  const clap = () => changeAnimation('clap', false)
+  const dance = () => changeAnimation('dance', false)
+  const discuss = () => changeAnimation('discuss', false)
+  const lay = () => changeAnimation('lay', false)
+  const angry = () => changeAnimation('angry', false)
+  const wave = () => changeAnimation('wave', false)
+  const sad = () => changeAnimation('sad', false)
+  const sit = () => changeAnimation('sit', false)
+  const punch = () => changeAnimation('punch', true)
+  const kick = () => changeAnimation('kick', true)
 
   useKeyPressEvent('1', wave)
   useKeyPressEvent('2', bow)
@@ -168,16 +120,20 @@ export const MainMember = () => {
   useKeyPressEvent('8', sad)
   useKeyPressEvent('9', angry)
 
+  useKeyPressEvent('c', punch)
+  useKeyPressEvent('x', sit)
+  useKeyPressEvent('k', kick)
+
   return (
     <>
       <CharacterControl
         cameraPosition={[20, 6, 20]}
         canControl={!isInputFocus}
         collider={[1.25, 2, 1.25]}
-        initialPosition={[0, 5, 0]}
+        initialPosition={[0, 0, 0]}
         polarAngle={[0.5, Math.PI / 2]}
         speed={6}
-        onAnimationChange={() => changeAnimation(anim)}
+        onAnimationChange={() => changeAnimation(anim, false)}
         onCharacterMove={dispatchMovement}
       >
         <BaseCharacter
@@ -195,13 +151,11 @@ export const MainMember = () => {
             ]
           }
           upper={categorySelectedItemIds.get('upper')}
+          onAnimationFinished={() => {
+            changeAnimation('idle', false)
+          }} //use for the animation that plays once (punch, kick, etc)
         />
-        {isEditAvatar && videoEnabled && (
-          <mesh ref={videoFrame} position={[0, 4.5, 0]}>
-            <planeGeometry args={[VIDEO_WIDTH, (VIDEO_WIDTH * 3) / 4]} />
-            <meshBasicMaterial map={videoTexture || tempTexture} toneMapped={true} />
-          </mesh>
-        )}
+        {isEditAvatar && videoEnabled && <Vid peerId={localPeer?.id} />}
       </CharacterControl>
       {/* <Pug ref={pugRef} anim={anim === 'idle.000' ? 'Idle' : 'Run'} /> */}
     </>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useEditCharacterStore, useMemberStore } from '@/stores'
+import { useEditCharacterStore, useMemberStore, User } from '@/stores'
 
 import { useAuth } from './useAuth'
 import { useAxiosPrivate } from './useAxiosPrivate'
@@ -11,7 +11,7 @@ export const useGetMe = () => {
   const [setUser] = useMemberStore((state) => [state.setUser])
   const [setCategorySelectedFromApi] = useEditCharacterStore((state) => [state.setCategorySelectedFromApi])
 
-  const [result, setResult] = useState<any>(null)
+  const [result, setResult] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<string>('')
 

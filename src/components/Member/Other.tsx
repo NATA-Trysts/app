@@ -1,13 +1,13 @@
-import { selectRemotePeers, useHMSStore } from '@100mslive/react-sdk'
-import { useTexture } from '@react-three/drei'
+import { selectPeerByID, useHMSStore, useVideo } from '@100mslive/react-sdk'
+import { Html } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { CuboidCollider, RapierRigidBody, RigidBody } from '@react-three/rapier'
-import { useEffect, useRef, useState } from 'react'
-import { Group, Mesh, Quaternion, Vector3, VideoTexture } from 'three'
+import { useEffect, useRef } from 'react'
+import { Group, Quaternion, Vector3 } from 'three'
 
 import { useVirtualSpaceStore } from '@/stores'
 
-import { BaseCharacter } from './BaseCharacter'
+import { OtherCharacter } from './OtherCharacter'
 
 const nextPosition = new Vector3()
 const nextQuaternion = new Quaternion()
@@ -22,13 +22,41 @@ type OtherProps = {
   isNearestMember: boolean
 }
 
-const VIDEO_WIDTH = 2
+export const Vid = ({ peerId }: { peerId: string | undefined }) => {
+  const peer = useHMSStore(selectPeerByID(peerId))
+  const { videoRef } = useVideo({
+    trackId: peer?.videoTrack,
+  })
+
+  return (
+    <>
+      {peer && (
+        <Html center position={[0, 5, 0]}>
+          <div
+            style={{
+              width: 200,
+              height: 150,
+              backgroundColor: 'red',
+              borderRadius: 20,
+              overflow: 'hidden',
+            }}
+          >
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              playsInline
+              style={{ width: '100%', height: '100%', objectFit: 'cover', zIndex: 90 }}
+            ></video>
+          </div>
+        </Html>
+      )}
+    </>
+  )
+}
 
 export const Other = (props: OtherProps) => {
   const playerRef = useRef<Group>(null)
-  const videoFrame = useRef<Mesh>(null)
-  const [videoTexture, setVideoTexture] = useState<VideoTexture>()
-  const remotePeers = useHMSStore(selectRemotePeers)
   const [videoLayout, isEditAvatar] = useVirtualSpaceStore((state) => [state.videoLayout, state.isEditAvatar])
   const rigRef = useRef<RapierRigidBody>(null)
 
@@ -36,18 +64,7 @@ export const Other = (props: OtherProps) => {
     playerRef.current?.position.set(props.position[0], props.position[1], props.position[2])
   }, [])
 
-  const [tempTexture] = useTexture([
-    'https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg',
-  ])
-
-  useEffect(() => {
-    const videoElement = document.getElementById(`video-ref-${props.peerId}`) as HTMLVideoElement
-    // const filteredRemotePeer = remotePeers.filter((peer) => peer.id === props.peerId)[0]
-
-    if (videoElement && videoFrame.current) setVideoTexture(new VideoTexture(videoElement))
-  }, [remotePeers, props.peerId, props.isNearestMember])
-
-  useFrame(({ camera }) => {
+  useFrame(() => {
     if (playerRef.current) {
       nextPosition.fromArray(props.position)
       nextQuaternion.fromArray(props.quaternion)
@@ -63,18 +80,14 @@ export const Other = (props: OtherProps) => {
         true,
       )
     }
-    if (videoFrame.current) videoFrame.current.lookAt(camera.position)
   })
 
   return (
     <>
       <group ref={playerRef}>
-        <BaseCharacter action={props.action} />
+        <OtherCharacter action={props.action} />
         {props.isNearestMember && videoLayout === 'above-head' && !isEditAvatar ? (
-          <mesh ref={videoFrame} position={[0, 4.5, 0]}>
-            <planeGeometry args={[VIDEO_WIDTH, (VIDEO_WIDTH * 3) / 4]} />
-            <meshBasicMaterial map={videoTexture || tempTexture} />
-          </mesh>
+          <Vid key={props.peerId} peerId={props.peerId} />
         ) : null}
       </group>
       <RigidBody ref={rigRef} lockTranslations colliders="cuboid" type="dynamic">

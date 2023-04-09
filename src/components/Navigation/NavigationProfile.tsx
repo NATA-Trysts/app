@@ -55,7 +55,7 @@ export const NavigationProfile = () => {
   return (
     <NavigationProfileContainer>
       <>
-        {!isLoading && !error && (
+        {!isLoading && !error && result && (
           <>
             {isDisplayed ? (
               <>

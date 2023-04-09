@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
-import { isEmpty, size } from 'lodash-es'
-import { Children, ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { Children, ReactNode, useEffect, useRef, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 
 import { ReactComponent as ArrowLeft } from '@/assets/icons/slider-arrow-left.svg'
@@ -81,30 +80,25 @@ export type MemberVideoLayoutProps = {
 
 export const MemberVideoLayout = ({ ...props }: MemberVideoLayoutProps) => {
   const [videoLayout, isEditAvatar] = useVirtualSpaceStore((state) => [state.videoLayout, state.isEditAvatar])
-  const nearestMembers = useMemberStore((state) => state.nearestMembers)
-  const memberCount = useMemo(() => (nearestMembers ? size(nearestMembers) : 0), [nearestMembers])
-  const isOtherMember = useMemo(() => (nearestMembers ? isEmpty(nearestMembers) : false), [nearestMembers])
-  // const otherMembers = useMemberStore((state) => state.otherMembers)
-  // const memberCount = useMemo(() => (otherMembers ? size(otherMembers) : 0), [otherMembers])
-  // const isOtherMember = useMemo(() => (otherMembers ? isEmpty(otherMembers) : false), [otherMembers])
+  const nearestMemberIds = useMemberStore((state) => state.nearestMemberIds)
+  const otherMembers = useMemberStore((state) => state.otherMembers)
 
   return (
     <>
       {!isEditAvatar ? (
         <VideoContainer
           animate={{
-            opacity: isOtherMember || videoLayout !== 'slide' ? 0 : 1,
-            width: 190 * memberCount + 8 * (memberCount + 1),
+            opacity: nearestMemberIds.length === 0 || videoLayout !== 'slide' ? 0 : 1,
+            width: 190 * nearestMemberIds.length + 8 * (nearestMemberIds.length + 1),
           }}
           initial={{
             opacity: 0,
           }}
           {...props}
         >
-          <VideoSlider memberCount={memberCount}>
-            {Object.values(nearestMembers).map((player) => (
-              <MemberVideoCard key={player.id} member={player} />
-            ))}
+          <VideoSlider memberCount={nearestMemberIds.length}>
+            {nearestMemberIds.length > 0 &&
+              nearestMemberIds.map((memberId) => <MemberVideoCard key={memberId} member={otherMembers[memberId]} />)}
           </VideoSlider>
         </VideoContainer>
       ) : null}

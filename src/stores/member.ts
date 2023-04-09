@@ -75,12 +75,13 @@ type MemberState = {
     quaternion: { x: number; y: number; z: number; w: number },
   ) => void
   updateActionOtherMember: (sessionId: string, action: string) => void
-  nearestMembers: OtherMember<NearestMember>
-  addNearestMember: (sessionId: string, nearestMember: NearestMember) => void
-  removeNearestMember: (sessionId: string) => void
 
-  mainMemberAnimation: string
-  setMainMemberAnimation: (mainMemberAnimation: string) => void
+  nearestMemberIds: string[]
+  addNearestMemberId: (sessionId: string) => void
+  removeNearestMemberId: (sessionId: string) => void
+
+  mainMemberAnimation: [string, boolean]
+  setMainMemberAnimation: (mainMemberAnimation: [string, boolean]) => void
 }
 
 export const useMemberStore = create<MemberState>()(
@@ -182,18 +183,14 @@ export const useMemberStore = create<MemberState>()(
           }),
         ),
 
-      nearestMembers: {},
-      addNearestMember: (sessionId: string, nearestMember: NearestMember) =>
-        set(
-          produce((state: MemberState) => {
-            state.nearestMembers[sessionId] = nearestMember
-          }),
-        ),
-      removeNearestMember: (sessionId: string) =>
-        set((state) => ({ nearestMembers: omit(state.nearestMembers, [sessionId]) })),
+      nearestMemberIds: [],
+      addNearestMemberId: (sessionId: string) =>
+        set((state) => ({ nearestMemberIds: [...state.nearestMemberIds, sessionId] })),
+      removeNearestMemberId: (sessionId: string) =>
+        set((state) => ({ nearestMemberIds: state.nearestMemberIds.filter((id) => id !== sessionId) })),
 
-      mainMemberAnimation: 'idle.000',
-      setMainMemberAnimation: (mainMemberAnimation: string) => set(() => ({ mainMemberAnimation })),
+      mainMemberAnimation: ['idle.000', false],
+      setMainMemberAnimation: (mainMemberAnimation: [string, boolean]) => set(() => ({ mainMemberAnimation })),
     }),
     {
       name: 'member-storage',
