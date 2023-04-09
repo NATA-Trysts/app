@@ -122,7 +122,7 @@ export const BaseCharacter = memo(
 
       return () => {
         mixer.removeEventListener('finished', props.onAnimationFinished)
-        actions[props.action] && actions[props.action].fadeOut(0.2)
+        props.action && actions[props.action[0]].fadeOut(0.2)
       }
     }, [props.action])
 
