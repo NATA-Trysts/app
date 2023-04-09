@@ -46,6 +46,9 @@ type EditCharacterState = {
 
   isInputFocus: boolean
   setIsInputFocus: (isInputFocus: boolean) => void
+
+  isUpdatingAvatar: boolean
+  setIsUpdatingAvatar: (isUpdatingAvatar: boolean) => void
 }
 
 export const useEditCharacterStore = create<EditCharacterState>((set) => ({
@@ -131,4 +134,7 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
 
   isInputFocus: false,
   setIsInputFocus: (isInputFocus: boolean) => set(() => ({ isInputFocus })),
+
+  isUpdatingAvatar: false,
+  setIsUpdatingAvatar: (isUpdatingAvatar: boolean) => set(() => ({ isUpdatingAvatar })),
 }))

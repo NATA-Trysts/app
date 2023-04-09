@@ -4,7 +4,11 @@ import { useAxiosPrivate } from './useAxiosPrivate'
 import { useGetMe } from './useGetMe'
 
 const useUpdateAvatar = () => {
-  const [categorySelectedItemIds] = useEditCharacterStore((state) => [state.categorySelectedItemIds])
+  const [categorySelectedItemIds, isUpdatingAvatar, setIsUpdatingAvatar] = useEditCharacterStore((state) => [
+    state.categorySelectedItemIds,
+    state.isUpdatingAvatar,
+    state.setIsUpdatingAvatar,
+  ])
   const [setIsEditAvatar] = useVirtualSpaceStore((state) => [state.setIsEditAvatar])
   const [user, setUser] = useMemberStore((state) => [state.user, state.setUser])
 
@@ -12,6 +16,10 @@ const useUpdateAvatar = () => {
   const { result } = useGetMe()
 
   const updateAvatar = () => {
+    if (isUpdatingAvatar) return
+
+    setIsUpdatingAvatar(true)
+
     const objectAvatar: any = Object.fromEntries(categorySelectedItemIds)
 
     const newAvatar: AvatarType = {
@@ -29,10 +37,11 @@ const useUpdateAvatar = () => {
           avatar: newAvatar,
         })
         setIsEditAvatar(false)
+        setIsUpdatingAvatar(false)
       })
   }
 
-  return { updateAvatar }
+  return { updateAvatar, isUpdatingAvatar }
 }
 
 export { useUpdateAvatar }
