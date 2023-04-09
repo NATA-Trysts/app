@@ -60,6 +60,18 @@ type VirtualSpaceState = {
   }
   addWhiteBoardMember: (member: Member) => void
   removeWhiteBoardMember: (member: Member) => void
+
+  isLoadingSpace: boolean
+  setIsLoadingSpace: (isLoadingSpace: boolean) => void
+
+  isLoadingUser: boolean
+  setIsLoadingUser: (isLoadingUser: boolean) => void
+
+  isJoiningHMS: boolean
+  setIsJoiningHMS: (isJoiningHMS: boolean) => void
+
+  isJoiningMultiplayer: boolean
+  setIsJoiningMultiplayer: (isJoiningMultiplayer: boolean) => void
 }
 
 export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
@@ -118,4 +130,16 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
     set((state) => ({
       whiteBoardMembers: omit(state.whiteBoardMembers, [member.id]),
     })),
+
+  isLoadingSpace: true,
+  setIsLoadingSpace: (isLoadingSpace: boolean) => set(() => ({ isLoadingSpace })),
+
+  isLoadingUser: true,
+  setIsLoadingUser: (isLoadingUser: boolean) => set(() => ({ isLoadingUser })),
+
+  isJoiningHMS: true,
+  setIsJoiningHMS: (isJoiningHMS: boolean) => set(() => ({ isJoiningHMS })),
+
+  isJoiningMultiplayer: true,
+  setIsJoiningMultiplayer: (isJoiningMultiplayer: boolean) => set(() => ({ isJoiningMultiplayer })),
 }))

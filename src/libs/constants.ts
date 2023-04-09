@@ -69,7 +69,7 @@ const INPUT_BORDER: InputStatusColor = {
   errorPending: '#DA2121',
 }
 
-const TRYSTS_EMAIL_LOGIN = 'trystsplatform@gmail.com'
+const TRYSTS_EMAIL_LOGIN = 'noreply@trysts.io'
 
 const MESSAGES = {
   MEMBER: {
@@ -166,6 +166,21 @@ const ANIMATION_COUNT_MAPPING: ValueMapping<number> = {
   walk: 1,
 }
 
+const ULTILITY_SIZE_MAPPING = {
+  chat: {
+    name: 'Chat',
+    width: '70%',
+  },
+  member: {
+    name: 'Member',
+    width: '60%',
+  },
+  setting: {
+    name: 'Setting',
+    width: '60%',
+  },
+}
+
 const JSDELIVR_URL = 'https://cdn.jsdelivr.net/gh/NATA-Trysts/cdn@main'
 
 export {
@@ -187,5 +202,6 @@ export {
   STRIPE_API_KEY,
   TAB_CATEGORY_COLOR,
   TRYSTS_EMAIL_LOGIN,
+  ULTILITY_SIZE_MAPPING,
 }
 export type { NotificationType, ValueMapping }

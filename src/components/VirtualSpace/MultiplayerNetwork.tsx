@@ -1,16 +1,11 @@
 // @ts-nocheck
 
-import { selectLocalPeerID, useHMSStore } from '@100mslive/react-sdk'
-import { Client, Room } from 'colyseus.js'
-import { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 
 import { Member, Message, useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
-const MULTIPLAYER_SERVICE_ENDPOINT = import.meta.env.VITE_MULTIPLAYER_SERVICE_ENDPOINT
-const WORLD_NAME = import.meta.env.VITE_WORLD_NAME
-
-export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
-  const [setRoomInstance, isJoinedHMS] = useNetworkStore((state) => [state.setRoomInstance, state.isJoinedHMS])
+export const MultiplayerNetwork = memo(() => {
+  const room = useNetworkStore((state) => state.roomInstance)
   const [setMainMember, addOtherMembers, removeOtherMembers, updateOtherMembers, updateActionOtherMember] =
     useMemberStore((state) => [
       state.setMainMember,
@@ -19,38 +14,13 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
       state.updateOtherMembers,
       state.updateActionOtherMember,
     ])
-
+  const addWhiteBoardMember = useVirtualSpaceStore((state) => state.addWhiteBoardMember)
+  const removeWhiteBoardMember = useVirtualSpaceStore((state) => state.removeWhiteBoardMember)
   const [addMessage] = useVirtualSpaceStore((state) => [state.addMessage])
-  const localPeerId = useHMSStore(selectLocalPeerID)
 
   useEffect(() => {
-    let room: typeof Room = null
-
     const handler = async () => {
-      if (!props.spaceId) return
-
-      const client = new Client(MULTIPLAYER_SERVICE_ENDPOINT)
-
-      if (!client) throw Error('Client not connected')
-
       try {
-        try {
-          room = await client.joinById(props.spaceId, {
-            peerId: localPeerId,
-          })
-        } catch (error) {
-          if (error.message === `room "${props.spaceId}" not found`) {
-            try {
-              room = await client.create(WORLD_NAME, {
-                spaceId: props.spaceId,
-                peerId: localPeerId,
-              })
-            } catch (error) {
-              throw Error('Join room failed!')
-            }
-          }
-        }
-
         room.state.members.onAdd = (member: Member, sessionId: string) => {
           if (sessionId === room.sessionId) {
             setMainMember({
@@ -117,18 +87,22 @@ export const MultiplayerNetwork = (props: { spaceId: string | undefined }) => {
           addMessage(message)
         }
 
+        room?.onMessage(MESSAGES.WHITEBOARD.JOIN, ({ member }) => {
+          addWhiteBoardMember(member)
+        })
+
+        room?.onMessage(MESSAGES.WHITEBOARD.LEAVE, ({ member }) => {
+          removeWhiteBoardMember(member)
+        })
+
         setRoomInstance(room)
       } catch (e) {
         throw Error('Join room failed!')
       }
     }
 
-    isJoinedHMS && handler()
-
-    return () => {
-      room?.leave()
-    }
-  }, [isJoinedHMS])
+    room && handler()
+  }, [room])
 
   return null
-}
+})

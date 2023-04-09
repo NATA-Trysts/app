@@ -8,7 +8,7 @@ export type UserProfileProps = {
 }
 
 export const UserProfile = ({ ...props }: UserProfileProps) => {
-  const { result: user } = useGetMe()
+  const { me: user } = useGetMe()
 
   return (
     <UserProfileContainer {...props}>

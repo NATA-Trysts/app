@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { CustomableContainer } from '@/components/Commons'
@@ -7,17 +6,17 @@ import { MultitabDetect, MultiTabWarning } from '@/components/MultitabDetect'
 import { UtilitySection } from '@/components/UtilitySection'
 import {
   CustomCharacterPanel,
-  HMSNetwork,
   MultiplayerNetwork,
   MyInformationCard,
   MyVideo,
   Scene,
   ToolbarMiddle,
   ToolbarRight,
+  VirtualSpaceLoading,
 } from '@/components/VirtualSpace'
 import { Chat, Members, Setting } from '@/components/VirtualSpace/Ultilities'
-import { MESSAGES } from '@/libs/constants'
-import { useAppStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
+import { ULTILITY_SIZE_MAPPING } from '@/libs/constants'
+import { useAppStore, useVirtualSpaceStore } from '@/stores'
 
 import { Header } from './Header'
 
@@ -95,83 +94,55 @@ const LeftSideWrapper = styled.div`
 const VirtualSpace = () => {
   const customColor = useAppStore((state) => state.customColor)
   const [selectedUltility] = useVirtualSpaceStore((state) => [state.selectedUltility])
-  const roomInstance = useNetworkStore((state) => state.roomInstance)
-  const addWhiteBoardMember = useVirtualSpaceStore((state) => state.addWhiteBoardMember)
-  const removeWhiteBoardMember = useVirtualSpaceStore((state) => state.removeWhiteBoardMember)
-  const { spaceId } = useParams()
-
-  const ultilityMapping = {
-    chat: {
-      name: 'Chat',
-      width: '70%',
-    },
-    member: {
-      name: 'Member',
-      width: '60%',
-    },
-    setting: {
-      name: 'Setting',
-      width: '60%',
-    },
-  }
 
   useEffect(() => {
     document.title = 'Trysts | Summer Open Call'
   }, [])
 
-  useEffect(() => {
-    roomInstance?.onMessage(MESSAGES.WHITEBOARD.JOIN, ({ member }) => {
-      addWhiteBoardMember(member)
-    })
-
-    roomInstance?.onMessage(MESSAGES.WHITEBOARD.LEAVE, ({ member }) => {
-      removeWhiteBoardMember(member)
-    })
-  }, [roomInstance])
-
   return (
-    <CustomableContainer customColor={customColor}>
-      <MultitabDetect fallback={<MultiTabWarning />}>
-        <Container customColor={customColor}>
-          <MultiplayerNetwork spaceId={spaceId} />
-          <HMSNetwork />
-          <Scene />
-          <OverlayContainer>
-            <Header />
-            <LeftSideContainer>
-              <LeftSideWrapper>
-                <MyVideo />
-                <MyInformationCard />
-              </LeftSideWrapper>
-            </LeftSideContainer>
-            <MiddleSideContainer>
-              <ToolbarMiddle />
-            </MiddleSideContainer>
-            <RightSideContainer>
-              {selectedUltility ? (
-                <UtilitySection
-                  name={ultilityMapping[selectedUltility].name}
-                  width={ultilityMapping[selectedUltility].width}
-                >
-                  {
+    <VirtualSpaceLoading>
+      <CustomableContainer customColor={customColor}>
+        <MultitabDetect fallback={<MultiTabWarning />}>
+          <Container customColor={customColor}>
+            <MultiplayerNetwork />
+            <Scene />
+            <OverlayContainer>
+              <Header />
+              <LeftSideContainer>
+                <LeftSideWrapper>
+                  <MyVideo />
+                  <MyInformationCard />
+                </LeftSideWrapper>
+              </LeftSideContainer>
+              <MiddleSideContainer>
+                <ToolbarMiddle />
+              </MiddleSideContainer>
+              <RightSideContainer>
+                {selectedUltility ? (
+                  <UtilitySection
+                    name={ULTILITY_SIZE_MAPPING[selectedUltility].name}
+                    width={ULTILITY_SIZE_MAPPING[selectedUltility].width}
+                  >
                     {
-                      chat: <Chat />,
-                      member: <Members />,
-                      setting: <Setting />,
-                    }[selectedUltility]
-                  }
-                </UtilitySection>
-              ) : (
-                <></>
-              )}
-              <ToolbarRight />
-            </RightSideContainer>
+                      {
+                        chat: <Chat />,
+                        member: <Members />,
+                        setting: <Setting />,
+                      }[selectedUltility]
+                    }
+                  </UtilitySection>
+                ) : (
+                  <></>
+                )}
+                <ToolbarRight />
+              </RightSideContainer>
 
-            <CustomCharacterPanel />
-          </OverlayContainer>
-        </Container>
-      </MultitabDetect>
-    </CustomableContainer>
+              <CustomCharacterPanel />
+            </OverlayContainer>
+          </Container>
+        </MultitabDetect>
+      </CustomableContainer>
+    </VirtualSpaceLoading>
   )
 }
 
