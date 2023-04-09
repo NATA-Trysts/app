@@ -16,7 +16,7 @@ const useUpdateAvatar = () => {
   const { result } = useGetMe()
 
   const updateAvatar = () => {
-    if (isUpdatingAvatar) return
+    if (isUpdatingAvatar || result === null) return
 
     setIsUpdatingAvatar(true)
 
@@ -28,7 +28,7 @@ const useUpdateAvatar = () => {
     }
 
     axiosPrivate
-      .put(`/users/${result._id}`, {
+      .put(`/users/${result?._id}`, {
         avatar: newAvatar,
       })
       .then(() => {
