@@ -12,7 +12,7 @@ import { ReactComponent as MicroOff } from '@/assets/icons/mic-off.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
 import { ReactComponent as Whiteboard } from '@/assets/icons/whiteboard.svg'
 import { ReactComponent as Writing } from '@/assets/icons/writing.svg'
-import { NameBox } from '@/components/EditCharacter'
+import { NameBox, RandomAvatar } from '@/components/EditCharacter'
 import { EmojiContent } from '@/components/EmojiContent'
 import { ListAudio, ListCamera } from '@/components/ListDevice'
 import { Popover } from '@/components/Popover'
@@ -300,6 +300,7 @@ export const ToolbarMiddle = () => {
         )}
       </AnimatedToolbarContainer>
       <NameBox isEdit={isEditAvatar} />
+      <RandomAvatar isEdit={isEditAvatar} />
       {isOpenWhiteBoard && (
         <WhiteBoard
           close={() => {
