@@ -1,4 +1,4 @@
-import { Environment, Stats } from '@react-three/drei'
+import { Environment } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import {
   // Debug,
@@ -22,7 +22,7 @@ export const Scene = () => {
       <MemberVideoLayout />
       <Canvas dpr={[0.25, 0.25]}>
         <Perf />
-        <Stats />
+        {/* <Stats  /> */}
 
         <Suspense fallback={<Loading />}>
           <Environment preset="city" />

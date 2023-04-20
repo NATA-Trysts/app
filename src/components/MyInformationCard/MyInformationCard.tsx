@@ -60,7 +60,7 @@ export const MyInformationCard: FC<MyInformationCardProps> = ({
   return (
     <Container>
       <Wrapper>
-        <MyAvatar alt="Sonha avatar" loading="lazy" src={avatar} />
+        <MyAvatar alt={`${name} avatar`} loading="lazy" src={avatar} />
         <NameContainer>
           <Text size="medium" weight="normal">
             {truncateText(name, maxNameCharacter)}

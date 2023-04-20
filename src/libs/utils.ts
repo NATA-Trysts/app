@@ -1,3 +1,4 @@
+import { HMSConfig } from '@100mslive/react-sdk'
 import { random } from 'lodash-es'
 import React from 'react'
 
@@ -40,3 +41,15 @@ export const generateRandomNumber = (length: number) => {
 }
 
 export const generateAnimationString = (str: string, max: number) => `${str}.${String(random(max)).padStart(3, '0')}`
+
+export const generateHMSConfig = (userName: string, authToken: string, metadata: any) =>
+  ({
+    userName,
+    authToken,
+    settings: {
+      isAudioMuted: true,
+      isVideoMuted: true,
+    },
+    metaData: JSON.stringify(metadata),
+    rememberDeviceSelection: true,
+  } as HMSConfig)

@@ -41,7 +41,7 @@ const ProfileAvatar = styled.img`
 export const NavigationProfile = () => {
   const isExpanded = useDashboardStore((state) => state.isExpanded)
   const [isDisplayed, setIsDisplayed] = useState(false)
-  const { result, isLoading, error } = useGetMe()
+  const { me, isLoading, error } = useGetMe()
 
   // delay display of help title to prevent flickering
   useEffect(() => {
@@ -55,14 +55,14 @@ export const NavigationProfile = () => {
   return (
     <NavigationProfileContainer>
       <>
-        {!isLoading && !error && result && (
+        {!isLoading && !error && me && (
           <>
             {isDisplayed ? (
               <>
                 <MyInformationCard
                   avatar={'https://i.pinimg.com/originals/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg'}
-                  handler={result.handler}
-                  name={result.username}
+                  handler={me.handler}
+                  name={me.username}
                 />
                 <ProfileCharacter>
                   <ProfileCharacterCanvas>
