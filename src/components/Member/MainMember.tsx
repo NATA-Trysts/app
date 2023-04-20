@@ -130,6 +130,7 @@ export const MainMember = () => {
         cameraPosition={[20, 6, 20]}
         canControl={!isInputFocus}
         collider={[1.25, 2, 1.25]}
+        frameOffset={1}
         initialPosition={[0, 0, 0]}
         polarAngle={[0.5, Math.PI / 2]}
         speed={6}

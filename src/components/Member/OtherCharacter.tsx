@@ -102,7 +102,7 @@ export function OtherCharacter({ ...props }: ModelProps) {
     actions[props.action].reset().fadeIn(0.2).play()
 
     return () => {
-      props.action && actions[props.action]?.fadeOut(0.2)
+      props.action && actions[props.action] && actions[props.action]?.fadeOut(0.2)
     }
   }, [props.action])
 

@@ -14,7 +14,6 @@ import { Container } from '@/layouts/common'
 
 import { MemberVideoLayout } from '../MemberVideoLayout'
 import { OtherMember } from '../OtherMember'
-import { Loading } from './Loading'
 
 export const Scene = () => {
   return (
@@ -24,7 +23,7 @@ export const Scene = () => {
         <Perf />
         {/* <Stats  /> */}
 
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={null}>
           <Environment preset="city" />
           <ambientLight intensity={0.7} />
 
