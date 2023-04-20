@@ -2,6 +2,7 @@
 
 import { memo, useEffect } from 'react'
 
+import { MESSAGES } from '@/libs/constants'
 import { Member, Message, useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
 export const MultiplayerNetwork = memo(() => {
@@ -19,7 +20,7 @@ export const MultiplayerNetwork = memo(() => {
   const [addMessage] = useVirtualSpaceStore((state) => [state.addMessage])
 
   useEffect(() => {
-    const handler = async () => {
+    if (room)
       try {
         room.state.members.onAdd = (member: Member, sessionId: string) => {
           if (sessionId === room.sessionId) {
@@ -77,31 +78,26 @@ export const MultiplayerNetwork = memo(() => {
               updateActionOtherMember(sessionId, member.action)
             }
           }
+
+          room.state.members.onRemove = (_, sessionId: string) => {
+            removeOtherMembers(sessionId)
+          }
+
+          room.state.messages.onAdd = (message: Message) => {
+            addMessage(message)
+          }
+
+          room?.onMessage(MESSAGES.WHITEBOARD.JOIN, ({ member }) => {
+            addWhiteBoardMember(member)
+          })
+
+          room?.onMessage(MESSAGES.WHITEBOARD.LEAVE, ({ member }) => {
+            removeWhiteBoardMember(member)
+          })
         }
-
-        room.state.members.onRemove = (_, sessionId: string) => {
-          removeOtherMembers(sessionId)
-        }
-
-        room.state.messages.onAdd = (message: Message) => {
-          addMessage(message)
-        }
-
-        room?.onMessage(MESSAGES.WHITEBOARD.JOIN, ({ member }) => {
-          addWhiteBoardMember(member)
-        })
-
-        room?.onMessage(MESSAGES.WHITEBOARD.LEAVE, ({ member }) => {
-          removeWhiteBoardMember(member)
-        })
-
-        setRoomInstance(room)
-      } catch (e) {
-        throw Error('Join room failed!')
+      } catch (error) {
+        throw Error('Multiplayer Error', error)
       }
-    }
-
-    room && handler()
   }, [room])
 
   return null
