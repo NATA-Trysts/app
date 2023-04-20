@@ -25,6 +25,8 @@ type ChatMessage = {
 type VirtualSpaceState = {
   spaceId: string
   setSpaceId: (spaceId: string) => void
+  spaceName: string
+  setSpaceName: (spaceName: string) => void
   selectedUltility: UltilityType
   setSelectedUltility: (selectedUltility: UltilityType) => void
   customColor: CustomColor
@@ -77,6 +79,9 @@ type VirtualSpaceState = {
 export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
   spaceId: '123',
   setSpaceId: (spaceId) => set(() => ({ spaceId })),
+
+  spaceName: '',
+  setSpaceName: (spaceName) => set(() => ({ spaceName })),
 
   selectedUltility: null,
   setSelectedUltility: (selectedUltility) => set(() => ({ selectedUltility })),

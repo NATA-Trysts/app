@@ -13,10 +13,10 @@ const useUpdateAvatar = () => {
   const [user, setUser] = useMemberStore((state) => [state.user, state.setUser])
 
   const axiosPrivate = useAxiosPrivate()
-  const { result } = useGetMe()
+  const { me } = useGetMe()
 
   const updateAvatar = () => {
-    if (isUpdatingAvatar || result === null) return
+    if (isUpdatingAvatar || me === null) return
 
     setIsUpdatingAvatar(true)
 
@@ -28,7 +28,7 @@ const useUpdateAvatar = () => {
     }
 
     axiosPrivate
-      .put(`/users/${result?._id}`, {
+      .put(`/users/${me?._id}`, {
         avatar: newAvatar,
       })
       .then(() => {

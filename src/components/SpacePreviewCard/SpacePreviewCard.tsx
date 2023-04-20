@@ -39,10 +39,10 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
   }
 
   const handleDoubleClick = () => {
-    if (item.author === user._id) {
+    if (item.author._id === user._id) {
       navigate(`/files/${item._id}`)
     } else {
-      navigate(`/${item._id}`)
+      navigate(`/${item.code}`)
     }
   }
 
@@ -59,6 +59,7 @@ export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePrevi
         isActive={item._id === selectedSpacePreview?._id}
         isHovered={isHovered}
         spaceAuthorId={(item.author as any)._id}
+        spaceCode={item.code}
         spaceId={item._id}
         subtitle={subtitle}
         title={title}

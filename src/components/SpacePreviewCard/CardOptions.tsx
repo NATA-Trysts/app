@@ -17,6 +17,7 @@ const MemberContainer = styled.div`
 type CardOptionsProps = {
   spaceAuthorId: string
   spaceId: string
+  spaceCode: string
   onClickThreeDots: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
@@ -28,17 +29,17 @@ type Options = {
 
 type Owner = 'owner' | 'guest'
 
-export const CardOptions = ({ spaceAuthorId, spaceId, onClickThreeDots }: CardOptionsProps) => {
+export const CardOptions = ({ spaceAuthorId, spaceId, spaceCode, onClickThreeDots }: CardOptionsProps) => {
   const navigate = useNavigate()
   const { copy } = useCopyToClipboard()
   const [user] = useMemberStore((state) => [state.user])
 
   const handleHostClick = () => {
-    navigate(`/${spaceId}`)
+    navigate(`/${spaceCode}`)
   }
 
   const handleOpenInNewTabClick = () => {
-    window.open(`/${spaceId}`, '_blank')
+    window.open(`/${spaceCode}`, '_blank')
   }
 
   const handleEditSpaceClick = () => {
@@ -47,7 +48,7 @@ export const CardOptions = ({ spaceAuthorId, spaceId, onClickThreeDots }: CardOp
 
   const handleCopyUrlClick = () => {
     // temp local host url
-    copy(`http://127.0.0.1:5173/${spaceId}`)
+    copy(`http://127.0.0.1:5173/${spaceCode}`)
   }
 
   const optionsMap = new Map<Owner, Options[]>([

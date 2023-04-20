@@ -1,13 +1,19 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+type Author = {
+  _id: string
+  username: string
+}
+
 export type Space = {
   _id: string
   name: string
   thumbnail: string
   latestEdited: number
-  author: string
+  author: Author
   category: string
+  code: string
 }
 
 // 1 for home, 2 for files, and 3 for libraries

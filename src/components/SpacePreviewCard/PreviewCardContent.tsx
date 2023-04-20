@@ -80,6 +80,7 @@ type PreviewCardContentProps = {
   isHovered: boolean
   spaceAuthorId: string
   spaceId: string
+  spaceCode: string
   title: string
   subtitle: string
   imageUrl: string
@@ -91,6 +92,7 @@ export const PreviewCardContent = ({
   isHovered,
   spaceAuthorId,
   spaceId,
+  spaceCode,
   title,
   subtitle,
   imageUrl,
@@ -126,7 +128,12 @@ export const PreviewCardContent = ({
             {subtitle}
           </Text>
         </CardBodyText>
-        <CardOptions spaceAuthorId={spaceAuthorId} spaceId={spaceId} onClickThreeDots={onClickThreeDots} />
+        <CardOptions
+          spaceAuthorId={spaceAuthorId}
+          spaceCode={spaceCode}
+          spaceId={spaceId}
+          onClickThreeDots={onClickThreeDots}
+        />
       </CardBody>
     </CardContentContainer>
   )
