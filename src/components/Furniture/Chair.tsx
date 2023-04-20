@@ -24,7 +24,7 @@ export function Chair(
   const { nodes } = useGLTF(`${JSDELIVR_URL}/models-transform/chair.glb`) as GLTFResult
 
   return (
-    <group {...props} dispose={null} name="chair">
+    <group {...props} dispose={null} name="chair" scale={[0.025, 0.025, 0.025]}>
       <mesh geometry={nodes.chair.geometry} rotation={[-Math.PI, 0, -Math.PI]}>
         <meshStandardMaterial
           color={props.color}

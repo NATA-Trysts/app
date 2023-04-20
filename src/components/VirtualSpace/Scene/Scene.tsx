@@ -1,8 +1,8 @@
 import { Environment } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { Debug, InstancedRigidBodyProps, Physics, RigidBody } from '@react-three/rapier'
+import { Debug, Physics, RigidBody } from '@react-three/rapier'
 import { Perf } from 'r3f-perf'
-import { Suspense, useMemo } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 
 import { ChairInstance } from '@/components/Furniture'
 import { Hint } from '@/components/Hint'
@@ -13,23 +13,26 @@ import { useVirtualSpaceStore } from '@/stores'
 import { MemberVideoLayout } from '../MemberVideoLayout'
 // import { OtherMember } from '../OtherMember'
 
-const createBody = (): InstancedRigidBodyProps => ({
-  key: Math.random(),
-  position: [Math.random() * 40, -2, Math.random() * 40],
-  rotation: [0, 0, 0],
-  scale: [0.025, 0.025, 0.025],
-})
-
 export const Scene = () => {
-  const setInteractable = useVirtualSpaceStore((state) => state.setInteractable)
+  const [spaceModels, setInteractable] = useVirtualSpaceStore((state) => [state.spaceModels, state.setInteractable])
+  const [bodies, setBodies] = useState([])
 
-  const bodies = useMemo(
-    () =>
-      Array.from({
-        length: 10,
-      }).map(() => createBody()),
-    [],
-  )
+  useEffect(() => {
+    let newBodies: any = []
+
+    if (spaceModels.length > 0) {
+      newBodies = spaceModels.map((model: any) => {
+        return {
+          key: model.uuid,
+          position: [model.position.x, model.position.y - 2, model.position.z],
+          rotation: [model.rotation.x, model.rotation.y, model.rotation.z],
+          scale: [0.025, 0.025, 0.025],
+        }
+      })
+    }
+
+    setBodies(newBodies)
+  }, [spaceModels])
 
   return (
     <Container>
