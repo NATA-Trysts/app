@@ -71,6 +71,7 @@ const useBuilder = () => {
       color: '#ff00ff',
       roughness: 1,
       metalness: 0,
+      type: item.category,
     })
 
     updateHistory((models) => {

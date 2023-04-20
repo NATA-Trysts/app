@@ -50,6 +50,7 @@ export type SpaceModel = {
   color: string
   roughness: number
   metalness: number
+  type: CategoryType // TODO: add more types
 }
 
 type BuilderState = {
