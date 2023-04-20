@@ -129,7 +129,7 @@ export const BaseCharacter = memo(
     return (
       <group ref={group} {...props} dispose={null}>
         <group name="Scene" position={[0, -2, 0]}>
-          <group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.015}>
+          <group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
             <primitive object={nodes.mixamorigHips} />
 
             {skin.length === 0 ? (
