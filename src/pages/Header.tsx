@@ -56,7 +56,7 @@ const CustomOption = styled(Option)<{ textColor: string }>`
 `
 
 export const Header = () => {
-  const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
+  const [isEditAvatar, spaceName] = useVirtualSpaceStore((state) => [state.isEditAvatar, state.spaceName])
   const color = useAppStore((state) => state.customColor)
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -128,7 +128,7 @@ export const Header = () => {
           <FullLogo />
         </div>
       </Popover>
-      <VirtualSpaceNameCard name="Summer Open call 🎤" spaceId="123" />
+      <VirtualSpaceNameCard name={spaceName} spaceId="123" />
     </Container>
   )
 }

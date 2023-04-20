@@ -6,9 +6,10 @@ import { Client, Room } from 'colyseus.js'
 import { ReactNode, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
+import axiosConfigured from '@/api/axios'
 import { useAuth, useAxiosPrivate } from '@/hooks'
 import { generateHMSConfig } from '@/libs/utils'
-// import { CategorySelectedItemId, useEditCharacterStore, useMemberStore, User } from '@/stores'
+import { CategorySelectedItemId, useEditCharacterStore, useMemberStore, User, useVirtualSpaceStore } from '@/stores'
 
 type VirtualSpaceLoadingProps = {
   children: ReactNode
@@ -20,14 +21,16 @@ const WORLD_NAME = import.meta.env.VITE_WORLD_NAME
 export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const { spaceId } = useParams()
   const hmsActions = useHMSActions()
-  // const setCategorySelectedFromApi = useEditCharacterStore((state) => state.setCategorySelectedFromApi)
-  // const setUser = useMemberStore((state) => state.setUser)
+  const setCategorySelectedFromApi = useEditCharacterStore((state) => state.setCategorySelectedFromApi)
+  const setUser = useMemberStore((state) => state.setUser)
   const localPeerId = useHMSStore(selectLocalPeerID)
 
   const [isPrepare, setIsPrepare] = useState(true)
   const [prepareStatus, setPrepareStatus] = useState('prepare process')
   const [prepareError, setPrepareError] = useState('')
   const { auth } = useAuth()
+
+  const [setSpaceName] = useVirtualSpaceStore((state) => [state.setSpaceName])
 
   // const { me } = useGetMe()
   const axiosPrivate = useAxiosPrivate()
@@ -44,47 +47,51 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
     const chainCall = async () => {
       try {
         let user: User
+        let hmsRoomId: string
         // Get Space && Get User
         // -> Get Space
+        const getSpaceByCodeRequest: AxiosResponse<Space, any> = await axiosConfigured.get(`/spaces/code/${spaceId}`)
+
         const getUserRequest: AxiosResponse<User, any> =
           auth?.accessToken &&
           axiosPrivate('/user', {
             cancelToken: cancelTokenSource.token,
           })
 
-        const responses: AxiosResponse<User, any>[] = [getUserRequest]
+        const responses: AxiosResponse<User, Space, any>[] = [getUserRequest, getSpaceByCodeRequest]
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const results = await Promise.allSettled(responses)
 
         // User Response
-        // setPrepareStatus('Get Userdata')
+        setPrepareStatus('Get User')
 
-        // if (results[0].status === 'fulfilled') {
-        //   user = results[0].value.data
-        //   const avatarFromApi = user.avatar
+        if (results[0].status === 'fulfilled') {
+          user = results[0].value.data
+          const avatarFromApi = user.avatar
 
-        //   delete (avatarFromApi as any).image
+          delete (avatarFromApi as any).image
 
-        //   setCategorySelectedFromApi(new Map(Object.entries(avatarFromApi)) as CategorySelectedItemId)
-        //   setUser(user)
-        // }
-        // if (results[0].status === 'rejected') {
-        //   setPrepareError('Get Me Failed')
-        // }
+          setCategorySelectedFromApi(new Map(Object.entries(avatarFromApi)) as CategorySelectedItemId)
+          setUser(user)
+        }
+        if (results[0].status === 'rejected') {
+          setPrepareError('Get Me Failed')
+        }
 
         // Space Response
-        setPrepareStatus('Get Space data')
-
-        console.log(`Get space ${spaceId}!`)
-        const roomId = '642c5157adb93485420bfec8'
+        setPrepareStatus('Get Space')
+        if (results[1].status === 'fulfilled') {
+          setSpaceName(results[1].value.data.name)
+          hmsRoomId = results[1].value.data.hmsRoomId
+        }
 
         // Join HMS
         setPrepareStatus('Joining HMS')
 
         const hmsRequest = await axios.post(import.meta.env.VITE_HMS_ENDPOINT, {
           // eslint-disable-next-line camelcase
-          room_id: roomId,
+          room_id: hmsRoomId,
           // TODO: change based on role
           role: import.meta.env.VITE_HMS_ROLE_PARTICIPANT,
           // eslint-disable-next-line camelcase
