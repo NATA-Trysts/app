@@ -25,7 +25,7 @@ type VirtualSpaceLoadingProps = {
 const MULTIPLAYER_SERVICE_ENDPOINT = import.meta.env.VITE_MULTIPLAYER_SERVICE_ENDPOINT
 const WORLD_NAME = import.meta.env.VITE_WORLD_NAME
 
-type PrepareState = 'info-loaded' | 'hms.joined' | 'multiplayer.joined'
+type PrepareState = 'info-loaded' | 'need-verify' | 'hms.joined' | 'multiplayer.joined'
 
 export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const { spaceId } = useParams()
@@ -37,6 +37,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const [isPrepare, setIsPrepare] = useState(true)
   const [prepareStatus, setPrepareStatus] = useState('prepare process')
   const [prepareError, setPrepareError] = useState('')
+  const [password, setPassword] = useState('')
   const { auth } = useAuth()
 
   const [setSpaceName] = useVirtualSpaceStore((state) => [state.setSpaceName])
@@ -90,12 +91,17 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
         // Space Response
         setPrepareStatus('Get Space')
         if (results[1].status === 'fulfilled') {
+          const password = results[1].value.data.password
+
           setSpaceName(results[1].value.data.name)
           setRoomId(results[1].value.data.hmsRoomId)
-        }
 
-        // setRoomId(roomId)
-        setPrepareState('info-loaded')
+          if (password) {
+            setPrepareState('need-verify')
+          } else {
+            setPrepareState('info-loaded')
+          }
+        }
       } catch (error) {
         console.error(error)
         setPrepareError('Prepare Failed')
@@ -178,11 +184,39 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
     }
   }, [prepareState])
 
+  const handleVerifyPassword = async () => {
+    try {
+      const result = await axiosConfigured.post(`/spaces/verify`, {
+        code: spaceId,
+        password,
+      })
+
+      if (result.data) {
+        setPrepareState('info-loaded')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <>
+      {prepareState === 'need-verify' && (
+        <div>
+          <h1>Need Verify</h1>
+          <input
+            type="text"
+            value={password}
+            onChange={(e: any) => {
+              setPassword(e.target.value)
+            }}
+          />
+          <button onClick={handleVerifyPassword}>Join</button>
+        </div>
+      )}
       {isPrepare && <span>{prepareStatus}</span>}
       {prepareError && <span>{prepareError}</span>}
-      {props.children}
+      {!isPrepare && !prepareError && props.children}
     </>
   )
 }
