@@ -12,7 +12,7 @@ const AvatarPanelContainer = styled(motion.div)<{ bottom: number; left: number; 
   top: ${({ top }) => top}px;
 
   width: 300px;
-  height: 580px;
+  height: 640px;
   background-color: #191a1d;
   border-radius: 16px;
   display: grid;

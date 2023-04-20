@@ -1,6 +1,13 @@
-import { selectIsLocalAudioEnabled, selectIsLocalVideoEnabled, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
+import {
+  selectIsLocalAudioEnabled,
+  selectIsLocalVideoEnabled,
+  selectPeerScreenSharing,
+  selectScreenShareByPeerID,
+  useHMSActions,
+  useHMSStore,
+} from '@100mslive/react-sdk'
 import { motion } from 'framer-motion'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as ArrowUp } from '@/assets/icons/arrow-up.svg'
@@ -12,7 +19,7 @@ import { ReactComponent as MicroOff } from '@/assets/icons/mic-off.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
 import { ReactComponent as Whiteboard } from '@/assets/icons/whiteboard.svg'
 import { ReactComponent as Writing } from '@/assets/icons/writing.svg'
-import { NameBox } from '@/components/EditCharacter'
+import { NameBox, RandomAvatar } from '@/components/EditCharacter'
 import { EmojiContent } from '@/components/EmojiContent'
 import { ListAudio, ListCamera } from '@/components/ListDevice'
 import { Popover } from '@/components/Popover'
@@ -20,6 +27,7 @@ import { AnimatedToolbarContainer, ToolbarItem, WithTooltip } from '@/components
 import { MESSAGES } from '@/libs/constants'
 import { useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
+import { ScreenShare } from './ScreenShare'
 import { WhiteBoard } from './WhiteBoard'
 
 const Condition = styled(motion.div)`
@@ -31,7 +39,7 @@ const CustomToolbarItem = styled(ToolbarItem)`
   margin-left: 8px;
 `
 
-const OpeningWhiteBoardNotification = styled.div`
+const OpeningNotification = styled.div`
   transform: translateY(-72px);
   width: 310px;
   height: 40px;
@@ -45,6 +53,7 @@ const OpeningWhiteBoardNotification = styled.div`
 `
 
 export const ToolbarMiddle = () => {
+  const videoRef = useRef<HTMLVideoElement>(null)
   const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
   // TODO: Calling api to retrieve isHost
   const isHost = true
@@ -57,11 +66,14 @@ export const ToolbarMiddle = () => {
   const hmsActions = useHMSActions()
   const audioEnabled = useHMSStore(selectIsLocalAudioEnabled)
   const videoEnabled = useHMSStore(selectIsLocalVideoEnabled)
+  const presenter = useHMSStore(selectPeerScreenSharing)
+  const screenShareVideoTrack = useHMSStore(selectScreenShareByPeerID(presenter ? presenter.id : ''))
 
   const [isOpenCameraSetting, setIsOpenCameraSetting] = useState(false)
   const [isOpenMicSetting, setIsOpenMicSetting] = useState(false)
   const [isOpenEmoji, setIsOpenEmoji] = useState(false)
   const [isOpenWhiteBoard, setIsOpenWhiteBoard] = useState(false)
+  const [isOpenShareScreen, setIsOpenShareScreen] = useState(false)
   const [isHostOpeningWhiteBoard, setIsHostOpeningWhiteBoard] = useState(false)
 
   const toggleAudio = async () => await hmsActions.setLocalAudioEnabled(!audioEnabled)
@@ -70,7 +82,10 @@ export const ToolbarMiddle = () => {
 
   const shareScreen = async () => {
     try {
-      await hmsActions.setScreenShareEnabled(true)
+      if (isHost) {
+        await hmsActions.setScreenShareEnabled(true)
+      }
+      openShareScreen()
     } catch (error) {
       console.error(error)
     }
@@ -80,23 +95,13 @@ export const ToolbarMiddle = () => {
     return Object.keys(otherMembers)
   }, [otherMembers])
 
-  const joinWhiteBoard = () => {
-    roomInstance?.send(MESSAGES.WHITEBOARD.JOIN, {
-      member: mainMember,
-    })
-  }
-
-  const leaveWhiteBoard = () => {
-    roomInstance?.send(MESSAGES.WHITEBOARD.LEAVE, {
-      member: mainMember,
-    })
-  }
-
   const openWhiteBoard = () => {
     if (isHost) {
       roomInstance?.send(MESSAGES.WHITEBOARD.HOST_OPEN)
     }
-    joinWhiteBoard()
+    roomInstance?.send(MESSAGES.WHITEBOARD.JOIN, {
+      member: mainMember,
+    })
     setIsOpenWhiteBoard(!isOpenWhiteBoard)
   }
 
@@ -104,8 +109,20 @@ export const ToolbarMiddle = () => {
     if (isHost) {
       roomInstance?.send(MESSAGES.WHITEBOARD.HOST_CLOSE)
     }
-    leaveWhiteBoard()
+    roomInstance?.send(MESSAGES.WHITEBOARD.LEAVE, {
+      member: mainMember,
+    })
     setIsOpenWhiteBoard(false)
+  }
+
+  const openShareScreen = () => {
+    setIsOpenShareScreen(true)
+  }
+
+  const closeShareScreen = () => {
+    setIsOpenShareScreen(false)
+
+    hmsActions.setScreenShareEnabled(false)
   }
 
   const onPressZToOpenWhiteBoard = (e: KeyboardEvent) => {
@@ -129,15 +146,28 @@ export const ToolbarMiddle = () => {
     })
   }, [roomInstance])
 
+  useEffect(() => {
+    if (screenShareVideoTrack) {
+      hmsActions.attachVideo(screenShareVideoTrack.id, videoRef.current!)
+    }
+  }, [screenShareVideoTrack])
+
   return (
     <>
       {isHostOpeningWhiteBoard && (
-        <OpeningWhiteBoardNotification>
+        <OpeningNotification>
           <span>
             The host is opening a white board, press <b>Z</b> to join
           </span>
-        </OpeningWhiteBoardNotification>
+        </OpeningNotification>
       )}
+      {!!presenter && !isHost && (
+        <OpeningNotification>
+          <span>The host is sharing screen, join now</span>
+        </OpeningNotification>
+      )}
+      {presenter && isOpenShareScreen && <ScreenShare ref={videoRef} close={closeShareScreen}></ScreenShare>}
+
       <AnimatedToolbarContainer
         layout
         transition={{
@@ -200,16 +230,19 @@ export const ToolbarMiddle = () => {
             width: { duration: isEditAvatar ? 0.25 : 0.1 },
           }}
         >
-          <CustomToolbarItem
-            style={{
-              marginLeft: 8,
-            }}
-            onClick={shareScreen}
-          >
-            <WithTooltip content="Share screen" id="share-screen">
-              <ShareScreen />
-            </WithTooltip>
-          </CustomToolbarItem>
+          {isHost && (
+            <CustomToolbarItem
+              style={{
+                marginLeft: 8,
+              }}
+              onClick={shareScreen}
+            >
+              <WithTooltip content="Share screen" id="share-screen">
+                <ShareScreen />
+              </WithTooltip>
+            </CustomToolbarItem>
+          )}
+
           <ToolbarItem>
             <WithTooltip content="Whiteboard" id="whiteboard">
               <Whiteboard />
@@ -300,6 +333,7 @@ export const ToolbarMiddle = () => {
         )}
       </AnimatedToolbarContainer>
       <NameBox isEdit={isEditAvatar} />
+      <RandomAvatar isEdit={isEditAvatar} />
       {isOpenWhiteBoard && (
         <WhiteBoard
           close={() => {
