@@ -219,6 +219,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
       {isPrepare && <span>{prepareStatus}</span>}
       {prepareError && <span>{prepareError}</span>}
       {!isPrepare && !prepareError && props.children}
+      {props.children}
     </>
   )
 }
