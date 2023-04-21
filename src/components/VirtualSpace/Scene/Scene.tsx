@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { Debug, Physics, RigidBody } from '@react-three/rapier'
 import { Perf } from 'r3f-perf'
 import { Suspense, useEffect, useState } from 'react'
+import { Object3D } from 'three'
 
 import { ChairInstance, DeskInstance } from '@/components/Furniture'
 import { Hint } from '@/components/Hint'
@@ -17,16 +18,13 @@ export const Scene = () => {
   const [spaceModels, setInteractable] = useVirtualSpaceStore((state) => [state.spaceModels, state.setInteractable])
   const [bodies, setBodies] = useState([])
   const [deskBodies, setDeskBodies] = useState([])
+  const [target, setTarget] = useState<Object3D | null>(null)
 
   useEffect(() => {
     let newBodies: any = []
     let newBodiesDesk: any = []
     const spacesModelsChair = spaceModels.filter((model: any) => model.type === 'chair')
     const spacesModelsDesk = spaceModels.filter((model: any) => model.type === 'desk')
-
-    console.log('spaceModels', spaceModels)
-    console.log('spaceModelsChair', spacesModelsChair)
-    console.log('spaceModelsDesk', spacesModelsDesk)
 
     if (spacesModelsChair.length > 0) {
       newBodies = spacesModelsChair.map((model: any) => {
@@ -66,8 +64,24 @@ export const Scene = () => {
           <Physics gravity={[0, -9.82, 0]}>
             <ChairInstance
               bodies={bodies}
-              onCollisionEnter={() => setInteractable(true)}
-              onCollisionExit={() => setInteractable(false)}
+              onCollisionEnter={({ target }) => {
+                setInteractable(true)
+                if (target) {
+                  const position = (target.rigidBodyObject as Object3D).position
+                  const rotation = (target.rigidBodyObject as Object3D).rotation
+
+                  const newTarget: any = {
+                    position: { x: position.x, y: position.y, z: position.z },
+                    rotation: { x: rotation.x, y: rotation.y, z: rotation.z },
+                  }
+
+                  setTarget(newTarget)
+                }
+              }}
+              onCollisionExit={() => {
+                setInteractable(false)
+                setTarget(null)
+              }}
             />
             <DeskInstance
               bodies={deskBodies}
@@ -81,7 +95,7 @@ export const Scene = () => {
                 <meshBasicMaterial color="pink" />
               </mesh>
             </RigidBody>
-            <MainMember />
+            <MainMember target={target} />
             {/* <OtherMember /> */}
           </Physics>
         </Suspense>

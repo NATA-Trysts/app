@@ -90,10 +90,21 @@ type ModelProps = {
   shoe?: SubcategoryActiveItem[]
   accessory?: SubcategoryActiveItem[]
   tattoo?: Texture
+  positionY?: number
 } & JSX.IntrinsicElements['group']
 
 export const BaseCharacter = memo(
-  ({ skin = [], hair = [], upper = [], lower = [], shoe = [], accessory = [], tattoo, ...props }: ModelProps) => {
+  ({
+    skin = [],
+    hair = [],
+    upper = [],
+    lower = [],
+    shoe = [],
+    accessory = [],
+    tattoo,
+    positionY = -2,
+    ...props
+  }: ModelProps) => {
     const group = useRef<Group>(null)
     const { scene, materials, animations } = useGLTF(`${JSDELIVR_URL}/models-transform/character.glb`) as GLTFResult
     const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
@@ -128,8 +139,8 @@ export const BaseCharacter = memo(
 
     return (
       <group ref={group} {...props} dispose={null}>
-        <group name="Scene" position={[0, -2, 0]}>
-          <group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
+        <group name="Scene" position={[0, positionY, 0]}>
+          <group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.015}>
             <primitive object={nodes.mixamorigHips} />
 
             {skin.length === 0 ? (
