@@ -1,10 +1,5 @@
 import { useGLTF } from '@react-three/drei'
-import {
-  CollisionEnterHandler,
-  CollisionExitHandler,
-  InstancedRigidBodies,
-  InstancedRigidBodyProps,
-} from '@react-three/rapier'
+import { CollisionEnterHandler, InstancedRigidBodies, InstancedRigidBodyProps } from '@react-three/rapier'
 import { useEffect, useRef } from 'react'
 import { Color, InstancedMesh } from 'three'
 import { GLTF } from 'three-stdlib'
@@ -25,7 +20,7 @@ type GLTFResult = GLTF & {
 type FurnitureInstance = {
   bodies: InstancedRigidBodyProps[]
   onCollisionEnter: CollisionEnterHandler
-  onCollisionExit: CollisionExitHandler
+  onCollisionExit: () => void
 }
 
 export const ChairInstance = ({ bodies, onCollisionEnter, onCollisionExit }: FurnitureInstance) => {
@@ -47,6 +42,7 @@ export const ChairInstance = ({ bodies, onCollisionEnter, onCollisionExit }: Fur
       <InstancedRigidBodies
         colliders="cuboid"
         instances={bodies}
+        sensor={false}
         type="fixed"
         onCollisionEnter={onCollisionEnter}
         onCollisionExit={onCollisionExit}

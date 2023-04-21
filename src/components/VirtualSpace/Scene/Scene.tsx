@@ -1,10 +1,11 @@
 import { Environment } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { Debug, InstancedRigidBodyProps, Physics, RigidBody } from '@react-three/rapier'
+import { Debug, Physics, RigidBody } from '@react-three/rapier'
 import { Perf } from 'r3f-perf'
-import { Suspense, useMemo } from 'react'
+import { Suspense, useEffect, useState } from 'react'
+import { Object3D } from 'three'
 
-import { ChairInstance } from '@/components/Furniture'
+import { ChairInstance, DeskInstance } from '@/components/Furniture'
 import { Hint } from '@/components/Hint'
 import { MainMember } from '@/components/Member'
 import { Container } from '@/layouts/common'
@@ -13,23 +14,43 @@ import { useVirtualSpaceStore } from '@/stores'
 import { MemberVideoLayout } from '../MemberVideoLayout'
 // import { OtherMember } from '../OtherMember'
 
-const createBody = (): InstancedRigidBodyProps => ({
-  key: Math.random(),
-  position: [Math.random() * 40, -2, Math.random() * 40],
-  rotation: [0, 0, 0],
-  scale: [0.025, 0.025, 0.025],
-})
-
 export const Scene = () => {
-  const setInteractable = useVirtualSpaceStore((state) => state.setInteractable)
+  const [spaceModels, setInteractable] = useVirtualSpaceStore((state) => [state.spaceModels, state.setInteractable])
+  const [bodies, setBodies] = useState([])
+  const [deskBodies, setDeskBodies] = useState([])
+  const [target, setTarget] = useState<Object3D | null>(null)
 
-  const bodies = useMemo(
-    () =>
-      Array.from({
-        length: 10,
-      }).map(() => createBody()),
-    [],
-  )
+  useEffect(() => {
+    let newBodies: any = []
+    let newBodiesDesk: any = []
+    const spacesModelsChair = spaceModels.filter((model: any) => model.type === 'chair')
+    const spacesModelsDesk = spaceModels.filter((model: any) => model.type === 'desk')
+
+    if (spacesModelsChair.length > 0) {
+      newBodies = spacesModelsChair.map((model: any) => {
+        return {
+          key: model.uuid,
+          position: [model.position.x, model.position.y - 2, model.position.z],
+          rotation: [model.rotation.x, model.rotation.y, model.rotation.z],
+          scale: [0.025, 0.025, 0.025],
+        }
+      })
+    }
+
+    if (spacesModelsDesk.length > 0) {
+      newBodiesDesk = spacesModelsDesk.map((model: any) => {
+        return {
+          key: model.uuid,
+          position: [model.position.x, model.position.y - 2, model.position.z],
+          rotation: [model.rotation.x, model.rotation.y, model.rotation.z],
+          scale: [0.025, 0.025, 0.025],
+        }
+      })
+    }
+
+    setBodies(newBodies)
+    setDeskBodies(newBodiesDesk)
+  }, [spaceModels])
 
   return (
     <Container>
@@ -43,6 +64,27 @@ export const Scene = () => {
           <Physics gravity={[0, -9.82, 0]}>
             <ChairInstance
               bodies={bodies}
+              onCollisionEnter={({ target }) => {
+                setInteractable(true)
+                if (target) {
+                  const position = (target.rigidBodyObject as Object3D).position
+                  const rotation = (target.rigidBodyObject as Object3D).rotation
+
+                  const newTarget: any = {
+                    position: { x: position.x, y: position.y, z: position.z },
+                    rotation: { x: rotation.x, y: rotation.y, z: rotation.z },
+                  }
+
+                  setTarget(newTarget)
+                }
+              }}
+              onCollisionExit={() => {
+                setInteractable(false)
+                setTarget(null)
+              }}
+            />
+            <DeskInstance
+              bodies={deskBodies}
               onCollisionEnter={() => setInteractable(true)}
               onCollisionExit={() => setInteractable(false)}
             />
@@ -53,7 +95,7 @@ export const Scene = () => {
                 <meshBasicMaterial color="pink" />
               </mesh>
             </RigidBody>
-            <MainMember />
+            <MainMember target={target} />
             {/* <OtherMember /> */}
           </Physics>
         </Suspense>

@@ -40,7 +40,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const [password, setPassword] = useState('')
   const { auth } = useAuth()
 
-  const [setSpaceName] = useVirtualSpaceStore((state) => [state.setSpaceName])
+  const [setSpaceName, setSpaceModels] = useVirtualSpaceStore((state) => [state.setSpaceName, state.setSpaceModels])
   const [prepareState, setPrepareState] = useState<PrepareState>('')
 
   const [setRoomInstance] = useNetworkStore((state) => [state.setRoomInstance])
@@ -91,10 +91,12 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
         // Space Response
         setPrepareStatus('Get Space')
         if (results[1].status === 'fulfilled') {
+          const models = results[1].value.data.models
           const password = results[1].value.data.password
 
           setSpaceName(results[1].value.data.name)
           setRoomId(results[1].value.data.hmsRoomId)
+          setSpaceModels(models)
 
           if (password) {
             setPrepareState('need-verify')
