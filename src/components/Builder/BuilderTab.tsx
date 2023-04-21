@@ -69,7 +69,7 @@ export const BuilderTab = () => {
     {
       id: 2,
       icon: <SmileFaceIcon />,
-      name: 'table', // temp
+      name: 'desk', // temp
       isActive: false,
     },
   ])

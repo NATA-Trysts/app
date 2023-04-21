@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export type CategoryType = 'chair' | 'table' | null
+export type CategoryType = 'chair' | 'table' | 'desk' | null
 
 export type ModelResolution = {
   low: string

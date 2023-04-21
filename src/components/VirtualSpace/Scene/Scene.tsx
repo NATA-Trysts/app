@@ -4,7 +4,7 @@ import { Debug, Physics, RigidBody } from '@react-three/rapier'
 import { Perf } from 'r3f-perf'
 import { Suspense, useEffect, useState } from 'react'
 
-import { ChairInstance } from '@/components/Furniture'
+import { ChairInstance, DeskInstance } from '@/components/Furniture'
 import { Hint } from '@/components/Hint'
 import { MainMember } from '@/components/Member'
 import { Container } from '@/layouts/common'
@@ -16,12 +16,31 @@ import { MemberVideoLayout } from '../MemberVideoLayout'
 export const Scene = () => {
   const [spaceModels, setInteractable] = useVirtualSpaceStore((state) => [state.spaceModels, state.setInteractable])
   const [bodies, setBodies] = useState([])
+  const [deskBodies, setDeskBodies] = useState([])
 
   useEffect(() => {
     let newBodies: any = []
+    let newBodiesDesk: any = []
+    const spacesModelsChair = spaceModels.filter((model: any) => model.type === 'chair')
+    const spacesModelsDesk = spaceModels.filter((model: any) => model.type === 'desk')
 
-    if (spaceModels.length > 0) {
-      newBodies = spaceModels.map((model: any) => {
+    console.log('spaceModels', spaceModels)
+    console.log('spaceModelsChair', spacesModelsChair)
+    console.log('spaceModelsDesk', spacesModelsDesk)
+
+    if (spacesModelsChair.length > 0) {
+      newBodies = spacesModelsChair.map((model: any) => {
+        return {
+          key: model.uuid,
+          position: [model.position.x, model.position.y - 2, model.position.z],
+          rotation: [model.rotation.x, model.rotation.y, model.rotation.z],
+          scale: [0.025, 0.025, 0.025],
+        }
+      })
+    }
+
+    if (spacesModelsDesk.length > 0) {
+      newBodiesDesk = spacesModelsDesk.map((model: any) => {
         return {
           key: model.uuid,
           position: [model.position.x, model.position.y - 2, model.position.z],
@@ -32,6 +51,7 @@ export const Scene = () => {
     }
 
     setBodies(newBodies)
+    setDeskBodies(newBodiesDesk)
   }, [spaceModels])
 
   return (
@@ -46,6 +66,11 @@ export const Scene = () => {
           <Physics gravity={[0, -9.82, 0]}>
             <ChairInstance
               bodies={bodies}
+              onCollisionEnter={() => setInteractable(true)}
+              onCollisionExit={() => setInteractable(false)}
+            />
+            <DeskInstance
+              bodies={deskBodies}
               onCollisionEnter={() => setInteractable(true)}
               onCollisionExit={() => setInteractable(false)}
             />

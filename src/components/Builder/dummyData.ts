@@ -20,35 +20,11 @@ export const subCategoryList: SubCategoryItem[] = [
     name: 'Cat Meme 1',
     description: 'Cat Meme 1 description lorem ipsum',
     img: 'https://www.newshub.co.nz/home/lifestyle/2019/08/the-top-five-cat-memes-of-all-time-rated/_jcr_content/par/video/image.dynimg.full.q75.jpg',
-    category: 'chair',
+    category: 'desk',
     collection: '1234',
     resolutions: {
       low: 'https://github.com/NATA-Trysts/cdn/raw/main/models/chair.glb',
       medium: 'https://github.com/NATA-Trysts/cdn/raw/main/models/chair.glb',
-    },
-  },
-  {
-    id: '3',
-    name: 'Cat Meme 2',
-    description: 'Cat Meme 2 description lorem ipsum',
-    img: 'https://www.idlememe.com/wp-content/uploads/2021/10/beluga-cat-meme-idlememe-5.jpg',
-    category: 'table',
-    collection: '1234',
-    resolutions: {
-      low: 'https://github.com/NATA-Trysts/cdn/raw/main/models/desk.glb',
-      medium: 'https://github.com/NATA-Trysts/cdn/raw/main/models/desk.glb',
-    },
-  },
-  {
-    id: '4',
-    name: 'Cat Meme 3',
-    description: 'Cat Meme 3 description lorem ipsum',
-    img: 'https://a.pinatafarm.com/1092x612/d47afa3656/coughing-cat-dcbc3e50b235f7aa3793bfa07959fb7a-meme.jpeg',
-    category: 'table',
-    collection: '1234',
-    resolutions: {
-      low: 'https://github.com/NATA-Trysts/cdn/raw/main/models/desk.glb',
-      medium: 'https://github.com/NATA-Trysts/cdn/raw/main/models/desk.glb',
     },
   },
 ]
