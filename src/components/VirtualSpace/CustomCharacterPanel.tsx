@@ -24,6 +24,7 @@ export const CustomCharacterPanel = () => {
     roomInstance?.send(MESSAGES.MEMBER.CHANGE_AVATAR, {
       avatar: JSON.stringify(avatar),
     })
+    setIsEditAvatar(false)
   }
 
   const back = () => {
