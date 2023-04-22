@@ -2,27 +2,41 @@
 
 import { memo, useEffect } from 'react'
 
-import { MESSAGES } from '@/libs/constants'
 import { Member, Message, useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
 export const MultiplayerNetwork = memo(() => {
   const room = useNetworkStore((state) => state.roomInstance)
-  const [setMainMember, addOtherMembers, removeOtherMembers, updateOtherMembers, updateActionOtherMember] =
-    useMemberStore((state) => [
-      state.setMainMember,
-      state.addOtherMembers,
-      state.removeOtherMembers,
-      state.updateOtherMembers,
-      state.updateActionOtherMember,
+  const [
+    setMainMember,
+    addOtherMembers,
+    removeOtherMembers,
+    updateOtherMembers,
+    updateActionOtherMember,
+    removeNearestMemberId,
+  ] = useMemberStore((state) => [
+    state.setMainMember,
+    state.addOtherMembers,
+    state.removeOtherMembers,
+    state.updateOtherMembers,
+    state.updateActionOtherMember,
+    state.removeNearestMemberId,
+  ])
+  const [setHostWhiteBoardOpen, addWhiteBoard, removeWhiteBoard, addWhiteBoardMember, removeWhiteBoardMember] =
+    useVirtualSpaceStore((state) => [
+      state.setHostWhiteBoardOpen,
+      state.addWhiteBoard,
+      state.removeWhiteBoard,
+      state.addWhiteBoardMember,
+      state.removeWhiteBoardMember,
     ])
-  const addWhiteBoardMember = useVirtualSpaceStore((state) => state.addWhiteBoardMember)
-  const removeWhiteBoardMember = useVirtualSpaceStore((state) => state.removeWhiteBoardMember)
   const [addMessage] = useVirtualSpaceStore((state) => [state.addMessage])
 
   useEffect(() => {
     if (room)
       try {
         room.state.members.onAdd = (member: Member, sessionId: string) => {
+          console.log('add', member.id)
+
           if (sessionId === room.sessionId) {
             setMainMember({
               id: member.id,
@@ -39,6 +53,7 @@ export const MultiplayerNetwork = memo(() => {
                 w: member.quaternion.w,
               },
               action: member.action,
+              isHost: member.isHost,
             })
           } else {
             addOtherMembers(sessionId, {
@@ -56,6 +71,7 @@ export const MultiplayerNetwork = memo(() => {
                 w: member.quaternion.w,
               },
               action: member.action,
+              isHost: member.isHost,
             })
           }
 
@@ -78,23 +94,38 @@ export const MultiplayerNetwork = memo(() => {
               updateActionOtherMember(sessionId, member.action)
             }
           }
-
-          room.state.members.onRemove = (_, sessionId: string) => {
-            removeOtherMembers(sessionId)
-          }
-
-          room.state.messages.onAdd = (message: Message) => {
-            addMessage(message)
-          }
-
-          room?.onMessage(MESSAGES.WHITEBOARD.JOIN, ({ member }) => {
-            addWhiteBoardMember(member)
-          })
-
-          room?.onMessage(MESSAGES.WHITEBOARD.LEAVE, ({ member }) => {
-            removeWhiteBoardMember(member)
-          })
         }
+
+        room.state.members.onRemove = (_, sessionId: string) => {
+          removeOtherMembers(sessionId)
+          removeNearestMemberId(sessionId)
+        }
+
+        room.state.messages.onAdd = (message: Message) => {
+          addMessage(message)
+        }
+
+        room.state.whiteboards.onAdd = (whiteboard) => {
+          addWhiteBoard({ id: whiteboard.id, members: [] })
+
+          whiteboard.members.onAdd = (memberId) => {
+            addWhiteBoardMember(whiteboard.id, memberId)
+          }
+
+          whiteboard.members.onRemove = (memberId) => {
+            removeWhiteBoardMember(whiteboard.id, memberId)
+          }
+        }
+
+        room.state.whiteboards.onRemove = (_, whiteboardId) => {
+          removeWhiteBoard(whiteboardId)
+        }
+
+        room.state.listen('isHostWhiteBoardOpen', (isOpen: boolean) => {
+          console.log('isHostWhiteBoardOpen_change', isOpen)
+
+          setHostWhiteBoardOpen(isOpen)
+        })
       } catch (error) {
         throw Error('Multiplayer Error', error)
       }

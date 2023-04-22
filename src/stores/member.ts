@@ -18,6 +18,7 @@ export type Member = {
     w: number
   }
   action: string
+  isHost?: boolean
 }
 
 export type ModelMaterial = {
@@ -185,7 +186,7 @@ export const useMemberStore = create<MemberState>()(
 
       nearestMemberIds: [],
       addNearestMemberId: (sessionId: string) =>
-        set((state) => ({ nearestMemberIds: [...state.nearestMemberIds, sessionId] })),
+        set((state) => ({ nearestMemberIds: [...new Set([...state.nearestMemberIds, sessionId])] })),
       removeNearestMemberId: (sessionId: string) =>
         set((state) => ({ nearestMemberIds: state.nearestMemberIds.filter((id) => id !== sessionId) })),
 

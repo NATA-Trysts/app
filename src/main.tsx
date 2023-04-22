@@ -24,6 +24,10 @@ const VirtualSpace = lazy(() => import('@/pages/VirtualSpace'))
 const Create = lazy(() => import('@/pages/Create'))
 const Pricing = lazy(() => import('@/pages/Pricing'))
 
+import { enableMapSet } from 'immer'
+
+enableMapSet()
+
 if (process.env.NODE_ENV === 'production') {
   disableReactDevTools()
 }
@@ -37,20 +41,20 @@ const Guard = () => {
   return (
     <Routes>
       <Route element={<Outlet />} path="/">
-        {/* <Route element={<PersistLogin />}> */}
-        <Route
-          element={
-            <Suspense fallback={<span>loading</span>}>
-              <HMSRoomProvider>
-                {/* <MobileDetect> */}
-                <VirtualSpace />
-                {/* </MobileDetect> */}
-              </HMSRoomProvider>
-            </Suspense>
-          }
-          path="/:spaceId"
-        />
-        {/* </Route> */}
+        <Route element={<PersistLogin />}>
+          <Route
+            element={
+              <Suspense fallback={<span>loading</span>}>
+                <HMSRoomProvider>
+                  {/* <MobileDetect> */}
+                  <VirtualSpace />
+                  {/* </MobileDetect> */}
+                </HMSRoomProvider>
+              </Suspense>
+            }
+            path="/:spaceId"
+          />
+        </Route>
         <Route element={<PersistLogin />}>
           <Route
             element={

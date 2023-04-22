@@ -17,17 +17,27 @@ const Overlay = styled.div`
   pointer-events: auto;
 `
 
-const IframeContainer = styled.div`
+const WhiteBoardDialog = styled.div`
+  width: 1368px;
+  height: 730px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 8px;
+`
+
+const IframeContainer = styled.div`
+  width: inherit;
+  height: inherit;
+  border-radius: 20px;
+  overflow: hidden;
   pointer-events: auto;
+  position: relative;
+  background-color: #fff;
 
   iframe {
-    width: 1368px;
-    height: 730px;
+    width: inherit;
+    height: inherit;
   }
 
   .icon-wrapper {
@@ -48,7 +58,10 @@ const IconWrapper = styled.div.attrs({
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  z-index: 1;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
 `
 
 const SharedButtonMask = styled.div`
@@ -60,10 +73,19 @@ const SharedButtonMask = styled.div`
   background: #f9fafb;
 `
 
+const HelpButtonmask = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100px;
+  height: 52px;
+  background: #f9fafb;
+`
+
 export const WhiteBoard = (props: { id: string; close: () => void }) => {
   return (
     <Overlay>
-      <IframeContainer>
+      <WhiteBoardDialog>
         <IconWrapper
           onClick={() => {
             props.close()
@@ -71,10 +93,13 @@ export const WhiteBoard = (props: { id: string; close: () => void }) => {
         >
           <Cross color="#b792be" height={16} width={16} />
         </IconWrapper>
-        <SharedButtonMask></SharedButtonMask>
-        <iframe src={`https://beta.tldraw.com/r/${props.id}`}></iframe>
-        <WhiteBoardMembers></WhiteBoardMembers>
-      </IframeContainer>
+        <IframeContainer>
+          <SharedButtonMask></SharedButtonMask>
+          <HelpButtonmask></HelpButtonmask>
+          <iframe src={`https://beta.tldraw.com/r/${props.id}`}></iframe>
+        </IframeContainer>
+        <WhiteBoardMembers whiteboardId={props.id}></WhiteBoardMembers>
+      </WhiteBoardDialog>
     </Overlay>
   )
 }

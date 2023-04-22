@@ -24,12 +24,12 @@ const MemberAvatar = styled.div`
   }
 `
 
-export const WhiteBoardMembers = () => {
-  const whiteBoardMembers = useVirtualSpaceStore((state) => state.whiteBoardMembers)
+export const WhiteBoardMembers = (props: { whiteboardId: string }) => {
+  const whiteboards = useVirtualSpaceStore((state) => state.whiteboards)
 
   return (
     <MemberAvatarWrapper>
-      {Object.keys(whiteBoardMembers).map((it) => (
+      {whiteboards.get(props.whiteboardId)?.members.map((it) => (
         <MemberAvatar key={it}></MemberAvatar>
       ))}
     </MemberAvatarWrapper>

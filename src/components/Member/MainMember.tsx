@@ -44,6 +44,7 @@ export const MainMember = () => {
   ])
   const prevAnim = useRef(mainMemberAnimation[0])
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const TATTOO_MAPPING: ValueMapping<Texture> = {
     'tattoo.001.001.001': tattooSpot,
     'tattoo.001.001.002': tattooDragon,
@@ -144,13 +145,13 @@ export const MainMember = () => {
           lower={categorySelectedItemIds.get('lower')}
           shoe={categorySelectedItemIds.get('shoe')}
           skin={categorySelectedItemIds.get('skin')}
-          tattoo={
-            TATTOO_MAPPING[
-              ((categorySelectedItemIds.get('tattoo') as any).length > 0
-                ? (categorySelectedItemIds.get('tattoo') as any)[0].itemId
-                : '') as any
-            ]
-          }
+          // tattoo={
+          //   TATTOO_MAPPING[
+          //     ((categorySelectedItemIds.get('tattoo') as any).length > 0
+          //       ? (categorySelectedItemIds.get('tattoo') as any)[0].itemId
+          //       : '') as any
+          //   ]
+          // }
           upper={categorySelectedItemIds.get('upper')}
           onAnimationFinished={() => {
             changeAnimation('idle', false)

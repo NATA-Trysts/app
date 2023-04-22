@@ -11,6 +11,7 @@ import { Container } from '@/layouts/common'
 import { useVirtualSpaceStore } from '@/stores'
 
 import { MemberVideoLayout } from '../MemberVideoLayout'
+import { OtherMember } from '../OtherMember'
 // import { OtherMember } from '../OtherMember'
 
 const createBody = (): InstancedRigidBodyProps => ({
@@ -34,7 +35,7 @@ export const Scene = () => {
   return (
     <Container>
       <MemberVideoLayout />
-      <Canvas dpr={[0.25, 0.25]}>
+      <Canvas dpr={[1, 1]}>
         <Perf />
         <Suspense fallback={null}>
           <Environment preset="city" />
@@ -54,7 +55,7 @@ export const Scene = () => {
               </mesh>
             </RigidBody>
             <MainMember />
-            {/* <OtherMember /> */}
+            <OtherMember />
           </Physics>
         </Suspense>
       </Canvas>

@@ -17,7 +17,6 @@ import { ReactComponent as Emoji } from '@/assets/icons/emoji.svg'
 import { ReactComponent as Micro } from '@/assets/icons/mic.svg'
 import { ReactComponent as MicroOff } from '@/assets/icons/mic-off.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
-import { ReactComponent as Whiteboard } from '@/assets/icons/whiteboard.svg'
 import { ReactComponent as Writing } from '@/assets/icons/writing.svg'
 import { NameBox, RandomAvatar } from '@/components/EditCharacter'
 import { EmojiContent } from '@/components/EmojiContent'
@@ -35,10 +34,6 @@ const Condition = styled(motion.div)`
   gap: 8px;
 `
 
-const CustomToolbarItem = styled(ToolbarItem)`
-  margin-left: 8px;
-`
-
 const OpeningNotification = styled.div`
   transform: translateY(-72px);
   width: 310px;
@@ -54,14 +49,17 @@ const OpeningNotification = styled.div`
 
 export const ToolbarMiddle = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
-  // TODO: Calling api to retrieve isHost
-  const isHost = true
+  const [isEditAvatar, isHostWhiteBoardOpen] = useVirtualSpaceStore((state) => [
+    state.isEditAvatar,
+    state.isHostWhiteBoardOpen,
+  ])
   const addOtherMembers = useMemberStore((state) => state.addOtherMembers)
   const removeOtherMembers = useMemberStore((state) => state.removeOtherMembers)
   const otherMembers = useMemberStore((state) => state.otherMembers)
   const mainMember = useMemberStore((state) => state.mainMember)
+  const isHost = mainMember?.isHost
   const roomInstance = useNetworkStore((state) => state.roomInstance)
+  const roomId = roomInstance?.id
 
   const hmsActions = useHMSActions()
   const audioEnabled = useHMSStore(selectIsLocalAudioEnabled)
@@ -74,7 +72,8 @@ export const ToolbarMiddle = () => {
   const [isOpenEmoji, setIsOpenEmoji] = useState(false)
   const [isOpenWhiteBoard, setIsOpenWhiteBoard] = useState(false)
   const [isOpenShareScreen, setIsOpenShareScreen] = useState(false)
-  const [isHostOpeningWhiteBoard, setIsHostOpeningWhiteBoard] = useState(false)
+
+  console.log('isOpenWhiteBoard ', isOpenWhiteBoard)
 
   const toggleAudio = async () => await hmsActions.setLocalAudioEnabled(!audioEnabled)
 
@@ -97,21 +96,24 @@ export const ToolbarMiddle = () => {
 
   const openWhiteBoard = () => {
     if (isHost) {
-      roomInstance?.send(MESSAGES.WHITEBOARD.HOST_OPEN)
+      roomInstance?.send(MESSAGES.WHITEBOARD.HOST_OPEN, { whiteboardId: roomId })
+    } else {
+      roomInstance?.send(MESSAGES.WHITEBOARD.JOIN, {
+        whiteboardId: roomId,
+      })
     }
-    roomInstance?.send(MESSAGES.WHITEBOARD.JOIN, {
-      member: mainMember,
-    })
+
     setIsOpenWhiteBoard(!isOpenWhiteBoard)
   }
 
   const closeWhiteBoard = () => {
     if (isHost) {
-      roomInstance?.send(MESSAGES.WHITEBOARD.HOST_CLOSE)
+      roomInstance?.send(MESSAGES.WHITEBOARD.HOST_CLOSE, { whiteboardId: roomId })
+    } else {
+      roomInstance?.send(MESSAGES.WHITEBOARD.LEAVE, {
+        whiteboardId: roomId,
+      })
     }
-    roomInstance?.send(MESSAGES.WHITEBOARD.LEAVE, {
-      member: mainMember,
-    })
     setIsOpenWhiteBoard(false)
   }
 
@@ -132,19 +134,40 @@ export const ToolbarMiddle = () => {
   }
 
   useEffect(() => {
-    roomInstance?.onMessage(MESSAGES.WHITEBOARD.HOST_OPEN, () => {
-      // TODO: Do we need to send host information here?
-      setIsHostOpeningWhiteBoard(true)
-
-      window.addEventListener('keypress', onPressZToOpenWhiteBoard)
-    })
-
-    roomInstance?.onMessage(MESSAGES.WHITEBOARD.HOST_CLOSE, () => {
-      setIsHostOpeningWhiteBoard(false)
-
+    if (isHostWhiteBoardOpen) {
+      if (!isHost) window.addEventListener('keypress', onPressZToOpenWhiteBoard)
+    } else {
+      closeWhiteBoard()
       window.removeEventListener('keypress', onPressZToOpenWhiteBoard)
-    })
-  }, [roomInstance])
+    }
+
+    return () => window.removeEventListener('keypress', onPressZToOpenWhiteBoard)
+  }, [roomInstance, isHostWhiteBoardOpen])
+
+  // useEffect(() => {
+  //   const unsubs: (() => void)[] = []
+
+  //   unsubs.push(
+  //     roomInstance?.onMessage(MESSAGES.WHITEBOARD.HOST_OPEN, () => {
+  //       // TODO: Do we need to send host information here?
+  //       setIsHostOpeningWhiteBoard(true)
+
+  //       window.addEventListener('keypress', onPressZToOpenWhiteBoard)
+  //     }),
+  //   )
+
+  //   unsubs.push(
+  //     roomInstance?.onMessage(MESSAGES.WHITEBOARD.HOST_CLOSE, () => {
+  //       setIsHostOpeningWhiteBoard(false)
+
+  //       window.removeEventListener('keypress', onPressZToOpenWhiteBoard)
+  //     }),
+  //   )
+
+  //   return () => {
+  //     unsubs.forEach((unsub) => unsub())
+  //   }
+  // }, [roomInstance, mainMember])
 
   useEffect(() => {
     if (screenShareVideoTrack) {
@@ -154,7 +177,7 @@ export const ToolbarMiddle = () => {
 
   return (
     <>
-      {isHostOpeningWhiteBoard && (
+      {isHostWhiteBoardOpen && (
         <OpeningNotification>
           <span>
             The host is opening a white board, press <b>Z</b> to join
@@ -195,7 +218,7 @@ export const ToolbarMiddle = () => {
             </div>
           </Popover>
         </ToolbarItem>
-        <CustomToolbarItem>
+        <ToolbarItem>
           <WithTooltip content={`${videoEnabled ? 'Off' : 'On'} camera`} id="camera" onClick={toggleVideo}>
             {videoEnabled ? <Camera /> : <CameraOff />}
           </WithTooltip>
@@ -214,46 +237,38 @@ export const ToolbarMiddle = () => {
               </WithTooltip>
             </div>
           </Popover>
-        </CustomToolbarItem>
-        <Condition
-          layout
-          animate={{
-            opacity: isEditAvatar ? 0 : 1,
-            width: isEditAvatar ? 0 : 80,
-          }}
-          initial={{
-            width: 0,
-            opacity: 0,
-          }}
-          transition={{
-            opacity: { ease: 'linear', duration: isEditAvatar ? 0.1 : 0.25 },
-            width: { duration: isEditAvatar ? 0.25 : 0.1 },
-          }}
-        >
-          {isHost && (
-            <CustomToolbarItem
-              style={{
-                marginLeft: 8,
-              }}
-              onClick={shareScreen}
-            >
-              <WithTooltip content="Share screen" id="share-screen">
-                <ShareScreen />
-              </WithTooltip>
-            </CustomToolbarItem>
-          )}
-
-          <ToolbarItem>
-            <WithTooltip content="Whiteboard" id="whiteboard">
-              <Whiteboard />
-            </WithTooltip>
-          </ToolbarItem>
-        </Condition>
-        <CustomToolbarItem
-          style={{
-            marginLeft: 8,
-          }}
-        >
+        </ToolbarItem>
+        {isHost && (
+          <Condition
+            layout
+            animate={{
+              opacity: isEditAvatar ? 0 : 1,
+              width: isEditAvatar ? 0 : '100%',
+            }}
+            initial={{
+              width: 0,
+              opacity: 0,
+            }}
+            transition={{
+              opacity: { ease: 'linear', duration: isEditAvatar ? 0.1 : 0.25 },
+              width: { duration: isEditAvatar ? 0.25 : 0.1 },
+            }}
+          >
+            <>
+              <ToolbarItem onClick={shareScreen}>
+                <WithTooltip content="Share screen" id="share-screen">
+                  <ShareScreen />
+                </WithTooltip>
+              </ToolbarItem>
+              <ToolbarItem>
+                <WithTooltip content="White Board" id="white-board" onClick={() => openWhiteBoard()}>
+                  <Writing />
+                </WithTooltip>
+              </ToolbarItem>
+            </>
+          </Condition>
+        )}
+        <ToolbarItem>
           <Popover
             align="center"
             content={<EmojiContent setIsPopoverOpen={setIsOpenEmoji} />}
@@ -290,12 +305,8 @@ export const ToolbarMiddle = () => {
               </WithTooltip>
             </div>
           </Popover>
-        </CustomToolbarItem>
-        <CustomToolbarItem
-          style={{
-            marginLeft: 8,
-          }}
-        >
+        </ToolbarItem>
+        <ToolbarItem>
           <Popover
             align="center"
             content={<EmojiContent setIsPopoverOpen={setIsOpenEmoji} />}
@@ -317,20 +328,7 @@ export const ToolbarMiddle = () => {
               </WithTooltip>
             </div>
           </Popover>
-        </CustomToolbarItem>
-        {isHost && (
-          <CustomToolbarItem
-            style={{
-              marginLeft: 8,
-            }}
-          >
-            <div>
-              <WithTooltip content="White Board" id="white-board" onClick={() => openWhiteBoard()}>
-                <Writing />
-              </WithTooltip>
-            </div>
-          </CustomToolbarItem>
-        )}
+        </ToolbarItem>
       </AnimatedToolbarContainer>
       <NameBox isEdit={isEditAvatar} />
       <RandomAvatar isEdit={isEditAvatar} />
