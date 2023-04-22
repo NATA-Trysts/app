@@ -37,20 +37,20 @@ const Guard = () => {
   return (
     <Routes>
       <Route element={<Outlet />} path="/">
-        {/* <Route element={<PersistLogin />}> */}
-        <Route
-          element={
-            <Suspense fallback={<span>loading</span>}>
-              <HMSRoomProvider>
-                {/* <MobileDetect> */}
-                <VirtualSpace />
-                {/* </MobileDetect> */}
-              </HMSRoomProvider>
-            </Suspense>
-          }
-          path="/:spaceId"
-        />
-        {/* </Route> */}
+        <Route element={<PersistLogin />}>
+          <Route
+            element={
+              <Suspense fallback={<span>loading</span>}>
+                <HMSRoomProvider>
+                  {/* <MobileDetect> */}
+                  <VirtualSpace />
+                  {/* </MobileDetect> */}
+                </HMSRoomProvider>
+              </Suspense>
+            }
+            path="/:spaceId"
+          />
+        </Route>
         <Route element={<PersistLogin />}>
           <Route
             element={

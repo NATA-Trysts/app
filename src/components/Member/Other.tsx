@@ -2,7 +2,7 @@ import { selectPeerByID, useHMSStore, useVideo } from '@100mslive/react-sdk'
 import { Html } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { CuboidCollider, RapierRigidBody, RigidBody } from '@react-three/rapier'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Group, Quaternion, Vector3 } from 'three'
 
 import { useVirtualSpaceStore } from '@/stores'
@@ -20,6 +20,7 @@ type OtherProps = {
   onIntersectEnter: () => void
   onIntersectExit: () => void
   isNearestMember: boolean
+  avatar: string
 }
 
 export const Vid = ({ peerId }: { peerId: string | undefined }) => {
@@ -59,10 +60,15 @@ export const Other = (props: OtherProps) => {
   const playerRef = useRef<Group>(null)
   const [videoLayout, isEditAvatar] = useVirtualSpaceStore((state) => [state.videoLayout, state.isEditAvatar])
   const rigRef = useRef<RapierRigidBody>(null)
+  const [otherAvatar, setOtherAvatar] = useState()
 
   useEffect(() => {
     playerRef.current?.position.set(props.position[0], props.position[1], props.position[2])
   }, [])
+
+  useEffect(() => {
+    props.avatar && setOtherAvatar(JSON.parse(props.avatar))
+  }, [props.avatar])
 
   useFrame(() => {
     if (playerRef.current) {
@@ -85,7 +91,22 @@ export const Other = (props: OtherProps) => {
   return (
     <>
       <group ref={playerRef}>
-        <OtherCharacter action={props.action} />
+        {otherAvatar && (
+          <OtherCharacter
+            accessory={otherAvatar['accessory']}
+            action={props.action}
+            hair={otherAvatar['hair']}
+            lower={otherAvatar['lower']}
+            shoe={otherAvatar['shoe']}
+            skin={otherAvatar['skin']}
+            // tattoo={
+            //   TATTOO_MAPPING[
+            //     ((otherAvatar['tattoo'] as any).length > 0 ? (otherAvatar['tattoo'] as any)[0].itemId : '') as any
+            //   ]
+            // }
+            upper={otherAvatar['upper']}
+          />
+        )}
         {props.isNearestMember && videoLayout === 'above-head' && !isEditAvatar ? (
           <Vid key={props.peerId} peerId={props.peerId} />
         ) : null}

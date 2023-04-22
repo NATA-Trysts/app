@@ -12,7 +12,7 @@ import { Container } from '@/layouts/common'
 import { useVirtualSpaceStore } from '@/stores'
 
 import { MemberVideoLayout } from '../MemberVideoLayout'
-// import { OtherMember } from '../OtherMember'
+import { OtherMember } from '../OtherMember'
 
 export const Scene = () => {
   const [spaceModels, setInteractable] = useVirtualSpaceStore((state) => [state.spaceModels, state.setInteractable])
@@ -96,7 +96,7 @@ export const Scene = () => {
               </mesh>
             </RigidBody>
             <MainMember target={target} />
-            {/* <OtherMember /> */}
+            <OtherMember />
           </Physics>
         </Suspense>
       </Canvas>
