@@ -1,8 +1,9 @@
-// @ts-nocheck
+// @ts-check
 
 import { selectIsConnectedToRoom, selectLocalPeerID, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
 import axios, { AxiosResponse, CancelTokenSource } from 'axios'
 import { Client, Room } from 'colyseus.js'
+import { omit } from 'lodash-es'
 import { ReactNode, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -15,7 +16,7 @@ import {
   useMemberStore,
   useNetworkStore,
   User,
-  useVirtualSpaceStore,
+  // useVirtualSpaceStore,
 } from '@/stores'
 
 type VirtualSpaceLoadingProps = {
@@ -40,7 +41,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const [password, setPassword] = useState('')
   const { auth } = useAuth()
 
-  const [setSpaceName, setSpaceModels] = useVirtualSpaceStore((state) => [state.setSpaceName, state.setSpaceModels])
+  // const [setSpaceName, setSpaceModels] = useVirtualSpaceStore((state) => [state.setSpaceName, state.setSpaceModels])
   const [prepareState, setPrepareState] = useState<PrepareState>('')
 
   const [setRoomInstance] = useNetworkStore((state) => [state.setRoomInstance])
@@ -49,6 +50,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const isConnectedToRoom = useHMSStore(selectIsConnectedToRoom)
 
   const [roomId, setRoomId] = useState()
+  const [localUser, setLocalUser] = useState<User>()
 
   useEffect(() => {
     const cancelTokenSource: CancelTokenSource | null = axios.CancelToken.source()
@@ -59,7 +61,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
       try {
         // Get Space && Get User
         // -> Get Space
-        const getSpaceByCodeRequest: AxiosResponse<Space, any> = await axiosConfigured.get(`/spaces/code/${spaceId}`)
+        // const getSpaceByCodeRequest: AxiosResponse<Space, any> = await axiosConfigured.get(`/spaces/code/${spaceId}`)
 
         const getUserRequest: AxiosResponse<User, any> =
           auth?.accessToken &&
@@ -67,7 +69,10 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
             cancelToken: cancelTokenSource.token,
           })
 
-        const responses: AxiosResponse<User, Space, any>[] = [getUserRequest, getSpaceByCodeRequest]
+        const responses: AxiosResponse<User, Space, any>[] = [
+          getUserRequest,
+          // getSpaceByCodeRequest
+        ]
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const results = await Promise.allSettled(responses)
@@ -76,10 +81,9 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
         setPrepareStatus('Get User')
 
         if (results[0].status === 'fulfilled') {
-          user = results[0].value.data
-          const avatarFromApi = user.avatar
-
-          delete (avatarFromApi as any).image
+          user = results[0].value.data as User
+          setLocalUser(user)
+          const avatarFromApi = omit(user.avatar, 'image')
 
           setCategorySelectedFromApi(new Map(Object.entries(avatarFromApi)) as CategorySelectedItemId)
           setUser(user)
@@ -89,21 +93,25 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
         }
 
         // Space Response
-        setPrepareStatus('Get Space')
-        if (results[1].status === 'fulfilled') {
-          const models = results[1].value.data.models
-          const password = results[1].value.data.password
+        // setPrepareStatus('Get Space')
+        // if (results[1].status === 'fulfilled') {
+        //   const models = results[1].value.data.models
+        //   const password = results[1].value.data.password
 
-          setSpaceName(results[1].value.data.name)
-          setRoomId(results[1].value.data.hmsRoomId)
-          setSpaceModels(models)
+        //   setSpaceName(results[1].value.data.name)
+        //   setRoomId(results[1].value.data.hmsRoomId)
+        //   setSpaceModels(models)
 
-          if (password) {
-            setPrepareState('need-verify')
-          } else {
-            setPrepareState('info-loaded')
-          }
-        }
+        //   if (password) {
+        //     setPrepareState('need-verify')
+        //   } else {
+        //     setPrepareState('info-loaded')
+        //   }
+        // }
+
+        setRoomId('642c5157adb93485420bfec8')
+
+        setPrepareState('info-loaded')
       } catch (error) {
         console.error(error)
         setPrepareError('Prepare Failed')
@@ -126,8 +134,6 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
         // eslint-disable-next-line camelcase
         user_id: 'hey_sh',
       })
-
-      console.log(hmsRequest)
 
       const hmsConfig = generateHMSConfig('Random UN', hmsRequest.data.token, { city: 'Da Nang' })
 
@@ -152,10 +158,18 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
 
     if (!client) throw Error('Client not connected')
     const joinMultiplayer = async () => {
+      const multiplayerUser = omit(localUser, '_id')
+
       setPrepareStatus('Joining Multiplayer')
       try {
         room = await client.joinById(spaceId, {
           peerId: localPeerId,
+          user: {
+            email: multiplayerUser.email,
+            handler: multiplayerUser.handler,
+            username: multiplayerUser.username,
+            avatar: JSON.stringify(multiplayerUser.avatar),
+          },
         })
       } catch (error) {
         if (error.message === `room "${spaceId}" not found`) {
@@ -163,6 +177,12 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
             room = await client.create(WORLD_NAME, {
               spaceId,
               peerId: localPeerId,
+              user: {
+                email: multiplayerUser.email,
+                handler: multiplayerUser.handler,
+                username: multiplayerUser.username,
+                avatar: JSON.stringify(multiplayerUser.avatar),
+              },
             })
           } catch (error) {
             setPrepareError('Create Multiplayer Failed')
@@ -179,12 +199,14 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
       room && setRoomInstance(room)
     }
 
-    if (isConnectedToRoom && localPeerId && prepareState === 'hms.joined') joinMultiplayer()
+    if (isConnectedToRoom && localPeerId && localUser && prepareState === 'hms.joined') {
+      joinMultiplayer()
+    }
 
     window.onunload = () => {
       room?.leave()
     }
-  }, [prepareState])
+  }, [prepareState, localUser])
 
   const handleVerifyPassword = async () => {
     try {

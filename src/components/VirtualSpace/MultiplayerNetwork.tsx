@@ -7,14 +7,21 @@ import { Member, Message, useMemberStore, useNetworkStore, useVirtualSpaceStore 
 
 export const MultiplayerNetwork = memo(() => {
   const room = useNetworkStore((state) => state.roomInstance)
-  const [setMainMember, addOtherMembers, removeOtherMembers, updateOtherMembers, updateActionOtherMember] =
-    useMemberStore((state) => [
-      state.setMainMember,
-      state.addOtherMembers,
-      state.removeOtherMembers,
-      state.updateOtherMembers,
-      state.updateActionOtherMember,
-    ])
+  const [
+    setMainMember,
+    addOtherMembers,
+    removeOtherMembers,
+    updateOtherMembers,
+    updateActionOtherMember,
+    updateAvatarOtherMember,
+  ] = useMemberStore((state) => [
+    state.setMainMember,
+    state.addOtherMembers,
+    state.removeOtherMembers,
+    state.updateOtherMembers,
+    state.updateActionOtherMember,
+    state.updateAvatarOtherMember,
+  ])
   const addWhiteBoardMember = useVirtualSpaceStore((state) => state.addWhiteBoardMember)
   const removeWhiteBoardMember = useVirtualSpaceStore((state) => state.removeWhiteBoardMember)
   const [addMessage] = useVirtualSpaceStore((state) => [state.addMessage])
@@ -41,6 +48,7 @@ export const MultiplayerNetwork = memo(() => {
               action: member.action,
             })
           } else {
+            console.log(member)
             addOtherMembers(sessionId, {
               id: member.id,
               peerId: member.peerId,
@@ -56,6 +64,7 @@ export const MultiplayerNetwork = memo(() => {
                 w: member.quaternion.w,
               },
               action: member.action,
+              avatar: member.user.avatar,
             })
           }
 
@@ -76,6 +85,7 @@ export const MultiplayerNetwork = memo(() => {
                 },
               )
               updateActionOtherMember(sessionId, member.action)
+              updateAvatarOtherMember(sessionId, member.user.avatar)
             }
           }
 

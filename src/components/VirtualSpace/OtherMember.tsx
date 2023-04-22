@@ -18,6 +18,7 @@ export const OtherMember = () => {
             <Other
               key={player.id}
               action={player.action}
+              avatar={player.avatar}
               isNearestMember={nearestMemberIds.includes(player.id)}
               peerId={player.peerId}
               position={[player.position.x, player.position.y, player.position.z]}
