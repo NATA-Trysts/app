@@ -69,20 +69,32 @@ export const useEditCharacterStore = create<EditCharacterState>((set) => ({
       const subcategoryActiveItems = state.categorySelectedItemIds.get(categoryId) || []
       const subcategoryActiveItem = subcategoryActiveItems.find((item) => item.id === subcategoryId)
 
+      // create new array to update instead of using above array
+      let newSubcategoryActiveItems = null
+
       if (subcategoryActiveItem) {
         // if the item is already selected, remove it
         // else update the item
         if (subcategoryActiveItem.itemId === itemId) {
-          subcategoryActiveItems.splice(subcategoryActiveItems.indexOf(subcategoryActiveItem), 1)
+          // subcategoryActiveItems.splice(subcategoryActiveItems.indexOf(subcategoryActiveItem), 1)
+          newSubcategoryActiveItems = subcategoryActiveItems.filter((item) => item.id !== subcategoryId)
         } else {
-          subcategoryActiveItem.itemId = itemId
+          // subcategoryActiveItem.itemId = itemId
+          newSubcategoryActiveItems = subcategoryActiveItems.map((item) => {
+            if (item.id === subcategoryId) {
+              return { id: subcategoryId, itemId }
+            }
+
+            return item
+          })
         }
       } else {
-        subcategoryActiveItems.push({ id: subcategoryId, itemId })
+        // subcategoryActiveItems.push({ id: subcategoryId, itemId })
+        newSubcategoryActiveItems = [...subcategoryActiveItems, { id: subcategoryId, itemId }]
       }
 
       return {
-        categorySelectedItemIds: new Map(state.categorySelectedItemIds).set(categoryId, subcategoryActiveItems),
+        categorySelectedItemIds: new Map(state.categorySelectedItemIds).set(categoryId, newSubcategoryActiveItems),
       }
     }),
   setCategorySelectedFromApi: (categorySelectedItemId) =>

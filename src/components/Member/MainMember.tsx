@@ -1,14 +1,17 @@
 import { selectIsLocalVideoEnabled, selectLocalPeer, useHMSStore } from '@100mslive/react-sdk'
 import { useTexture } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
+import { RapierRigidBody, RigidBodyTypeString } from '@react-three/rapier'
 import { CharacterControl, useCharacterControl } from '@sonhaaa/3d-playground'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useKeyPressEvent } from 'react-use'
 import {
   Group,
+  Object3D,
   // Quaternion,
   // Vector3
   Texture,
+  Vector3,
 } from 'three'
 
 import { ANIMATION_COUNT_MAPPING, MESSAGES, ValueMapping } from '@/libs/constants'
@@ -23,10 +26,14 @@ import { Vid } from './Other'
 // const pQ = new Quaternion()
 // const pP = new Vector3(0, -2, 0)
 
-export const MainMember = () => {
+type MainMemberProps = {
+  target: Object3D | null
+}
+
+export const MainMember = ({ target }: MainMemberProps) => {
   const isInputFocus = useEditCharacterStore((state) => state.isInputFocus)
   const categorySelectedItemIds = useEditCharacterStore((state) => state.categorySelectedItemIds)
-  const isEditAvatar = useVirtualSpaceStore((state) => state.isEditAvatar)
+  const [isEditAvatar, interactable] = useVirtualSpaceStore((state) => [state.isEditAvatar, state.interactable])
   const roomInstance = useNetworkStore((state) => state.roomInstance)
   const anim = useCharacterControl(['idle', 'walk'])
   const [tattooSpot, tattooDragon, tattooRing] = useTexture(
@@ -44,6 +51,12 @@ export const MainMember = () => {
   ])
   const prevAnim = useRef(mainMemberAnimation[0])
 
+  const [characterControlType, setCharacterControlType] = useState<RigidBodyTypeString | undefined>('dynamic')
+  const [characterControlState, setCharacterControlState] = useState<'dynamic' | 'static' | undefined>('dynamic')
+  const [basePositionY, setBasePositionY] = useState(-2)
+
+  const lP = useRef<Vector3>(new Vector3(0, 0, 0))
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const TATTOO_MAPPING: ValueMapping<Texture> = {
     'tattoo.001.001.001': tattooSpot,
@@ -55,6 +68,9 @@ export const MainMember = () => {
   // const pugRunTime = useRef(0)
 
   const dispatchMovement = (character: Group) => {
+    setCharacterControlType('dynamic')
+    setCharacterControlState('dynamic')
+
     roomInstance?.send(MESSAGES.MEMBER.MOVE, {
       position: {
         x: character.position.x,
@@ -98,6 +114,17 @@ export const MainMember = () => {
     }
   }
 
+  const handleStateChange = (character: RapierRigidBody) => {
+    if (characterControlState === 'static' && characterControlType === 'fixed' && target) {
+      lP.current.set(character.translation().x, character.translation().y, character.translation().z)
+      character.setTranslation({ x: target.position.x, y: character.translation().y, z: target.position.z }, true)
+      setBasePositionY(-1.5)
+    } else {
+      character.setTranslation({ x: lP.current.x, y: lP.current.y, z: lP.current.z }, true)
+      setBasePositionY(-2)
+    }
+  }
+
   const bow = () => changeAnimation('bow', false)
   const cheer = () => changeAnimation('cheer', false)
   const clap = () => changeAnimation('clap', false)
@@ -107,7 +134,13 @@ export const MainMember = () => {
   const angry = () => changeAnimation('angry', false)
   const wave = () => changeAnimation('wave', false)
   const sad = () => changeAnimation('sad', false)
-  const sit = () => changeAnimation('sit', false)
+  const sit = () => {
+    if (interactable) {
+      setCharacterControlType('fixed')
+      setCharacterControlState('static')
+      changeAnimation('sit', false)
+    }
+  }
   const punch = () => changeAnimation('punch', true)
   const kick = () => changeAnimation('kick', true)
 
@@ -122,7 +155,7 @@ export const MainMember = () => {
   useKeyPressEvent('9', angry)
 
   useKeyPressEvent('c', punch)
-  useKeyPressEvent('x', sit)
+  useKeyPressEvent('z', sit)
   useKeyPressEvent('k', kick)
 
   return (
@@ -135,14 +168,18 @@ export const MainMember = () => {
         initialPosition={[0, 0, 0]}
         polarAngle={[0.5, Math.PI / 2]}
         speed={6}
+        state={characterControlState}
+        type={characterControlType}
         onAnimationChange={() => changeAnimation(anim, false)}
         onCharacterMove={dispatchMovement}
+        onStateChange={handleStateChange}
       >
         <BaseCharacter
           accessory={categorySelectedItemIds.get('accessory')}
           action={mainMemberAnimation}
           hair={categorySelectedItemIds.get('hair')}
           lower={categorySelectedItemIds.get('lower')}
+          positionY={basePositionY}
           shoe={categorySelectedItemIds.get('shoe')}
           skin={categorySelectedItemIds.get('skin')}
           // tattoo={

@@ -19,9 +19,16 @@ type ChatMessage = {
   [id: string]: Message
 }
 
-type WhiteBoard = {
+export type WhiteBoard = {
   id: string
   members: string[]
+}
+
+export type SpaceModelTemp = {
+  key: number
+  position: [number, number, number]
+  rotation: [number, number, number]
+  scale: [number, number, number]
 }
 
 type VirtualSpaceState = {
@@ -29,6 +36,8 @@ type VirtualSpaceState = {
   setSpaceId: (spaceId: string) => void
   spaceName: string
   setSpaceName: (spaceName: string) => void
+  spaceModels: SpaceModelTemp[]
+  setSpaceModels: (spaceModels: SpaceModelTemp[]) => void
   selectedUltility: UltilityType
   setSelectedUltility: (selectedUltility: UltilityType) => void
   customColor: CustomColor
@@ -87,6 +96,9 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
 
   spaceName: '',
   setSpaceName: (spaceName) => set(() => ({ spaceName })),
+
+  spaceModels: [],
+  setSpaceModels: (spaceModels) => set(() => ({ spaceModels })),
 
   selectedUltility: null,
   setSelectedUltility: (selectedUltility) => set(() => ({ selectedUltility })),

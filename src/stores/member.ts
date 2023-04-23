@@ -19,6 +19,7 @@ export type Member = {
   }
   action: string
   isHost?: boolean
+  avatar: string
 }
 
 export type ModelMaterial = {
@@ -76,6 +77,7 @@ type MemberState = {
     quaternion: { x: number; y: number; z: number; w: number },
   ) => void
   updateActionOtherMember: (sessionId: string, action: string) => void
+  updateAvatarOtherMember: (sessionId: string, avatar: string) => void
 
   nearestMemberIds: string[]
   addNearestMemberId: (sessionId: string) => void
@@ -181,6 +183,12 @@ export const useMemberStore = create<MemberState>()(
         set(
           produce((state: MemberState) => {
             state.otherMembers[sessionId].action = action
+          }),
+        ),
+      updateAvatarOtherMember: (sessionId, avatar) =>
+        set(
+          produce((state: MemberState) => {
+            state.otherMembers[sessionId].avatar = avatar
           }),
         ),
 

@@ -13,6 +13,7 @@ export const MultiplayerNetwork = memo(() => {
     updateOtherMembers,
     updateActionOtherMember,
     removeNearestMemberId,
+    updateAvatarOtherMember,
   ] = useMemberStore((state) => [
     state.setMainMember,
     state.addOtherMembers,
@@ -20,7 +21,9 @@ export const MultiplayerNetwork = memo(() => {
     state.updateOtherMembers,
     state.updateActionOtherMember,
     state.removeNearestMemberId,
+    state.updateAvatarOtherMember,
   ])
+
   const [setHostWhiteBoardOpen, addWhiteBoard, removeWhiteBoard, addWhiteBoardMember, removeWhiteBoardMember] =
     useVirtualSpaceStore((state) => [
       state.setHostWhiteBoardOpen,
@@ -29,6 +32,9 @@ export const MultiplayerNetwork = memo(() => {
       state.addWhiteBoardMember,
       state.removeWhiteBoardMember,
     ])
+
+  const addWhiteBoardMember = useVirtualSpaceStore((state) => state.addWhiteBoardMember)
+  const removeWhiteBoardMember = useVirtualSpaceStore((state) => state.removeWhiteBoardMember)
   const [addMessage] = useVirtualSpaceStore((state) => [state.addMessage])
 
   useEffect(() => {
@@ -56,6 +62,7 @@ export const MultiplayerNetwork = memo(() => {
               isHost: member.isHost,
             })
           } else {
+            console.log(member)
             addOtherMembers(sessionId, {
               id: member.id,
               peerId: member.peerId,
@@ -72,6 +79,7 @@ export const MultiplayerNetwork = memo(() => {
               },
               action: member.action,
               isHost: member.isHost,
+              avatar: member.user.avatar,
             })
           }
 
@@ -92,6 +100,7 @@ export const MultiplayerNetwork = memo(() => {
                 },
               )
               updateActionOtherMember(sessionId, member.action)
+              updateAvatarOtherMember(sessionId, member.user.avatar)
             }
           }
         }
