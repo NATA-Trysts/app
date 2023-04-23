@@ -102,7 +102,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
 
           setSpaceName(space.name)
           setRoomId(space.hmsRoomId)
-          isHost.current = space.author._id === user?._id
+          isHost.current = space.author === user?._id
 
           if (password) {
             setPrepareState('need-verify')

@@ -1,17 +1,18 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-type Author = {
-  _id: string
-  username: string
-}
+// type Author = {
+//   _id: string
+//   username: string
+// }
 
 export type Space = {
   _id: string
   name: string
   thumbnail: string
   latestEdited: number
-  author: Author
+  // author: Author
+  author: string
   category: string
   code: string
   password: string
