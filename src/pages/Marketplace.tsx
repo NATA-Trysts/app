@@ -103,7 +103,7 @@ function convertItemsToMansonryColumn(items: any[], columnLength: number): Previ
 
 const MarketPlace = () => {
   const [filter, setFilter] = useState('All')
-  const dialogRef = useRef<DialogRef>(null)
+  const previewDialogRef = useRef<DialogRef>(null)
   const stripeDialogRef = useRef<DialogRef>(null)
   const [collections, setCollections] = useState<Collection[]>([])
   const [boughtCollections, setBoughtCollections] = useState<string[]>([])
@@ -146,6 +146,7 @@ const MarketPlace = () => {
           appearance: stripeAppearance,
         }
 
+        //TODO need to change when Dialog component refactor that not using ref to open dialog anymore
         stripeDialogRef.current?.open?.(
           <Elements options={options} stripe={stripePromise}>
             <CheckoutForm total={item.price} onSucceed={() => handlePaymentSucceed(item._id)} />
@@ -188,7 +189,8 @@ const MarketPlace = () => {
         )
       })
 
-      dialogRef.current?.open?.(
+      //TODO need to change when Dialog component refactor that not using ref to open dialog anymore
+      previewDialogRef.current?.open?.(
         <>
           <MarketDialogTitle>
             <MarketDialogText>Nha Trang inspiration</MarketDialogText>
@@ -282,7 +284,7 @@ const MarketPlace = () => {
         </ContentBody>
       </Content>
 
-      <Dialog ref={dialogRef}></Dialog>
+      <Dialog ref={previewDialogRef}></Dialog>
       <Dialog ref={stripeDialogRef}></Dialog>
     </MarketPlacePage>
   )

@@ -14,6 +14,7 @@ import {
   ToolbarRight,
   VirtualSpaceLoading,
 } from '@/components/VirtualSpace'
+import { IframeDialogProvider } from '@/components/VirtualSpace/IframeDialog/IframeDialogContext'
 import { Chat, Members, Setting } from '@/components/VirtualSpace/Ultilities'
 import { ULTILITY_SIZE_MAPPING } from '@/libs/constants'
 import { useAppStore, useVirtualSpaceStore } from '@/stores'
@@ -107,37 +108,39 @@ const VirtualSpace = () => {
             <MultiplayerNetwork />
             <Scene />
             <OverlayContainer>
-              <Header />
-              <LeftSideContainer>
-                <LeftSideWrapper>
-                  <MyVideo />
-                  <MyInformationCard />
-                </LeftSideWrapper>
-              </LeftSideContainer>
-              <MiddleSideContainer>
-                <ToolbarMiddle />
-              </MiddleSideContainer>
-              <RightSideContainer>
-                {selectedUltility ? (
-                  <UtilitySection
-                    name={ULTILITY_SIZE_MAPPING[selectedUltility].name}
-                    width={ULTILITY_SIZE_MAPPING[selectedUltility].width}
-                  >
-                    {
+              <IframeDialogProvider>
+                <Header />
+                <LeftSideContainer>
+                  <LeftSideWrapper>
+                    <MyVideo />
+                    <MyInformationCard />
+                  </LeftSideWrapper>
+                </LeftSideContainer>
+                <MiddleSideContainer>
+                  <ToolbarMiddle />
+                </MiddleSideContainer>
+                <RightSideContainer>
+                  {selectedUltility ? (
+                    <UtilitySection
+                      name={ULTILITY_SIZE_MAPPING[selectedUltility].name}
+                      width={ULTILITY_SIZE_MAPPING[selectedUltility].width}
+                    >
                       {
-                        chat: <Chat />,
-                        member: <Members />,
-                        setting: <Setting />,
-                      }[selectedUltility]
-                    }
-                  </UtilitySection>
-                ) : (
-                  <></>
-                )}
-                <ToolbarRight />
-              </RightSideContainer>
+                        {
+                          chat: <Chat />,
+                          member: <Members />,
+                          setting: <Setting />,
+                        }[selectedUltility]
+                      }
+                    </UtilitySection>
+                  ) : (
+                    <></>
+                  )}
+                  <ToolbarRight />
+                </RightSideContainer>
 
-              <CustomCharacterPanel />
+                <CustomCharacterPanel />
+              </IframeDialogProvider>
             </OverlayContainer>
           </Container>
         </MultitabDetect>

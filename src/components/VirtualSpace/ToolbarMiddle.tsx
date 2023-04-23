@@ -26,6 +26,7 @@ import { AnimatedToolbarContainer, ToolbarItem, WithTooltip } from '@/components
 import { MESSAGES } from '@/libs/constants'
 import { useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
+import { useIframeDialog } from './IframeDialog/IframeDialogContext'
 import { ScreenShare } from './ScreenShare'
 import { WhiteBoard } from './WhiteBoard'
 
@@ -67,13 +68,12 @@ export const ToolbarMiddle = () => {
   const presenter = useHMSStore(selectPeerScreenSharing)
   const screenShareVideoTrack = useHMSStore(selectScreenShareByPeerID(presenter ? presenter.id : ''))
 
+  const [openIframe] = useIframeDialog()
+
   const [isOpenCameraSetting, setIsOpenCameraSetting] = useState(false)
   const [isOpenMicSetting, setIsOpenMicSetting] = useState(false)
   const [isOpenEmoji, setIsOpenEmoji] = useState(false)
-  const [isOpenWhiteBoard, setIsOpenWhiteBoard] = useState(false)
   const [isOpenShareScreen, setIsOpenShareScreen] = useState(false)
-
-  console.log('isOpenWhiteBoard ', isOpenWhiteBoard)
 
   const toggleAudio = async () => await hmsActions.setLocalAudioEnabled(!audioEnabled)
 
@@ -103,7 +103,7 @@ export const ToolbarMiddle = () => {
       })
     }
 
-    setIsOpenWhiteBoard(!isOpenWhiteBoard)
+    openIframe(<WhiteBoard id={roomInstance?.id || ''} />, { onClose: closeWhiteBoard })
   }
 
   const closeWhiteBoard = () => {
@@ -114,7 +114,6 @@ export const ToolbarMiddle = () => {
         whiteboardId: roomId,
       })
     }
-    setIsOpenWhiteBoard(false)
   }
 
   const openShareScreen = () => {
@@ -137,37 +136,11 @@ export const ToolbarMiddle = () => {
     if (isHostWhiteBoardOpen) {
       if (!isHost) window.addEventListener('keypress', onPressZToOpenWhiteBoard)
     } else {
-      closeWhiteBoard()
       window.removeEventListener('keypress', onPressZToOpenWhiteBoard)
     }
 
     return () => window.removeEventListener('keypress', onPressZToOpenWhiteBoard)
-  }, [roomInstance, isHostWhiteBoardOpen])
-
-  // useEffect(() => {
-  //   const unsubs: (() => void)[] = []
-
-  //   unsubs.push(
-  //     roomInstance?.onMessage(MESSAGES.WHITEBOARD.HOST_OPEN, () => {
-  //       // TODO: Do we need to send host information here?
-  //       setIsHostOpeningWhiteBoard(true)
-
-  //       window.addEventListener('keypress', onPressZToOpenWhiteBoard)
-  //     }),
-  //   )
-
-  //   unsubs.push(
-  //     roomInstance?.onMessage(MESSAGES.WHITEBOARD.HOST_CLOSE, () => {
-  //       setIsHostOpeningWhiteBoard(false)
-
-  //       window.removeEventListener('keypress', onPressZToOpenWhiteBoard)
-  //     }),
-  //   )
-
-  //   return () => {
-  //     unsubs.forEach((unsub) => unsub())
-  //   }
-  // }, [roomInstance, mainMember])
+  }, [roomInstance, isHostWhiteBoardOpen, mainMember])
 
   useEffect(() => {
     if (screenShareVideoTrack) {
@@ -177,7 +150,7 @@ export const ToolbarMiddle = () => {
 
   return (
     <>
-      {isHostWhiteBoardOpen && (
+      {!isHost && isHostWhiteBoardOpen && (
         <OpeningNotification>
           <span>
             The host is opening a white board, press <b>Z</b> to join
@@ -332,14 +305,6 @@ export const ToolbarMiddle = () => {
       </AnimatedToolbarContainer>
       <NameBox isEdit={isEditAvatar} />
       <RandomAvatar isEdit={isEditAvatar} />
-      {isOpenWhiteBoard && (
-        <WhiteBoard
-          close={() => {
-            closeWhiteBoard()
-          }}
-          id={roomInstance?.id || ''}
-        />
-      )}
     </>
   )
 }
