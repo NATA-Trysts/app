@@ -17,7 +17,7 @@ import {
   useMemberStore,
   useNetworkStore,
   User,
-  // useVirtualSpaceStore,
+  useVirtualSpaceStore,
 } from '@/stores'
 
 type VirtualSpaceLoadingProps = {
@@ -42,7 +42,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const [password, setPassword] = useState('')
   const { auth } = useAuth()
 
-  // const [setSpaceName, setSpaceModels] = useVirtualSpaceStore((state) => [state.setSpaceName, state.setSpaceModels])
+  const [setSpaceName] = useVirtualSpaceStore((state) => [state.setSpaceName])
   const [prepareState, setPrepareState] = useState<PrepareState>('')
 
   const [setRoomInstance] = useNetworkStore((state) => [state.setRoomInstance])
@@ -63,7 +63,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
       try {
         // Get Space && Get User
         // -> Get Space
-        // const getSpaceByCodeRequest: AxiosResponse<Space, any> = await axiosConfigured.get(`/spaces/code/${spaceId}`)
+        const getSpaceByCodeRequest: Promise<AxiosResponse<Space, any>> = axiosConfigured.get(`/spaces/code/${spaceId}`)
 
         const getUserRequest: Promise<AxiosResponse<User, any>> | undefined = auth?.accessToken
           ? axiosPrivate('/user', {
@@ -73,7 +73,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
 
         const responses: (Promise<AxiosResponse<User | Space, any>> | undefined)[] = [
           getUserRequest,
-          // getSpaceByCodeRequest
+          getSpaceByCodeRequest,
         ]
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -95,23 +95,23 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
         }
 
         // Space Response
-        // setPrepareStatus('Get Space')
-        // if (results[1].status === 'fulfilled') {
-        //   const models = results[1].value.data.models
-        //   const password = results[1].value.data.password
+        setPrepareStatus('Get Space')
+        if (results[1].status === 'fulfilled' && results[1].value) {
+          const space = results[1].value.data as Space
+          const password = space.password
 
-        //   setSpaceName(results[1].value.data.name)
-        //   setRoomId(results[1].value.data.hmsRoomId)
-        //   setSpaceModels(models)
+          setSpaceName(space.name)
+          setRoomId(space.hmsRoomId)
+          isHost.current = space.author._id === user?._id
 
-        //   if (password) {
-        //     setPrepareState('need-verify')
-        //   } else {
-        //     setPrepareState('info-loaded')
-        //   }
-        // }
+          if (password) {
+            setPrepareState('need-verify')
+          } else {
+            setPrepareState('info-loaded')
+          }
+        }
 
-        setRoomId('642c5157adb93485420bfec8')
+        // setRoomId('642c5157adb93485420bfec8')
 
         setPrepareState('info-loaded')
       } catch (error) {

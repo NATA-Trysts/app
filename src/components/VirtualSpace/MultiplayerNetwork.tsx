@@ -33,8 +33,6 @@ export const MultiplayerNetwork = memo(() => {
       state.removeWhiteBoardMember,
     ])
 
-  const addWhiteBoardMember = useVirtualSpaceStore((state) => state.addWhiteBoardMember)
-  const removeWhiteBoardMember = useVirtualSpaceStore((state) => state.removeWhiteBoardMember)
   const [addMessage] = useVirtualSpaceStore((state) => [state.addMessage])
 
   useEffect(() => {
