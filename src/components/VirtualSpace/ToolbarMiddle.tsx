@@ -27,6 +27,7 @@ import { MESSAGES } from '@/libs/constants'
 import { useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
 import { useIframeDialog } from './IframeDialog/IframeDialogContext'
+import { Poker } from './Poker'
 import { ScreenShare } from './ScreenShare'
 import { WhiteBoard } from './WhiteBoard'
 
@@ -115,6 +116,12 @@ export const ToolbarMiddle = () => {
       })
     }
   }
+
+  const openPoker = () => {
+    openIframe(<Poker id={'53007769639138993570'} />, { onClose: closePoker })
+  }
+
+  const closePoker = () => {}
 
   const openShareScreen = () => {
     setIsOpenShareScreen(true)
@@ -233,8 +240,13 @@ export const ToolbarMiddle = () => {
                   <ShareScreen />
                 </WithTooltip>
               </ToolbarItem>
-              <ToolbarItem>
-                <WithTooltip content="White Board" id="white-board" onClick={() => openWhiteBoard()}>
+              <ToolbarItem onClick={openWhiteBoard}>
+                <WithTooltip content="White Board" id="white-board">
+                  <Writing />
+                </WithTooltip>
+              </ToolbarItem>
+              <ToolbarItem onClick={openPoker}>
+                <WithTooltip content="Start Poker" id="poker">
                   <Writing />
                 </WithTooltip>
               </ToolbarItem>
@@ -271,6 +283,7 @@ export const ToolbarMiddle = () => {
                       w: 0,
                     },
                     action: 'idle.000',
+                    avatar: '',
                   })
                 }}
               >
