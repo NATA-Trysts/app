@@ -14,6 +14,7 @@ const ToolbarContainer = styled.div`
 
 const AnimatedToolbarContainer = styled(motion.div)`
   display: flex;
+  gap: 8px;
   border-radius: 16px;
   background: var(--color-5);
   padding: 8px;

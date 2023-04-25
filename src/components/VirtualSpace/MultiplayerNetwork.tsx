@@ -2,7 +2,6 @@
 
 import { memo, useEffect } from 'react'
 
-import { MESSAGES } from '@/libs/constants'
 import { Member, Message, useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
 export const MultiplayerNetwork = memo(() => {
@@ -13,6 +12,7 @@ export const MultiplayerNetwork = memo(() => {
     removeOtherMembers,
     updateOtherMembers,
     updateActionOtherMember,
+    removeNearestMemberId,
     updateAvatarOtherMember,
   ] = useMemberStore((state) => [
     state.setMainMember,
@@ -20,16 +20,27 @@ export const MultiplayerNetwork = memo(() => {
     state.removeOtherMembers,
     state.updateOtherMembers,
     state.updateActionOtherMember,
+    state.removeNearestMemberId,
     state.updateAvatarOtherMember,
   ])
-  const addWhiteBoardMember = useVirtualSpaceStore((state) => state.addWhiteBoardMember)
-  const removeWhiteBoardMember = useVirtualSpaceStore((state) => state.removeWhiteBoardMember)
+
+  const [setHostWhiteBoardOpen, addWhiteBoard, removeWhiteBoard, addWhiteBoardMember, removeWhiteBoardMember] =
+    useVirtualSpaceStore((state) => [
+      state.setHostWhiteBoardOpen,
+      state.addWhiteBoard,
+      state.removeWhiteBoard,
+      state.addWhiteBoardMember,
+      state.removeWhiteBoardMember,
+    ])
+
   const [addMessage] = useVirtualSpaceStore((state) => [state.addMessage])
 
   useEffect(() => {
     if (room)
       try {
         room.state.members.onAdd = (member: Member, sessionId: string) => {
+          console.log('add', member.id)
+
           if (sessionId === room.sessionId) {
             setMainMember({
               id: member.id,
@@ -46,6 +57,7 @@ export const MultiplayerNetwork = memo(() => {
                 w: member.quaternion.w,
               },
               action: member.action,
+              isHost: member.isHost,
             })
           } else {
             console.log(member)
@@ -64,6 +76,7 @@ export const MultiplayerNetwork = memo(() => {
                 w: member.quaternion.w,
               },
               action: member.action,
+              isHost: member.isHost,
               avatar: member.user.avatar,
             })
           }
@@ -88,23 +101,38 @@ export const MultiplayerNetwork = memo(() => {
               updateAvatarOtherMember(sessionId, member.user.avatar)
             }
           }
-
-          room.state.members.onRemove = (_, sessionId: string) => {
-            removeOtherMembers(sessionId)
-          }
-
-          room.state.messages.onAdd = (message: Message) => {
-            addMessage(message)
-          }
-
-          room?.onMessage(MESSAGES.WHITEBOARD.JOIN, ({ member }) => {
-            addWhiteBoardMember(member)
-          })
-
-          room?.onMessage(MESSAGES.WHITEBOARD.LEAVE, ({ member }) => {
-            removeWhiteBoardMember(member)
-          })
         }
+
+        room.state.members.onRemove = (_, sessionId: string) => {
+          removeOtherMembers(sessionId)
+          removeNearestMemberId(sessionId)
+        }
+
+        room.state.messages.onAdd = (message: Message) => {
+          addMessage(message)
+        }
+
+        room.state.whiteboards.onAdd = (whiteboard) => {
+          addWhiteBoard({ id: whiteboard.id, members: [] })
+
+          whiteboard.members.onAdd = (memberId) => {
+            addWhiteBoardMember(whiteboard.id, memberId)
+          }
+
+          whiteboard.members.onRemove = (memberId) => {
+            removeWhiteBoardMember(whiteboard.id, memberId)
+          }
+        }
+
+        room.state.whiteboards.onRemove = (_, whiteboardId) => {
+          removeWhiteBoard(whiteboardId)
+        }
+
+        room.state.listen('isHostWhiteBoardOpen', (isOpen: boolean) => {
+          console.log('isHostWhiteBoardOpen_change', isOpen)
+
+          setHostWhiteBoardOpen(isOpen)
+        })
       } catch (error) {
         throw Error('Multiplayer Error', error)
       }
