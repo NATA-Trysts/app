@@ -245,14 +245,14 @@ export const ToolbarMiddle = () => {
                   <Writing />
                 </WithTooltip>
               </ToolbarItem>
-              <ToolbarItem onClick={openPoker}>
-                <WithTooltip content="Start Poker" id="poker">
-                  <Writing />
-                </WithTooltip>
-              </ToolbarItem>
             </>
           </Condition>
         )}
+        <ToolbarItem onClick={openPoker}>
+          <WithTooltip content="Start Poker" id="poker">
+            <Writing />
+          </WithTooltip>
+        </ToolbarItem>
         <ToolbarItem>
           <Popover
             align="center"

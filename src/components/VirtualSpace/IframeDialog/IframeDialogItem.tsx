@@ -8,7 +8,7 @@ export const IframeDiaglog = styled(Dialog)`
   max-height: unset;
 
   ${CloseButton} {
-    top: 0;
-    right: 0;
+    top: -12px;
+    right: -12px;
   }
 `
