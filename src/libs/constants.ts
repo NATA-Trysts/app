@@ -184,6 +184,18 @@ const ULTILITY_SIZE_MAPPING = {
 
 const JSDELIVR_URL = 'https://cdn.jsdelivr.net/gh/NATA-Trysts/cdn@main'
 
+// chair, desk, decoration, layout
+
+// const MODELS_DATA = [
+//   {
+//     uuid: '',
+//     name: '',
+//     category: '',
+//     description: '',
+//     thumbnail: '',
+//   }
+// ]
+
 export {
   ANIMATION_COUNT_MAPPING,
   CHARACTER_CONFIG_VALUE_MAPPING,
