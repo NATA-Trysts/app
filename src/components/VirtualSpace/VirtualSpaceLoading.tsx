@@ -10,9 +10,9 @@ import { useParams } from 'react-router-dom'
 import axiosConfigured from '@/api/axios'
 import { useAuth, useAxiosPrivate } from '@/hooks'
 import { generateHMSConfig } from '@/libs/utils'
+import { Space } from '@/models/Space'
 import {
   CategorySelectedItemId,
-  Space,
   useEditCharacterStore,
   useMemberStore,
   useNetworkStore,
@@ -43,7 +43,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const [password, setPassword] = useState('')
   const { auth } = useAuth()
 
-  const [setSpaceName] = useVirtualSpaceStore((state) => [state.setSpaceName])
+  const [setSpaceName, setSpaceTheme] = useVirtualSpaceStore((state) => [state.setSpaceName, state.setSpaceTheme])
   const [prepareState, setPrepareState] = useState<PrepareState>('')
 
   const [setRoomInstance] = useNetworkStore((state) => [state.setRoomInstance])
@@ -102,6 +102,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
           const password = space.password
 
           setSpaceName(space.name)
+          setSpaceTheme(space.theme)
           setRoomId(space.hmsRoomId)
           isHost.current = space.author === user?._id
 

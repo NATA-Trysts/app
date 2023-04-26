@@ -7,64 +7,66 @@ import { BasicButton } from '@/components/Button'
 import { Text } from '@/components/Commons'
 import { ButtonContent } from '@/components/Commons/Button'
 import { MultiToggle, MultiToggleProps, MultiToggleRef, ToggleLabel } from '@/components/Commons/MultiToggle'
+import { CustomableSpaceTheme } from '@/models/Space'
 
 import { CanNextCreateContentProps, CreateForm, CreateFormHeader } from '..'
 import { ThemeImage, ThemeImageCard } from './ThemeImageCard'
 
-type SpaceThemeType = 'office' | 'conference' | 'event' | 'workshop' | 'custom'
+export type CreateSpaceTheme = CustomableSpaceTheme
 
-type SpaceTheme = {
-  [key in SpaceThemeType]: ReactNode
+type CreateSpaceThemes = {
+  [key in CreateSpaceTheme]: ReactNode
 }
 
-const themes: SpaceTheme = {
-  office: (
+const themes: CreateSpaceThemes = {
+  home: (
     <ThemeImageCard
-      key={'office-image'}
-      name="Office"
+      key={'home-image'}
+      name="Home"
       src="https://31e58c129a.cbaul-cdnwnd.com/b10995abef9b7109e0c8dd76841104e4/200000058-2a47f2a481/0042.jpg?ph=31e58c129a"
     ></ThemeImageCard>
   ),
-  conference: (
+  forest: (
     <ThemeImageCard
-      key={'conference-image'}
-      name="Conference"
+      key={'forest-image'}
+      name="Forest"
       src="https://w0.peakpx.com/wallpaper/172/710/HD-wallpaper-anime-girl-purple-eyes-cyberpunk-anime-girl-anime-cyberpunk-artist-artwork-digital-art.jpg"
     ></ThemeImageCard>
   ),
-  event: (
-    <ThemeImageCard
-      key={'event-image'}
-      name="Event"
-      src="https://wallpaperaccess.com/full/1761194.jpg"
-    ></ThemeImageCard>
+  city: (
+    <ThemeImageCard key={'city-image'} name="City" src="https://wallpaperaccess.com/full/1761194.jpg"></ThemeImageCard>
   ),
-  workshop: (
+  kidsplayground: (
     <ThemeImageCard
-      key={'workshop-image'}
-      name="Workshop"
+      key={'kidsplayground-image'}
+      name="Kids Playground"
       src="https://i.pinimg.com/originals/fd/09/ef/fd09ef6514db7fb0798f1f0c362bcab0.jpg"
     ></ThemeImageCard>
   ),
   custom: <ThemeImageCard key={'custom-image'} name="Custom" src={CustomImage}></ThemeImageCard>,
 }
 
-const themeOptions = [
+type ThemeOptionType = {
+  value: CreateSpaceTheme
+  display: CreateSpaceThemes[keyof CreateSpaceThemes]
+}
+
+const themeOptions: ThemeOptionType[] = [
   {
-    value: 'office',
-    display: themes['office'],
+    value: 'home',
+    display: themes['home'],
   },
   {
-    value: 'conference',
-    display: themes['conference'],
+    value: 'forest',
+    display: themes['forest'],
   },
   {
-    value: 'event',
-    display: themes['event'],
+    value: 'city',
+    display: themes['city'],
   },
   {
-    value: 'workshop',
-    display: themes['workshop'],
+    value: 'kidsplayground',
+    display: themes['kidsplayground'],
   },
 ]
 
@@ -87,7 +89,7 @@ export const SelectTheme = ({ onThemeSelected, onCanNext }: SelectThemeProps) =>
     (value: any) => {
       setValue('theme', value)
       onCanNext?.(true)
-      onThemeSelected?.(themes[value as SpaceThemeType])
+      onThemeSelected?.(themes[value as CreateSpaceTheme])
     },
     [setValue, onCanNext, onThemeSelected],
   )
