@@ -106,7 +106,9 @@ const VirtualSpace = () => {
         <MultitabDetect fallback={<MultiTabWarning />}>
           <Container customColor={customColor}>
             <MultiplayerNetwork />
+
             <Scene />
+
             <OverlayContainer>
               <IframeDialogProvider>
                 <Header />

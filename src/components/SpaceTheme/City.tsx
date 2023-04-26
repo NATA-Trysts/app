@@ -3,15 +3,16 @@
 */
 
 import { PerspectiveCamera } from '@react-three/drei'
+import { RigidBody } from '@react-three/rapier'
 import useSpline from '@splinetool/r3f-spline'
 
-export function City({ ...props }) {
+export default function Scene({ ...props }) {
   const { nodes, materials } = useSpline('https://prod.spline.design/iWydTIzFGLNviD8p/scene.splinecode')
 
   return (
     <>
       <color args={['#defaf9']} attach="background" />
-      <group {...props} dispose={null}>
+      <group {...props} receiveShadow dispose={null} position={[0, -1.5, 0]} scale={0.05}>
         <mesh
           geometry={nodes.Sun.geometry}
           material={materials['Sun Material']}
@@ -50,600 +51,6 @@ export function City({ ...props }) {
           shadow-mapSize-height={1024}
           shadow-mapSize-width={1024}
         />
-        <group name="Vespa" position={[-1872.66, 52.18, 1367.4]} rotation={[0, -0.31, 0]} scale={1}>
-          <group name="Container" position={[0.17, -66.98, 39.03]} rotation={[0, 0.02, 0]} scale={1}>
-            <group name="Motorbike" position={[0, 48.73, -39.04]} rotation={[-Math.PI, -0.15, -Math.PI]} scale={0.38}>
-              <group name="Group 7" position={[-5.59, 10.72, 0]}>
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['left 2'].geometry}
-                  material={materials['car-black']}
-                  name="left 2"
-                  position={[-72.37, 92.85, 36.79]}
-                  rotation={[1.28, -0.05, 2.26]}
-                  scale={[-0.72, 0.21, 0.72]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.left.geometry}
-                  material={materials['car-black']}
-                  name="left"
-                  position={[63.97, 92.75, 60.49]}
-                  rotation={[1.28, -0.05, -1.93]}
-                  scale={[-0.72, 0.21, 0.72]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.grey.geometry}
-                  material={materials['car-black']}
-                  name="grey"
-                  position={[-10.54, 111.14, 86.48]}
-                  rotation={[-0.47, -0.16, 1.49]}
-                  scale={[-2.04, 1.72, 0.75]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Cone copy'].geometry}
-                  material={materials['car-black']}
-                  name="Cone copy"
-                  position={[71.08, 127.58, 39.22]}
-                  rotation={[0.01, 1.23, 1.59]}
-                  scale={1.65}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Cylinder copy'].geometry}
-                  material={materials['car-black']}
-                  name="Cylinder copy"
-                  position={[48.18, 115.74, 55.87]}
-                  rotation={[-0.28, 0.27, -1]}
-                  scale={[1.65, 0.96, 1.65]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Cone copy1'].geometry}
-                  material={materials['car-black']}
-                  name="Cone copy1"
-                  position={[-65.01, 127.58, 15.22]}
-                  rotation={[2.7, -1.56, 1.1]}
-                  scale={[-1.65, 1.65, 1.65]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Cylinder copy1'].geometry}
-                  material={materials['car-black']}
-                  name="Cylinder copy1"
-                  position={[-49.18, 115.74, 38.71]}
-                  rotation={[-0.33, -0.6, 0.89]}
-                  scale={[-1.65, 0.96, 1.65]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.Cylinder_grey.geometry}
-                  material={materials['car-black']}
-                  name="Cylinder_grey"
-                  position={[-6.79, 66.44, 70.27]}
-                  rotation={[0, 1.4, -0.43]}
-                  scale={1.43}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.Torus.geometry}
-                  material={materials['car-black']}
-                  name="Torus"
-                  position={[24.89, -92.79, -104.43]}
-                  rotation={[0, 1.4, 0]}
-                  scale={[1.3, 1.3, 1.8]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Ellipse 2'].geometry}
-                  material={materials['Ellipse 2 Material']}
-                  name="Ellipse 2"
-                  position={[11.97, -93.31, -106.43]}
-                  rotation={[Math.PI, -1.4, 0.3]}
-                  scale={[1.37, 1.37, 1.47]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.Torus1.geometry}
-                  material={materials['car-black']}
-                  name="Torus1"
-                  position={[-15.56, -92.79, 127.38]}
-                  rotation={[0, 1.4, 0]}
-                  scale={[1.3, 1.3, 1.8]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Ellipse 21'].geometry}
-                  material={materials.car}
-                  name="Ellipse 21"
-                  position={[-28.48, -93.31, 125.38]}
-                  rotation={[Math.PI, -1.4, 0.3]}
-                  scale={[1.37, 1.37, 1.47]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.inside.geometry}
-                  material={materials['car-black']}
-                  name="inside"
-                  position={[12.68, -72.41, -34.6]}
-                  rotation={[0, 1.4, 0]}
-                  scale={[1.65, 1.65, 2.97]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['mid part grey'].geometry}
-                  material={materials['car-black']}
-                  name="mid part grey"
-                  position={[-7.59, -2.64, 77.54]}
-                  rotation={[0, 1.4, 0]}
-                  scale={[-0.62, 1.65, 1.14]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.grey1.geometry}
-                  material={materials['car-black']}
-                  name="grey1"
-                  position={[30.71, -8.3, -136.93]}
-                  rotation={[-2.97, 0.17, -1.6]}
-                  scale={[-1.22, 1.03, 0.45]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.grey2.geometry}
-                  material={materials['car-black']}
-                  name="grey2"
-                  position={[23.67, -51.4, -101.53]}
-                  rotation={[-0.01, 1.4, -0.04]}
-                  scale={[-1.97, 2.05, 0.6]}
-                />
-              </group>
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.Subdiv.geometry}
-                material={materials['Subdiv Material']}
-                name="Subdiv"
-                position={[-24.75, -0.59, 147.8]}
-                rotation={[-1.03, -0.09, 1.42]}
-                scale={[-1.37, 1.3, 1.21]}
-              />
-              <group name="light-red" position={[-0.37, 67.8, -19.1]}>
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.red.geometry}
-                  material={materials['car-light']}
-                  name="red"
-                  position={[-15.93, 54.57, 106.57]}
-                  rotation={[-0.47, -0.16, 1.49]}
-                  scale={[-1.82, 1.54, 1.2]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.red1.geometry}
-                  material={materials['car-light']}
-                  name="red1"
-                  position={[25.61, -65.28, -118.48]}
-                  rotation={[-2.97, 0.17, -1.6]}
-                  scale={[-1.09, 0.92, 0.71]}
-                />
-              </group>
-              <group name="yellow" position={[8.37, -3.24, 0.7]}>
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.head.geometry}
-                  material={materials['car-yellow']}
-                  name="head"
-                  position={[-18.71, 116.96, 63.93]}
-                  rotation={[0, 1.4, -0.35]}
-                  scale={[1.16, 1.65, 1.16]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.Cylinder_yellow.geometry}
-                  material={materials['']}
-                  name="Cylinder_yellow"
-                  position={[-19.81, 89.29, 64.27]}
-                  rotation={[0, 1.4, -0.5]}
-                  scale={[1.99, 1.56, 1.99]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Cube 2'].geometry}
-                  material={materials['']}
-                  name="Cube 2"
-                  position={[-32.68, -1.45, 144.62]}
-                  rotation={[-1.03, -0.09, 1.42]}
-                  scale={[-1.24, 1.65, 0.51]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.front.geometry}
-                  material={materials['car-yellow']}
-                  name="front"
-                  position={[-28.03, -22.08, 116.86]}
-                  rotation={[0, 1.4, 0]}
-                  scale={[1.8, 1.65, 0.78]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['mid part yellow'].geometry}
-                  material={materials['']}
-                  name="mid part yellow"
-                  position={[-22.35, -39.17, 82.66]}
-                  rotation={[0, 1.4, 0.43]}
-                  scale={[1.65, 1.65, 2.67]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['seat yellow'].geometry}
-                  material={materials['']}
-                  name="seat yellow"
-                  position={[8.63, -9.76, -95.05]}
-                  rotation={[0, 1.4, Math.PI]}
-                  scale={[-1.65, 1.65, 1.04]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.right.geometry}
-                  material={materials['car-yellow']}
-                  name="right"
-                  position={[-47.03, -39.86, -106.71]}
-                  rotation={[-Math.PI, -1.4, -Math.PI]}
-                  scale={[1.75, 2.14, 0.6]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.left1.geometry}
-                  material={materials['']}
-                  name="left1"
-                  position={[64.04, -39.86, -87.12]}
-                  rotation={[0, 1.4, 0]}
-                  scale={[-1.75, 2.14, 0.6]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.yellow1.geometry}
-                  material={materials['']}
-                  name="yellow1"
-                  position={[9.71, -38.24, -102.19]}
-                  rotation={[-0.01, 1.4, -0.04]}
-                  scale={[-1.75, 1.83, 1.3]}
-                />
-              </group>
-              <group name="grey3" position={[-0.92, -82.08, 11.48]}>
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Torus 2'].geometry}
-                  material={materials.car}
-                  name="Torus 2"
-                  position={[20.23, 0, -115.91]}
-                  rotation={[0, 1.4, 0]}
-                  scale={[1.03, 1.03, 1.48]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.Ellipse.geometry}
-                  material={materials.car}
-                  name="Ellipse"
-                  position={[33.14, -0.76, -114.16]}
-                  rotation={[0, 1.4, -0.3]}
-                  scale={[1.46, 1.46, 1.56]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Torus 21'].geometry}
-                  material={materials.car}
-                  name="Torus 21"
-                  position={[-20.23, 0, 115.91]}
-                  rotation={[0, 1.4, 0]}
-                  scale={[1.03, 1.03, 1.48]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.Ellipse1.geometry}
-                  material={materials.car}
-                  name="Ellipse1"
-                  position={[-7.32, -0.76, 117.65]}
-                  rotation={[0, 1.4, -0.3]}
-                  scale={[1.46, 1.46, 1.56]}
-                />
-              </group>
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.seat_brown.geometry}
-                material={materials['seat_brown Material']}
-                name="seat_brown"
-                position={[12.66, 8.98, -71.86]}
-                rotation={[0, 1.4, 0.03]}
-                scale={[1.43, 1.77, 1.04]}
-              />
-            </group>
-            <group name="Girl" position={[2, 84.47, -30.73]} rotation={[-Math.PI, -0.03, -Math.PI]} scale={0.38}>
-              <group name="head1" position={[10.04, 105.01, -48.14]} rotation={[-0.14, -0.02, 0]} scale={0.59}>
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Merged Geometry'].geometry}
-                  material={materials['car-black']}
-                  name="Merged Geometry"
-                  position={[-5.38, -4.43, 28.84]}
-                  rotation={[-3, -0.1, -3.14]}
-                  scale={4.39}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Merged Geometry 2'].geometry}
-                  material={materials.eye}
-                  name="Merged Geometry 2"
-                  position={[-5.18, 7.47, 29.29]}
-                  rotation={[-3, -0.1, -3.14]}
-                  scale={4.39}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Merged Geometry 3'].geometry}
-                  material={materials['red 2 flat']}
-                  name="Merged Geometry 3"
-                  position={[-3.47, -21.36, 24.93]}
-                  rotation={[-3, -0.1, -3.14]}
-                  scale={4.39}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Cube 9'].geometry}
-                  material={materials['red flat']}
-                  name="Cube 9"
-                  position={[-5.09, -33.73, 25.36]}
-                  rotation={[-0.02, -0.04, -0.02]}
-                  scale={[1.09, 1.01, 0.53]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Cube 21'].geometry}
-                  material={materials['Cube 21 Material']}
-                  name="Cube 21"
-                  position={[38.89, -9, -6.07]}
-                  scale={[-1, 1, 1]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.Cube.geometry}
-                  material={materials['Cube Material']}
-                  name="Cube"
-                  position={[-46.02, -12.67, -6.07]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['hair 3'].geometry}
-                  material={materials['hair 3 Material']}
-                  name="hair 3"
-                  position={[-3.26, 39.95, -32.33]}
-                  rotation={[-Math.PI / 6, 0, 0]}
-                  scale={[1.04, 1, 1]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Sphere 2'].geometry}
-                  material={materials['Sphere 2 Material']}
-                  name="Sphere 2"
-                  position={[-2.88, -8.51, -8.67]}
-                />
-              </group>
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.Cylinder.geometry}
-                material={materials.beige}
-                name="Cylinder"
-                position={[6.08, 60.62, -52.04]}
-                rotation={[0.22, -0.17, 0]}
-                scale={1.33}
-              />
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes['Cube 20'].geometry}
-                material={materials.Shirt}
-                name="Cube 20"
-                position={[6.09, 24.51, -49.5]}
-                rotation={[-Math.PI, 0, -Math.PI]}
-              />
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes['body 2'].geometry}
-                material={materials.skin}
-                name="body 2"
-                position={[6.15, -0.39, -49.12]}
-              />
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.Cube1.geometry}
-                material={materials['road-2']}
-                name="Cube1"
-                position={[5.64, -46.17, -49.83]}
-                rotation={[0, 0, 0]}
-                scale={[0.64, 0.67, 0.67]}
-              />
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes['Cube 18'].geometry}
-                material={materials.skin}
-                name="Cube 18"
-                position={[34.83, -41.93, -2.07]}
-                rotation={[-0.79, 0.19, 0.2]}
-                scale={[-0.54, 0.54, 0.54]}
-              />
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.Cube2.geometry}
-                material={materials.skin}
-                name="Cube2"
-                position={[-39.97, -10.99, 47.6]}
-                rotation={[0.21, -0.33, 0.12]}
-                scale={[-0.54, 0.54, 0.54]}
-              />
-              <group
-                name="Group 5"
-                position={[-24.24, -132.29, 0.5]}
-                rotation={[0.41, -0.27, 0.01]}
-                scale={[1.07, 1.01, 1.05]}
-              >
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Merged Geometry1'].geometry}
-                  material={materials.white}
-                  name="Merged Geometry1"
-                  position={[0.84, 2.45, 4.58]}
-                  rotation={[2.84, -0.46, -2.91]}
-                  scale={[2.46, 2.61, 2.45]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Cube 4'].geometry}
-                  material={materials['Untitled Material']}
-                  name="Cube 4"
-                  position={[0.03, -5.56, -27.01]}
-                  rotation={[Math.PI, 0, 0]}
-                  scale={0.9}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Cube 3'].geometry}
-                  material={materials.white}
-                  name="Cube 3"
-                  position={[-0.5, -10.06, 16.62]}
-                  rotation={[-Math.PI / 2, 0, 0]}
-                  scale={1}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Cube 22'].geometry}
-                  material={materials['yellow-3']}
-                  name="Cube 22"
-                  position={[-0.4, -9.73, 0.39]}
-                  rotation={[-Math.PI / 2, 0, 0]}
-                  scale={1}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Rectangle 2'].geometry}
-                  material={materials.white}
-                  name="Rectangle 2"
-                  position={[-0.45, -20.06, -0.01]}
-                  rotation={[-Math.PI / 2, 0, 0]}
-                  scale={1}
-                />
-              </group>
-              <group
-                name="Group 4"
-                position={[51.91, -139.8, 78.41]}
-                rotation={[-0.52, 0.24, -0.03]}
-                scale={[1.07, 0.99, 1.07]}
-              >
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Merged Geometry2'].geometry}
-                  material={materials.white}
-                  name="Merged Geometry2"
-                  position={[0, 2.75, 4.55]}
-                  rotation={[-2.61, 0.1, 3]}
-                  scale={[2.45, 2.59, 2.5]}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Cube 41'].geometry}
-                  material={materials['Untitled Material']}
-                  name="Cube 41"
-                  position={[0.03, -5.56, -27.01]}
-                  rotation={[Math.PI, 0, 0]}
-                  scale={0.9}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Cube 31'].geometry}
-                  material={materials.white}
-                  name="Cube 31"
-                  position={[-0.5, -10.06, 16.62]}
-                  rotation={[-Math.PI / 2, 0, 0]}
-                  scale={1}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Cube 23'].geometry}
-                  material={materials['yellow-3']}
-                  name="Cube 23"
-                  position={[-0.4, -9.73, 0.39]}
-                  rotation={[-Math.PI / 2, 0, 0]}
-                  scale={1}
-                />
-                <mesh
-                  castShadow
-                  receiveShadow
-                  geometry={nodes['Rectangle 21'].geometry}
-                  material={materials.white}
-                  name="Rectangle 21"
-                  position={[-0.45, -20.06, -0.01]}
-                  rotation={[-Math.PI / 2, 0, 0]}
-                  scale={1}
-                />
-              </group>
-            </group>
-          </group>
-        </group>
         <PerspectiveCamera
           far={100000}
           fov={45}
@@ -674,9 +81,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry3'].geometry}
+            geometry={nodes['Merged Geometry'].geometry}
             material={materials['road-2']}
-            name="Merged Geometry3"
+            name="Merged Geometry"
             position={[-16.45, -21.78, -7.02]}
           />
           <mesh
@@ -700,9 +107,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry4'].geometry}
+            geometry={nodes['Merged Geometry1'].geometry}
             material={materials['red flat']}
-            name="Merged Geometry4"
+            name="Merged Geometry1"
             position={[19.39, -8.34, -1.79]}
             rotation={[1.7, 1.45, -1.69]}
             scale={[1.37, 1.37, 1.38]}
@@ -710,9 +117,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 21'].geometry}
+            geometry={nodes['Merged Geometry 2'].geometry}
             material={materials['car-black']}
-            name="Merged Geometry 21"
+            name="Merged Geometry 2"
             position={[21.96, 2.61, -2.18]}
             rotation={[1.7, 1.45, -1.69]}
             scale={[1.37, 1.37, 1.38]}
@@ -720,9 +127,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 91'].geometry}
+            geometry={nodes['Cube 9'].geometry}
             material={materials.cat}
-            name="Cube 91"
+            name="Cube 9"
             position={[0, -16.75, 0]}
             rotation={[0, Math.PI / 2, 0]}
           />
@@ -731,9 +138,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 22'].geometry}
+            geometry={nodes['Merged Geometry 21'].geometry}
             material={materials['car-black']}
-            name="Merged Geometry 22"
+            name="Merged Geometry 21"
             position={[22.53, 2.26, -0.17]}
             rotation={[0.16, 0.89, -0.2]}
             scale={0.9}
@@ -741,9 +148,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry5'].geometry}
-            material={materials['Merged Geometry5 Material']}
-            name="Merged Geometry5"
+            geometry={nodes['Merged Geometry2'].geometry}
+            material={materials['Merged Geometry2 Material']}
+            name="Merged Geometry2"
             position={[18.75, -8.26, -1.86]}
             rotation={[0.16, 0.89, -0.2]}
             scale={0.9}
@@ -751,9 +158,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 92'].geometry}
+            geometry={nodes['Cube 91'].geometry}
             material={materials.cat}
-            name="Cube 92"
+            name="Cube 91"
             position={[0, -16.75, 0]}
             rotation={[0, Math.PI / 2, 0]}
           />
@@ -772,9 +179,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 23'].geometry}
+            geometry={nodes['Merged Geometry 22'].geometry}
             material={materials['red flat']}
-            name="Merged Geometry 23"
+            name="Merged Geometry 22"
             position={[18.63, -8.25, -1.36]}
             rotation={[2.9, 1.1, -2.87]}
             scale={1}
@@ -782,9 +189,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry6'].geometry}
+            geometry={nodes['Merged Geometry3'].geometry}
             material={materials['car-black']}
-            name="Merged Geometry6"
+            name="Merged Geometry3"
             position={[22.08, -1.84, -2.37]}
             rotation={[2.9, 1.1, -2.87]}
             scale={1}
@@ -792,9 +199,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 93'].geometry}
+            geometry={nodes['Cube 92'].geometry}
             material={materials.cat}
-            name="Cube 93"
+            name="Cube 92"
             position={[0, -16.75, 0]}
             rotation={[0, Math.PI / 2, 0]}
           />
@@ -813,9 +220,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 24'].geometry}
+            geometry={nodes['Merged Geometry 23'].geometry}
             material={materials['red flat']}
-            name="Merged Geometry 24"
+            name="Merged Geometry 23"
             position={[40.23, 22.43, 25.55]}
             rotation={[Math.PI, 1.2, Math.PI]}
             scale={1.14}
@@ -823,9 +230,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry7'].geometry}
+            geometry={nodes['Merged Geometry4'].geometry}
             material={materials['car-black']}
-            name="Merged Geometry7"
+            name="Merged Geometry4"
             position={[40.2, 29.96, 29.84]}
             rotation={[Math.PI, 1.2, Math.PI]}
             scale={1.14}
@@ -853,9 +260,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 94'].geometry}
+            geometry={nodes['Cube 93'].geometry}
             material={materials.cat}
-            name="Cube 94"
+            name="Cube 93"
             position={[4.81, -8.14, 13.45]}
             rotation={[0, Math.PI / 2, 0]}
           />
@@ -885,17 +292,17 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry8'].geometry}
+            geometry={nodes['Merged Geometry5'].geometry}
             material={materials.beige}
-            name="Merged Geometry8"
+            name="Merged Geometry5"
             position={[-0.21, 0.8, 0.5]}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 25'].geometry}
+            geometry={nodes['Merged Geometry 24'].geometry}
             material={materials.green}
-            name="Merged Geometry 25"
+            name="Merged Geometry 24"
             position={[0, 0, -0.5]}
           />
         </group>
@@ -1240,9 +647,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry9'].geometry}
+            geometry={nodes['Merged Geometry6'].geometry}
             material={materials['wood-3']}
-            name="Merged Geometry9"
+            name="Merged Geometry6"
             position={[38.69, -90.17, -95.77]}
           />
           <group name="Group 146">
@@ -1301,9 +708,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry10'].geometry}
+            geometry={nodes['Merged Geometry7'].geometry}
             material={materials['wood-3']}
-            name="Merged Geometry10"
+            name="Merged Geometry7"
             position={[38.69, -90.17, -95.77]}
           />
           <group name="Group 1461">
@@ -1343,11 +750,21 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
+            geometry={nodes['Merged Geometry 25'].geometry}
+            material={materials['Untitled Material']}
+            name="Merged Geometry 25"
+            position={[35.98, -81.07, -64.36]}
+            rotation={[0, 0.87, 0]}
+            scale={1}
+          />
+          <mesh
+            castShadow
+            receiveShadow
             geometry={nodes['Merged Geometry 251'].geometry}
             material={materials['Untitled Material']}
             name="Merged Geometry 251"
-            position={[35.98, -81.07, -64.36]}
-            rotation={[0, 0.87, 0]}
+            position={[-78.32, -81.07, -63.24]}
+            rotation={[-Math.PI, 0.7, Math.PI]}
             scale={1}
           />
           <mesh
@@ -1356,9 +773,8 @@ export function City({ ...props }) {
             geometry={nodes['Merged Geometry 252'].geometry}
             material={materials['Untitled Material']}
             name="Merged Geometry 252"
-            position={[-78.32, -81.07, -63.24]}
-            rotation={[-Math.PI, 0.7, Math.PI]}
-            scale={1}
+            position={[-59.57, -81.07, 49.51]}
+            rotation={[-Math.PI, -0.87, -Math.PI]}
           />
           <mesh
             castShadow
@@ -1366,15 +782,6 @@ export function City({ ...props }) {
             geometry={nodes['Merged Geometry 253'].geometry}
             material={materials['Untitled Material']}
             name="Merged Geometry 253"
-            position={[-59.57, -81.07, 49.51]}
-            rotation={[-Math.PI, -0.87, -Math.PI]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes['Merged Geometry 254'].geometry}
-            material={materials['Untitled Material']}
-            name="Merged Geometry 254"
             position={[45.14, -81.07, 40.35]}
             rotation={[0, -0.44, 0]}
             scale={1}
@@ -1592,9 +999,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 311'].geometry}
+            geometry={nodes['Cube 31'].geometry}
             material={materials['Untitled Material']}
-            name="Cube 311"
+            name="Cube 31"
             position={[-0.72, -81, 0]}
             rotation={[-Math.PI / 2, 0, 0]}
             scale={0.62}
@@ -1611,17 +1018,17 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry11'].geometry}
+            geometry={nodes['Merged Geometry8'].geometry}
             material={materials.white}
-            name="Merged Geometry11"
+            name="Merged Geometry8"
             position={[0.43, 63.6, -0.82]}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder1.geometry}
+            geometry={nodes.Cylinder.geometry}
             material={materials['car-light']}
-            name="Cylinder1"
+            name="Cylinder"
             position={[0, 63.09, -0.8]}
             rotation={[Math.PI / 2, 0, 0]}
             scale={0.51}
@@ -1631,9 +1038,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 312'].geometry}
+            geometry={nodes['Cube 311'].geometry}
             material={materials['Untitled Material']}
-            name="Cube 312"
+            name="Cube 311"
             position={[-0.72, -81, 0]}
             rotation={[-Math.PI / 2, 0, 0]}
             scale={0.62}
@@ -1650,17 +1057,17 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry12'].geometry}
+            geometry={nodes['Merged Geometry9'].geometry}
             material={materials.white}
-            name="Merged Geometry12"
+            name="Merged Geometry9"
             position={[0.43, 63.6, -0.82]}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder2.geometry}
+            geometry={nodes.Cylinder1.geometry}
             material={materials['car-light']}
-            name="Cylinder2"
+            name="Cylinder1"
             position={[0, 63.09, -0.8]}
             rotation={[Math.PI / 2, 0, 0]}
             scale={0.51}
@@ -1681,9 +1088,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Ellipse 22'].geometry}
+              geometry={nodes['Ellipse 2'].geometry}
               material={materials.carrot}
-              name="Ellipse 22"
+              name="Ellipse 2"
               position={[3.8, 9.62, 3.17]}
               rotation={[-0.94, -0.02, -1.42]}
               scale={0.45}
@@ -1722,9 +1129,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 411'].geometry}
+            geometry={nodes['Cube 41'].geometry}
             material={materials['Untitled Material']}
-            name="Cube 411"
+            name="Cube 41"
             position={[-69.13, 24.36, -35.34]}
             rotation={[-1, 0.89, 1.2]}
             scale={1.13}
@@ -1785,9 +1192,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes.Ellipse2.geometry}
+              geometry={nodes.Ellipse.geometry}
               material={materials.carrot}
-              name="Ellipse2"
+              name="Ellipse"
               position={[-0.97, 12.53, 1.64]}
               rotation={[-0.63, -0.32, -1.89]}
               scale={0.4}
@@ -1795,9 +1202,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes.Cylinder3.geometry}
+              geometry={nodes.Cylinder2.geometry}
               material={materials['yellow-2']}
-              name="Cylinder3"
+              name="Cylinder2"
               position={[0, 11.02, 0]}
               rotation={[-2.97, -1.13, 2.32]}
               scale={0.4}
@@ -1839,9 +1246,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Ellipse 23'].geometry}
+              geometry={nodes['Ellipse 21'].geometry}
               material={materials.carrot}
-              name="Ellipse 23"
+              name="Ellipse 21"
               position={[3.8, 9.62, 3.17]}
               rotation={[-0.94, -0.02, -1.42]}
               scale={0.45}
@@ -1880,9 +1287,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 412'].geometry}
+            geometry={nodes['Cube 411'].geometry}
             material={materials['Untitled Material']}
-            name="Cube 412"
+            name="Cube 411"
             position={[-69.13, 24.36, -35.34]}
             rotation={[-1, 0.89, 1.2]}
             scale={1.13}
@@ -1943,9 +1350,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes.Ellipse3.geometry}
+              geometry={nodes.Ellipse1.geometry}
               material={materials.carrot}
-              name="Ellipse3"
+              name="Ellipse1"
               position={[-0.97, 12.53, 1.64]}
               rotation={[-0.63, -0.32, -1.89]}
               scale={0.4}
@@ -1953,9 +1360,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes.Cylinder4.geometry}
+              geometry={nodes.Cylinder3.geometry}
               material={materials['yellow-2']}
-              name="Cylinder4"
+              name="Cylinder3"
               position={[0, 11.02, 0]}
               rotation={[-2.97, -1.13, 2.32]}
               scale={0.4}
@@ -1997,9 +1404,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Ellipse 24'].geometry}
+              geometry={nodes['Ellipse 22'].geometry}
               material={materials.carrot}
-              name="Ellipse 24"
+              name="Ellipse 22"
               position={[3.8, 9.62, 3.17]}
               rotation={[-0.94, -0.02, -1.42]}
               scale={0.45}
@@ -2038,9 +1445,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 413'].geometry}
+            geometry={nodes['Cube 412'].geometry}
             material={materials['Untitled Material']}
-            name="Cube 413"
+            name="Cube 412"
             position={[-69.13, 24.36, -35.34]}
             rotation={[-1, 0.89, 1.2]}
             scale={1.13}
@@ -2101,9 +1508,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes.Ellipse4.geometry}
+              geometry={nodes.Ellipse2.geometry}
               material={materials.carrot}
-              name="Ellipse4"
+              name="Ellipse2"
               position={[-0.97, 12.53, 1.64]}
               rotation={[-0.63, -0.32, -1.89]}
               scale={0.4}
@@ -2111,9 +1518,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes.Cylinder5.geometry}
+              geometry={nodes.Cylinder4.geometry}
               material={materials['yellow-2']}
-              name="Cylinder5"
+              name="Cylinder4"
               position={[0, 11.02, 0]}
               rotation={[-2.97, -1.13, 2.32]}
               scale={0.4}
@@ -2204,9 +1611,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Ellipse 25'].geometry}
+            geometry={nodes['Ellipse 23'].geometry}
             material={materials.carrot}
-            name="Ellipse 25"
+            name="Ellipse 23"
             position={[22.66, 7.73, 36.11]}
             rotation={[-1.3, 0.58, -0.28]}
             scale={1.03}
@@ -2224,9 +1631,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Ellipse5.geometry}
+            geometry={nodes.Ellipse3.geometry}
             material={materials.carrot}
-            name="Ellipse5"
+            name="Ellipse3"
             position={[-5.73, 59.36, -23.05]}
             rotation={[-0.79, 0.66, -1.11]}
             scale={0.92}
@@ -2254,9 +1661,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder6.geometry}
+            geometry={nodes.Cylinder5.geometry}
             material={materials['yellow-2']}
-            name="Cylinder6"
+            name="Cylinder5"
             position={[-8.52, 55.88, -26.46]}
             rotation={[-0.1, -Math.PI / 4, -Math.PI / 3]}
             scale={0.92}
@@ -2346,9 +1753,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Ellipse 26'].geometry}
+            geometry={nodes['Ellipse 24'].geometry}
             material={materials.carrot}
-            name="Ellipse 26"
+            name="Ellipse 24"
             position={[22.66, 7.73, 36.11]}
             rotation={[-1.3, 0.58, -0.28]}
             scale={1.03}
@@ -2366,9 +1773,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Ellipse6.geometry}
+            geometry={nodes.Ellipse4.geometry}
             material={materials.carrot}
-            name="Ellipse6"
+            name="Ellipse4"
             position={[-5.73, 59.36, -23.05]}
             rotation={[-0.79, 0.66, -1.11]}
             scale={0.92}
@@ -2396,9 +1803,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder7.geometry}
+            geometry={nodes.Cylinder6.geometry}
             material={materials['yellow-2']}
-            name="Cylinder7"
+            name="Cylinder6"
             position={[-8.52, 55.88, -26.46]}
             rotation={[-0.1, -Math.PI / 4, -Math.PI / 3]}
             scale={0.92}
@@ -2488,9 +1895,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Ellipse 27'].geometry}
+            geometry={nodes['Ellipse 25'].geometry}
             material={materials.carrot}
-            name="Ellipse 27"
+            name="Ellipse 25"
             position={[22.66, 7.73, 36.11]}
             rotation={[-1.3, 0.58, -0.28]}
             scale={1.03}
@@ -2508,9 +1915,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Ellipse7.geometry}
+            geometry={nodes.Ellipse5.geometry}
             material={materials.carrot}
-            name="Ellipse7"
+            name="Ellipse5"
             position={[-5.73, 59.36, -23.05]}
             rotation={[-0.79, 0.66, -1.11]}
             scale={0.92}
@@ -2538,9 +1945,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder8.geometry}
+            geometry={nodes.Cylinder7.geometry}
             material={materials['yellow-2']}
-            name="Cylinder8"
+            name="Cylinder7"
             position={[-8.52, 55.88, -26.46]}
             rotation={[-0.1, -Math.PI / 4, -Math.PI / 3]}
             scale={0.92}
@@ -2690,170 +2097,174 @@ export function City({ ...props }) {
             scale={0.72}
           />
         </group>
-        <group name="Group 123" position={[-1353.31, 83.35, 411.92]}>
-          <group name="Group 25" position={[-20.57, 41.77, -10.92]} rotation={[-3.02, 0.96, 2.91]} scale={1}>
+        <RigidBody colliders="cuboid" type="fixed">
+          <group name="Group 123" position={[-1353.31, 83.35, 411.92]}>
+            <group name="Group 25" position={[-20.57, 41.77, -10.92]} rotation={[-3.02, 0.96, 2.91]} scale={1}>
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Merged Geometry 74'].geometry}
+                material={materials.white}
+                name="Merged Geometry 74"
+                position={[0, 0, 0]}
+                rotation={[0.01, 0, 0]}
+                scale={[1.02, 1, 0.47]}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Merged Geometry 84'].geometry}
+                material={materials['Untitled Material']}
+                name="Merged Geometry 84"
+                position={[0, 0, 0]}
+                rotation={[0.01, 0, 0]}
+                scale={[1.02, 1, 0.47]}
+              />
+            </group>
+            <group name="Group4" position={[-4.36, 64.96, 3.83]} rotation={[0, 0.11, 0.09]} scale={[1, 1, 0.47]}>
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Merged Geometry 75'].geometry}
+                material={materials.white}
+                name="Merged Geometry 75"
+                position={[0, 0, -0.55]}
+                rotation={[0, 0, -0.17]}
+                scale={[1, 1, 0.95]}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Merged Geometry 85'].geometry}
+                material={materials['Untitled Material']}
+                name="Merged Geometry 85"
+                position={[0, 0, -0.55]}
+                rotation={[0, 0, -0.17]}
+                scale={[1, 1, 0.95]}
+              />
+            </group>
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 74'].geometry}
-              material={materials.white}
-              name="Merged Geometry 74"
-              position={[0, 0, 0]}
-              rotation={[0.01, 0, 0]}
-              scale={[1.02, 1, 0.47]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Merged Geometry 84'].geometry}
-              material={materials['Untitled Material']}
-              name="Merged Geometry 84"
-              position={[0, 0, 0]}
-              rotation={[0.01, 0, 0]}
-              scale={[1.02, 1, 0.47]}
-            />
-          </group>
-          <group name="Group4" position={[-4.36, 64.96, 3.83]} rotation={[0, 0.11, 0.09]} scale={[1, 1, 0.47]}>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Merged Geometry 75'].geometry}
-              material={materials.white}
-              name="Merged Geometry 75"
-              position={[0, 0, -0.55]}
-              rotation={[0, 0, -0.17]}
-              scale={[1, 1, 0.95]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Merged Geometry 85'].geometry}
-              material={materials['Untitled Material']}
-              name="Merged Geometry 85"
-              position={[0, 0, -0.55]}
-              rotation={[0, 0, -0.17]}
-              scale={[1, 1, 0.95]}
-            />
-          </group>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes['Cylinder 118'].geometry}
-            material={materials['blue-grey']}
-            name="Cylinder 118"
-            position={[-19.3, -83.76, 0]}
-            scale={0.72}
-          />
-        </group>
-        <group name="cat-1" position={[-1322.59, 98.05, -123.01]} rotation={[0, -0.51, 0]} scale={0.63}>
-          <group name="balloon-1" position={[-28.32, 33.13, 47.36]} rotation={[0, 0.87, -0.11]} scale={0.93}>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Cube 102'].geometry}
-              material={materials.cat}
-              name="Cube 102"
-              position={[-0.2, 47.94, 0.27]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Cube 95'].geometry}
-              material={materials.beige}
-              name="Cube 95"
-              position={[0, 113.06, 0]}
+              geometry={nodes['Cylinder 118'].geometry}
+              material={materials['blue-grey']}
+              name="Cylinder 118"
+              position={[-19.3, -83.76, 0]}
+              scale={0.72}
             />
           </group>
-          <group name="balloo2" position={[-36.49, -13.23, 74.05]} rotation={[0.14, 0, 0.15]} scale={0.93}>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Cube 103'].geometry}
-              material={materials.cat}
-              name="Cube 103"
-              position={[-0.2, 47.94, 0.27]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Cube 96'].geometry}
-              material={materials['shed-orange']}
-              name="Cube 96"
-              position={[0, 108.1, 0]}
-            />
+        </RigidBody>
+        <RigidBody colliders="cuboid" type="fixed">
+          <group name="cat-1" position={[-1322.59, 98.05, -123.01]} rotation={[0, -0.51, 0]} scale={0.63}>
+            <group name="balloon-1" position={[-28.32, 33.13, 47.36]} rotation={[0, 0.87, -0.11]} scale={0.93}>
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Cube 102'].geometry}
+                material={materials.cat}
+                name="Cube 102"
+                position={[-0.2, 47.94, 0.27]}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Cube 94'].geometry}
+                material={materials.beige}
+                name="Cube 94"
+                position={[0, 113.06, 0]}
+              />
+            </group>
+            <group name="balloo2" position={[-36.49, -13.23, 74.05]} rotation={[0.14, 0, 0.15]} scale={0.93}>
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Cube 103'].geometry}
+                material={materials.cat}
+                name="Cube 103"
+                position={[-0.2, 47.94, 0.27]}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Cube 95'].geometry}
+                material={materials['shed-orange']}
+                name="Cube 95"
+                position={[0, 108.1, 0]}
+              />
+            </group>
+            <group name="Group 6" position={[3.45, -97.03, -21.42]} rotation={[0, -0.98, 0]} scale={1.42}>
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Merged Geometry10'].geometry}
+                material={materials.red2}
+                name="Merged Geometry10"
+                position={[31.92, 25.26, 12.38]}
+                rotation={[0, 0.98, 0]}
+                scale={0.7}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Ellipse 26'].geometry}
+                material={materials['car-black']}
+                name="Ellipse 26"
+                position={[37.83, 26.05, 11.73]}
+                rotation={[-Math.PI / 2, 1.22, Math.PI / 2]}
+                scale={1}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Shape 2'].geometry}
+                material={materials['car-black']}
+                name="Shape 2"
+                position={[30.84, 34.36, 24.68]}
+                rotation={[-Math.PI / 2, 1.22, Math.PI / 2]}
+                scale={[-1, 1, 1]}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Shape1.geometry}
+                material={materials['car-black']}
+                name="Shape1"
+                position={[30.84, 34.36, -1.3]}
+                rotation={[-Math.PI / 2, 1.22, Math.PI / 2]}
+                scale={1}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Cube 111'].geometry}
+                material={materials.cat}
+                name="Cube 111"
+                position={[29.91, 7.27, 51.8]}
+                rotation={[2.68, 1.19, -2.28]}
+                scale={1}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Cube 104'].geometry}
+                material={materials.cat}
+                name="Cube 104"
+                position={[38.3, 3.51, -9.3]}
+                rotation={[1.15, 0, -0.7]}
+                scale={1}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Cube 96'].geometry}
+                material={materials.cat}
+                name="Cube 96"
+                position={[4.81, -8.14, 13.45]}
+                rotation={[0, Math.PI / 2, 0]}
+              />
+            </group>
           </group>
-          <group name="Group 6" position={[3.45, -97.03, -21.42]} rotation={[0, -0.98, 0]} scale={1.42}>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Merged Geometry13'].geometry}
-              material={materials.red2}
-              name="Merged Geometry13"
-              position={[31.92, 25.26, 12.38]}
-              rotation={[0, 0.98, 0]}
-              scale={0.7}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Ellipse 28'].geometry}
-              material={materials['car-black']}
-              name="Ellipse 28"
-              position={[37.83, 26.05, 11.73]}
-              rotation={[-Math.PI / 2, 1.22, Math.PI / 2]}
-              scale={1}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Shape 2'].geometry}
-              material={materials['car-black']}
-              name="Shape 2"
-              position={[30.84, 34.36, 24.68]}
-              rotation={[-Math.PI / 2, 1.22, Math.PI / 2]}
-              scale={[-1, 1, 1]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.Shape1.geometry}
-              material={materials['car-black']}
-              name="Shape1"
-              position={[30.84, 34.36, -1.3]}
-              rotation={[-Math.PI / 2, 1.22, Math.PI / 2]}
-              scale={1}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Cube 111'].geometry}
-              material={materials.cat}
-              name="Cube 111"
-              position={[29.91, 7.27, 51.8]}
-              rotation={[2.68, 1.19, -2.28]}
-              scale={1}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Cube 104'].geometry}
-              material={materials.cat}
-              name="Cube 104"
-              position={[38.3, 3.51, -9.3]}
-              rotation={[1.15, 0, -0.7]}
-              scale={1}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Cube 97'].geometry}
-              material={materials.cat}
-              name="Cube 97"
-              position={[4.81, -8.14, 13.45]}
-              rotation={[0, Math.PI / 2, 0]}
-            />
-          </group>
-        </group>
+        </RigidBody>
         <group name="ad-2 2" position={[-819.39, 34.44, -2044.2]} rotation={[0, 0.96, 0]} scale={0.52}>
           <mesh
             castShadow
@@ -2878,9 +2289,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry14'].geometry}
+            geometry={nodes['Merged Geometry11'].geometry}
             material={materials['wood-4']}
-            name="Merged Geometry14"
+            name="Merged Geometry11"
             position={[0, 0, 0]}
             rotation={[0, -0.52, 0]}
             scale={1.05}
@@ -2910,9 +2321,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry15'].geometry}
+            geometry={nodes['Merged Geometry12'].geometry}
             material={materials['wood-4']}
-            name="Merged Geometry15"
+            name="Merged Geometry12"
             position={[0, 0, 0]}
             rotation={[0, -0.52, 0]}
             scale={1.05}
@@ -2923,9 +2334,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry16'].geometry}
+              geometry={nodes['Merged Geometry13'].geometry}
               material={materials['shed-orange']}
-              name="Merged Geometry16"
+              name="Merged Geometry13"
               position={[-4.04, 5.61, 4.83]}
               rotation={[0.18, 0.03, 0.3]}
               scale={1}
@@ -2974,9 +2385,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry17'].geometry}
+            geometry={nodes['Merged Geometry14'].geometry}
             material={materials['shed-orange']}
-            name="Merged Geometry17"
+            name="Merged Geometry14"
             position={[0, 44.9, -2.9]}
             rotation={[0, -0.09, 0]}
             scale={1}
@@ -2984,9 +2395,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Rectangle 211'].geometry}
+            geometry={nodes['Rectangle 21'].geometry}
             material={materials['shed-orange']}
-            name="Rectangle 211"
+            name="Rectangle 21"
             position={[-1.27, -15.36, 3.4]}
             rotation={[-Math.PI, 0, -Math.PI]}
             scale={1.02}
@@ -3014,9 +2425,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Sphere 21'].geometry}
+            geometry={nodes['Sphere 2'].geometry}
             material={materials.beige}
-            name="Sphere 21"
+            name="Sphere 2"
             position={[0.02, 128.12, 0.03]}
             scale={1}
           />
@@ -3033,9 +2444,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Sphere 22'].geometry}
+            geometry={nodes['Sphere 21'].geometry}
             material={materials.beige}
-            name="Sphere 22"
+            name="Sphere 21"
             position={[0.02, 128.12, 0.03]}
             scale={1}
           />
@@ -3052,9 +2463,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Sphere 23'].geometry}
+            geometry={nodes['Sphere 22'].geometry}
             material={materials.beige}
-            name="Sphere 23"
+            name="Sphere 22"
             position={[0.02, 128.12, 0.03]}
             scale={1}
           />
@@ -3071,9 +2482,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Sphere 24'].geometry}
+            geometry={nodes['Sphere 23'].geometry}
             material={materials.beige}
-            name="Sphere 24"
+            name="Sphere 23"
             position={[0.02, 128.12, 0.03]}
             scale={1}
           />
@@ -3090,9 +2501,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Sphere 25'].geometry}
+            geometry={nodes['Sphere 24'].geometry}
             material={materials.beige}
-            name="Sphere 25"
+            name="Sphere 24"
             position={[0.02, 128.12, 0.03]}
             scale={1}
           />
@@ -3109,9 +2520,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Sphere 26'].geometry}
+            geometry={nodes['Sphere 25'].geometry}
             material={materials.beige}
-            name="Sphere 26"
+            name="Sphere 25"
             position={[0.02, 128.12, 0.03]}
             scale={1}
           />
@@ -3128,9 +2539,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Sphere 27'].geometry}
+            geometry={nodes['Sphere 26'].geometry}
             material={materials.beige}
-            name="Sphere 27"
+            name="Sphere 26"
             position={[0.02, 128.12, 0.03]}
             scale={1}
           />
@@ -3147,9 +2558,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Sphere 28'].geometry}
+            geometry={nodes['Sphere 27'].geometry}
             material={materials.beige}
-            name="Sphere 28"
+            name="Sphere 27"
             position={[0.02, 128.12, 0.03]}
             scale={1}
           />
@@ -3166,9 +2577,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Sphere 29'].geometry}
+            geometry={nodes['Sphere 28'].geometry}
             material={materials.beige}
-            name="Sphere 29"
+            name="Sphere 28"
             position={[0.02, 128.12, 0.03]}
             scale={1}
           />
@@ -3185,9 +2596,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Sphere 210'].geometry}
+            geometry={nodes['Sphere 29'].geometry}
             material={materials.beige}
-            name="Sphere 210"
+            name="Sphere 29"
             position={[0.02, 128.12, 0.03]}
             scale={1}
           />
@@ -3204,9 +2615,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Sphere 211'].geometry}
+            geometry={nodes['Sphere 210'].geometry}
             material={materials.beige}
-            name="Sphere 211"
+            name="Sphere 210"
             position={[0.02, 128.12, 0.03]}
             scale={1}
           />
@@ -3223,9 +2634,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Sphere 212'].geometry}
+            geometry={nodes['Sphere 211'].geometry}
             material={materials.beige}
-            name="Sphere 212"
+            name="Sphere 211"
             position={[0.02, 128.12, 0.03]}
             scale={1}
           />
@@ -3289,9 +2700,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 35'].geometry}
+            geometry={nodes['Merged Geometry 3'].geometry}
             material={materials['glass-window']}
-            name="Merged Geometry 35"
+            name="Merged Geometry 3"
             position={[-134.74, -77.41, 171.74]}
             rotation={[0, 0, 0]}
           />
@@ -3366,9 +2777,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry18'].geometry}
+              geometry={nodes['Merged Geometry15'].geometry}
               material={materials.eye}
-              name="Merged Geometry18"
+              name="Merged Geometry15"
               position={[27.96, -40.29, -3.29]}
               rotation={[-Math.PI, 1.4, Math.PI]}
               scale={2.35}
@@ -3498,9 +2909,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 201'].geometry}
+              geometry={nodes['Cube 20'].geometry}
               material={materials.skin}
-              name="Cube 201"
+              name="Cube 20"
               position={[-1.43, -3.92, 9.7]}
               rotation={[-Math.PI, -0.59, -Math.PI]}
               scale={0.76}
@@ -3518,9 +2929,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 211'].geometry}
+              geometry={nodes['Cube 21'].geometry}
               material={materials.eye}
-              name="Cube 211"
+              name="Cube 21"
               position={[37.56, 12.73, -4.82]}
               rotation={[3.13, -0.58, -1.14]}
               scale={[0.43, 0.43, 0.34]}
@@ -3545,7 +2956,7 @@ export function City({ ...props }) {
               rotation={[0, 0.63, 1.08]}
               scale={[0.49, 0.34, 0.35]}
             />
-            <group name="red2" position={[-21.53, -1.95, -26.44]} rotation={[-Math.PI, -1.4, -Math.PI]} scale={0.43}>
+            <group name="red" position={[-21.53, -1.95, -26.44]} rotation={[-Math.PI, -1.4, -Math.PI]} scale={0.43}>
               <mesh
                 castShadow
                 receiveShadow
@@ -3570,9 +2981,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry19'].geometry}
+              geometry={nodes['Merged Geometry16'].geometry}
               material={materials.pink}
-              name="Merged Geometry19"
+              name="Merged Geometry16"
               position={[-11.58, -22.12, -7.4]}
               rotation={[0, 0, 0]}
               scale={1}
@@ -3594,9 +3005,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry20'].geometry}
+              geometry={nodes['Merged Geometry17'].geometry}
               material={materials.eye}
-              name="Merged Geometry20"
+              name="Merged Geometry17"
               position={[27.96, -40.29, -3.29]}
               rotation={[-Math.PI, 1.4, Math.PI]}
               scale={2.35}
@@ -3706,9 +3117,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 202'].geometry}
+              geometry={nodes['Cube 201'].geometry}
               material={materials.skin}
-              name="Cube 202"
+              name="Cube 201"
               position={[-1.43, -3.92, 9.7]}
               rotation={[-Math.PI, -0.59, -Math.PI]}
               scale={0.76}
@@ -3726,9 +3137,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 212'].geometry}
+              geometry={nodes['Cube 211'].geometry}
               material={materials.eye}
-              name="Cube 212"
+              name="Cube 211"
               position={[37.56, 12.73, -4.82]}
               rotation={[3.13, -0.58, -1.14]}
               scale={[0.43, 0.43, 0.34]}
@@ -3763,7 +3174,7 @@ export function City({ ...props }) {
               rotation={[-3.14, -0.35, -3.14]}
               scale={0.43}
             />
-            <group name="red3" position={[-21.53, -1.95, -26.44]} rotation={[-Math.PI, -1.4, -Math.PI]} scale={0.43}>
+            <group name="red1" position={[-21.53, -1.95, -26.44]} rotation={[-Math.PI, -1.4, -Math.PI]} scale={0.43}>
               <mesh
                 castShadow
                 receiveShadow
@@ -3788,9 +3199,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry21'].geometry}
+              geometry={nodes['Merged Geometry18'].geometry}
               material={materials.pink}
-              name="Merged Geometry21"
+              name="Merged Geometry18"
               position={[-11.58, -22.12, -7.4]}
               rotation={[0, 0, 0]}
               scale={1}
@@ -3924,9 +3335,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 181'].geometry}
+              geometry={nodes['Cube 18'].geometry}
               material={materials.eye}
-              name="Cube 181"
+              name="Cube 18"
               position={[201.77, -6.08, -8.33]}
               rotation={[0.04, -0.07, 0.01]}
               scale={[1, 1, 0.77]}
@@ -3954,9 +3365,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 213'].geometry}
+              geometry={nodes['Cube 212'].geometry}
               material={materials.eye}
-              name="Cube 213"
+              name="Cube 212"
               position={[-176.84, 119.39, -47.77]}
               rotation={[0.01, -0.82, 2.02]}
               scale={[1, 1, 0.79]}
@@ -3972,7 +3383,7 @@ export function City({ ...props }) {
             rotation={[0, -0.26, 0]}
             scale={1.06}
           />
-          <group name="red4" position={[-57.8, 115.32, 194.77]} rotation={[0, Math.PI / 4, 0]} scale={1.06}>
+          <group name="red2" position={[-57.8, 115.32, 194.77]} rotation={[0, Math.PI / 4, 0]} scale={1.06}>
             <mesh
               castShadow
               receiveShadow
@@ -4007,9 +3418,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 231'].geometry}
+            geometry={nodes['Cube 23'].geometry}
             material={materials.pink}
-            name="Cube 231"
+            name="Cube 23"
             position={[-117.69, 115.12, 190.62]}
             rotation={[0, -0.02, 0.37]}
             scale={1.06}
@@ -4017,9 +3428,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 221'].geometry}
+            geometry={nodes['Cube 22'].geometry}
             material={materials.pink}
-            name="Cube 221"
+            name="Cube 22"
             position={[-50.93, 61.26, 141.93]}
             rotation={[-0.16, -0.04, 0]}
             scale={[1.16, 1.22, 1.06]}
@@ -4037,9 +3448,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Sphere 213'].geometry}
+            geometry={nodes['Sphere 212'].geometry}
             material={materials['car-black']}
-            name="Sphere 213"
+            name="Sphere 212"
             position={[-7.04, 159.32, 153.67]}
             rotation={[-0.1, 0.14, -0.07]}
             scale={[1, 0.88, 0.65]}
@@ -4058,9 +3469,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 203'].geometry}
+              geometry={nodes['Cube 202'].geometry}
               material={materials.skin}
-              name="Cube 203"
+              name="Cube 202"
               position={[-89.29, 97.77, 26.12]}
               rotation={[0, -0.81, 0]}
               scale={1.79}
@@ -4102,9 +3513,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry22'].geometry}
+              geometry={nodes['Merged Geometry19'].geometry}
               material={materials['wood-3']}
-              name="Merged Geometry22"
+              name="Merged Geometry19"
               position={[0, 0, 0]}
               scale={1.25}
             />
@@ -4123,9 +3534,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry23'].geometry}
+              geometry={nodes['Merged Geometry20'].geometry}
               material={materials['wood-3']}
-              name="Merged Geometry23"
+              name="Merged Geometry20"
               position={[0, 0, 0]}
               scale={1.25}
             />
@@ -4136,9 +3547,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry24'].geometry}
+              geometry={nodes['Merged Geometry21'].geometry}
               material={materials['Untitled Material']}
-              name="Merged Geometry24"
+              name="Merged Geometry21"
               position={[-6.9, 69.74, 5.72]}
               scale={1.4}
             />
@@ -4157,9 +3568,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry25'].geometry}
+              geometry={nodes['Merged Geometry22'].geometry}
               material={materials['Untitled Material']}
-              name="Merged Geometry25"
+              name="Merged Geometry22"
               position={[-3.15, 147.95, 12.02]}
               rotation={[0, 0, -0.05]}
               scale={2.94}
@@ -4177,9 +3588,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry26'].geometry}
+              geometry={nodes['Merged Geometry23'].geometry}
               material={materials['Untitled Material']}
-              name="Merged Geometry26"
+              name="Merged Geometry23"
               position={[-3.15, 147.95, 12.02]}
               rotation={[0, 0, -0.05]}
               scale={2.94}
@@ -4197,9 +3608,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry27'].geometry}
+              geometry={nodes['Merged Geometry24'].geometry}
               material={materials['Untitled Material']}
-              name="Merged Geometry27"
+              name="Merged Geometry24"
               position={[-3.15, 147.95, 12.02]}
               rotation={[0, 0, -0.05]}
               scale={2.94}
@@ -4217,9 +3628,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry28'].geometry}
+              geometry={nodes['Merged Geometry25'].geometry}
               material={materials['Untitled Material']}
-              name="Merged Geometry28"
+              name="Merged Geometry25"
               position={[-3.15, 147.95, 12.02]}
               rotation={[0, 0, -0.05]}
               scale={2.78}
@@ -4229,9 +3640,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry29'].geometry}
+              geometry={nodes['Merged Geometry26'].geometry}
               material={materials['Untitled Material']}
-              name="Merged Geometry29"
+              name="Merged Geometry26"
               position={[-3.15, 147.95, 12.02]}
               rotation={[0, 0, -0.05]}
               scale={2.78}
@@ -4241,9 +3652,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry30'].geometry}
+              geometry={nodes['Merged Geometry27'].geometry}
               material={materials['Untitled Material']}
-              name="Merged Geometry30"
+              name="Merged Geometry27"
               position={[-3.15, 147.95, 12.02]}
               rotation={[0, 0, -0.05]}
               scale={2.78}
@@ -4261,9 +3672,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry31'].geometry}
+              geometry={nodes['Merged Geometry28'].geometry}
               material={materials['Untitled Material']}
-              name="Merged Geometry31"
+              name="Merged Geometry28"
               position={[-3.15, 147.95, 12.02]}
               rotation={[0, 0, -0.05]}
               scale={2.78}
@@ -4474,9 +3885,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry32'].geometry}
+            geometry={nodes['Merged Geometry29'].geometry}
             material={materials['wood-2']}
-            name="Merged Geometry32"
+            name="Merged Geometry29"
             position={[-14.74, -9.08, -4.87]}
           />
           <mesh
@@ -4507,9 +3918,9 @@ export function City({ ...props }) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes['Merged Geometry33'].geometry}
+          geometry={nodes['Merged Geometry30'].geometry}
           material={materials['wood-2']}
-          name="Merged Geometry33"
+          name="Merged Geometry30"
           position={[3225.1, 1.89, 2194.92]}
           rotation={[0, 0, 0]}
           scale={1}
@@ -4517,17 +3928,17 @@ export function City({ ...props }) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes['Merged Geometry34'].geometry}
+          geometry={nodes['Merged Geometry31'].geometry}
           material={materials['wood-2']}
-          name="Merged Geometry34"
+          name="Merged Geometry31"
           position={[2496.34, 13.89, -2891.41]}
         />
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes['Merged Geometry35'].geometry}
+          geometry={nodes['Merged Geometry32'].geometry}
           material={materials['wood-2']}
-          name="Merged Geometry35"
+          name="Merged Geometry32"
           position={[589.25, 25.41, 2963.59]}
           scale={0.8}
         />
@@ -4569,9 +3980,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 36'].geometry}
+            geometry={nodes['Merged Geometry 35'].geometry}
             material={materials.grass}
-            name="Merged Geometry 36"
+            name="Merged Geometry 35"
             position={[435.7, -78.79, -347.89]}
             rotation={[0, 0.92, 0]}
             scale={3.34}
@@ -4600,9 +4011,9 @@ export function City({ ...props }) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes['Merged Geometry 255'].geometry}
+          geometry={nodes['Merged Geometry 254'].geometry}
           material={materials['gress-3']}
-          name="Merged Geometry 255"
+          name="Merged Geometry 254"
           position={[1916.45, 5.76, 1382.87]}
         />
         <mesh
@@ -4726,9 +4137,9 @@ export function City({ ...props }) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes['Cube 98'].geometry}
+          geometry={nodes['Cube 97'].geometry}
           material={materials.stone}
-          name="Cube 98"
+          name="Cube 97"
           position={[2045.13, -23.44, 829.04]}
           rotation={[-2.08, -1.01, 1.54]}
           scale={0.4}
@@ -4786,9 +4197,9 @@ export function City({ ...props }) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes['Cube 42'].geometry}
+          geometry={nodes['Cube 4'].geometry}
           material={materials.stone}
-          name="Cube 42"
+          name="Cube 4"
           position={[-736.81, 31.34, 1347.69]}
           rotation={[-2.22, -0.98, -2.25]}
           scale={0.5}
@@ -4826,9 +4237,9 @@ export function City({ ...props }) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes['Cube 32'].geometry}
+          geometry={nodes['Cube 3'].geometry}
           material={materials.stone}
-          name="Cube 32"
+          name="Cube 3"
           position={[897.26, -21.7, 1371.97]}
           rotation={[-2.19, -0.11, 0.92]}
           scale={0.5}
@@ -4836,9 +4247,9 @@ export function City({ ...props }) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes['Cube 414'].geometry}
+          geometry={nodes['Cube 413'].geometry}
           material={materials.stone}
-          name="Cube 414"
+          name="Cube 413"
           position={[569.23, -39.31, -1310.91]}
           rotation={[2.42, 0.75, -0.87]}
           scale={0.41}
@@ -4846,9 +4257,9 @@ export function City({ ...props }) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes['Cube 25'].geometry}
+          geometry={nodes['Cube 2'].geometry}
           material={materials.stone}
-          name="Cube 25"
+          name="Cube 2"
           position={[711.26, -34.7, 1355.6]}
           rotation={[-2.52, 1.16, -2.01]}
           scale={0.5}
@@ -4867,9 +4278,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 313'].geometry}
+            geometry={nodes['Cube 312'].geometry}
             material={materials['flower-2']}
-            name="Cube 313"
+            name="Cube 312"
             position={[-117.64, -28.42, 187.28]}
             rotation={[0.12, -0.26, -0.17]}
             scale={0.5}
@@ -4877,9 +4288,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 251'].geometry}
+            geometry={nodes['Cube 25'].geometry}
             material={materials['flower-2']}
-            name="Cube 251"
+            name="Cube 25"
             position={[-170.42, -28.42, 197.59]}
             rotation={[0.25, 0, -0.07]}
             scale={0.5}
@@ -4887,9 +4298,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry36'].geometry}
+            geometry={nodes['Merged Geometry33'].geometry}
             material={materials['gress-3']}
-            name="Merged Geometry36"
+            name="Merged Geometry33"
             position={[-146.67, -19.8, 185.2]}
           />
           <group name="Group 69" position={[71.4, 0.64, -85.22]} rotation={[0, 0.87, 0]} scale={1}>
@@ -4906,9 +4317,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry37'].geometry}
+              geometry={nodes['Merged Geometry34'].geometry}
               material={materials['Untitled Material']}
-              name="Merged Geometry37"
+              name="Merged Geometry34"
               position={[0, 12.38, 0.08]}
               rotation={[0, -0.87, 0]}
               scale={1}
@@ -4928,9 +4339,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry38'].geometry}
+              geometry={nodes['Merged Geometry35'].geometry}
               material={materials['Untitled Material']}
-              name="Merged Geometry38"
+              name="Merged Geometry35"
               position={[0, 12.38, 0.08]}
               rotation={[0, -0.87, 0]}
               scale={1}
@@ -4944,6 +4355,117 @@ export function City({ ...props }) {
             geometry={nodes['Cube 28'].geometry}
             material={materials['gress-3']}
             name="Cube 28"
+            position={[115.32, -13.52, -183.87]}
+            rotation={[0.61, -1.23, 0.87]}
+            scale={0.19}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes['Cube 32'].geometry}
+            material={materials['gress-3']}
+            name="Cube 32"
+            position={[144.11, -6.41, -279.31]}
+            rotation={[2.27, -1.32, 2.57]}
+            scale={0.19}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes['Cube 213'].geometry}
+            material={materials['gress-3']}
+            name="Cube 213"
+            position={[134.13, -21.5, -192.46]}
+            rotation={[2.91, -0.59, -2.98]}
+            scale={0.19}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes['Cube 313'].geometry}
+            material={materials['flower-2']}
+            name="Cube 313"
+            position={[189.19, -28.42, -177.43]}
+            rotation={[0.12, -0.26, -0.17]}
+            scale={0.5}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes['Cube 251'].geometry}
+            material={materials['flower-2']}
+            name="Cube 251"
+            position={[136.41, -28.42, -167.12]}
+            rotation={[0.25, 0, -0.07]}
+            scale={0.5}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes['Merged Geometry36'].geometry}
+            material={materials['gress-3']}
+            name="Merged Geometry36"
+            position={[-146.67, -19.8, 185.2]}
+            rotation={[0, 0.38, 0]}
+            scale={1}
+          />
+          <group name="Group 691" position={[71.4, 0.64, -85.22]} rotation={[0, 0.87, 0]} scale={1}>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes['Merged Geometry 223'].geometry}
+              material={materials['car-black']}
+              name="Merged Geometry 223"
+              position={[0.33, -1.05, -2.55]}
+              rotation={[0, -0.87, 0]}
+              scale={1}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes['Merged Geometry37'].geometry}
+              material={materials['Untitled Material']}
+              name="Merged Geometry37"
+              position={[0, 12.38, 0.08]}
+              rotation={[0, -0.87, 0]}
+              scale={1}
+            />
+          </group>
+          <group name="Group 661" position={[-71.53, 0.64, 85.11]} rotation={[0, 0.87, 0]} scale={1}>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes['Merged Geometry 224'].geometry}
+              material={materials['car-black']}
+              name="Merged Geometry 224"
+              position={[0.33, -1.05, -2.55]}
+              rotation={[0, -0.87, 0]}
+              scale={1}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes['Merged Geometry38'].geometry}
+              material={materials['Untitled Material']}
+              name="Merged Geometry38"
+              position={[0, 12.38, 0.08]}
+              rotation={[0, -0.87, 0]}
+              scale={1}
+            />
+          </group>
+        </group>
+        <group
+          name="Group 71"
+          position={[-922.51, 21.26, 720.09]}
+          rotation={[-Math.PI, Math.PI / 6, -Math.PI]}
+          scale={1}
+        >
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes['Cube 281'].geometry}
+            material={materials['gress-3']}
+            name="Cube 281"
             position={[115.32, -13.52, -183.87]}
             rotation={[0.61, -1.23, 0.87]}
             scale={0.19}
@@ -4974,7 +4496,7 @@ export function City({ ...props }) {
             geometry={nodes['Cube 314'].geometry}
             material={materials['flower-2']}
             name="Cube 314"
-            position={[189.19, -28.42, -177.43]}
+            position={[-117.64, -28.42, 187.28]}
             rotation={[0.12, -0.26, -0.17]}
             scale={0.5}
           />
@@ -4984,7 +4506,7 @@ export function City({ ...props }) {
             geometry={nodes['Cube 252'].geometry}
             material={materials['flower-2']}
             name="Cube 252"
-            position={[136.41, -28.42, -167.12]}
+            position={[-170.42, -28.42, 197.59]}
             rotation={[0.25, 0, -0.07]}
             scale={0.5}
           />
@@ -4995,16 +4517,14 @@ export function City({ ...props }) {
             material={materials['gress-3']}
             name="Merged Geometry39"
             position={[-146.67, -19.8, 185.2]}
-            rotation={[0, 0.38, 0]}
-            scale={1}
           />
-          <group name="Group 691" position={[71.4, 0.64, -85.22]} rotation={[0, 0.87, 0]} scale={1}>
+          <group name="Group 692" position={[71.4, 0.64, -85.22]} rotation={[0, 0.87, 0]} scale={1}>
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 223'].geometry}
+              geometry={nodes['Merged Geometry 225'].geometry}
               material={materials['car-black']}
-              name="Merged Geometry 223"
+              name="Merged Geometry 225"
               position={[0.33, -1.05, -2.55]}
               rotation={[0, -0.87, 0]}
               scale={1}
@@ -5020,13 +4540,13 @@ export function City({ ...props }) {
               scale={1}
             />
           </group>
-          <group name="Group 661" position={[-71.53, 0.64, 85.11]} rotation={[0, 0.87, 0]} scale={1}>
+          <group name="Group 662" position={[-71.53, 0.64, 85.11]} rotation={[0, 0.87, 0]} scale={1}>
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 224'].geometry}
+              geometry={nodes['Merged Geometry 226'].geometry}
               material={materials['car-black']}
-              name="Merged Geometry 224"
+              name="Merged Geometry 226"
               position={[0.33, -1.05, -2.55]}
               rotation={[0, -0.87, 0]}
               scale={1}
@@ -5043,41 +4563,14 @@ export function City({ ...props }) {
             />
           </group>
         </group>
-        <group
-          name="Group 71"
-          position={[-922.51, 21.26, 720.09]}
-          rotation={[-Math.PI, Math.PI / 6, -Math.PI]}
-          scale={1}
-        >
+        <group name="Group 70" position={[2224.07, 21.26, 1278.78]}>
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 281'].geometry}
+            geometry={nodes['Merged Geometry 227'].geometry}
             material={materials['gress-3']}
-            name="Cube 281"
-            position={[115.32, -13.52, -183.87]}
-            rotation={[0.61, -1.23, 0.87]}
-            scale={0.19}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes['Cube 322'].geometry}
-            material={materials['gress-3']}
-            name="Cube 322"
-            position={[144.11, -6.41, -279.31]}
-            rotation={[2.27, -1.32, 2.57]}
-            scale={0.19}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes['Cube 215'].geometry}
-            material={materials['gress-3']}
-            name="Cube 215"
-            position={[134.13, -21.5, -192.46]}
-            rotation={[2.91, -0.59, -2.98]}
-            scale={0.19}
+            name="Merged Geometry 227"
+            position={[-64.22, -17.42, -49.44]}
           />
           <mesh
             castShadow
@@ -5107,88 +4600,6 @@ export function City({ ...props }) {
             name="Merged Geometry42"
             position={[-146.67, -19.8, 185.2]}
           />
-          <group name="Group 692" position={[71.4, 0.64, -85.22]} rotation={[0, 0.87, 0]} scale={1}>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Merged Geometry 225'].geometry}
-              material={materials['car-black']}
-              name="Merged Geometry 225"
-              position={[0.33, -1.05, -2.55]}
-              rotation={[0, -0.87, 0]}
-              scale={1}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Merged Geometry43'].geometry}
-              material={materials['Untitled Material']}
-              name="Merged Geometry43"
-              position={[0, 12.38, 0.08]}
-              rotation={[0, -0.87, 0]}
-              scale={1}
-            />
-          </group>
-          <group name="Group 662" position={[-71.53, 0.64, 85.11]} rotation={[0, 0.87, 0]} scale={1}>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Merged Geometry 226'].geometry}
-              material={materials['car-black']}
-              name="Merged Geometry 226"
-              position={[0.33, -1.05, -2.55]}
-              rotation={[0, -0.87, 0]}
-              scale={1}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Merged Geometry44'].geometry}
-              material={materials['Untitled Material']}
-              name="Merged Geometry44"
-              position={[0, 12.38, 0.08]}
-              rotation={[0, -0.87, 0]}
-              scale={1}
-            />
-          </group>
-        </group>
-        <group name="Group 70" position={[2224.07, 21.26, 1278.78]}>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes['Merged Geometry 227'].geometry}
-            material={materials['gress-3']}
-            name="Merged Geometry 227"
-            position={[-64.22, -17.42, -49.44]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes['Cube 316'].geometry}
-            material={materials['flower-2']}
-            name="Cube 316"
-            position={[-117.64, -28.42, 187.28]}
-            rotation={[0.12, -0.26, -0.17]}
-            scale={0.5}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes['Cube 254'].geometry}
-            material={materials['flower-2']}
-            name="Cube 254"
-            position={[-170.42, -28.42, 197.59]}
-            rotation={[0.25, 0, -0.07]}
-            scale={0.5}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes['Merged Geometry45'].geometry}
-            material={materials['gress-3']}
-            name="Merged Geometry45"
-            position={[-146.67, -19.8, 185.2]}
-          />
           <group name="Group 693" position={[71.4, 0.64, -85.22]} rotation={[0, 0.87, 0]} scale={1}>
             <mesh
               castShadow
@@ -5203,9 +4614,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry46'].geometry}
+              geometry={nodes['Merged Geometry43'].geometry}
               material={materials['Untitled Material']}
-              name="Merged Geometry46"
+              name="Merged Geometry43"
               position={[0, 12.38, 0.08]}
               rotation={[0, -0.87, 0]}
               scale={1}
@@ -5225,9 +4636,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry47'].geometry}
+              geometry={nodes['Merged Geometry44'].geometry}
               material={materials['Untitled Material']}
-              name="Merged Geometry47"
+              name="Merged Geometry44"
               position={[0, 12.38, 0.08]}
               rotation={[0, -0.87, 0]}
               scale={1}
@@ -5285,9 +4696,9 @@ export function City({ ...props }) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Cube3.geometry}
+          geometry={nodes.Cube.geometry}
           material={materials.bush}
-          name="Cube3"
+          name="Cube"
           position={[1816.05, -0.26, 1021.41]}
           rotation={[-Math.PI / 2, 0, -0.26]}
           scale={0.44}
@@ -5367,9 +4778,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 323'].geometry}
+              geometry={nodes['Cube 322'].geometry}
               material={materials['Untitled Material']}
-              name="Cube 323"
+              name="Cube 322"
               position={[0, 12.26, -17.05]}
               rotation={[-1.83, 0, 0]}
               scale={[0.92, 1, 1]}
@@ -5377,9 +4788,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 317'].geometry}
+              geometry={nodes['Cube 316'].geometry}
               material={materials['Untitled Material']}
-              name="Cube 317"
+              name="Cube 316"
               position={[0, -3.37, -1.07]}
               scale={[0.92, 1.41, 1]}
             />
@@ -5498,9 +4909,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 324'].geometry}
+              geometry={nodes['Cube 323'].geometry}
               material={materials['Untitled Material']}
-              name="Cube 324"
+              name="Cube 323"
               position={[0, 12.26, -17.05]}
               rotation={[-1.83, 0, 0]}
               scale={[0.92, 1, 1]}
@@ -5508,9 +4919,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 318'].geometry}
+              geometry={nodes['Cube 317'].geometry}
               material={materials['Untitled Material']}
-              name="Cube 318"
+              name="Cube 317"
               position={[0, -3.37, -1.07]}
               scale={[0.92, 1.41, 1]}
             />
@@ -5583,9 +4994,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Ellipse8.geometry}
+            geometry={nodes.Ellipse6.geometry}
             material={materials['road-2']}
-            name="Ellipse8"
+            name="Ellipse6"
             position={[-4.55, -7.83, 2.85]}
             rotation={[-1.52, -0.02, -0.84]}
             scale={2.1}
@@ -5603,9 +5014,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry48'].geometry}
+            geometry={nodes['Merged Geometry45'].geometry}
             material={materials.grass}
-            name="Merged Geometry48"
+            name="Merged Geometry45"
             position={[-4.54, 6.59, 0.5]}
             rotation={[0, 0, 0]}
           />
@@ -5614,9 +5025,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Ellipse9.geometry}
+            geometry={nodes.Ellipse7.geometry}
             material={materials['road-2']}
-            name="Ellipse9"
+            name="Ellipse7"
             position={[-4.55, -7.83, 2.85]}
             rotation={[-1.52, -0.02, -0.84]}
             scale={2.1}
@@ -5634,9 +5045,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry49'].geometry}
+            geometry={nodes['Merged Geometry46'].geometry}
             material={materials.grass}
-            name="Merged Geometry49"
+            name="Merged Geometry46"
             position={[-4.54, 6.59, 0.5]}
             rotation={[0, 0, 0]}
           />
@@ -5646,9 +5057,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes.Ellipse10.geometry}
+              geometry={nodes.Ellipse8.geometry}
               material={materials['road-2']}
-              name="Ellipse10"
+              name="Ellipse8"
               position={[63.86, 6.45, 4.91]}
               rotation={[-1.52, -0.02, -0.84]}
               scale={2.84}
@@ -5668,9 +5079,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry50'].geometry}
+              geometry={nodes['Merged Geometry47'].geometry}
               material={materials.grass}
-              name="Merged Geometry50"
+              name="Merged Geometry47"
               position={[-5.11, 111.89, 9.67]}
               rotation={[0.13, 0.83, -0.08]}
               scale={8.55}
@@ -5692,9 +5103,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes.Ellipse11.geometry}
+              geometry={nodes.Ellipse9.geometry}
               material={materials['road-2']}
-              name="Ellipse11"
+              name="Ellipse9"
               position={[64.22, 6.47, 4.59]}
               rotation={[-1.52, -0.02, -0.84]}
               scale={2.84}
@@ -5714,9 +5125,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry51'].geometry}
+              geometry={nodes['Merged Geometry48'].geometry}
               material={materials.grass}
-              name="Merged Geometry51"
+              name="Merged Geometry48"
               position={[-5.11, 111.89, 9.67]}
               rotation={[0.13, 0.83, -0.08]}
               scale={8.55}
@@ -5738,9 +5149,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes.Ellipse12.geometry}
+              geometry={nodes.Ellipse10.geometry}
               material={materials['road-2']}
-              name="Ellipse12"
+              name="Ellipse10"
               position={[56.03, 6.24, 6.21]}
               rotation={[-1.52, -0.02, -0.84]}
               scale={2.84}
@@ -5760,9 +5171,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry52'].geometry}
+              geometry={nodes['Merged Geometry49'].geometry}
               material={materials.grass}
-              name="Merged Geometry52"
+              name="Merged Geometry49"
               position={[-5.11, 111.89, 9.67]}
               rotation={[0.13, 0.83, -0.08]}
               scale={8.55}
@@ -5783,9 +5194,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Subdiv1.geometry}
-            material={materials['Subdiv1 Material']}
-            name="Subdiv1"
+            geometry={nodes.Subdiv.geometry}
+            material={materials['Subdiv Material']}
+            name="Subdiv"
             position={[0.8, -13.9, -0.55]}
             rotation={[0, Math.PI / 2, 0]}
             scale={[3.25, 0.98, 3.25]}
@@ -5793,9 +5204,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder9.geometry}
-            material={materials['Cylinder9 Material']}
-            name="Cylinder9"
+            geometry={nodes.Cylinder8.geometry}
+            material={materials['Cylinder8 Material']}
+            name="Cylinder8"
             position={[0.8, 45.52, -0.55]}
             rotation={[0, Math.PI / 2, 0]}
             scale={[2.05, 1.58, 2.05]}
@@ -5865,9 +5276,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder10.geometry}
+            geometry={nodes.Cylinder9.geometry}
             material={materials['wood-2']}
-            name="Cylinder10"
+            name="Cylinder9"
             position={[0, 2.35, 0]}
             scale={7.71}
           />
@@ -5875,9 +5286,9 @@ export function City({ ...props }) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes['Merged Geometry53'].geometry}
+          geometry={nodes['Merged Geometry50'].geometry}
           material={materials.car}
-          name="Merged Geometry53"
+          name="Merged Geometry50"
           position={[-1604, -5.28, 1424.78]}
         />
         <mesh
@@ -5953,9 +5364,9 @@ export function City({ ...props }) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes['Merged Geometry 37'].geometry}
+          geometry={nodes['Merged Geometry 36'].geometry}
           material={materials.car}
-          name="Merged Geometry 37"
+          name="Merged Geometry 36"
           position={[853.01, -6.4, 950.04]}
         />
         <mesh
@@ -6027,9 +5438,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder11.geometry}
+            geometry={nodes.Cylinder10.geometry}
             material={materials['wood-2']}
-            name="Cylinder11"
+            name="Cylinder10"
             position={[1.15, -0.03, 9.71]}
             scale={[0.39, 7.46, 0.39]}
           />
@@ -6088,9 +5499,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder12.geometry}
+            geometry={nodes.Cylinder11.geometry}
             material={materials['wood-2']}
-            name="Cylinder12"
+            name="Cylinder11"
             position={[1.15, -0.03, 9.71]}
             scale={[0.39, 7.46, 0.39]}
           />
@@ -6099,9 +5510,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube4.geometry}
+            geometry={nodes.Cube1.geometry}
             material={materials['wood-2']}
-            name="Cube4"
+            name="Cube1"
             position={[12.34, -193.59, -45.39]}
             rotation={[3.13, -1.47, -3.06]}
             scale={[0.17, 0.18, 0.17]}
@@ -6109,9 +5520,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 99'].geometry}
+            geometry={nodes['Cube 98'].geometry}
             material={materials['tree-1']}
-            name="Cube 99"
+            name="Cube 98"
             position={[78.75, 66.53, -128.92]}
             rotation={[-1.23, -1.46, -2.31]}
             scale={[0.38, 0.37, 0.37]}
@@ -6151,9 +5562,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube5.geometry}
+            geometry={nodes.Cube2.geometry}
             material={materials['wood-2']}
-            name="Cube5"
+            name="Cube2"
             position={[-76.79, -205.41, -39.82]}
             rotation={[0, 0.27, 0.1]}
             scale={0.21}
@@ -6171,9 +5582,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 910'].geometry}
+            geometry={nodes['Cube 99'].geometry}
             material={materials['tree-1']}
-            name="Cube 910"
+            name="Cube 99"
             position={[-233.64, 34.87, -63.37]}
             rotation={[2.99, 0.01, 1.51]}
             scale={0.38}
@@ -6222,9 +5633,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 43'].geometry}
+              geometry={nodes['Cube 42'].geometry}
               material={materials['tree-3']}
-              name="Cube 43"
+              name="Cube 42"
               position={[71.15, 52.19, -90.5]}
               rotation={[0.86, 0.99, 2.52]}
               scale={1.3}
@@ -6252,9 +5663,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes.Cylinder13.geometry}
+              geometry={nodes.Cylinder12.geometry}
               material={materials['wood-2']}
-              name="Cylinder13"
+              name="Cylinder12"
               position={[3.55, -112.04, -7.6]}
               scale={1.3}
             />
@@ -6273,9 +5684,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 46'].geometry}
+              geometry={nodes['Cube 43'].geometry}
               material={materials['tree-3']}
-              name="Cube 46"
+              name="Cube 43"
               position={[71.15, 52.19, -90.5]}
               rotation={[0.86, 0.99, 2.52]}
               scale={1.3}
@@ -6303,9 +5714,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes.Cylinder14.geometry}
+              geometry={nodes.Cylinder13.geometry}
               material={materials['wood-2']}
-              name="Cylinder14"
+              name="Cylinder13"
               position={[3.55, -112.04, -7.6]}
               scale={1.3}
             />
@@ -6324,9 +5735,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 47'].geometry}
+              geometry={nodes['Cube 46'].geometry}
               material={materials['tree-3']}
-              name="Cube 47"
+              name="Cube 46"
               position={[71.15, 52.19, -90.5]}
               rotation={[0.86, 0.99, 2.52]}
               scale={1.3}
@@ -6334,9 +5745,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Cube 319'].geometry}
+              geometry={nodes['Cube 318'].geometry}
               material={materials['tree-3']}
-              name="Cube 319"
+              name="Cube 318"
               position={[-95, 37.73, 2.12]}
               rotation={[0, 0, 0.69]}
               scale={1.3}
@@ -6354,9 +5765,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes.Cylinder15.geometry}
+              geometry={nodes.Cylinder14.geometry}
               material={materials['wood-2']}
-              name="Cylinder15"
+              name="Cylinder14"
               position={[3.55, -112.04, -7.6]}
               scale={1.3}
             />
@@ -6366,12 +5777,53 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry54'].geometry}
+            geometry={nodes['Merged Geometry51'].geometry}
             material={materials.fruit}
-            name="Merged Geometry54"
+            name="Merged Geometry51"
             position={[-5.8, -34.55, 8.25]}
           />
           <group name="tree-1" position={[-17.99, -13.72, 1.95]} scale={0.81}>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes['Cube 319'].geometry}
+              material={materials['tree-3']}
+              name="Cube 319"
+              position={[-107.88, -0.26, 2.21]}
+              rotation={[0, 0, 0.22]}
+              scale={1.3}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes['Cube 215'].geometry}
+              material={materials['tree-3']}
+              name="Cube 215"
+              position={[41.3, 126.74, 7.05]}
+              rotation={[0, 0, -0.17]}
+              scale={1.3}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder15.geometry}
+              material={materials['wood-2']}
+              name="Cylinder15"
+              position={[3.55, -112.04, -7.6]}
+              scale={1.3}
+            />
+          </group>
+        </group>
+        <group name="Group 59" position={[494.77, 189.4, 1341.45]}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes['Merged Geometry52'].geometry}
+            material={materials.fruit}
+            name="Merged Geometry52"
+            position={[-5.8, -34.55, 8.25]}
+          />
+          <group name="tree-11" position={[-17.99, -13.72, 1.95]} scale={0.81}>
             <mesh
               castShadow
               receiveShadow
@@ -6403,54 +5855,13 @@ export function City({ ...props }) {
             />
           </group>
         </group>
-        <group name="Group 59" position={[494.77, 189.4, 1341.45]}>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes['Merged Geometry55'].geometry}
-            material={materials.fruit}
-            name="Merged Geometry55"
-            position={[-5.8, -34.55, 8.25]}
-          />
-          <group name="tree-11" position={[-17.99, -13.72, 1.95]} scale={0.81}>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Cube 325'].geometry}
-              material={materials['tree-3']}
-              name="Cube 325"
-              position={[-107.88, -0.26, 2.21]}
-              rotation={[0, 0, 0.22]}
-              scale={1.3}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Cube 217'].geometry}
-              material={materials['tree-3']}
-              name="Cube 217"
-              position={[41.3, 126.74, 7.05]}
-              rotation={[0, 0, -0.17]}
-              scale={1.3}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.Cylinder17.geometry}
-              material={materials['wood-2']}
-              name="Cylinder17"
-              position={[3.55, -112.04, -7.6]}
-              scale={1.3}
-            />
-          </group>
-        </group>
         <group name="tree 2" position={[1313.99, 307.7, -3750.05]} rotation={[-Math.PI, 0.25, -3.04]} scale={0.19}>
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube6.geometry}
+            geometry={nodes.Cube3.geometry}
             material={materials['wood-2']}
-            name="Cube6"
+            name="Cube3"
             position={[-409.18, -1186.05, 194.49]}
           />
           <mesh
@@ -6476,9 +5887,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 911'].geometry}
+            geometry={nodes['Cube 910'].geometry}
             material={materials['tree-1']}
-            name="Cube 911"
+            name="Cube 910"
             position={[-845.55, -328.25, 132.09]}
             rotation={[-2.83, 0.3, 1.54]}
             scale={1.79}
@@ -6518,9 +5929,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube7.geometry}
+            geometry={nodes.Cube4.geometry}
             material={materials['wood-2']}
-            name="Cube7"
+            name="Cube4"
             position={[-409.18, -1186.05, 194.49]}
           />
           <mesh
@@ -6546,9 +5957,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 912'].geometry}
+            geometry={nodes['Cube 911'].geometry}
             material={materials['tree-1']}
-            name="Cube 912"
+            name="Cube 911"
             position={[-845.55, -328.25, 132.09]}
             rotation={[-2.83, 0.3, 1.54]}
             scale={1.79}
@@ -6584,7 +5995,7 @@ export function City({ ...props }) {
             scale={1.79}
           />
         </group>
-        <group name="Group 73" position={[-1136.26, 88.31, 917.88]} rotation={[-Math.PI, 0.32, -Math.PI]} scale={0.3}>
+        <group name="Group 7" position={[-1136.26, 88.31, 917.88]} rotation={[-Math.PI, 0.32, -Math.PI]} scale={0.3}>
           <mesh
             castShadow
             receiveShadow
@@ -6615,7 +6026,7 @@ export function City({ ...props }) {
             scale={1}
           />
         </group>
-        <group name="Group 74" position={[-1076.41, 55.34, 854.99]} scale={0.3}>
+        <group name="Group 73" position={[-1076.41, 55.34, 854.99]} scale={0.3}>
           <mesh
             castShadow
             receiveShadow
@@ -6657,7 +6068,7 @@ export function City({ ...props }) {
               scale={[0.43, 0.43, 0.39]}
             />
           </group>
-          <group name="Group 75" position={[-30.98, -22.86, 6.65]} rotation={[0, 0.2, 0]} scale={0.29}>
+          <group name="Group 74" position={[-30.98, -22.86, 6.65]} rotation={[0, 0.2, 0]} scale={0.29}>
             <mesh
               castShadow
               receiveShadow
@@ -6742,7 +6153,7 @@ export function City({ ...props }) {
               scale={[0.43, 0.43, 0.39]}
             />
           </group>
-          <group name="Group 76" position={[-30.98, -22.86, 6.65]} rotation={[0, 0.2, 0]} scale={0.29}>
+          <group name="Group 75" position={[-30.98, -22.86, 6.65]} rotation={[0, 0.2, 0]} scale={0.29}>
             <mesh
               castShadow
               receiveShadow
@@ -6827,7 +6238,7 @@ export function City({ ...props }) {
               scale={[0.43, 0.43, 0.39]}
             />
           </group>
-          <group name="Group 77" position={[-30.98, -22.86, 6.65]} rotation={[0, 0.2, 0]} scale={0.29}>
+          <group name="Group 76" position={[-30.98, -22.86, 6.65]} rotation={[0, 0.2, 0]} scale={0.29}>
             <mesh
               castShadow
               receiveShadow
@@ -6912,7 +6323,7 @@ export function City({ ...props }) {
               scale={[0.43, 0.43, 0.39]}
             />
           </group>
-          <group name="Group 78" position={[-22.37, -23.24, 6.96]} rotation={[0, 0.2, 0]} scale={0.29}>
+          <group name="Group 77" position={[-22.37, -23.24, 6.96]} rotation={[0, 0.2, 0]} scale={0.29}>
             <mesh
               castShadow
               receiveShadow
@@ -6975,7 +6386,7 @@ export function City({ ...props }) {
           </group>
         </group>
         <group name="Group 63" position={[811.96, 31.51, 1536.07]}>
-          <group name="Group 51" position={[17.79, -6.79, 32.04]} rotation={[-Math.PI, 0.31, -Math.PI]} scale={0.3}>
+          <group name="Group 5" position={[17.79, -6.79, 32.04]} rotation={[-Math.PI, 0.31, -Math.PI]} scale={0.3}>
             <mesh
               castShadow
               receiveShadow
@@ -7037,7 +6448,7 @@ export function City({ ...props }) {
               scale={1}
             />
           </group>
-          <group name="Group 41" position={[-29.94, 40.03, -26.84]} rotation={[0, 0.42, 0]} scale={0.34}>
+          <group name="Group 4" position={[-29.94, 40.03, -26.84]} rotation={[0, 0.42, 0]} scale={0.34}>
             <mesh
               castShadow
               receiveShadow
@@ -7126,6 +6537,7 @@ export function City({ ...props }) {
           rotation={[-1.17, 0.63, 1.46]}
           scale={0.25}
         />
+        {/* <RigidBody colliders="trimesh" type="fixed"> */}
         <mesh
           castShadow
           receiveShadow
@@ -7134,13 +6546,14 @@ export function City({ ...props }) {
           name="Boolean 2"
           position={[28.47, -32.27, -201.3]}
         />
+        {/* </RigidBody> */}
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Boolean.geometry}
           material={nodes.Boolean.material}
           name="Boolean"
-          position={[85.16, -24.95, -493.41]}
+          position={[85.16, -20, -493.41]}
         />
         <mesh
           castShadow
@@ -7230,13 +6643,13 @@ export function City({ ...props }) {
           rotation={[-Math.PI / 2, 0, 0]}
           scale={0.81}
         />
-        <group name="Group 411" position={[-2457.75, 247.16, -2121.41]} scale={0.81}>
+        <group name="Group 41" position={[-2457.75, 247.16, -2121.41]} scale={0.81}>
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry56'].geometry}
+            geometry={nodes['Merged Geometry53'].geometry}
             material={materials['wall-orange']}
-            name="Merged Geometry56"
+            name="Merged Geometry53"
             position={[5.85, 275.16, 231.09]}
             scale={1.24}
           />
@@ -7275,9 +6688,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Merged Geometry57'].geometry}
+                geometry={nodes['Merged Geometry54'].geometry}
                 material={materials.wall}
-                name="Merged Geometry57"
+                name="Merged Geometry54"
                 position={[-0.08, -12.07, 200.88]}
                 scale={1}
               />
@@ -7287,17 +6700,17 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 23'].geometry}
+              geometry={nodes['Rectangle 2'].geometry}
               material={materials['glass-window']}
-              name="Rectangle 23"
+              name="Rectangle 2"
               position={[-13.78, 0.12, 1.09]}
             />
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry58'].geometry}
+              geometry={nodes['Merged Geometry55'].geometry}
               material={materials.beige}
-              name="Merged Geometry58"
+              name="Merged Geometry55"
               position={[-14.42, 0, 0]}
               rotation={[0, 0, 0]}
               scale={0.91}
@@ -7307,9 +6720,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 24'].geometry}
+              geometry={nodes['Rectangle 23'].geometry}
               material={materials['glass-window']}
-              name="Rectangle 24"
+              name="Rectangle 23"
               position={[44.97, 0.12, 1.09]}
             />
             <mesh
@@ -7325,9 +6738,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry59'].geometry}
+              geometry={nodes['Merged Geometry56'].geometry}
               material={materials.beige}
-              name="Merged Geometry59"
+              name="Merged Geometry56"
               position={[-14.42, 0, 0]}
               rotation={[0, 0, 0]}
               scale={0.91}
@@ -7337,37 +6750,37 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 25'].geometry}
+              geometry={nodes['Rectangle 24'].geometry}
               material={materials['glass-window']}
-              name="Rectangle 25"
+              name="Rectangle 24"
               position={[-13.78, 0.12, 1.09]}
             />
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry60'].geometry}
+              geometry={nodes['Merged Geometry57'].geometry}
               material={materials.beige}
-              name="Merged Geometry60"
+              name="Merged Geometry57"
               position={[-14.42, 0, 0]}
               rotation={[0, 0, 0]}
               scale={0.91}
             />
           </group>
-          <group name="Group 52" position={[306.94, -191.28, 220.3]} rotation={[0, 0, 0]} scale={1}>
+          <group name="Group 51" position={[306.94, -191.28, 220.3]} rotation={[0, 0, 0]} scale={1}>
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 26'].geometry}
+              geometry={nodes['Rectangle 25'].geometry}
               material={materials['glass-window']}
-              name="Rectangle 26"
+              name="Rectangle 25"
               position={[-11.91, 20.42, -4.1]}
             />
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry61'].geometry}
+              geometry={nodes['Merged Geometry58'].geometry}
               material={materials.beige}
-              name="Merged Geometry61"
+              name="Merged Geometry58"
               position={[-12.36, 0, -0.33]}
               rotation={[0, 0, 0]}
               scale={1.24}
@@ -7377,9 +6790,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 27'].geometry}
+              geometry={nodes['Rectangle 26'].geometry}
               material={materials['glass-window']}
-              name="Rectangle 27"
+              name="Rectangle 26"
               position={[91.83, 20.42, -4.1]}
             />
             <mesh
@@ -7395,9 +6808,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 28'].geometry}
+              geometry={nodes['Rectangle 27'].geometry}
               material={materials['glass-window']}
-              name="Rectangle 28"
+              name="Rectangle 27"
               position={[-0.29, 20.42, -4.1]}
             />
             <mesh
@@ -7415,9 +6828,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry62'].geometry}
+              geometry={nodes['Merged Geometry59'].geometry}
               material={materials.beige}
-              name="Merged Geometry62"
+              name="Merged Geometry59"
               position={[-0.08, 0, 0]}
               rotation={[0.17, Math.PI / 2, 0]}
               scale={1.24}
@@ -7436,9 +6849,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 29'].geometry}
+              geometry={nodes['Rectangle 28'].geometry}
               material={materials['glass-window']}
-              name="Rectangle 29"
+              name="Rectangle 28"
               position={[-7.34, 23.45, -4.1]}
             />
             <mesh
@@ -7454,9 +6867,30 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry63'].geometry}
+              geometry={nodes['Merged Geometry60'].geometry}
               material={materials['green-2']}
-              name="Merged Geometry63"
+              name="Merged Geometry60"
+              position={[14.44, 17.65, 0]}
+              rotation={[0, Math.PI / 2, 0]}
+              scale={1.24}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes['Rectangle 29'].geometry}
+              material={materials['glass-window']}
+              name="Rectangle 29"
+              position={[16.11, 16.49, 3.35]}
+              scale={0.73}
+            />
+          </group>
+          <group name="Group 671" position={[193.21, -25.97, 108.54]} rotation={[0, 0, 0]} scale={1}>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes['Merged Geometry61'].geometry}
+              material={materials['green-2']}
+              name="Merged Geometry61"
               position={[14.44, 17.65, 0]}
               rotation={[0, Math.PI / 2, 0]}
               scale={1.24}
@@ -7471,34 +6905,13 @@ export function City({ ...props }) {
               scale={0.73}
             />
           </group>
-          <group name="Group 671" position={[193.21, -25.97, 108.54]} rotation={[0, 0, 0]} scale={1}>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Merged Geometry64'].geometry}
-              material={materials['green-2']}
-              name="Merged Geometry64"
-              position={[14.44, 17.65, 0]}
-              rotation={[0, Math.PI / 2, 0]}
-              scale={1.24}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Rectangle 212'].geometry}
-              material={materials['glass-window']}
-              name="Rectangle 212"
-              position={[16.11, 16.49, 3.35]}
-              scale={0.73}
-            />
-          </group>
           <group name="Group9" position={[-127.9, 51.56, 149.43]} rotation={[-0.17, 0, 0]} scale={1}>
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry65'].geometry}
+              geometry={nodes['Merged Geometry62'].geometry}
               material={materials.beige}
-              name="Merged Geometry65"
+              name="Merged Geometry62"
               position={[-0.08, 0, 0]}
               rotation={[0.17, Math.PI / 2, 0]}
               scale={1.24}
@@ -7564,19 +6977,19 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 38'].geometry}
+            geometry={nodes['Merged Geometry 37'].geometry}
             material={materials['glass-2']}
-            name="Merged Geometry 38"
+            name="Merged Geometry 37"
             position={[27.21, -7.94, -2.67]}
             scale={1.24}
           />
-          <group name="Group 53" position={[-264.82, -0.56, -45.73]} rotation={[0, -Math.PI / 2, 0]} scale={1.24}>
+          <group name="Group 52" position={[-264.82, -0.56, -45.73]} rotation={[0, -Math.PI / 2, 0]} scale={1.24}>
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry66'].geometry}
+              geometry={nodes['Merged Geometry63'].geometry}
               material={materials.beige}
-              name="Merged Geometry66"
+              name="Merged Geometry63"
               position={[0.78, -6.28, -32.91]}
               rotation={[0, 0, 0]}
               scale={1}
@@ -7594,9 +7007,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry67'].geometry}
+              geometry={nodes['Merged Geometry64'].geometry}
               material={materials['yellow-2']}
-              name="Merged Geometry67"
+              name="Merged Geometry64"
               position={[0, 42.14, 0.15]}
               rotation={[0, 0, 0]}
               scale={1}
@@ -7606,9 +7019,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry68'].geometry}
+              geometry={nodes['Merged Geometry65'].geometry}
               material={materials.beige}
-              name="Merged Geometry68"
+              name="Merged Geometry65"
               position={[0.78, -6.28, -32.91]}
               rotation={[0, 0, 0]}
               scale={1}
@@ -7626,21 +7039,21 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry69'].geometry}
+              geometry={nodes['Merged Geometry66'].geometry}
               material={materials['yellow-2']}
-              name="Merged Geometry69"
+              name="Merged Geometry66"
               position={[0, 42.14, 0.15]}
               rotation={[0, 0, 0]}
               scale={1}
             />
           </group>
-          <group name="Group 710" position={[-127.9, -0.56, 149.24]} scale={1.24}>
+          <group name="Group 78" position={[-127.9, -0.56, 149.24]} scale={1.24}>
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry70'].geometry}
+              geometry={nodes['Merged Geometry67'].geometry}
               material={materials.beige}
-              name="Merged Geometry70"
+              name="Merged Geometry67"
               position={[0.78, -6.28, -32.91]}
               rotation={[0, 0, 0]}
               scale={1}
@@ -7658,9 +7071,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry71'].geometry}
+              geometry={nodes['Merged Geometry68'].geometry}
               material={materials['yellow-2']}
-              name="Merged Geometry71"
+              name="Merged Geometry68"
               position={[0, 42.14, 0.15]}
               rotation={[0, 0, 0]}
               scale={1}
@@ -7682,9 +7095,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry72'].geometry}
+              geometry={nodes['Merged Geometry69'].geometry}
               material={materials['wood-1']}
-              name="Merged Geometry72"
+              name="Merged Geometry69"
               position={[-77.22, -21.55, -4.02]}
               rotation={[0, Math.PI / 2, 0]}
               scale={1.24}
@@ -7702,9 +7115,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry73'].geometry}
+              geometry={nodes['Merged Geometry70'].geometry}
               material={materials['wood-1']}
-              name="Merged Geometry73"
+              name="Merged Geometry70"
               position={[-0.17, -21.55, -4.02]}
               rotation={[0, -Math.PI / 2, 0]}
               scale={1.24}
@@ -7721,9 +7134,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 232'].geometry}
+            geometry={nodes['Cube 231'].geometry}
             material={materials.beige}
-            name="Cube 232"
+            name="Cube 231"
             position={[-279.99, 331.03, -288.88]}
             rotation={[-Math.PI / 2, 0, 0]}
             scale={1}
@@ -7733,9 +7146,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 213'].geometry}
+                geometry={nodes['Rectangle 211'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 213"
+                name="Rectangle 211"
                 position={[0.16, 0.12, 1.09]}
               />
               <mesh
@@ -7751,9 +7164,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Merged Geometry74'].geometry}
+                geometry={nodes['Merged Geometry71'].geometry}
                 material={materials.beige}
-                name="Merged Geometry74"
+                name="Merged Geometry71"
                 position={[0, 1.96, 0.51]}
                 rotation={[0, Math.PI / 2, 0]}
                 scale={1.24}
@@ -7763,9 +7176,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 214'].geometry}
+                geometry={nodes['Rectangle 212'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 214"
+                name="Rectangle 212"
                 position={[0.16, 0.12, 1.09]}
               />
               <mesh
@@ -7781,9 +7194,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Merged Geometry75'].geometry}
+                geometry={nodes['Merged Geometry72'].geometry}
                 material={materials.beige}
-                name="Merged Geometry75"
+                name="Merged Geometry72"
                 position={[0, 1.96, 0.51]}
                 rotation={[0, Math.PI / 2, 0]}
                 scale={1.24}
@@ -7793,9 +7206,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 215'].geometry}
+                geometry={nodes['Rectangle 213'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 215"
+                name="Rectangle 213"
                 position={[0.16, 0.12, 1.09]}
               />
               <mesh
@@ -7811,9 +7224,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Merged Geometry76'].geometry}
+                geometry={nodes['Merged Geometry73'].geometry}
                 material={materials.beige}
-                name="Merged Geometry76"
+                name="Merged Geometry73"
                 position={[0, 1.96, 0.51]}
                 rotation={[0, Math.PI / 2, 0]}
                 scale={1.24}
@@ -7823,9 +7236,39 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 216'].geometry}
+                geometry={nodes['Rectangle 214'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 216"
+                name="Rectangle 214"
+                position={[0.16, 0.12, 1.09]}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Merged Geometry 255'].geometry}
+                material={materials.beige}
+                name="Merged Geometry 255"
+                position={[-0.12, 3.35, 7.57]}
+                rotation={[0, Math.PI / 2, 0]}
+                scale={1.24}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Merged Geometry74'].geometry}
+                material={materials.beige}
+                name="Merged Geometry74"
+                position={[0, 1.96, 0.51]}
+                rotation={[0, Math.PI / 2, 0]}
+                scale={1.24}
+              />
+            </group>
+            <group name="Group 19" position={[-321.56, -9.49, -67.54]} rotation={[0, -Math.PI / 2, 0]}>
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['Rectangle 215'].geometry}
+                material={materials['glass-window']}
+                name="Rectangle 215"
                 position={[0.16, 0.12, 1.09]}
               />
               <mesh
@@ -7841,21 +7284,21 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Merged Geometry77'].geometry}
+                geometry={nodes['Merged Geometry75'].geometry}
                 material={materials.beige}
-                name="Merged Geometry77"
+                name="Merged Geometry75"
                 position={[0, 1.96, 0.51]}
                 rotation={[0, Math.PI / 2, 0]}
                 scale={1.24}
               />
             </group>
-            <group name="Group 19" position={[-321.56, -9.49, -67.54]} rotation={[0, -Math.PI / 2, 0]}>
+            <group name="Group 215" position={[260.33, -9.49, -416.45]} rotation={[0, Math.PI / 2, 0]}>
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 217'].geometry}
+                geometry={nodes['Rectangle 216'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 217"
+                name="Rectangle 216"
                 position={[0.16, 0.12, 1.09]}
               />
               <mesh
@@ -7871,21 +7314,21 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Merged Geometry78'].geometry}
+                geometry={nodes['Merged Geometry76'].geometry}
                 material={materials.beige}
-                name="Merged Geometry78"
+                name="Merged Geometry76"
                 position={[0, 1.96, 0.51]}
                 rotation={[0, Math.PI / 2, 0]}
                 scale={1.24}
               />
             </group>
-            <group name="Group 215" position={[260.33, -9.49, -416.45]} rotation={[0, Math.PI / 2, 0]}>
+            <group name="Group 223" position={[-61.22, -9.49, 266.19]} rotation={[0, 0, 0]} scale={1}>
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 218'].geometry}
+                geometry={nodes['Rectangle 217'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 218"
+                name="Rectangle 217"
                 position={[0.16, 0.12, 1.09]}
               />
               <mesh
@@ -7901,21 +7344,21 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Merged Geometry79'].geometry}
+                geometry={nodes['Merged Geometry77'].geometry}
                 material={materials.beige}
-                name="Merged Geometry79"
+                name="Merged Geometry77"
                 position={[0, 1.96, 0.51]}
                 rotation={[0, Math.PI / 2, 0]}
                 scale={1.24}
               />
             </group>
-            <group name="Group 223" position={[-61.22, -9.49, 266.19]} rotation={[0, 0, 0]} scale={1}>
+            <group name="Group 18" position={[-321.56, -9.49, 90.16]} rotation={[0, -Math.PI / 2, 0]}>
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 219'].geometry}
+                geometry={nodes['Rectangle 218'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 219"
+                name="Rectangle 218"
                 position={[0.16, 0.12, 1.09]}
               />
               <mesh
@@ -7931,39 +7374,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Merged Geometry80'].geometry}
+                geometry={nodes['Merged Geometry78'].geometry}
                 material={materials.beige}
-                name="Merged Geometry80"
-                position={[0, 1.96, 0.51]}
-                rotation={[0, Math.PI / 2, 0]}
-                scale={1.24}
-              />
-            </group>
-            <group name="Group 18" position={[-321.56, -9.49, 90.16]} rotation={[0, -Math.PI / 2, 0]}>
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes['Rectangle 220'].geometry}
-                material={materials['glass-window']}
-                name="Rectangle 220"
-                position={[0.16, 0.12, 1.09]}
-              />
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes['Merged Geometry 260'].geometry}
-                material={materials.beige}
-                name="Merged Geometry 260"
-                position={[-0.12, 3.35, 7.57]}
-                rotation={[0, Math.PI / 2, 0]}
-                scale={1.24}
-              />
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes['Merged Geometry81'].geometry}
-                material={materials.beige}
-                name="Merged Geometry81"
+                name="Merged Geometry78"
                 position={[0, 1.96, 0.51]}
                 rotation={[0, Math.PI / 2, 0]}
                 scale={1.24}
@@ -7973,9 +7386,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 182'].geometry}
+            geometry={nodes['Cube 181'].geometry}
             material={materials.beige}
-            name="Cube 182"
+            name="Cube 181"
             position={[-65.66, -59.22, 253.85]}
           />
           <group name="Group 224" position={[2.24, -215.82, -103.63]}>
@@ -7988,9 +7401,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 222'].geometry}
+                geometry={nodes['Rectangle 219'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 222"
+                name="Rectangle 219"
                 position={[3.52, 16.51, -0.74]}
                 rotation={[0, -Math.PI / 2, 0]}
                 scale={[0.74, 0.81, 0.81]}
@@ -7998,9 +7411,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Merged Geometry82'].geometry}
+                geometry={nodes['Merged Geometry79'].geometry}
                 material={materials['Untitled Material']}
-                name="Merged Geometry82"
+                name="Merged Geometry79"
                 position={[0, 0, 0]}
                 scale={1}
               />
@@ -8009,9 +7422,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 223'].geometry}
+                geometry={nodes['Rectangle 220'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 223"
+                name="Rectangle 220"
                 position={[3.52, 16.51, -0.74]}
                 rotation={[0, -Math.PI / 2, 0]}
                 scale={[0.74, 0.81, 0.81]}
@@ -8019,9 +7432,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Merged Geometry83'].geometry}
+                geometry={nodes['Merged Geometry80'].geometry}
                 material={materials['Untitled Material']}
-                name="Merged Geometry83"
+                name="Merged Geometry80"
                 position={[0, 0, 0]}
                 scale={1}
               />
@@ -8030,9 +7443,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 224'].geometry}
+                geometry={nodes['Rectangle 222'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 224"
+                name="Rectangle 222"
                 position={[85.66, 0.12, 1.09]}
               />
               <mesh
@@ -8049,9 +7462,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 225'].geometry}
+                geometry={nodes['Rectangle 223'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 225"
+                name="Rectangle 223"
                 position={[85.66, 0.12, 1.09]}
               />
               <mesh
@@ -8068,9 +7481,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 226'].geometry}
+                geometry={nodes['Rectangle 224'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 226"
+                name="Rectangle 224"
                 position={[85.66, 0.12, 1.09]}
               />
               <mesh
@@ -8087,9 +7500,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 227'].geometry}
+                geometry={nodes['Rectangle 225'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 227"
+                name="Rectangle 225"
                 position={[-11.91, 37.93, -4.1]}
               />
               <mesh
@@ -8133,9 +7546,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry84'].geometry}
+            geometry={nodes['Merged Geometry81'].geometry}
             material={materials['wall-orange']}
-            name="Merged Geometry84"
+            name="Merged Geometry81"
             position={[18.39, 0, 0]}
             scale={1.24}
           />
@@ -8161,9 +7574,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 39'].geometry}
+              geometry={nodes['Merged Geometry 38'].geometry}
               material={materials.beige}
-              name="Merged Geometry 39"
+              name="Merged Geometry 38"
               position={[37.57, 74.81, 19.62]}
               scale={1.24}
             />
@@ -8193,9 +7606,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 233'].geometry}
+            geometry={nodes['Cube 232'].geometry}
             material={materials.wall}
-            name="Cube 233"
+            name="Cube 232"
             position={[-279.99, 331.03, -288.88]}
             rotation={[-Math.PI / 2, 0, 0]}
             scale={1}
@@ -8211,9 +7624,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 183'].geometry}
+            geometry={nodes['Cube 182'].geometry}
             material={materials.wall}
-            name="Cube 183"
+            name="Cube 182"
             position={[-65.66, -29.95, 253.85]}
           />
           <mesh
@@ -8238,38 +7651,38 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
+              geometry={nodes['Merged Geometry 260'].geometry}
+              material={materials.white}
+              name="Merged Geometry 260"
+              position={[217.59, 0, -152.06]}
+              rotation={[0, Math.PI / 2, 0]}
+              scale={1}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes['Merged Geometry82'].geometry}
+              material={materials['green-2']}
+              name="Merged Geometry82"
+              position={[217.59, 0, -152.06]}
+              rotation={[0, Math.PI / 2, 0]}
+              scale={1}
+            />
+            <mesh
+              castShadow
+              receiveShadow
               geometry={nodes['Merged Geometry 262'].geometry}
               material={materials.white}
               name="Merged Geometry 262"
-              position={[217.59, 0, -152.06]}
-              rotation={[0, Math.PI / 2, 0]}
-              scale={1}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Merged Geometry85'].geometry}
-              material={materials['green-2']}
-              name="Merged Geometry85"
-              position={[217.59, 0, -152.06]}
-              rotation={[0, Math.PI / 2, 0]}
-              scale={1}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Merged Geometry 263'].geometry}
-              material={materials.white}
-              name="Merged Geometry 263"
               position={[-145.99, 0, 223.67]}
               scale={1}
             />
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry86'].geometry}
+              geometry={nodes['Merged Geometry83'].geometry}
               material={materials['green-2']}
-              name="Merged Geometry86"
+              name="Merged Geometry83"
               position={[-145.98, 0, 223.67]}
               scale={1}
             />
@@ -8299,36 +7712,36 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry87'].geometry}
+            geometry={nodes['Merged Geometry84'].geometry}
             material={materials['Untitled Material']}
-            name="Merged Geometry87"
+            name="Merged Geometry84"
             position={[-277.94, 0.06, -442.12]}
             scale={1.24}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry88'].geometry}
+            geometry={nodes['Merged Geometry85'].geometry}
             material={materials['Untitled Material']}
-            name="Merged Geometry88"
+            name="Merged Geometry85"
             position={[2978.35, 0.47, 38.18]}
             scale={1.24}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 310'].geometry}
+            geometry={nodes['Merged Geometry 39'].geometry}
             material={materials['Untitled Material']}
-            name="Merged Geometry 310"
+            name="Merged Geometry 39"
             position={[-3557.87, 0.45, 845.48]}
             scale={1.24}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 264'].geometry}
+            geometry={nodes['Merged Geometry 263'].geometry}
             material={materials['Untitled Material']}
-            name="Merged Geometry 264"
+            name="Merged Geometry 263"
             position={[-2922.68, 0.47, -1778.74]}
             scale={1.24}
           />
@@ -8348,9 +7761,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry89'].geometry}
+              geometry={nodes['Merged Geometry86'].geometry}
               material={materials['wood-1']}
-              name="Merged Geometry89"
+              name="Merged Geometry86"
               position={[-0.17, -21.55, -4.02]}
               rotation={[0, 0, 0]}
               scale={1.24}
@@ -8368,9 +7781,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 228'].geometry}
+              geometry={nodes['Rectangle 226'].geometry}
               material={materials['yellow-2']}
-              name="Rectangle 228"
+              name="Rectangle 226"
               position={[2.08, 12.43, -0.8]}
               rotation={[-Math.PI / 2, 0, 0]}
               scale={1}
@@ -8389,9 +7802,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 265'].geometry}
+              geometry={nodes['Merged Geometry 264'].geometry}
               material={materials.wall}
-              name="Merged Geometry 265"
+              name="Merged Geometry 264"
               position={[146.89, -55.03, 4.48]}
               rotation={[0, 0.7, 0]}
               scale={1.24}
@@ -8409,9 +7822,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 320'].geometry}
+              geometry={nodes['Merged Geometry 310'].geometry}
               material={materials['glass-window']}
-              name="Merged Geometry 320"
+              name="Merged Geometry 310"
               position={[147.74, 7.85, 1.09]}
               rotation={[0, 0.7, 0]}
               scale={1.24}
@@ -8540,9 +7953,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry90'].geometry}
+              geometry={nodes['Merged Geometry87'].geometry}
               material={materials['wood-1']}
-              name="Merged Geometry90"
+              name="Merged Geometry87"
               position={[-0.17, -21.55, -4.02]}
               rotation={[0, 0, 0]}
               scale={1.24}
@@ -8560,9 +7973,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 229'].geometry}
+              geometry={nodes['Rectangle 227'].geometry}
               material={materials['Untitled Material']}
-              name="Rectangle 229"
+              name="Rectangle 227"
               position={[2.08, 12.43, -0.8]}
               rotation={[-Math.PI / 2, 0, 0]}
               scale={1}
@@ -8592,9 +8005,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 230'].geometry}
+                geometry={nodes['Rectangle 228'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 230"
+                name="Rectangle 228"
                 position={[0.68, 6.34, -2.66]}
                 rotation={[0, 0, 0]}
                 scale={0.81}
@@ -8602,9 +8015,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Merged Geometry91'].geometry}
+                geometry={nodes['Merged Geometry88'].geometry}
                 material={materials['yellow-2']}
-                name="Merged Geometry91"
+                name="Merged Geometry88"
                 position={[0.11, 5.16, -3.54]}
                 rotation={[0, 0, 0]}
                 scale={1}
@@ -8624,9 +8037,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 231'].geometry}
+                geometry={nodes['Rectangle 229'].geometry}
                 material={materials['glass-window']}
-                name="Rectangle 231"
+                name="Rectangle 229"
                 position={[0.68, 6.34, -2.66]}
                 rotation={[0, 0, 0]}
                 scale={0.81}
@@ -8634,9 +8047,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Merged Geometry92'].geometry}
+                geometry={nodes['Merged Geometry89'].geometry}
                 material={materials['yellow-2']}
-                name="Merged Geometry92"
+                name="Merged Geometry89"
                 position={[0.11, 5.16, -3.54]}
                 rotation={[0, 0, 0]}
                 scale={1}
@@ -8698,9 +8111,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry93'].geometry}
+              geometry={nodes['Merged Geometry90'].geometry}
               material={materials['wood-1']}
-              name="Merged Geometry93"
+              name="Merged Geometry90"
               position={[-0.17, -21.55, -4.02]}
               scale={1.24}
             />
@@ -8717,9 +8130,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 232'].geometry}
+              geometry={nodes['Rectangle 230'].geometry}
               material={materials['']}
-              name="Rectangle 232"
+              name="Rectangle 230"
               position={[-1.49, -2.74, -0.8]}
               rotation={[-Math.PI / 2, 0, 0]}
               scale={1}
@@ -8747,27 +8160,27 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 322'].geometry}
+              geometry={nodes['Merged Geometry 320'].geometry}
               material={materials['glass-window']}
-              name="Merged Geometry 322"
+              name="Merged Geometry 320"
               position={[147.81, 7.85, 1.09]}
               scale={1.24}
             />
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 266'].geometry}
+              geometry={nodes['Merged Geometry 265'].geometry}
               material={materials['yellow-3']}
-              name="Merged Geometry 266"
+              name="Merged Geometry 265"
               position={[294.02, 6.39, 0]}
               scale={1.24}
             />
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry94'].geometry}
+              geometry={nodes['Merged Geometry91'].geometry}
               material={materials['yellow-3']}
-              name="Merged Geometry94"
+              name="Merged Geometry91"
               position={[-0.27, 6.39, 0]}
               scale={1.24}
             />
@@ -8776,18 +8189,18 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry95'].geometry}
+              geometry={nodes['Merged Geometry92'].geometry}
               material={materials['glass-window']}
-              name="Merged Geometry95"
+              name="Merged Geometry92"
               position={[23.82, 20.42, -3.28]}
               scale={1.24}
             />
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 323'].geometry}
+              geometry={nodes['Merged Geometry 322'].geometry}
               material={materials['yellow-3']}
-              name="Merged Geometry 323"
+              name="Merged Geometry 322"
               position={[24.15, 40.19, 1.19]}
               scale={1.24}
             />
@@ -8803,9 +8216,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 267'].geometry}
+              geometry={nodes['Merged Geometry 266'].geometry}
               material={materials.beige}
-              name="Merged Geometry 267"
+              name="Merged Geometry 266"
               position={[133.79, 1.95, 0]}
               rotation={[0, Math.PI / 2, 0]}
               scale={[1.24, 1.24, 0.93]}
@@ -8813,9 +8226,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry96'].geometry}
+              geometry={nodes['Merged Geometry93'].geometry}
               material={materials['yellow-2']}
-              name="Merged Geometry96"
+              name="Merged Geometry93"
               position={[133.67, 1.95, -0.62]}
               rotation={[0, Math.PI / 2, 0]}
               scale={[1.24, 1.24, 0.93]}
@@ -8841,18 +8254,49 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 233'].geometry}
+              geometry={nodes['Rectangle 231'].geometry}
               material={materials['glass-window']}
-              name="Rectangle 233"
+              name="Rectangle 231"
               position={[-6.66, -15.18, 1.09]}
               scale={1}
             />
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry97'].geometry}
+              geometry={nodes['Merged Geometry94'].geometry}
               material={materials.wall}
-              name="Merged Geometry97"
+              name="Merged Geometry94"
+              position={[-8.06, -8.25, 7.57]}
+              rotation={[0, Math.PI / 2, 0]}
+              scale={1.24}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes['Merged Geometry 323'].geometry}
+              material={materials.orange}
+              name="Merged Geometry 323"
+              position={[-7.34, -13.65, 0.51]}
+              rotation={[0, Math.PI / 2, 0]}
+              scale={1.24}
+            />
+          </group>
+          <group name="Group 141" position={[-173.61, 137.91, -160.72]} rotation={[0, -Math.PI / 2, 0]} scale={1}>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes['Rectangle 232'].geometry}
+              material={materials['glass-window']}
+              name="Rectangle 232"
+              position={[-6.66, -15.18, 1.09]}
+              scale={1}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes['Merged Geometry95'].geometry}
+              material={materials.wall}
+              name="Merged Geometry95"
               position={[-8.06, -8.25, 7.57]}
               rotation={[0, Math.PI / 2, 0]}
               scale={1.24}
@@ -8863,37 +8307,6 @@ export function City({ ...props }) {
               geometry={nodes['Merged Geometry 324'].geometry}
               material={materials.orange}
               name="Merged Geometry 324"
-              position={[-7.34, -13.65, 0.51]}
-              rotation={[0, Math.PI / 2, 0]}
-              scale={1.24}
-            />
-          </group>
-          <group name="Group 141" position={[-173.61, 137.91, -160.72]} rotation={[0, -Math.PI / 2, 0]} scale={1}>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Rectangle 234'].geometry}
-              material={materials['glass-window']}
-              name="Rectangle 234"
-              position={[-6.66, -15.18, 1.09]}
-              scale={1}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Merged Geometry98'].geometry}
-              material={materials.wall}
-              name="Merged Geometry98"
-              position={[-8.06, -8.25, 7.57]}
-              rotation={[0, Math.PI / 2, 0]}
-              scale={1.24}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes['Merged Geometry 325'].geometry}
-              material={materials.orange}
-              name="Merged Geometry 325"
               position={[-7.34, -13.65, 0.51]}
               rotation={[0, Math.PI / 2, 0]}
               scale={1.24}
@@ -8920,9 +8333,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 326'].geometry}
+            geometry={nodes['Merged Geometry 325'].geometry}
             material={materials['wall-orange']}
-            name="Merged Geometry 326"
+            name="Merged Geometry 325"
             position={[-144.15, -223.26, 4.48]}
             scale={1.24}
           />
@@ -8950,9 +8363,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 235'].geometry}
+              geometry={nodes['Rectangle 233'].geometry}
               material={materials.beige}
-              name="Rectangle 235"
+              name="Rectangle 233"
               position={[0.05, 0.01, 8.91]}
             />
             <mesh
@@ -8986,18 +8399,18 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 327'].geometry}
+              geometry={nodes['Merged Geometry 326'].geometry}
               material={materials['wall-orange']}
-              name="Merged Geometry 327"
+              name="Merged Geometry 326"
               position={[235.44, 1.96, 0.51]}
               scale={1.24}
             />
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 268'].geometry}
+              geometry={nodes['Merged Geometry 267'].geometry}
               material={materials['wall-orange']}
-              name="Merged Geometry 268"
+              name="Merged Geometry 267"
               position={[22.75, 1.96, 0.51]}
               scale={1.24}
             />
@@ -9015,18 +8428,18 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 328'].geometry}
+            geometry={nodes['Merged Geometry 327'].geometry}
             material={materials.orange}
-            name="Merged Geometry 328"
+            name="Merged Geometry 327"
             position={[3.14, -211.41, 192.83]}
             scale={1.24}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 269'].geometry}
+            geometry={nodes['Merged Geometry 268'].geometry}
             material={materials['glass-window']}
-            name="Merged Geometry 269"
+            name="Merged Geometry 268"
             position={[3.59, -190.93, 189.07]}
             scale={1.24}
           />
@@ -9035,9 +8448,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 270'].geometry}
+            geometry={nodes['Merged Geometry 269'].geometry}
             material={materials.beige}
-            name="Merged Geometry 270"
+            name="Merged Geometry 269"
             position={[-45.69, 68.24, 138.06]}
             rotation={[0, 0, 0]}
             scale={1}
@@ -9045,9 +8458,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry99'].geometry}
+            geometry={nodes['Merged Geometry96'].geometry}
             material={materials['yellow-2']}
-            name="Merged Geometry99"
+            name="Merged Geometry96"
             position={[-45.76, 68.24, 138.03]}
             rotation={[0, 0, 0]}
             scale={1}
@@ -9066,9 +8479,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 236'].geometry}
+              geometry={nodes['Rectangle 234'].geometry}
               material={materials['glass-2']}
-              name="Rectangle 236"
+              name="Rectangle 234"
               position={[-7.34, 23.45, -4.1]}
             />
             <mesh
@@ -9080,14 +8493,14 @@ export function City({ ...props }) {
               position={[6.51, -87.56, -0.43]}
             />
           </group>
-          <group name="Group 711" position={[-32.9, -39.24, 102.46]} rotation={[0, -Math.PI / 9, 0]} scale={0.81}>
-            <group name="Group 712" position={[152.05, 0, 0]} scale={[0.99, 1, 1]}>
+          <group name="Group 710" position={[-32.9, -39.24, 102.46]} rotation={[0, -Math.PI / 9, 0]} scale={0.81}>
+            <group name="Group 711" position={[152.05, 0, 0]} scale={[0.99, 1, 1]}>
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 237'].geometry}
+                geometry={nodes['Rectangle 235'].geometry}
                 material={materials['glass-2']}
-                name="Rectangle 237"
+                name="Rectangle 235"
                 position={[16.11, 16.49, 3.35]}
                 scale={0.73}
               />
@@ -9105,9 +8518,9 @@ export function City({ ...props }) {
               <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['Rectangle 238'].geometry}
+                geometry={nodes['Rectangle 236'].geometry}
                 material={materials['glass-2']}
-                name="Rectangle 238"
+                name="Rectangle 236"
                 position={[16.11, 16.49, 3.35]}
                 scale={0.73}
               />
@@ -9147,9 +8560,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Merged Geometry 329'].geometry}
+            geometry={nodes['Merged Geometry 328'].geometry}
             material={materials.wall}
-            name="Merged Geometry 329"
+            name="Merged Geometry 328"
             position={[2, 142.48, -192.75]}
             rotation={[0, Math.PI / 2, 0]}
             scale={1.24}
@@ -9167,9 +8580,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry100'].geometry}
+              geometry={nodes['Merged Geometry97'].geometry}
               material={materials['glass-window']}
-              name="Merged Geometry100"
+              name="Merged Geometry97"
               position={[0.13, 0.1, 0.88]}
               scale={1}
             />
@@ -9178,18 +8591,18 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 273'].geometry}
+              geometry={nodes['Merged Geometry 270'].geometry}
               material={materials.orange}
-              name="Merged Geometry 273"
+              name="Merged Geometry 270"
               position={[0, 0, 0]}
               scale={1}
             />
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry101'].geometry}
+              geometry={nodes['Merged Geometry98'].geometry}
               material={materials['glass-window']}
-              name="Merged Geometry101"
+              name="Merged Geometry98"
               position={[-0.17, 16.51, -2.11]}
               scale={1}
             />
@@ -9198,9 +8611,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 274'].geometry}
+              geometry={nodes['Merged Geometry 273'].geometry}
               material={materials.beige}
-              name="Merged Geometry 274"
+              name="Merged Geometry 273"
               position={[94.74, 0, 0]}
               rotation={[0, Math.PI / 2, 0]}
               scale={[1.24, 1.24, 0.93]}
@@ -9208,9 +8621,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry102'].geometry}
+              geometry={nodes['Merged Geometry99'].geometry}
               material={materials['yellow-2']}
-              name="Merged Geometry102"
+              name="Merged Geometry99"
               position={[94.83, 0, 0]}
               rotation={[0, Math.PI / 2, 0]}
               scale={[1.24, 1.24, 0.93]}
@@ -9221,9 +8634,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 255'].geometry}
+            geometry={nodes['Cube 254'].geometry}
             material={materials.wall}
-            name="Cube 255"
+            name="Cube 254"
             position={[0.3, 267.81, -189]}
             rotation={[-Math.PI / 2, 0, 0]}
             scale={1}
@@ -9240,9 +8653,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 184'].geometry}
+            geometry={nodes['Cube 183'].geometry}
             material={materials.wall}
-            name="Cube 184"
+            name="Cube 183"
             position={[0.83, 3.2, 137.34]}
           />
           <group
@@ -9254,9 +8667,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 239'].geometry}
+              geometry={nodes['Rectangle 237'].geometry}
               material={materials.beige}
-              name="Rectangle 239"
+              name="Rectangle 237"
               position={[-0.49, -0.06, -1.46]}
             />
             <mesh
@@ -9280,9 +8693,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry103'].geometry}
+              geometry={nodes['Merged Geometry100'].geometry}
               material={materials['glass-window']}
-              name="Merged Geometry103"
+              name="Merged Geometry100"
               position={[0.13, 0.1, 0.88]}
               scale={1}
             />
@@ -9291,18 +8704,18 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry104'].geometry}
+              geometry={nodes['Merged Geometry101'].geometry}
               material={materials.white}
-              name="Merged Geometry104"
+              name="Merged Geometry101"
               position={[-0.01, 0, 0]}
               scale={1.24}
             />
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 275'].geometry}
+              geometry={nodes['Merged Geometry 274'].geometry}
               material={materials['window-1']}
-              name="Merged Geometry 275"
+              name="Merged Geometry 274"
               position={[0, 0, 0]}
               scale={1.24}
             />
@@ -9311,18 +8724,18 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 330'].geometry}
+              geometry={nodes['Merged Geometry 329'].geometry}
               material={materials['window-1']}
-              name="Merged Geometry 330"
+              name="Merged Geometry 329"
               position={[0.44, 0, 0]}
               scale={1.24}
             />
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 240'].geometry}
+              geometry={nodes['Rectangle 238'].geometry}
               material={materials['glass-window']}
-              name="Rectangle 240"
+              name="Rectangle 238"
               position={[20.26, 21.01, -1.01]}
               rotation={[0, -Math.PI / 2, 0]}
               scale={[0.91, 1, 1]}
@@ -9330,9 +8743,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 241'].geometry}
+              geometry={nodes['Rectangle 239'].geometry}
               material={materials['glass-window']}
-              name="Rectangle 241"
+              name="Rectangle 239"
               position={[-17.62, 8.5, 197.12]}
               rotation={[0, -Math.PI / 2, 0]}
               scale={1}
@@ -9340,9 +8753,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 242'].geometry}
+              geometry={nodes['Rectangle 240'].geometry}
               material={materials['glass-window']}
-              name="Rectangle 242"
+              name="Rectangle 240"
               position={[-17.62, 8.5, -194.61]}
               rotation={[0, -Math.PI / 2, 0]}
               scale={1}
@@ -9352,18 +8765,18 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 276'].geometry}
+              geometry={nodes['Merged Geometry 275'].geometry}
               material={materials['window-1']}
-              name="Merged Geometry 276"
+              name="Merged Geometry 275"
               position={[0, 0, 0]}
               scale={1}
             />
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry105'].geometry}
+              geometry={nodes['Merged Geometry102'].geometry}
               material={materials['glass-window']}
-              name="Merged Geometry105"
+              name="Merged Geometry102"
               position={[-0.17, 16.51, -2.11]}
               scale={1}
             />
@@ -10182,6 +9595,48 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
+            geometry={nodes['Cube 47'].geometry}
+            material={materials['tree-3']}
+            name="Cube 47"
+            position={[92.81, 179.25, 74.89]}
+            rotation={[-0.07, 0.25, 0.23]}
+            scale={1.3}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes['Cube 324'].geometry}
+            material={materials['tree-3']}
+            name="Cube 324"
+            position={[-132.05, 147.53, -43.06]}
+            rotation={[0, 0.14, 0.75]}
+            scale={1.3}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes['Cube 217'].geometry}
+            material={materials['tree-3']}
+            name="Cube 217"
+            position={[77.83, 193.78, -71.85]}
+            rotation={[0, 0, -0.12]}
+            scale={1.3}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder17.geometry}
+            material={materials['wood-2']}
+            name="Cylinder17"
+            position={[3.55, -112.04, -7.6]}
+            rotation={[0, 0.61, 0]}
+            scale={1.3}
+          />
+        </group>
+        <group name="tree-1 4" position={[-688.96, 175.68, 3362]} scale={0.81}>
+          <mesh
+            castShadow
+            receiveShadow
             geometry={nodes['Cube 48'].geometry}
             material={materials['tree-3']}
             name="Cube 48"
@@ -10192,9 +9647,9 @@ export function City({ ...props }) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes['Cube 326'].geometry}
+            geometry={nodes['Cube 325'].geometry}
             material={materials['tree-3']}
-            name="Cube 326"
+            name="Cube 325"
             position={[-132.05, 147.53, -43.06]}
             rotation={[0, 0.14, 0.75]}
             scale={1.3}
@@ -10215,48 +9670,6 @@ export function City({ ...props }) {
             geometry={nodes.Cylinder18.geometry}
             material={materials['wood-2']}
             name="Cylinder18"
-            position={[3.55, -112.04, -7.6]}
-            rotation={[0, 0.61, 0]}
-            scale={1.3}
-          />
-        </group>
-        <group name="tree-1 4" position={[-688.96, 175.68, 3362]} scale={0.81}>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes['Cube 49'].geometry}
-            material={materials['tree-3']}
-            name="Cube 49"
-            position={[92.81, 179.25, 74.89]}
-            rotation={[-0.07, 0.25, 0.23]}
-            scale={1.3}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes['Cube 327'].geometry}
-            material={materials['tree-3']}
-            name="Cube 327"
-            position={[-132.05, 147.53, -43.06]}
-            rotation={[0, 0.14, 0.75]}
-            scale={1.3}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes['Cube 219'].geometry}
-            material={materials['tree-3']}
-            name="Cube 219"
-            position={[77.83, 193.78, -71.85]}
-            rotation={[0, 0, -0.12]}
-            scale={1.3}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder19.geometry}
-            material={materials['wood-2']}
-            name="Cylinder19"
             position={[3.55, -112.04, -7.6]}
             rotation={[0, 0.61, 0]}
             scale={1.3}
@@ -10349,9 +9762,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Rectangle 243'].geometry}
+              geometry={nodes['Rectangle 241'].geometry}
               material={materials['glass-window']}
-              name="Rectangle 243"
+              name="Rectangle 241"
               position={[0.68, 6.34, -2.66]}
               rotation={[0, 0, 0]}
               scale={0.81}
@@ -10359,9 +9772,9 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry106'].geometry}
+              geometry={nodes['Merged Geometry103'].geometry}
               material={materials.beige}
-              name="Merged Geometry106"
+              name="Merged Geometry103"
               position={[0.11, 5.16, -3.54]}
               rotation={[0, 0, 0]}
               scale={1}
@@ -10380,18 +9793,18 @@ export function City({ ...props }) {
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 332'].geometry}
+              geometry={nodes['Merged Geometry 330'].geometry}
               material={materials.beige}
-              name="Merged Geometry 332"
+              name="Merged Geometry 330"
               position={[235.44, 1.96, 0.51]}
               scale={1.24}
             />
             <mesh
               castShadow
               receiveShadow
-              geometry={nodes['Merged Geometry 277'].geometry}
+              geometry={nodes['Merged Geometry 276'].geometry}
               material={materials.beige}
-              name="Merged Geometry 277"
+              name="Merged Geometry 276"
               position={[22.75, 1.96, 0.51]}
               scale={1.24}
             />
