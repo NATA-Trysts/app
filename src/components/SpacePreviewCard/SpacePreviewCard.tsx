@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { Space as SpaceType, useDashboardStore, useMemberStore } from '@/stores'
+import { Space as SpaceType, useMemberStore, useSpacePreviewStore } from '@/stores'
 
 import { CardBackgroundShadow } from './CardBackgroundShadow'
 import { PreviewCardContent } from './PreviewCardContent'
@@ -22,7 +22,7 @@ type SpacePreviewCardProps = {
 }
 
 export const SpacePreviewCard = ({ item, imageUrl, title, subtitle }: SpacePreviewCardProps) => {
-  const [selectedSpacePreview, setSelectedSpacePreview] = useDashboardStore((state) => [
+  const [selectedSpacePreview, setSelectedSpacePreview] = useSpacePreviewStore((state) => [
     state.selectedSpacePreview,
     state.setSelectedSpacePreview,
   ])

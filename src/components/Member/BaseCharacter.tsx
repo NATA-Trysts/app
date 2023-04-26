@@ -81,6 +81,7 @@ type GLTFActions = Record<ActionName, THREE.AnimationAction>
 //#endregion
 
 type ModelProps = {
+  scale?: number
   action: [string, boolean]
   onAnimationFinished?: () => void
   skin?: SubcategoryActiveItem[]
@@ -95,6 +96,7 @@ type ModelProps = {
 
 export const BaseCharacter = memo(
   ({
+    scale = 0.015,
     skin = [],
     hair = [],
     upper = [],
@@ -140,7 +142,7 @@ export const BaseCharacter = memo(
     return (
       <group ref={group} {...props} dispose={null}>
         <group name="Scene" position={[0, positionY, 0]}>
-          <group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.015}>
+          <group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={scale}>
             <primitive object={nodes.mixamorigHips} />
 
             {skin.length === 0 ? (
