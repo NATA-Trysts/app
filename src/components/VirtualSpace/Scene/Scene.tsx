@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Environment } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { Debug, Physics, RigidBody } from '@react-three/rapier'
@@ -5,7 +6,7 @@ import { Perf } from 'r3f-perf'
 import { Suspense, useEffect, useState } from 'react'
 import { Object3D } from 'three'
 
-import { ChairInstance, DeskInstance } from '@/components/Furniture'
+// import { ChairInstance, DeskInstance } from '@/components/Furniture'
 import { Hint } from '@/components/Hint'
 import { MainMember } from '@/components/Member'
 import { Container } from '@/layouts/common'
@@ -62,7 +63,7 @@ export const Scene = () => {
           <ambientLight intensity={0.7} />
 
           <Physics gravity={[0, -9.82, 0]}>
-            <ChairInstance
+            {/* <ChairInstance
               bodies={bodies}
               onCollisionEnter={({ target }) => {
                 setInteractable(true)
@@ -87,7 +88,7 @@ export const Scene = () => {
               bodies={deskBodies}
               onCollisionEnter={() => setInteractable(true)}
               onCollisionExit={() => setInteractable(false)}
-            />
+            /> */}
             <Debug />
             <RigidBody position={[0, -2, 0]} rotation={[-Math.PI / 2, 0, 0]} type="fixed">
               <mesh castShadow receiveShadow>

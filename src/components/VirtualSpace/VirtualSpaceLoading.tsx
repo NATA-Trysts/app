@@ -18,6 +18,7 @@ import {
   useNetworkStore,
   User,
   useVirtualSpaceStore,
+  // useVirtualSpaceStore,
 } from '@/stores'
 
 type VirtualSpaceLoadingProps = {
