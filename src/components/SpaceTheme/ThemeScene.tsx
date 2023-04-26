@@ -6,11 +6,11 @@ import { Suspense } from 'react'
 
 import { Hint } from '@/components/Hint'
 import { MainMember } from '@/components/Member'
+import { City, Forest, Home, KidsPlayground } from '@/components/SpaceTheme'
 import { Container } from '@/layouts/common'
 
 import { MemberVideoLayout } from '../VirtualSpace/MemberVideoLayout'
 import { OtherMember } from '../VirtualSpace/OtherMember'
-import { City } from './City'
 
 // import { MemberVideoLayout } from '../MemberVideoLayout'
 // import { OtherMember } from '../OtherMember'
@@ -20,28 +20,22 @@ export const ThemeScene = () => {
     <Container>
       <MemberVideoLayout />
       <Suspense fallback={null}>
-        <Canvas flat linear shadows dpr={[0.25, 0.25]}>
+        <Canvas flat linear shadows dpr={[0.5, 0.5]}>
           <Perf />
-          {/* <Environment preset="studio" /> */}
-          {/* <ambientLight intensity={0.7} /> */}
 
-          <City />
-
-          {/* <Physics gravity={[0, -9.82, 0]}> */}
-          {/* <RigidBody colliders="cuboid" type="fixed"> */}
-          {/* <Island /> */}
-          {/* </RigidBody> */}
-
-          {/* <Debug />
+          <Physics gravity={[0, -9.82, 0]}>
+            <Debug />
+            {/* <Home /> */}
+            <Forest />
             <RigidBody position={[0, -2, 0]} rotation={[-Math.PI / 2, 0, 0]} type="fixed">
               <mesh castShadow receiveShadow>
-                <planeGeometry args={[100, 100]} />
-                <meshBasicMaterial color="pink" />
+                <planeGeometry args={[1000, 1000]} />
+                <meshBasicMaterial wireframe />
               </mesh>
             </RigidBody>
             <MainMember />
             <OtherMember />
-          </Physics> */}
+          </Physics>
         </Canvas>
       </Suspense>
       <Hint />

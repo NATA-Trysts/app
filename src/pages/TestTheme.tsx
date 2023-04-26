@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
 import { CustomableContainer } from '@/components/Commons'
 import { MultitabDetect, MultiTabWarning } from '@/components/MultitabDetect'
+import Home from '@/components/SpaceTheme/Home'
 import { ThemeScene } from '@/components/SpaceTheme/ThemeScene'
 import { UtilitySection } from '@/components/UtilitySection'
 import {
@@ -92,57 +94,58 @@ const LeftSideWrapper = styled.div`
 //#endregion
 
 const TestTheme = () => {
-  const customColor = useAppStore((state) => state.customColor)
-  const [selectedUltility] = useVirtualSpaceStore((state) => [state.selectedUltility])
+  // const customColor = useAppStore((state) => state.customColor)
+  // const [selectedUltility] = useVirtualSpaceStore((state) => [state.selectedUltility])
 
   useEffect(() => {
     document.title = 'Trysts | Summer Open Call'
   }, [])
 
   return (
-    <VirtualSpaceLoading>
-      <CustomableContainer customColor={customColor}>
-        <MultitabDetect fallback={<MultiTabWarning />}>
-          <Container customColor={customColor}>
-            <MultiplayerNetwork />
-            <ThemeScene />
-            <OverlayContainer>
-              <Header />
-              <LeftSideContainer>
-                <LeftSideWrapper>
-                  <MyVideo />
-                  <MyInformationCard />
-                </LeftSideWrapper>
-              </LeftSideContainer>
-              <MiddleSideContainer>
-                <ToolbarMiddle />
-              </MiddleSideContainer>
-              <RightSideContainer>
-                {selectedUltility ? (
-                  <UtilitySection
-                    name={ULTILITY_SIZE_MAPPING[selectedUltility].name}
-                    width={ULTILITY_SIZE_MAPPING[selectedUltility].width}
-                  >
-                    {
-                      {
-                        chat: <Chat />,
-                        member: <Members />,
-                        setting: <Setting />,
-                      }[selectedUltility]
-                    }
-                  </UtilitySection>
-                ) : (
-                  <></>
-                )}
-                <ToolbarRight />
-              </RightSideContainer>
+    <ThemeScene />
+    // <VirtualSpaceLoading>
+    //   <CustomableContainer customColor={customColor}>
+    //     <MultitabDetect fallback={<MultiTabWarning />}>
+    //       <Container customColor={customColor}>
+    //         <MultiplayerNetwork />
+    //         <ThemeScene />
+    //         <OverlayContainer>
+    //           <Header />
+    //           <LeftSideContainer>
+    //             <LeftSideWrapper>
+    //               <MyVideo />
+    //               <MyInformationCard />
+    //             </LeftSideWrapper>
+    //           </LeftSideContainer>
+    //           <MiddleSideContainer>
+    //             <ToolbarMiddle />
+    //           </MiddleSideContainer>
+    //           <RightSideContainer>
+    //             {selectedUltility ? (
+    //               <UtilitySection
+    //                 name={ULTILITY_SIZE_MAPPING[selectedUltility].name}
+    //                 width={ULTILITY_SIZE_MAPPING[selectedUltility].width}
+    //               >
+    //                 {
+    //                   {
+    //                     chat: <Chat />,
+    //                     member: <Members />,
+    //                     setting: <Setting />,
+    //                   }[selectedUltility]
+    //                 }
+    //               </UtilitySection>
+    //             ) : (
+    //               <></>
+    //             )}
+    //             <ToolbarRight />
+    //           </RightSideContainer>
 
-              <CustomCharacterPanel />
-            </OverlayContainer>
-          </Container>
-        </MultitabDetect>
-      </CustomableContainer>
-    </VirtualSpaceLoading>
+    //           <CustomCharacterPanel />
+    //         </OverlayContainer>
+    //       </Container>
+    //     </MultitabDetect>
+    //   </CustomableContainer>
+    // </VirtualSpaceLoading>
   )
 }
 
