@@ -1,10 +1,7 @@
 import produce from 'immer'
-import { omit } from 'lodash-es'
 import { create } from 'zustand'
 
 import { CustomColor } from '@/components/Commons'
-
-import { Member } from './member'
 
 type UltilityType = 'chat' | 'member' | 'setting' | null
 export type VideoLayoutType = 'above-head' | 'slide'
@@ -20,6 +17,11 @@ export type Message = {
 
 type ChatMessage = {
   [id: string]: Message
+}
+
+export type WhiteBoard = {
+  id: string
+  members: string[]
 }
 
 export type SpaceModelTemp = {
@@ -66,11 +68,14 @@ type VirtualSpaceState = {
   intersectId: string | null
   setIntersectId: (intersectId: string) => void
 
-  whiteBoardMembers: {
-    [id: string]: Member
-  }
-  addWhiteBoardMember: (member: Member) => void
-  removeWhiteBoardMember: (member: Member) => void
+  isHostWhiteBoardOpen: boolean
+  setHostWhiteBoardOpen: (open: boolean) => void
+
+  whiteboards: Map<string, WhiteBoard>
+  addWhiteBoard: (whiteboard: WhiteBoard) => void
+  removeWhiteBoard: (whiteboardId: string) => void
+  addWhiteBoardMember: (id: string, memberId: string) => void
+  removeWhiteBoardMember: (id: string, memberId: string) => void
 
   isLoadingSpace: boolean
   setIsLoadingSpace: (isLoadingSpace: boolean) => void
@@ -136,17 +141,37 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
   intersectId: null,
   setIntersectId: (intersectId: string) => set({ intersectId }),
 
-  whiteBoardMembers: {},
-  addWhiteBoardMember: (member: Member) =>
+  isHostWhiteBoardOpen: false,
+  setHostWhiteBoardOpen: (isOpen) => set({ isHostWhiteBoardOpen: isOpen }),
+
+  whiteboards: new Map<string, WhiteBoard>(),
+  addWhiteBoard: (whiteboard: WhiteBoard) =>
     set(
       produce((state: VirtualSpaceState) => {
-        state.whiteBoardMembers[member.id] = member
+        state.whiteboards.set(whiteboard.id, { id: whiteboard.id, members: whiteboard.members })
       }),
     ),
-  removeWhiteBoardMember: (member: Member) =>
-    set((state) => ({
-      whiteBoardMembers: omit(state.whiteBoardMembers, [member.id]),
-    })),
+  removeWhiteBoard: (whiteboardId: string) => {
+    set(
+      produce((state: VirtualSpaceState) => {
+        state.whiteboards.delete(whiteboardId)
+      }),
+    )
+  },
+  addWhiteBoardMember: (id, memberId) =>
+    set(
+      produce((state: VirtualSpaceState) => {
+        state.whiteboards.get(id)?.members.push(memberId)
+      }),
+    ),
+  removeWhiteBoardMember: (id, memberId) =>
+    set(
+      produce((state: VirtualSpaceState) => {
+        const members = state.whiteboards.get(id)?.members
+
+        members?.splice(members?.indexOf(memberId), 1)
+      }),
+    ),
 
   isLoadingSpace: true,
   setIsLoadingSpace: (isLoadingSpace: boolean) => set(() => ({ isLoadingSpace })),

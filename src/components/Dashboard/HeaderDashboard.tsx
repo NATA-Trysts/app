@@ -18,7 +18,7 @@ export const HeaderDashboard = () => {
         <Link style={{ textDecoration: 'none', color: 'inherit' }} to={'/marketplace'}>
           <BasicButton color="dark">
             <ShopIcon stroke="#696969" />
-            Market Place
+            Marketplace
           </BasicButton>
         </Link>
         <Link style={{ textDecoration: 'none', color: 'inherit' }} to={'/create'}>

@@ -25,6 +25,10 @@ const VirtualSpace = lazy(() => import('@/pages/VirtualSpace'))
 const Create = lazy(() => import('@/pages/Create'))
 const Pricing = lazy(() => import('@/pages/Pricing'))
 
+import { enableMapSet } from 'immer'
+
+enableMapSet()
+
 if (process.env.NODE_ENV === 'production') {
   disableReactDevTools()
 }

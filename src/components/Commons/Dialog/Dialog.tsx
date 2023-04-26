@@ -4,7 +4,6 @@ import {
   createContext,
   forwardRef,
   ReactNode,
-  useCallback,
   useContext,
   useEffect,
   useImperativeHandle,
@@ -15,6 +14,7 @@ import {
 import styled, { keyframes } from 'styled-components'
 
 import { ReactComponent as CrossIcon } from '@/assets/icons/cross.svg'
+import { useControllableState } from '@/hooks'
 
 type PointerDownOutsideEvent = CustomEvent<{
   originalEvent: PointerEvent
@@ -23,8 +23,9 @@ type FocusOutsideEvent = CustomEvent<{
   originalEvent: FocusEvent
 }>
 
-export type DialogProps = Omit<RadixDialogProps, 'open'> & {
+export type DialogProps = RadixDialogProps & {
   container?: HTMLElement
+  className?: string
   onDialogClose?: (data: any) => void
   onOpenAutoFocus?: (e: Event) => void
   onCloseAutoFocus?: (e: Event) => void
@@ -56,69 +57,87 @@ export const useDialogContext = () => {
   return useContext(DialogContext)
 }
 
+// TODO refactor this for not using ref to open dialog
 export const Dialog = forwardRef<DialogRef, DialogProps>(
   (
     {
+      defaultOpen,
+      open,
       container,
+      children,
+      className,
       onDialogClose,
       onOpenAutoFocus,
       onCloseAutoFocus,
       onEscapeKeyDown,
       onPointerDownOutside,
       onInteractOutside,
-      defaultOpen,
-      children,
+      onOpenChange,
       ...props
     }: DialogProps,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ref,
   ) => {
-    const [open, setOpen] = useState(defaultOpen)
-    const [content, setContent] = useState<ReactNode>(children)
+    const [dialogOpen, setDialogOpen] = useControllableState({
+      prop: open,
+      defaultProp: defaultOpen,
+      onChange: onOpenChange,
+    })
     const closeReturn = useRef<any>(undefined)
+    // TODO remove this this for not using ref to set content
+    const [content, setContent] = useState<ReactNode>()
 
+    // TODO remove this this for not using ref to set content
     useImperativeHandle(ref, () => ({
-      open(contents) {
-        setOpen(true)
+      open(content) {
+        setDialogOpen(true)
 
-        if (contents) setContent(contents)
+        if (content) setContent(content)
       },
     }))
 
     useEffect(() => {
-      if (!open) onDialogClose?.(closeReturn)
-    }, [open, onDialogClose])
-
-    const handleOnChange = useCallback((open: boolean) => {
-      setOpen(open)
-    }, [])
+      if (!dialogOpen) {
+        if (content) setContent(undefined)
+        onDialogClose?.(closeReturn)
+      }
+    }, [dialogOpen, onDialogClose])
 
     const close = (data: any) => {
       closeReturn.current = data
-      setOpen(false)
+      setDialogOpen(false)
     }
 
     return (
-      <RadixDialog.Root open={open} {...props} onOpenChange={handleOnChange}>
+      <DialogRoot
+        open={dialogOpen}
+        {...props}
+        onOpenChange={(open) => {
+          console.log(open)
+          setDialogOpen(open)
+        }}
+      >
         <DialogProvider close={close}>
           <RadixDialog.Portal container={container}>
             <DialogOverlay />
             <DialogContent
+              className={className}
               onCloseAutoFocus={onCloseAutoFocus}
               onEscapeKeyDown={onEscapeKeyDown}
               onInteractOutside={onInteractOutside}
               onOpenAutoFocus={onOpenAutoFocus}
               onPointerDownOutside={onPointerDownOutside}
             >
-              <DialogContentBody>{content}</DialogContentBody>
+              <DialogContentBody>{content ?? children}</DialogContentBody>
               <RadixDialog.Close asChild>
-                <CloseButton className="Button green">
+                <CloseButton>
                   <CrossIcon />
                 </CloseButton>
               </RadixDialog.Close>
             </DialogContent>
           </RadixDialog.Portal>
         </DialogProvider>
-      </RadixDialog.Root>
+      </DialogRoot>
     )
   },
 )
@@ -141,6 +160,10 @@ export const contentShow = keyframes`
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
+`
+
+export const DialogRoot = styled(RadixDialog.Root)`
+  background: red;
 `
 
 export const DialogOverlay = styled(RadixDialog.Overlay)`

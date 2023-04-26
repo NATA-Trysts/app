@@ -4,7 +4,7 @@ import { selectIsConnectedToRoom, selectLocalPeerID, useHMSActions, useHMSStore 
 import axios, { AxiosResponse, CancelTokenSource } from 'axios'
 import { Client, Room } from 'colyseus.js'
 import { omit } from 'lodash-es'
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import axiosConfigured from '@/api/axios'
@@ -12,10 +12,12 @@ import { useAuth, useAxiosPrivate } from '@/hooks'
 import { generateHMSConfig } from '@/libs/utils'
 import {
   CategorySelectedItemId,
+  Space,
   useEditCharacterStore,
   useMemberStore,
   useNetworkStore,
   User,
+  useVirtualSpaceStore,
   // useVirtualSpaceStore,
 } from '@/stores'
 
@@ -26,7 +28,7 @@ type VirtualSpaceLoadingProps = {
 const MULTIPLAYER_SERVICE_ENDPOINT = import.meta.env.VITE_MULTIPLAYER_SERVICE_ENDPOINT
 const WORLD_NAME = import.meta.env.VITE_WORLD_NAME
 
-type PrepareState = 'info-loaded' | 'need-verify' | 'hms.joined' | 'multiplayer.joined'
+type PrepareState = 'info-loaded' | 'need-verify' | 'hms.joined' | 'multiplayer.joined' | ''
 
 export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const { spaceId } = useParams()
@@ -41,7 +43,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const [password, setPassword] = useState('')
   const { auth } = useAuth()
 
-  // const [setSpaceName, setSpaceModels] = useVirtualSpaceStore((state) => [state.setSpaceName, state.setSpaceModels])
+  const [setSpaceName] = useVirtualSpaceStore((state) => [state.setSpaceName])
   const [prepareState, setPrepareState] = useState<PrepareState>('')
 
   const [setRoomInstance] = useNetworkStore((state) => [state.setRoomInstance])
@@ -49,7 +51,8 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const axiosPrivate = useAxiosPrivate()
   const isConnectedToRoom = useHMSStore(selectIsConnectedToRoom)
 
-  const [roomId, setRoomId] = useState()
+  const [roomId, setRoomId] = useState('')
+  const isHost = useRef(false)
   const [localUser, setLocalUser] = useState<User>()
 
   useEffect(() => {
@@ -61,17 +64,17 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
       try {
         // Get Space && Get User
         // -> Get Space
-        // const getSpaceByCodeRequest: AxiosResponse<Space, any> = await axiosConfigured.get(`/spaces/code/${spaceId}`)
+        const getSpaceByCodeRequest: Promise<AxiosResponse<Space, any>> = axiosConfigured.get(`/spaces/code/${spaceId}`)
 
-        const getUserRequest: AxiosResponse<User, any> =
-          auth?.accessToken &&
-          axiosPrivate('/user', {
-            cancelToken: cancelTokenSource.token,
-          })
+        const getUserRequest: Promise<AxiosResponse<User, any>> | undefined = auth?.accessToken
+          ? axiosPrivate('/user', {
+              cancelToken: cancelTokenSource.token,
+            })
+          : undefined
 
-        const responses: AxiosResponse<User, Space, any>[] = [
+        const responses: (Promise<AxiosResponse<User | Space, any>> | undefined)[] = [
           getUserRequest,
-          // getSpaceByCodeRequest
+          getSpaceByCodeRequest,
         ]
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -80,7 +83,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
         // User Response
         setPrepareStatus('Get User')
 
-        if (results[0].status === 'fulfilled') {
+        if (results[0].status === 'fulfilled' && results[0].value) {
           user = results[0].value.data as User
           setLocalUser(user)
           const avatarFromApi = omit(user.avatar, 'image')
@@ -93,23 +96,23 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
         }
 
         // Space Response
-        // setPrepareStatus('Get Space')
-        // if (results[1].status === 'fulfilled') {
-        //   const models = results[1].value.data.models
-        //   const password = results[1].value.data.password
+        setPrepareStatus('Get Space')
+        if (results[1].status === 'fulfilled' && results[1].value) {
+          const space = results[1].value.data as Space
+          const password = space.password
 
-        //   setSpaceName(results[1].value.data.name)
-        //   setRoomId(results[1].value.data.hmsRoomId)
-        //   setSpaceModels(models)
+          setSpaceName(space.name)
+          setRoomId(space.hmsRoomId)
+          isHost.current = space.author === user?._id
 
-        //   if (password) {
-        //     setPrepareState('need-verify')
-        //   } else {
-        //     setPrepareState('info-loaded')
-        //   }
-        // }
+          if (password) {
+            setPrepareState('need-verify')
+          } else {
+            setPrepareState('info-loaded')
+          }
+        }
 
-        setRoomId('642c5157adb93485420bfec8')
+        // setRoomId('642c5157adb93485420bfec8')
 
         setPrepareState('info-loaded')
       } catch (error) {
@@ -153,7 +156,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   }, [roomId, prepareState])
 
   useEffect(() => {
-    let room: typeof Room | null = null
+    let room: Room | null = null
     const client = new Client(MULTIPLAYER_SERVICE_ENDPOINT)
 
     if (!client) throw Error('Client not connected')
@@ -162,8 +165,9 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
 
       setPrepareStatus('Joining Multiplayer')
       try {
-        room = await client.joinById(spaceId, {
+        room = await client.joinById(spaceId ?? 'trysts', {
           peerId: localPeerId,
+          isHost: isHost.current,
           user: {
             email: multiplayerUser.email,
             handler: multiplayerUser.handler,
@@ -171,12 +175,13 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
             avatar: JSON.stringify(multiplayerUser.avatar),
           },
         })
-      } catch (error) {
+      } catch (error: any) {
         if (error.message === `room "${spaceId}" not found`) {
           try {
             room = await client.create(WORLD_NAME, {
               spaceId,
               peerId: localPeerId,
+              isHost: isHost.current,
               user: {
                 email: multiplayerUser.email,
                 handler: multiplayerUser.handler,
@@ -184,7 +189,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
                 avatar: JSON.stringify(multiplayerUser.avatar),
               },
             })
-          } catch (error) {
+          } catch (error: any) {
             setPrepareError('Create Multiplayer Failed')
             throw Error('Create room failed!', error)
           }
