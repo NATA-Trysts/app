@@ -27,7 +27,7 @@ import { Vid } from './Other'
 // const pP = new Vector3(0, -2, 0)
 
 type MainMemberProps = {
-  target: Object3D | null
+  target?: Object3D | null
 }
 
 export const MainMember = ({ target }: MainMemberProps) => {

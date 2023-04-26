@@ -14,6 +14,7 @@ import { PersistLogin, RequireAuth } from './components/Authentication'
 import { MobileDetect } from './components/MobileDetect'
 import { AuthProvider } from './context/AuthProvider'
 import NotAuthorize from './pages/NotAuthorize'
+import TestTheme from './pages/TestTheme'
 
 const Builder = lazy(() => import('@/pages/Builder'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
@@ -119,6 +120,20 @@ const Guard = () => {
           />
         </Route>
         <Route element={<Redirect />} path="/l" />
+        <Route element={<PersistLogin />}>
+          <Route
+            element={
+              <Suspense fallback={<span>loading</span>}>
+                <HMSRoomProvider>
+                  {/* <MobileDetect> */}
+                  <TestTheme />
+                  {/* </MobileDetect> */}
+                </HMSRoomProvider>
+              </Suspense>
+            }
+            path="/test-theme"
+          />
+        </Route>
         <Route element={<NotAuthorize />} path="/unauth" />
         <Route element={<NotFound />} path="*" />
       </Route>

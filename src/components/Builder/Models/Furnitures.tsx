@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// @ts-nocheck
+
 import { ThreeEvent, useFrame } from '@react-three/fiber'
 import { Select } from '@react-three/postprocessing'
 import { animate } from 'framer-motion'
@@ -6,7 +9,48 @@ import { useEvent, useKeyPressEvent } from 'react-use'
 import useKeyboardJs from 'react-use/lib/useKeyboardJs'
 import { Group } from 'three'
 
-import { Chair, Desk } from '@/components/Furniture'
+import {
+  AccentTable,
+  AppleTree,
+  Artboard,
+  Bath,
+  BathroomRug,
+  BeanBagChair,
+  BeanBagChairCoffee,
+  BedCabinet,
+  Bookshelf,
+  BubbleLamp,
+  Cabinet,
+  CabinetBathroom,
+  CabinetBook,
+  Carpet,
+  Chair,
+  CircleTable,
+  Desk,
+  DinningChair,
+  DinningTable,
+  DoubleBed,
+  Fan,
+  Fence,
+  KitchenCabinet,
+  KitchenRug,
+  KitchenShelf,
+  LeafPlant,
+  LeatherSofa,
+  OneLegLamp,
+  ParkBench,
+  PatternRug,
+  PearTree,
+  Refrigerator,
+  RelaxChair,
+  Shiba,
+  Sofa,
+  Stone,
+  TrianglePatternRug,
+  TvStand,
+  Vinyl,
+  WallLayoutHome,
+} from '@/components/Furniture'
 import { useDoubleClickAndHold } from '@/hooks'
 import { SpaceModel, useBuilderStore } from '@/stores'
 
@@ -142,16 +186,64 @@ const Furniture = (props: FurnitureProps) => {
         <Select enabled={hovered || selectedModelUuid === props.uuid}>
           {
             {
+              // 1: (
+              //   <Chair
+              //     color={props.color}
+              //     metalness={props.metalness}
+              //     roughness={props.roughness}
+              //     scale={[0.01, 0.01, 0.01]}
+              //     wireframe={props.wireframe}
+              //   />
+              // ),
               1: (
-                <Chair
-                  color={props.color}
-                  metalness={props.metalness}
-                  roughness={props.roughness}
-                  scale={[0.01, 0.01, 0.01]}
-                  wireframe={props.wireframe}
-                />
+                <>
+                  {/* <AccentTable /> */}
+                  {/* <AppleTree /> */}
+                  {/* <Artboard /> */}
+                  {/* <Bath /> */}
+                  {/* <BathroomRug /> */}
+                  {/* <BeanBagChair /> */}
+                  {/* <BeanBagChairCoffee /> */}
+                  {/* <BedCabinet /> */}
+                  {/* <Bookshelf /> */}
+                  {/* <BubbleLamp /> */}
+                  {/* <Cabinet /> */}
+                  {/* <CabinetBathroom /> */}
+                  {/* <CabinetBook /> */}
+                  {/* <Carpet /> */}
+                  {/* <Chair /> */}
+                  {/* <CircleTable /> */}
+                  {/* <Desk /> */}
+                  {/* <DinningChair /> */}
+                  {/* <DinningTable /> */}
+                  {/* <DoubleBed /> */}
+                  {/* <Fan /> */}
+                  {/* <Fence /> */}
+                  {/* <KitchenCabinet /> */}
+                  {/* <KitchenRug /> */}
+                  {/* <KitchenShelf /> */}
+                  <LeafPlant />
+                  {/* <LeatherSofa /> */}
+                  {/* <OneLegLamp /> */}
+                  {/* <ParkBench /> */}
+                  {/* <PatternRug /> */}
+                  {/* <PearTree /> */}
+                  {/* <Refrigerator /> */}
+                  {/* <RelaxChair /> */}
+                  {/* <Shiba /> */}
+                  {/* <Sofa /> */}
+                  {/* <TrianglePatternRug /> */}
+                  {/* <TvStand /> */}
+                  {/* <WallLayoutHome /> */}
+                </>
+                // color={props.color}
+                // metalness={props.metalness}
+                // roughness={props.roughness}
+                // scale={[0.01, 0.01, 0.01]}
+                // wireframe={props.wireframe}
+                // />
               ),
-              2: <Desk scale={[0.01, 0.01, 0.01]} />,
+              // 2: <Desk scale={[0.01, 0.01, 0.01]} />,
             }[props.id]
           }
         </Select>
