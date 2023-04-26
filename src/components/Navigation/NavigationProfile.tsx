@@ -1,8 +1,9 @@
-import { OrbitControls } from '@react-three/drei'
+import { Loader, OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
+import { Character } from '@/components/CharacterPreview'
 import { MyInformationCard } from '@/components/MyInformationCard'
 import { useGetMe } from '@/hooks'
 import { useDashboardStore } from '@/stores'
@@ -28,7 +29,7 @@ const ProfileCharacter = styled.div`
 `
 
 const ProfileCharacterCanvas = styled(Canvas)`
-  background-color: white;
+  background-color: #191a1d;
 `
 
 // for collapse mode
@@ -65,12 +66,21 @@ export const NavigationProfile = () => {
                   name={me.username}
                 />
                 <ProfileCharacter>
+                  <Loader />
                   <ProfileCharacterCanvas>
-                    <OrbitControls />
-                    <mesh>
-                      <boxGeometry args={[1, 1, 1]} />
-                      <meshNormalMaterial />
-                    </mesh>
+                    <OrbitControls
+                      dampingFactor={0.2}
+                      enableDamping={true}
+                      enablePan={false}
+                      enableRotate={true}
+                      enableZoom={false}
+                      maxAzimuthAngle={Infinity}
+                      maxPolarAngle={Math.PI / 2}
+                      minAzimuthAngle={Infinity}
+                      minPolarAngle={Math.PI / 2}
+                      rotateSpeed={0.5}
+                    />
+                    <Character />
                   </ProfileCharacterCanvas>
                 </ProfileCharacter>
               </>

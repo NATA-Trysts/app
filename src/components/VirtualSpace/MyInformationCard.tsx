@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 import styled from 'styled-components'
 
+import { Character } from '@/components/CharacterPreview'
 import { customColorHueMapping, Text } from '@/components/Commons'
 import { MyInformationCard as InformationCard } from '@/components/MyInformationCard'
 import { Option, Popover } from '@/components/Popover'
@@ -33,7 +34,7 @@ const CustomInformationCard = styled(motion.div)`
 const CharacterPreviewContainer = styled.div`
   width: 174px;
   height: 182px;
-  background: red;
+  background-color: #191a1d;
   border-radius: 6px;
 `
 
@@ -69,12 +70,20 @@ export const MyInformationCard = () => {
       content={
         <MemberInforContainer background={`hsla(${customColorHueMapping[color]}, 79%, 11%, 1)`}>
           <CharacterPreviewContainer>
-            <Canvas>
-              <OrbitControls />
-              <mesh>
-                <boxGeometry />
-                <meshNormalMaterial />
-              </mesh>
+            <Canvas style={{ backgroundColor: '#191a1d' }}>
+              <OrbitControls
+                dampingFactor={0.2}
+                enableDamping={true}
+                enablePan={false}
+                enableRotate={true}
+                enableZoom={false}
+                maxAzimuthAngle={Infinity}
+                maxPolarAngle={Math.PI / 2}
+                minAzimuthAngle={Infinity}
+                minPolarAngle={Math.PI / 2}
+                rotateSpeed={0.5}
+              />
+              <Character />
             </Canvas>
           </CharacterPreviewContainer>
           <Gap />
