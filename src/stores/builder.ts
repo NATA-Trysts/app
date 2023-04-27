@@ -43,7 +43,6 @@ export type MousePosition = Omit<Vec3, 'y'>
 export type SpaceModel = {
   uuid: string // unique
   name: string
-  id: string
   position: ModifierValueType
   rotation: ModifierValueType
   color: string

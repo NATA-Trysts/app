@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
-
 import { CategoryType, SpaceModel, SubCategoryItem, useBuilderStore } from '@/stores'
 
 const useBuilder = () => {
@@ -60,12 +58,9 @@ const useBuilder = () => {
   const clickSubCategory = (item: SubCategoryItem) => {
     updateSelectedSubCategoryItems(item.category, item)
 
-    const uuid = uuidv4()
-
     addModel({
-      uuid,
+      uuid: item.uuid,
       name: item.name,
-      id: item.id,
       position: { x: 0, y: 0, z: 0 },
       rotation: { x: 0, y: 0, z: 0 },
       color: '#ff00ff',
@@ -78,14 +73,14 @@ const useBuilder = () => {
       return [
         ...models,
         {
-          uuid,
+          uuid: item.uuid,
           name: item.name,
-          id: item.id,
           position: { x: 0, y: 0, z: 0 },
           rotation: { x: 0, y: 0, z: 0 },
           color: '#ff00ff',
           roughness: 1,
           metalness: 0,
+          type: item.category,
         },
       ]
     })
