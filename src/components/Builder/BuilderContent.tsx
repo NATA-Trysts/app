@@ -38,7 +38,7 @@ export const BuilderContent = ({ isLoading }: BuilderContentProps) => {
       <ModelPreview />
       <BuilderSubCategory
         list={subCategoryItems.get(selectedCategoryName)}
-        selectedId={selectedSubCategoryItems.get(selectedCategoryName)?.id}
+        selectedId={selectedSubCategoryItems.get(selectedCategoryName)?.uuid}
         onClickItem={handleSelectSubCategory}
       />
       <GPTButton />

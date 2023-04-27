@@ -29,7 +29,7 @@ export const ModelPreview = () => {
   return (
     <>
       <Preview>
-        <PreviewImg alt="Preview" loading="lazy" src={selectedSubCategoryItems.get(selectedCategoryName)?.img} />
+        <PreviewImg alt="Preview" loading="lazy" src={selectedSubCategoryItems.get(selectedCategoryName)?.thumbnail} />
       </Preview>
       <ItemDescription
         description={selectedSubCategoryItems.get(selectedCategoryName)?.description}

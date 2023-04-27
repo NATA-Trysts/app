@@ -193,7 +193,7 @@ const MODELS_DATA = [
     category: 'desk',
     description:
       'Complete your room aesthetic with this stylish accent table. Its small footprint makes it ideal for tight spaces, while its sleek design and choice of materials complement any decor.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/accent-table.webp',
   },
   {
     uuid: 'plant-10680d63-f2cf-4f30-ae45-3d309f4e4464',
@@ -201,7 +201,7 @@ const MODELS_DATA = [
     category: 'plant',
     description:
       'Bring the beauty of nature into your space with this stunning apple tree. Its colorful and delicious fruit also makes it a functional addition to any kitchen or dining area. ',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/apple-tree.webp',
   },
   {
     uuid: 'decoration-b186a8a9-9e0e-483e-9779-18abfe477fa3',
@@ -209,7 +209,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'This art board is a great addition to any room. Its sleek design and choice of materials complement any decor.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/artboard.webp',
   },
   {
     uuid: 'bath-2c419d45-c99e-45d6-8554-f0dbcaf4a6cd',
@@ -217,7 +217,7 @@ const MODELS_DATA = [
     category: 'bath',
     description:
       'Transform your bathroom into a luxurious spa-like retreat with this elegant bath. Its sleek design and comfortable size make it perfect for relaxing after a long day.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/bath.webp',
   },
   {
     uuid: 'bath-1c61a31c-4164-4cad-8ca5-73ac3168ad2d',
@@ -225,7 +225,7 @@ const MODELS_DATA = [
     category: 'bath',
     description:
       'Complete your bathroom aesthetic with this stylish rug. Its small footprint makes it ideal for tight spaces, while its sleek design and choice of materials complement any decor.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/bathroom-rug.webp',
   },
   {
     uuid: 'chair-868c1619-2cdf-4249-bb74-2c9309def2a2',
@@ -233,7 +233,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'Get cozy in style with this coffee-colored bean bag chair. With its versatile design and compact size, you can easily move it around to create the perfect spot for relaxation.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/bean-bag-chair-coffee.webp',
   },
   {
     uuid: 'chair-908ea24b-1e9f-47b2-973b-a6c4128b3f7f',
@@ -241,7 +241,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'Add a fun and casual seating option to your space with this comfortable bean bag chair. Its soft and supportive filling conforms to your body, providing a cozy spot to relax or read a book.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/bean-bag-chair.webp',
   },
   {
     uuid: 'cabinet-41223ee1-e7fd-48a0-ab74-677eae6a78b2',
@@ -249,7 +249,7 @@ const MODELS_DATA = [
     category: 'cabinet',
     description:
       'Maximize your bedroom storage and functionality with this sleek bed cabinet. Its modern design offers a sophisticated touch to your space, while its practical features provide ample storage for your bedroom essentials.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/bed-cabinet.webp',
   },
   {
     uuid: 'decoration-308b504b-d99a-4005-a265-503b2de768e5',
@@ -257,7 +257,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Add a touch of modern style to your space with this sleek bookshelf. Its versatile design and compact size make it perfect for displaying your favorite books, photos, and other decorative items.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/bookshelf.webp',
   },
   {
     uuid: 'decoration-4781c552-af73-4d69-bbab-33b21bfcb77a',
@@ -265,7 +265,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Create a dreamy and mesmerizing atmosphere in your space with this stunning bubble lamp. Its unique design features a cluster of glass orbs that emit a soft and diffused light, creating a soothing and calming ambiance.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/bubble-lamp.webp',
   },
   {
     uuid: 'cabinet-a99b7fbf-37f3-49a1-8657-d0bcc2997d98',
@@ -273,7 +273,7 @@ const MODELS_DATA = [
     category: 'cabinet',
     description:
       'Organize your bathroom in style with this sleek and practical bathroom cabinet. Its elegant design offers a sophisticated touch to your space, while its practical features provide ample storage for your bathroom essentials.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/cabinet-bathroom.webp',
   },
   {
     uuid: 'cabinet-29524f5b-0486-446e-a01f-181c4b7e5402',
@@ -281,7 +281,7 @@ const MODELS_DATA = [
     category: 'cabinet',
     description:
       '"Display your favorite books and decor items in style with this elegant book cabinet. Its modern design offers a sophisticated touch to your space, while its practical features provide ample storage for your book collection.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/cabinet-book.webp',
   },
   {
     uuid: 'cabinet-28f52db2-46da-4bb1-86da-ef5d256099ff',
@@ -289,7 +289,7 @@ const MODELS_DATA = [
     category: 'cabinet',
     description:
       'Organize your space in style with this elegant cabinet. Its sleek and modern design offers a sophisticated touch to your space, while its practical features provide ample storage for your essentials.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/cabinet.webp',
   },
   {
     uuid: 'decoration-26e29954-007d-408f-9243-86c518bfc035',
@@ -297,7 +297,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Add warmth and comfort to your space with this cozy and stylish carpet. Its plush texture provides a soft and comfortable surface to walk on, while its beautiful design adds a touch of elegance to your decor.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/carpet.webp',
   },
   {
     uuid: 'chair-bf76df41-9c51-4ae4-8d26-6a54e0e2265d',
@@ -305,7 +305,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'With modern design offers a sophisticated touch to your decor, while its comfortable seat provides a cozy and relaxing seating experience. Whether you use it in your living room, bedroom, or home office, this chair is the perfect addition to any space.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/chair.webp',
   },
   {
     uuid: 'desk-68eccc2e-9d7b-4c66-972e-9aca69b76505',
@@ -313,7 +313,7 @@ const MODELS_DATA = [
     category: 'desk',
     description:
       'Add a touch of elegance to your space with this beautiful circle table. Its sleek and modern design offers a sophisticated touch to your decor, while its compact size makes it a practical addition to any room in your home.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/circle-table.webp',
   },
   {
     uuid: 'desk-58d0bc2c-871f-45ae-a73d-178c0ad41f31',
@@ -321,7 +321,7 @@ const MODELS_DATA = [
     category: 'desk',
     description:
       'With multiple compartments and drawers of this desk, you can easily organize your items and keep them within reach. Its sturdy construction ensures that it can handle the weight of your computer and other items.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/desk.webp',
   },
   {
     uuid: 'chair-5b879d1e-ca56-49e2-8af8-f348dc043f03',
@@ -329,7 +329,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'Elevate your dining experience with these beautiful and comfortable dining chairs. Their sleek and modern design offers a sophisticated touch to your decor, while their comfortable seats provide a cozy and relaxing dining experience.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/dinning-chair.webp',
   },
   {
     uuid: 'desk-bb79046f-20c9-4eb3-b527-5470bfe8e967',
@@ -337,7 +337,7 @@ const MODELS_DATA = [
     category: 'desk',
     description:
       'Gather around this beautiful dining table and create memories that will last a lifetime. Its sleek and modern design offers a sophisticated touch to your decor, while its practical features provide ample space for your family and friends to enjoy a meal together.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/dinning-table.webp',
   },
   {
     uuid: 'decoration-1510441a-f8e8-444e-aea8-cc530a0fedb6',
@@ -345,7 +345,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'A furniture item commonly used in bedroom spaces. In space builders, a double bed is typically included as a foundational piece for designing a bedroom.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/double-bed.webp',
   },
   {
     uuid: 'decoration-3e35cb45-7d05-474d-8529-663638698841',
@@ -353,7 +353,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Keep your space cool and comfortable with this sleek and modern fan. Its compact size makes it a practical addition to any room in your home, while its powerful and adjustable airflow ensures that you can customize the temperature to your liking.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/fan.webp',
   },
   {
     uuid: 'cabinet-d6ad2e25-e3ef-407f-aeda-496c067b3762',
@@ -361,7 +361,7 @@ const MODELS_DATA = [
     category: 'cabinet',
     description:
       'Organize your kitchen in style with this sleek and practical kitchen cabinet. Its elegant design offers a sophisticated touch to your space, while its practical features provide ample storage for your kitchen essentials.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/kitchen-cabinet.webp',
   },
   {
     uuid: 'decoration-52dfe16a-b978-43bb-b90b-1981b8be5d6e',
@@ -369,7 +369,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Add a touch of comfort and style to your kitchen with this beautiful kitchen rug. Its soft and plush texture provides a cozy and inviting feel, while its practical features make it a great addition to any kitchen.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/kitchen-reg.webp',
   },
   {
     uuid: 'decoration-3fca352a-ef32-42af-ac04-fa045253c5d2',
@@ -377,7 +377,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Organize your kitchen and maximize your storage space with this beautiful kitchen shelf. Its sleek and modern design offers a sophisticated touch to your decor, while its practical features provide ample space for your kitchen essentials.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/kitchen-shelf.webp',
   },
   {
     uuid: 'decoration-792e50e3-5999-4589-a9cc-e3a1a0a3b5c7',
@@ -385,7 +385,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Its lush green foliage provides a calming and refreshing feel, while its natural design offers a touch of elegance to your decor.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/leaf-plant.webp',
   },
   {
     uuid: 'chair-312d6ba3-6e09-42c6-af59-6d4a7d9325d5',
@@ -393,7 +393,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'Upgrade your living room with this luxurious leather sofa. Its sleek and modern design offers a sophisticated touch to your decor, while its plush cushions provide ultimate comfort for you and your guests.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/leather-sofa.webp',
   },
   {
     uuid: 'decoration-a956af13-de12-4bf7-8871-04db2b847402',
@@ -401,7 +401,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Add a touch of contemporary style to your space with this unique one-leg lamp. Its sleek and minimalist design offers a modern touch to your decor, while its practical features provide ample lighting for your space.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/one-leg-lamp.webp',
   },
   {
     uuid: 'desk-73a25ea2-3079-4c49-9673-6675cfaa32a2',
@@ -409,7 +409,7 @@ const MODELS_DATA = [
     category: 'desk',
     description:
       'Bring the charm of a park to your outdoor space with this beautiful park bench. Its classic design offers a timeless touch to your decor, while its sturdy construction provides a durable and comfortable seating option.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/park-bench.webp',
   },
   {
     uuid: 'decoration-d414bcda-2df6-48c3-9ba6-8017925e733f',
@@ -417,7 +417,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Add a touch of personality to your space with this stylish patterned rug. Its unique design offers a bold and vibrant touch to your decor, while its soft and comfortable texture provides a cozy and inviting feel to your space.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/pattern-rug.webp',
   },
   {
     uuid: 'decoration-56fb707b-8b61-4feb-af13-f90544fc4a15',
@@ -425,7 +425,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Bring the beauty of nature to your outdoor space with this stunning pear tree. Its low maintenance requirements ensure that it can thrive in a variety of climates, making it a practical addition to any garden or landscape.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/pear-tree.webp',
   },
   {
     uuid: 'decoration-628e56c5-095b-4e55-9989-d4a3696afec6',
@@ -433,7 +433,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Keep your food and beverages fresh and cool with this sleek and modern refrigerator. Its spacious interior provides ample storage space for your food and beverages, while its practical features ensure that it can handle the weight of your items.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/refrigerator.webp',
   },
   {
     uuid: 'chair-c266dcd6-0dfe-49a1-be25-cf5c9161ae52',
@@ -441,7 +441,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'Relax and unwind in this comfortable and stylish relax chair. Its sleek and modern design offers a sophisticated touch to your decor, while its plush cushions provide ultimate comfort for you and your guests.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/relax-chair.webp',
   },
   {
     uuid: 'decoration-4504276e-81f1-4882-97af-7b86d604c36d',
@@ -449,7 +449,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Bring the beauty of nature to your space with this adorable Shiba. Its soft and cuddly texture provides a cozy and inviting feel, while its playful design offers a touch of personality to your decor.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/shiba.webp',
   },
   {
     uuid: 'chair-0b9eb21c-5a3f-4e71-b914-e817cc5ecd0e',
@@ -457,7 +457,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'Upgrade your living room with this luxurious sofa. Its sleek and modern design offers a sophisticated touch to your decor, while its plush cushions provide ultimate comfort for you and your guests.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/sofa.webp',
   },
   {
     uuid: 'decoration-1776bb75-87b3-4cad-ac68-1105e4a4ceb3',
@@ -465,7 +465,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Elevate your space with this stylish triangle pattern rug. Its unique design offers a contemporary touch to your decor, while its soft and comfortable texture provides a cozy and inviting feel to your space.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/triangle-pattern-rug.webp',
   },
   {
     uuid: 'decoration-fd9ee033-e41c-4210-8e6b-de57e90bf23a',
@@ -473,7 +473,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Upgrade your entertainment experience with this sleek and modern TV stand. Its clean lines and simple design offer a contemporary touch to your decor, while its sturdy construction provides a reliable and durable support for your TV and other media equipment.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/tv-stand.webp',
   },
   {
     uuid: 'layout-40eea2e9-124e-48d9-8397-5284a9e8e97f',
@@ -481,7 +481,7 @@ const MODELS_DATA = [
     category: 'layout',
     description:
       'Create a stylish and functional home with this customizable wall layout. Designed to help you easily build your virtual space, this layout features a variety of wall elements, including shelves, cabinets, and artwork, that can be arranged to suit your specific needs and preferences.',
-    thumbnail: '',
+    thumbnail: '/public/thumbnail/wall-layout-home.webp',
   },
 ]
 
