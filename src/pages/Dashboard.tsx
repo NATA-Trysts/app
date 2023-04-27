@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { exploreSpacesFromApi, HeaderDashboard, SpaceSection, useDashboard } from '@/components/Dashboard'
+import { exploreSpacesFromApi, HeaderDashboard, SpaceSection } from '@/components/Dashboard'
 import { NavigationPanel } from '@/components/Navigation'
 import { NotificationStack } from '@/components/Notification'
-import { DeleteDialog } from '@/components/SpacePreviewCard'
+import { DeleteDialog } from '@/components/PreviewCard'
 import { useAxiosPrivate } from '@/hooks'
 import { useDashboardStore, useMemberStore } from '@/stores'
 
@@ -25,12 +25,7 @@ const Body = styled.div`
 
 const Dashboard = () => {
   const [user] = useMemberStore((state) => [state.user])
-  const [setMySpaces, setExploreSpaces, setLibrarySpaces] = useDashboardStore((state) => [
-    state.setMySpaces,
-    state.setExploreSpaces,
-    state.setLibrarySpaces,
-  ])
-  const { convertSpacesToLibrarySpaces } = useDashboard()
+  const [setMySpaces, setExploreSpaces] = useDashboardStore((state) => [state.setMySpaces, state.setExploreSpaces])
 
   const axiosPrivate = useAxiosPrivate()
 
@@ -44,7 +39,6 @@ const Dashboard = () => {
 
     Promise.all([mySpacesPromise, librarySpacesPromise]).then((res) => {
       setMySpaces(res[0].data)
-      setLibrarySpaces(convertSpacesToLibrarySpaces(res[1].data))
     })
   }, [])
 
