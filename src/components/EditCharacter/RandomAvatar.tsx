@@ -79,8 +79,10 @@ export const RandomAvatar = ({ isEdit = false }: RandomAvatarProps) => {
   return (
     <RandomContainer
       animate={{
-        y: isEdit ? 0 : 200,
+        y: isEdit ? 0 : 50,
+        opacity: isEdit ? 1 : 0,
       }}
+      id="random-avatar"
       onClick={handleRandom}
     >
       <RandomIcon />
