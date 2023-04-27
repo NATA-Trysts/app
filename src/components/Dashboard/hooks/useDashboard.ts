@@ -1,7 +1,7 @@
 import { orderBy, take } from 'lodash-es'
 import * as timeago from 'timeago.js'
 
-import { CustomableSpaceTheme, Space } from '@/models/Space'
+import { CustomableTheme, Space } from '@/models/Space'
 
 const useDashboard = () => {
   const calculateTimeAgo = (timestamp: number) => {
@@ -16,10 +16,10 @@ const useDashboard = () => {
     return recentSpaces
   }
 
-  const convertSpacesToLibrarySpaces = (spaces: Space[]): Map<CustomableSpaceTheme, Space[]> => {
-    const librarySpaces = new Map<CustomableSpaceTheme, Space[]>()
+  const convertSpacesToLibrarySpaces = (spaces: Space[]): Map<CustomableTheme, Space[]> => {
+    const librarySpaces = new Map<CustomableTheme, Space[]>()
 
-    const addSpaces = (theme: CustomableSpaceTheme, space: Space) => {
+    const addSpaces = (theme: CustomableTheme, space: Space) => {
       if (librarySpaces.has(theme)) {
         const spaces = librarySpaces.get(theme)
 
