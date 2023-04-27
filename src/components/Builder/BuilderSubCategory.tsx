@@ -28,8 +28,8 @@ const SubCategoryList = styled.div`
 `
 
 const SubCategoryItem = styled.button<{ active: boolean }>`
-  width: 68px;
-  height: 68px;
+  width: 64px;
+  height: 64px;
   border: none;
   border-radius: 8px;
   overflow: hidden;

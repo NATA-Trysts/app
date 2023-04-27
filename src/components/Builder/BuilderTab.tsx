@@ -66,13 +66,13 @@ export const BuilderTab = () => {
       id: 4,
       icon: <SmileFaceIcon />,
       name: 'layout',
-      isActive: false,
+      isActive: true,
     },
     {
       id: 1,
       icon: <AllIcon />,
       name: 'chair', // temp
-      isActive: true,
+      isActive: false,
     },
     {
       id: 2,
