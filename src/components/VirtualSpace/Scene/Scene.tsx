@@ -54,22 +54,41 @@ import { useVirtualSpaceStore } from '@/stores'
 import { MemberVideoLayout } from '../MemberVideoLayout'
 import { OtherMember } from '../OtherMember'
 
-type RGBProps = {
+type FurnitureModelProps = {
   color?: string
   position: [number, number, number]
   children?: React.ReactNode
+  setInteractable: (value: boolean) => void
+  setTarget: (value: Object3D | null) => void
+  modelType: string
+  setTargetCategory: (value: string | null) => void
 }
 
-const FurnitureModel = (props: RGBProps) => {
+const FurnitureModel = (props: FurnitureModelProps) => {
   return (
     <RigidBody
       type="fixed"
       {...props}
-      onCollisionEnter={(e) => {
-        console.log('enter')
+      onCollisionEnter={({ target }) => {
+        props.setInteractable(true)
+
+        if (target) {
+          const position = (target.rigidBodyObject as Object3D).position
+          const rotation = (target.rigidBodyObject as Object3D).rotation
+
+          const newTarget: any = {
+            position: { x: position.x, y: position.y, z: position.z },
+            rotation: { x: rotation.x, y: rotation.y, z: rotation.z },
+          }
+
+          props.setTarget(newTarget)
+          props.setTargetCategory(props.modelType)
+        }
       }}
       onCollisionExit={(e) => {
-        console.log('exit')
+        props.setInteractable(false)
+        props.setTarget(null)
+        props.setTargetCategory(null)
       }}
     >
       {props.children}
@@ -80,6 +99,7 @@ const FurnitureModel = (props: RGBProps) => {
 export const Scene = () => {
   const [spaceModels, setInteractable] = useVirtualSpaceStore((state) => [state.spaceModels, state.setInteractable])
   const [target, setTarget] = useState<Object3D | null>(null)
+  const [targetCategory, setTargetCategory] = useState<string | null>(null)
 
   return (
     <Container>
@@ -92,7 +112,14 @@ export const Scene = () => {
 
           <Physics gravity={[0, -9.82, 0]}>
             {spaceModels.map((model: any) => (
-              <FurnitureModel key={model.uuid} position={[model.position.x, model.position.y, model.position.z]}>
+              <FurnitureModel
+                key={model.uuid}
+                modelType={model.type}
+                position={[model.position.x, model.position.y - 2, model.position.z]}
+                setInteractable={setInteractable}
+                setTarget={setTarget}
+                setTargetCategory={setTargetCategory}
+              >
                 {
                   {
                     'desk-d61cf1db-b68e-4e4e-9bbd-797962b63dbf': <AccentTable />,
@@ -148,7 +175,7 @@ export const Scene = () => {
           </Physics>
         </Suspense>
       </Canvas>
-      <Hint />
+      <Hint action={targetCategory === 'chair' ? 'sit' : 'abc'} actionKey={targetCategory === 'chair' ? 'Z' : 'L'} />
     </Container>
   )
 }
