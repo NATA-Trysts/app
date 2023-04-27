@@ -17,6 +17,7 @@ export type Space = {
   code: string
   password: string
   hmsRoomId: string
+  models: any[]
 }
 
 // 1 for home, 2 for files, and 3 for libraries

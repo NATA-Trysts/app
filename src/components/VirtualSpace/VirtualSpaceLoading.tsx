@@ -43,7 +43,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const [password, setPassword] = useState('')
   const { auth } = useAuth()
 
-  const [setSpaceName] = useVirtualSpaceStore((state) => [state.setSpaceName])
+  const [setSpaceName, setSpaceModels] = useVirtualSpaceStore((state) => [state.setSpaceName, state.setSpaceModels])
   const [prepareState, setPrepareState] = useState<PrepareState>('')
 
   const [setRoomInstance] = useNetworkStore((state) => [state.setRoomInstance])
@@ -102,6 +102,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
           const password = space.password
 
           setSpaceName(space.name)
+          setSpaceModels(space.models)
           setRoomId(space.hmsRoomId)
           isHost.current = space.author === user?._id
 
