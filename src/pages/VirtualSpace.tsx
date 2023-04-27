@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { CustomableContainer } from '@/components/Commons'
 import { MultitabDetect, MultiTabWarning } from '@/components/MultitabDetect'
+import { ThemeScene } from '@/components/SpaceTheme/ThemeScene'
 import { UtilitySection } from '@/components/UtilitySection'
 import {
   CustomCharacterPanel,
@@ -95,6 +96,7 @@ const LeftSideWrapper = styled.div`
 const VirtualSpace = () => {
   const customColor = useAppStore((state) => state.customColor)
   const [selectedUltility] = useVirtualSpaceStore((state) => [state.selectedUltility])
+  const [spaceTheme] = useVirtualSpaceStore((state) => [state.spaceTheme])
 
   useEffect(() => {
     document.title = 'Trysts | Summer Open Call'
@@ -107,7 +109,7 @@ const VirtualSpace = () => {
           <Container customColor={customColor}>
             <MultiplayerNetwork />
 
-            <Scene />
+            {spaceTheme ? <ThemeScene theme={spaceTheme} /> : <Scene />}
 
             <OverlayContainer>
               <IframeDialogProvider>

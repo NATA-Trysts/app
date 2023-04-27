@@ -2,6 +2,7 @@ import produce from 'immer'
 import { create } from 'zustand'
 
 import { CustomColor } from '@/components/Commons'
+import { SpaceTheme } from '@/models/Space'
 
 type UltilityType = 'chat' | 'member' | 'setting' | null
 export type VideoLayoutType = 'above-head' | 'slide'
@@ -38,6 +39,8 @@ type VirtualSpaceState = {
   setSpaceName: (spaceName: string) => void
   spaceModels: SpaceModelTemp[]
   setSpaceModels: (spaceModels: SpaceModelTemp[]) => void
+  spaceTheme: SpaceTheme
+  setSpaceTheme: (theme: SpaceTheme) => void
   selectedUltility: UltilityType
   setSelectedUltility: (selectedUltility: UltilityType) => void
   customColor: CustomColor
@@ -99,6 +102,9 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
 
   spaceModels: [],
   setSpaceModels: (spaceModels) => set(() => ({ spaceModels })),
+
+  spaceTheme: false,
+  setSpaceTheme: (spaceTheme) => set(() => ({ spaceTheme })),
 
   selectedUltility: null,
   setSelectedUltility: (selectedUltility) => set(() => ({ selectedUltility })),
