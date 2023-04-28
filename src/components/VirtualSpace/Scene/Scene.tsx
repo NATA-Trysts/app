@@ -21,9 +21,9 @@ import {
   CabinetBathroom,
   CabinetBook,
   Carpet,
-  // Chair,
+  Chair,
   CircleTable,
-  // Desk,
+  Desk,
   DinningChair,
   DinningTable,
   DoubleBed,
@@ -67,6 +67,7 @@ type FurnitureModelProps = {
 const FurnitureModel = (props: FurnitureModelProps) => {
   return (
     <RigidBody
+      // sensor
       type="fixed"
       {...props}
       onCollisionEnter={({ target }) => {
@@ -136,9 +137,9 @@ export const Scene = () => {
                     'cabinet-29524f5b-0486-446e-a01f-181c4b7e5402': <CabinetBook />,
                     'cabinet-28f52db2-46da-4bb1-86da-ef5d256099ff': <Cabinet />,
                     'decoration-26e29954-007d-408f-9243-86c518bfc035': <Carpet />,
-                    // 'chair-bf76df41-9c51-4ae4-8d26-6a54e0e2265d': <Chair />,
+                    'chair-bf76df41-9c51-4ae4-8d26-6a54e0e2265d': <Chair />,
                     'desk-68eccc2e-9d7b-4c66-972e-9aca69b76505': <CircleTable />,
-                    // 'desk-58d0bc2c-871f-45ae-a73d-178c0ad41f31': <Desk />,
+                    'desk-58d0bc2c-871f-45ae-a73d-178c0ad41f31': <Desk />,
                     'chair-5b879d1e-ca56-49e2-8af8-f348dc043f03': <DinningChair />,
                     'desk-bb79046f-20c9-4eb3-b527-5470bfe8e967': <DinningTable />,
                     'decoration-1510441a-f8e8-444e-aea8-cc530a0fedb6': <DoubleBed />,
@@ -149,7 +150,7 @@ export const Scene = () => {
                     'decoration-792e50e3-5999-4589-a9cc-e3a1a0a3b5c7': <LeafPlant />,
                     'chair-312d6ba3-6e09-42c6-af59-6d4a7d9325d5': <LeatherSofa />,
                     'decoration-a956af13-de12-4bf7-8871-04db2b847402': <OneLegLamp />,
-                    'desk-73a25ea2-3079-4c49-9673-6675cfaa32a2': <ParkBench />,
+                    'chair-73a25ea2-3079-4c49-9673-6675cfaa32a2': <ParkBench />,
                     'decoration-d414bcda-2df6-48c3-9ba6-8017925e733f': <PatternRug />,
                     'decoration-56fb707b-8b61-4feb-af13-f90544fc4a15': <PearTree />,
                     'decoration-628e56c5-095b-4e55-9989-d4a3696afec6': <Refrigerator />,

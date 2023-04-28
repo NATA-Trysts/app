@@ -12,9 +12,9 @@ import { Model as Cabinet } from './Cabinet'
 import { Model as CabinetBathroom } from './Cabinet-bathroom'
 import { Model as CabinetBook } from './Cabinet-book'
 import { Model as Carpet } from './Carpet'
-// import { Model as Chair } from './Chair'
+import { Model as Chair } from './Chair'
 import { Model as CircleTable } from './Circle-table'
-// import { Model as Desk } from './Desk'
+import { Model as Desk } from './Desk'
 import { Model as DinningChair } from './Dinning-chair'
 import { Model as DinningTable } from './Dinning-table'
 import { Model as DoubleBed } from './Double-bed'
@@ -51,9 +51,9 @@ export {
   CabinetBathroom,
   CabinetBook,
   Carpet,
-  // Chair,
+  Chair,
   CircleTable,
-  // Desk,
+  Desk,
   DinningChair,
   DinningTable,
   DoubleBed,

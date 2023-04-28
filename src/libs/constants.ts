@@ -404,9 +404,9 @@ const MODELS_DATA = [
     thumbnail: '/public/thumbnail/one-leg-lamp.webp',
   },
   {
-    uuid: 'desk-73a25ea2-3079-4c49-9673-6675cfaa32a2',
+    uuid: 'chair-73a25ea2-3079-4c49-9673-6675cfaa32a2',
     name: 'Park bench',
-    category: 'desk',
+    category: 'chair',
     description:
       'Bring the charm of a park to your outdoor space with this beautiful park bench. Its classic design offers a timeless touch to your decor, while its sturdy construction provides a durable and comfortable seating option.',
     thumbnail: '/public/thumbnail/park-bench.webp',
@@ -422,7 +422,7 @@ const MODELS_DATA = [
   {
     uuid: 'decoration-56fb707b-8b61-4feb-af13-f90544fc4a15',
     name: 'Pear Tree',
-    category: 'decoration',
+    category: 'plant',
     description:
       'Bring the beauty of nature to your outdoor space with this stunning pear tree. Its low maintenance requirements ensure that it can thrive in a variety of climates, making it a practical addition to any garden or landscape.',
     thumbnail: '/public/thumbnail/pear-tree.webp',

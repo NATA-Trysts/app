@@ -30,7 +30,7 @@ const Builder = () => {
         if (ignore) return
         const spaceData = res.data
 
-        document.title = `🔨 ${spaceData.name} | Trysts`
+        document.title = `Trysts | ${spaceData.name}`
 
         setSpaceInformation({
           name: spaceData.name,
