@@ -52,7 +52,7 @@ type GLTFResult = GLTF & {
   }
 }
 
-export default function Bookshelf(props) {
+export default function Bookshelf(props: JSX.IntrinsicElements['group']) {
   const { nodes } = useGLTF('/models/bookshelf-transformed.glb') as GLTFResult
   const instances = useMemo(
     () => ({
@@ -67,13 +67,13 @@ export default function Bookshelf(props) {
 
   return (
     <Merged meshes={instances} {...props}>
-      {(instances) => <Model instances={instances} />}
+      {(instances: any) => <Model instances={instances} />}
     </Merged>
   )
 }
 
-function Model({ instances, ...props }: JSX.IntrinsicElements['group']) {
-  const group = useRef<THREE.Group>()
+function Model({ instances, ...props }: JSX.IntrinsicElements['group'] & { instances: any }) {
+  const group = useRef<THREE.Group>(null)
   const { nodes, materials } = useGLTF('/models/bookshelf-transformed.glb') as GLTFResult
 
   return (

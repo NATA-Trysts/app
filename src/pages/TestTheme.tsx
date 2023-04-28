@@ -102,7 +102,7 @@ const TestTheme = () => {
   }, [])
 
   return (
-    <ThemeScene />
+    <ThemeScene theme="home" />
     // <VirtualSpaceLoading>
     //   <CustomableContainer customColor={customColor}>
     //     <MultitabDetect fallback={<MultiTabWarning />}>

@@ -142,6 +142,7 @@ const GPTButton = () => {
         color: generatedModel.color,
         roughness: 1,
         metalness: 0,
+        type: null,
       })
 
       setLoading(false)

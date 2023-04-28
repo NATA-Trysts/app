@@ -1,4 +1,4 @@
-import { forwardRef, RefObject } from 'react'
+import { ForwardedRef, forwardRef } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as Cross } from '@/assets/icons/cross.svg'
@@ -61,7 +61,7 @@ type ScreenShareProps = {
   close: () => void
 }
 
-export const ScreenShare = forwardRef(({ close }: ScreenShareProps, ref: RefObject<HTMLVideoElement>) => {
+export const ScreenShare = forwardRef(({ close }: ScreenShareProps, ref: ForwardedRef<HTMLVideoElement>) => {
   return (
     <Overlay>
       <VideoContainer>
