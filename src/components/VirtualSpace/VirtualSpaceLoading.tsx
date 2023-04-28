@@ -115,7 +115,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
 
         // setRoomId('642c5157adb93485420bfec8')
 
-        setPrepareState('info-loaded')
+        // setPrepareState('info-loaded')
       } catch (error) {
         console.error(error)
         setPrepareError('Prepare Failed')
