@@ -28,8 +28,8 @@ const SubCategoryList = styled.div`
 `
 
 const SubCategoryItem = styled.button<{ active: boolean }>`
-  width: 68px;
-  height: 68px;
+  width: 64px;
+  height: 64px;
   border: none;
   border-radius: 8px;
   overflow: hidden;
@@ -74,12 +74,19 @@ export const BuilderSubCategory = ({ list, selectedId, onClickItem }: SubCategor
       <SubCategoryList ref={subCategoryListRef}>
         {list?.map((item) => (
           <SubCategoryItem
-            key={item.id}
-            active={selectedId === item.id}
-            id={'sub-category-' + item.id.toString()}
+            key={item.uuid}
+            active={selectedId === item.uuid}
+            id={'sub-category-' + item.uuid.toString()}
             onClick={() => onClickItem(item)}
           >
-            <SubCategoryImg alt={item.name} loading="lazy" src={item.img} />
+            <SubCategoryImg
+              alt={item.name}
+              loading="lazy"
+              src={
+                item.thumbnail ||
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIE2Lcmdg3cD-7MR9wjwOO81cp7Lisx2b2Ww&usqp=CAU'
+              }
+            />
           </SubCategoryItem>
         ))}
       </SubCategoryList>

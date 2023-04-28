@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export type CategoryType = 'chair' | 'table' | 'desk' | null
+export type CategoryType = 'chair' | 'desk' | 'decoration' | 'layout' | 'cabinet' | 'plant' | 'bath'
 
 export type ModelResolution = {
   low: string
@@ -8,13 +8,12 @@ export type ModelResolution = {
 }
 
 export type SubCategoryItem = {
-  id: string
+  uuid: string
   name: string
   description: string
-  img: string
+  thumbnail: string
   category: CategoryType
-  collection: string
-  resolutions: ModelResolution
+  resolutions?: ModelResolution
 }
 
 type SpaceInformationType = {
@@ -44,7 +43,6 @@ export type MousePosition = Omit<Vec3, 'y'>
 export type SpaceModel = {
   uuid: string // unique
   name: string
-  id: string
   position: ModifierValueType
   rotation: ModifierValueType
   color: string
@@ -124,7 +122,12 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
 
   scrollPosition: new Map([
     ['chair', 0],
-    ['table', 0],
+    ['desk', 0],
+    ['decoration', 0],
+    ['layout', 0],
+    ['cabinet', 0],
+    ['plant', 0],
+    ['bath', 0],
   ]),
   setScrollPosition: (scrollPosition: Map<CategoryType, number>) => set(() => ({ scrollPosition })),
 

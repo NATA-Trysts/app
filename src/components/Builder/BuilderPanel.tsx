@@ -1,9 +1,12 @@
+// @ts-nocheck
+
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
+import { MODELS_DATA } from '@/libs/constants'
+
 import { BuilderContent } from './BuilderContent'
 import { BuilderTab } from './BuilderTab'
-import { subCategoryList } from './dummyData'
 import { useBuilder } from './hooks/useBuilder'
 
 const BuilderPanelContainer = styled.div`
@@ -29,7 +32,7 @@ export const BuilderPanel = () => {
   const { mappingData } = useBuilder()
 
   useEffect(() => {
-    mappingData(subCategoryList)
+    mappingData(MODELS_DATA)
       .then(() => {
         setIsLoading(false)
       })
