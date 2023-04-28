@@ -18,7 +18,7 @@ const NameBoxContainer = styled(motion.div)`
   justify-content: center;
   align-items: center;
   pointer-events: auto;
-  z-index: 0;
+  z-index: 1;
 `
 
 const NameWrapper = styled.div`
