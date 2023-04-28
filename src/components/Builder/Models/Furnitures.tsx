@@ -59,7 +59,7 @@ type FurnitureProps = SpaceModel & {
 }
 
 const INITIAL_Y = 0
-const HIGHEST_Y = 1
+const HIGHEST_Y = 1.5
 
 const Furniture = (props: FurnitureProps) => {
   const { updateHistory } = useBuilder()
@@ -146,6 +146,8 @@ const Furniture = (props: FurnitureProps) => {
 
       isModelClicked.current = false
       animate(yP.current, INITIAL_Y, {
+        type: 'spring',
+        bounce: 0.5,
         onUpdate: (latest) => {
           yP.current = latest
         },
