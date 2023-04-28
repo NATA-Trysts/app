@@ -61,6 +61,10 @@ export const BackButton = ({ top = 40, left = 120, onClickBack, isEdit = false }
       }}
       left={left}
       top={top}
+      transition={{
+        type: 'spring',
+        bounce: 0.2,
+      }}
       onClick={onClickBack}
     >
       <ArrowLeft />
