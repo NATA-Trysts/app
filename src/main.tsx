@@ -57,16 +57,18 @@ const Guard = () => {
           />
         </Route>
         <Route element={<PersistLogin />}>
-          <Route
-            element={
-              <Suspense fallback={<span>loading</span>}>
-                <MobileDetect>
-                  <Create />
-                </MobileDetect>
-              </Suspense>
-            }
-            path="/create"
-          />
+          <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+            <Route
+              element={
+                <Suspense fallback={<span>loading</span>}>
+                  <MobileDetect>
+                    <Create />
+                  </MobileDetect>
+                </Suspense>
+              }
+              path="/create"
+            />
+          </Route>
         </Route>
         <Route
           element={

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { exploreSpacesFromApi, HeaderDashboard, SpaceSection } from '@/components/Dashboard'
+import { exploreSpacesFromApi, HeaderDashboard, SpaceSection, useDashboard } from '@/components/Dashboard'
 import { NavigationPanel } from '@/components/Navigation'
 import { NotificationStack } from '@/components/Notification'
 import { useAxiosPrivate } from '@/hooks'
@@ -29,6 +29,7 @@ const Dashboard = () => {
     state.setExploreSpaces,
     state.setLibrarySpaces,
   ])
+  const { convertSpacesToLibrarySpaces } = useDashboard()
 
   const axiosPrivate = useAxiosPrivate()
 
@@ -42,7 +43,7 @@ const Dashboard = () => {
 
     Promise.all([mySpacesPromise, librarySpacesPromise]).then((res) => {
       setMySpaces(res[0].data)
-      setLibrarySpaces(res[1].data)
+      setLibrarySpaces(convertSpacesToLibrarySpaces(res[1].data))
     })
   }, [])
 

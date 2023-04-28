@@ -24,17 +24,18 @@ export const SpaceInfo = ({ onCanNext = () => {} }: SpaceInfoProps) => {
 
   const { register, getValues, setValue, formState, getFieldState, setFocus } = useFormContext()
 
-  const nameField = register('space-name', {
+  const nameField = register('name', {
     required: true,
     validate: { whitespace: isOnlyWhitespace },
+    minLength: 2,
   })
-  const passwordField = register('space-password', {
+  const passwordField = register('password', {
     required: true,
     disabled: !enablePassword,
     validate: { whitespace: isOnlyWhitespace },
   })
-  const nameState = getFieldState('space-name', formState)
-  const passwordState = getFieldState('space-password', formState)
+  const nameState = getFieldState('name', formState)
+  const passwordState = getFieldState('password', formState)
 
   useEffect(() => {
     onCanNext(
@@ -45,11 +46,11 @@ export const SpaceInfo = ({ onCanNext = () => {} }: SpaceInfoProps) => {
   register('max-member', { value: 10 })
 
   useEffect(() => {
-    setFocus('space-name')
+    setFocus('name')
   }, [setFocus])
 
   useEffect(() => {
-    if (enablePassword) setFocus('space-password')
+    if (enablePassword) setFocus('password')
   }, [enablePassword, setFocus])
 
   return (
@@ -61,16 +62,16 @@ export const SpaceInfo = ({ onCanNext = () => {} }: SpaceInfoProps) => {
       </CreateFormHeader>
 
       <CreateField>
-        <CreateLabel htmlFor="space-name">
+        <CreateLabel htmlFor="name">
           <SpaceInfoText size="medium" weight="normal">
             SpaceName
           </SpaceInfoText>
         </CreateLabel>
-        <CreateInput id="space-name" {...nameField} placeholder="Space Name" type="text" />
+        <CreateInput id="name" {...nameField} placeholder="Space Name" type="text" />
       </CreateField>
 
       <CreateField>
-        <PasswordLabel htmlFor="space-password">
+        <PasswordLabel htmlFor="password">
           <SpaceInfoText size="medium" weight="normal">
             Password protect
           </SpaceInfoText>
@@ -87,7 +88,7 @@ export const SpaceInfo = ({ onCanNext = () => {} }: SpaceInfoProps) => {
         </PasswordLabel>
 
         <PasswordInputContainer disabled={enablePassword}>
-          <CreateInput id="space-password" {...passwordField} placeholder="Space Password" type="password" />
+          <CreateInput id="password" {...passwordField} placeholder="Space Password" type="password" />
         </PasswordInputContainer>
       </CreateField>
 

@@ -1,24 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-// type Author = {
-//   _id: string
-//   username: string
-// }
-
-export type Space = {
-  _id: string
-  name: string
-  thumbnail: string
-  latestEdited: number
-  // author: Author
-  author: string
-  category: string
-  code: string
-  password: string
-  hmsRoomId: string
-  models: any[]
-}
+import { CustomableSpaceTheme, Space } from '@/models/Space'
 
 // 1 for home, 2 for files, and 3 for libraries
 export type DashboardOption = 1 | 2 | 3
@@ -33,8 +16,8 @@ type DashboardState = {
   exploreSpaces: Space[]
   setExploreSpaces: (exploreSpaces: Space[]) => void
 
-  librarySpaces: Map<string, Space[]>
-  setLibrarySpaces: (librarySpacesFromApi: Space[]) => void
+  librarySpaces: Map<CustomableSpaceTheme, Space[]>
+  setLibrarySpaces: (librarySpacesFromApi: Map<CustomableSpaceTheme, Space[]>) => void
 }
 
 type NavigationState = {
@@ -60,21 +43,7 @@ export const useDashboardStore = create<DashboardState>()(
       setExploreSpaces: (exploreSpaces: Space[]) => set(() => ({ exploreSpaces })),
 
       librarySpaces: new Map(),
-      setLibrarySpaces: (librarySpacesFromApi: Space[]) => {
-        const librarySpaces = new Map<string, Space[]>()
-
-        librarySpacesFromApi.forEach((space) => {
-          if (librarySpaces.has(space.category)) {
-            const spaces = librarySpaces.get(space.category)
-
-            if (spaces) {
-              spaces.push(space)
-              librarySpaces.set(space.category, spaces)
-            }
-          } else {
-            librarySpaces.set(space.category, [space])
-          }
-        })
+      setLibrarySpaces: (librarySpaces: Map<CustomableSpaceTheme, Space[]>) => {
         set(() => ({ librarySpaces }))
       },
     }),
