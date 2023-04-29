@@ -36,6 +36,7 @@ const Builder = () => {
           name: spaceData.name,
           password: spaceData.password,
           isProtected: spaceData.password !== '',
+          thumbnail: spaceData.thumbnail,
         })
         setSpaceCode(spaceData.code)
         setModels([...spaceData.models])

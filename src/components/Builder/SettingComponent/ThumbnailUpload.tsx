@@ -1,9 +1,11 @@
+import axios from 'axios'
 import { useState } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 import { ReactComponent as UploadIcon } from '@/assets/icons/thumbnail-upload.svg'
 import { Text } from '@/components/Commons'
 import { useNotification } from '@/hooks'
+import { useBuilderStore } from '@/stores'
 
 const Container = styled.div`
   width: 100%;
@@ -81,10 +83,70 @@ const ThumbnailImage = styled.img`
   object-fit: cover;
 `
 
-export const ThumbnailUpload = () => {
-  const [image, setImage] = useState(
-    'https://imageio.forbes.com/specials-images/imageserve/61f9a4549faaf4bcb6435f23/gathertownhero/0x0.jpg?format=jpg&height=964&width=1920&fit=crop',
+const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+
+const loading = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`
+
+const SpinnerContainer = styled.div`
+  & {
+    display: inline-block;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  & div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    margin: 4px;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    animation: ${loading} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+  }
+  & div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  & div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  & div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+`
+
+const Spinner = () => {
+  return (
+    <SpinnerContainer>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </SpinnerContainer>
   )
+}
+
+export const ThumbnailUpload = () => {
+  const [spaceInformation, setSpaceInformation] = useBuilderStore((state) => [
+    state.spaceInformation,
+    state.setSpaceInformation,
+  ])
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const { addNotification } = useNotification()
 
@@ -99,7 +161,30 @@ export const ThumbnailUpload = () => {
 
         reader.readAsDataURL(file)
         reader.onload = () => {
-          setImage(reader.result as string)
+          setIsLoading(true)
+
+          const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`
+          const formData = new FormData()
+
+          formData.append('file', reader.result as string)
+          formData.append('upload_preset', uploadPreset)
+
+          axios
+            .post(url, formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
+            .then((res) => {
+              setSpaceInformation({
+                ...spaceInformation,
+                thumbnail: res.data.secure_url,
+              })
+              setIsLoading(false)
+            })
+            .catch((err) => {
+              console.error(err)
+            })
         }
       }
     }
@@ -116,18 +201,29 @@ export const ThumbnailUpload = () => {
         </SizeWarning>
       </TitleWrapper>
       <ThumbnailBox>
-        <Overlay>
-          <UploadIcon />
-          <ImageInput
-            accept="image/png, image/jpeg"
-            multiple={false}
-            name="file"
-            title=" "
-            type="file"
-            onChange={handleChange}
-          />
-        </Overlay>
-        <ThumbnailImage src={image} />
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <>
+            <Overlay>
+              <UploadIcon />
+              <ImageInput
+                accept="image/png, image/jpeg"
+                multiple={false}
+                name="file"
+                title=" "
+                type="file"
+                onChange={handleChange}
+              />
+            </Overlay>
+            <ThumbnailImage
+              src={
+                spaceInformation.thumbnail ||
+                'https://htmlcolorcodes.com/assets/images/colors/black-color-solid-background-1920x1080.png'
+              }
+            />
+          </>
+        )}
       </ThumbnailBox>
     </Container>
   )

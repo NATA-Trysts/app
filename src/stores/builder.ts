@@ -20,6 +20,7 @@ type SpaceInformationType = {
   name: string
   isProtected: boolean
   password: string
+  thumbnail: string
 }
 
 type GlobalSettingsType = Map<string, { values: boolean[] | string[]; selected: boolean | string }>
@@ -141,6 +142,7 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
     name: '',
     isProtected: false,
     password: '',
+    thumbnail: '',
   },
   setSpaceInformation: (spaceInformation: SpaceInformationType) => set(() => ({ spaceInformation })),
 
