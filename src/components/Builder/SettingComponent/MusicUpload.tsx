@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 
 import { Text } from '@/components/Commons'
@@ -143,6 +143,22 @@ const Spinner = () => {
 const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
 const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
 
+const extractFileName = (url: string | undefined) => {
+  try {
+    if (url) {
+      const startIndex = url.lastIndexOf('/') + 1
+      const endIndex = url.indexOf('.mp3') + 4
+      const fileName = url.substring(startIndex, endIndex)
+
+      return fileName
+    } else {
+      return ''
+    }
+  } catch (err) {
+    return ''
+  }
+}
+
 export const MusicUpload = () => {
   const [spaceInformation, setSpaceInformation] = useBuilderStore((state) => [
     state.spaceInformation,
@@ -151,6 +167,14 @@ export const MusicUpload = () => {
 
   const [isLoading, setIsLoading] = useState(false)
   const [music, setMusic] = useState('')
+
+  useEffect(() => {
+    if (spaceInformation.backgroundMusic) {
+      const fileName = extractFileName(spaceInformation.backgroundMusic)
+
+      setMusic(fileName)
+    }
+  }, [spaceInformation.backgroundMusic])
 
   const handleClick = () => {}
 
@@ -169,6 +193,7 @@ export const MusicUpload = () => {
         setIsLoading(true)
         formData.append('file', file)
         formData.append('upload_preset', uploadPreset)
+        formData.append('public_id', `${file.name}-${Date.now()}`)
         axios
           .post(url, formData, {
             headers: {
