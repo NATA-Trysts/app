@@ -49,13 +49,16 @@ const Wrapper = styled.div`
 `
 
 export const BackgroundMusicSelect = () => {
-  const [setBackgroundMusic] = useVirtualSpaceStore((state) => [state.setBackgroundMusic])
+  const [isPlayingMusic, setIsPlayingMusic] = useVirtualSpaceStore((state) => [
+    state.isPlayingMusic,
+    state.setIsPlayingMusic,
+  ])
 
   const handleSelectedChange = useCallback(
     (value: string) => {
-      value === 'on' ? setBackgroundMusic(true) : setBackgroundMusic(false)
+      value === 'on' ? setIsPlayingMusic(true) : setIsPlayingMusic(false)
     },
-    [setBackgroundMusic],
+    [setIsPlayingMusic],
   )
 
   return (
@@ -71,7 +74,7 @@ export const BackgroundMusicSelect = () => {
             { value: 'on', display: 'On' },
             { value: 'off', display: 'Off' },
           ]}
-          selected={'on'}
+          selected={isPlayingMusic ? 'on' : 'off'}
         />
       </Wrapper>
     </Container>
