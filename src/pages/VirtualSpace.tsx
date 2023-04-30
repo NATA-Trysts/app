@@ -96,7 +96,7 @@ const LeftSideWrapper = styled.div`
 const VirtualSpace = () => {
   const customColor = useAppStore((state) => state.customColor)
   const [selectedUltility] = useVirtualSpaceStore((state) => [state.selectedUltility])
-  const [spaceTheme] = useVirtualSpaceStore((state) => [state.spaceTheme])
+  const [spaceTheme, spaceName] = useVirtualSpaceStore((state) => [state.spaceTheme, state.spaceName])
 
   const [spaceBackgroundMusic, isPlayingMusic] = useVirtualSpaceStore((state) => [
     state.spaceBackgroundMusic,
@@ -105,8 +105,12 @@ const VirtualSpace = () => {
   const audio = useMemo(() => new Audio(), [])
 
   useEffect(() => {
-    document.title = 'Trysts | Summer Open Call'
-  }, [])
+    document.title = `Trysts | ${spaceName}`
+
+    return () => {
+      document.title = 'Trysts'
+    }
+  }, [spaceName])
 
   useEffect(() => {
     if (isPlayingMusic && spaceBackgroundMusic) {
