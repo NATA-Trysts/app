@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { ReactComponent as ThreeDot } from '@/assets/icons/three-dot.svg'
 import { Option, Popover } from '@/components/Popover'
 import { useCopyToClipboard } from '@/hooks'
-import { useMemberStore } from '@/stores'
+import { useMemberStore, useSpacePreviewStore } from '@/stores'
 
 const MemberContainer = styled.div`
   padding: 8px;
@@ -33,6 +33,10 @@ export const CardOptions = ({ spaceAuthorId, spaceId, spaceCode, onClickThreeDot
   const navigate = useNavigate()
   const { copy } = useCopyToClipboard()
   const [user] = useMemberStore((state) => [state.user])
+  const [setIsOpenDeleteDialog, setIdToDelete] = useSpacePreviewStore((state) => [
+    state.setIsOpenDeleteDialog,
+    state.setIdToDelete,
+  ])
 
   const handleHostClick = () => {
     navigate(`/${spaceCode}`)
@@ -51,6 +55,11 @@ export const CardOptions = ({ spaceAuthorId, spaceId, spaceCode, onClickThreeDot
     copy(`http://127.0.0.1:5173/${spaceCode}`)
   }
 
+  const handleDelete = () => {
+    setIsOpenDeleteDialog(true)
+    setIdToDelete(spaceId)
+  }
+
   const optionsMap = new Map<Owner, Options[]>([
     [
       'owner',
@@ -59,7 +68,7 @@ export const CardOptions = ({ spaceAuthorId, spaceId, spaceCode, onClickThreeDot
         { customHoverBackgroundColor: '#C771E1', title: 'Open in new tab', onClick: handleOpenInNewTabClick },
         { customHoverBackgroundColor: '#C771E1', title: 'Edit space', onClick: handleEditSpaceClick },
         { customHoverBackgroundColor: '#C771E1', title: 'Copy URL', onClick: handleCopyUrlClick },
-        { customHoverBackgroundColor: '#FC677B', title: 'Delete space', onClick: () => {} },
+        { customHoverBackgroundColor: '#FC677B', title: 'Delete space', onClick: handleDelete },
       ],
     ],
     [

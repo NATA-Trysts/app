@@ -12,6 +12,7 @@ type DashboardState = {
 
   mySpaces: Space[]
   setMySpaces: (mySpaces: Space[]) => void
+  deleteSpace: (id: string) => void
 
   exploreSpaces: Space[]
   setExploreSpaces: (exploreSpaces: Space[]) => void
@@ -28,6 +29,12 @@ type NavigationState = {
 type SpacePreviewState = {
   selectedSpacePreview: Space | null
   setSelectedSpacePreview: (selectedSpacePreview: Space | null) => void
+
+  idToDelete: string
+  setIdToDelete: (idToDelete: string) => void
+
+  isOpenDeleteDialog: boolean
+  setIsOpenDeleteDialog: (isOpenDeleteDialog: boolean) => void
 }
 
 export const useDashboardStore = create<DashboardState>()(
@@ -38,6 +45,9 @@ export const useDashboardStore = create<DashboardState>()(
 
       mySpaces: [],
       setMySpaces: (mySpaces: Space[]) => set(() => ({ mySpaces })),
+      deleteSpace: (id: string) => {
+        set((state) => ({ mySpaces: state.mySpaces.filter((space) => space._id !== id) }))
+      },
 
       exploreSpaces: [],
       setExploreSpaces: (exploreSpaces: Space[]) => set(() => ({ exploreSpaces })),
@@ -64,5 +74,11 @@ export const useSpacePreviewStore = create<SpacePreviewState>((set) => {
   return {
     selectedSpacePreview: null,
     setSelectedSpacePreview: (selectedSpacePreview: Space | null) => set(() => ({ selectedSpacePreview })),
+
+    idToDelete: '',
+    setIdToDelete: (idToDelete: string) => set(() => ({ idToDelete })),
+
+    isOpenDeleteDialog: false,
+    setIsOpenDeleteDialog: (isOpenDeleteDialog: boolean) => set(() => ({ isOpenDeleteDialog })),
   }
 })

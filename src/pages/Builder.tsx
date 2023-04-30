@@ -40,7 +40,7 @@ const Builder = () => {
           backgroundMusic: spaceData.backgroundMusic,
         })
         setSpaceCode(spaceData.code)
-        setModels([...spaceData.models])
+        setModels(spaceData.models ? [...spaceData.models] : [])
       })
       .catch((err) => {
         console.error(err)
