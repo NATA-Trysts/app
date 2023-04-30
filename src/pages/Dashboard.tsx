@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { exploreSpacesFromApi, HeaderDashboard, SpaceSection, useDashboard } from '@/components/Dashboard'
 import { NavigationPanel } from '@/components/Navigation'
 import { NotificationStack } from '@/components/Notification'
+import { DeleteDialog } from '@/components/SpacePreviewCard'
 import { useAxiosPrivate } from '@/hooks'
 import { useDashboardStore, useMemberStore } from '@/stores'
 
@@ -57,6 +58,7 @@ const Dashboard = () => {
         </Body>
       </DashboardPage>
       <NotificationStack />
+      <DeleteDialog />
     </>
   )
 }

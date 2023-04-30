@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 
 import { CustomableContainer } from '@/components/Commons'
@@ -98,9 +98,26 @@ const VirtualSpace = () => {
   const [selectedUltility] = useVirtualSpaceStore((state) => [state.selectedUltility])
   const [spaceTheme] = useVirtualSpaceStore((state) => [state.spaceTheme])
 
+  const [spaceBackgroundMusic, isPlayingMusic] = useVirtualSpaceStore((state) => [
+    state.spaceBackgroundMusic,
+    state.isPlayingMusic,
+  ])
+  const audio = useMemo(() => new Audio(), [])
+
   useEffect(() => {
     document.title = 'Trysts | Summer Open Call'
   }, [])
+
+  useEffect(() => {
+    if (isPlayingMusic && spaceBackgroundMusic) {
+      audio.src = spaceBackgroundMusic
+      audio.loop = true
+      audio.play()
+    } else {
+      audio.pause()
+      audio.src = ''
+    }
+  }, [audio, isPlayingMusic, spaceBackgroundMusic])
 
   return (
     <VirtualSpaceLoading>

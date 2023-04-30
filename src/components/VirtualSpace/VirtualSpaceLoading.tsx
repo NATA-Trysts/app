@@ -43,10 +43,11 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const [password, setPassword] = useState('')
   const { auth } = useAuth()
 
-  const [setSpaceName, setSpaceModels, setSpaceTheme] = useVirtualSpaceStore((state) => [
+  const [setSpaceName, setSpaceModels, setSpaceTheme, setSpaceBackgroundMusic] = useVirtualSpaceStore((state) => [
     state.setSpaceName,
     state.setSpaceModels,
     state.setSpaceTheme,
+    state.setSpaceBackgroundMusic,
   ])
   const [prepareState, setPrepareState] = useState<PrepareState>('')
 
@@ -106,8 +107,9 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
           const password = space.password
 
           setSpaceName(space.name)
-          setSpaceModels(space.models)
+          setSpaceModels(space.models || [])
           setSpaceTheme(space.theme)
+          setSpaceBackgroundMusic(space.backgroundMusic)
           setRoomId(space.hmsRoomId)
           isHost.current = space.author === user?._id
 
