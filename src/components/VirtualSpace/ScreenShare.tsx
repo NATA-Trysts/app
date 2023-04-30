@@ -1,4 +1,4 @@
-import { forwardRef, RefObject } from 'react'
+import { useVideo } from '@100mslive/react-sdk'
 import styled from 'styled-components'
 
 import { ReactComponent as Cross } from '@/assets/icons/cross.svg'
@@ -50,8 +50,8 @@ const Video = styled.video.attrs({
   muted: true,
   playsInline: true,
 })`
-  width: 720px;
-  height: 500px;
+  width: 1368px;
+  height: 730px;
   object-fit: cover;
   border: 2px solid black;
   border-radius: 16px;
@@ -59,9 +59,12 @@ const Video = styled.video.attrs({
 
 type ScreenShareProps = {
   close: () => void
+  trackId: string
 }
 
-export const ScreenShare = forwardRef(({ close }: ScreenShareProps, ref: RefObject<HTMLVideoElement>) => {
+export const ScreenShare = ({ close, trackId }: ScreenShareProps) => {
+  const { videoRef: screenShareRef } = useVideo({ trackId })
+
   return (
     <Overlay>
       <VideoContainer>
@@ -72,8 +75,8 @@ export const ScreenShare = forwardRef(({ close }: ScreenShareProps, ref: RefObje
         >
           <Cross color="#b792be" height={16} width={16} />
         </IconWrapper>
-        <Video ref={ref}></Video>
+        <Video ref={screenShareRef}></Video>
       </VideoContainer>
     </Overlay>
   )
-})
+}
