@@ -7,12 +7,12 @@ import { BasicButton } from '@/components/Button'
 import { Text } from '@/components/Commons'
 import { ButtonContent } from '@/components/Commons/Button'
 import { MultiToggle, MultiToggleProps, MultiToggleRef, ToggleLabel } from '@/components/Commons/MultiToggle'
-import { CustomableSpaceTheme } from '@/models/Space'
+import { CustomableTheme } from '@/models/Space'
 
 import { CanNextCreateContentProps, CreateForm, CreateFormHeader } from '..'
 import { ThemeImage, ThemeImageCard } from './ThemeImageCard'
 
-export type CreateSpaceTheme = CustomableSpaceTheme
+export type CreateSpaceTheme = CustomableTheme
 
 type CreateSpaceThemes = {
   [key in CreateSpaceTheme]: ReactNode
@@ -71,15 +71,16 @@ const themeOptions: ThemeOptionType[] = [
 ]
 
 export type SelectThemeProps = CanNextCreateContentProps & {
+  defaultTheme?: CustomableTheme
   onThemeSelected?: (value: any) => void
 }
 
-export const SelectTheme = ({ onThemeSelected, onCanNext }: SelectThemeProps) => {
+export const SelectTheme = ({ onThemeSelected, onCanNext, defaultTheme }: SelectThemeProps) => {
   const { register, getValues, setValue } = useFormContext()
   const themeToggleRef = useRef<MultiToggleRef>(null)
   const [isCustom, setCustom] = useState(false)
 
-  register('theme')
+  register('theme', { value: defaultTheme })
 
   useEffect(() => {
     setCustom(getValues('theme') === 'custom')

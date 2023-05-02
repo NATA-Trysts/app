@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { CustomableSpaceTheme, Space } from '@/models/Space'
+import { Space } from '@/models/Space'
 
 // 1 for home, 2 for files, and 3 for libraries
 export type DashboardOption = 1 | 2 | 3
@@ -17,8 +17,8 @@ type DashboardState = {
   exploreSpaces: Space[]
   setExploreSpaces: (exploreSpaces: Space[]) => void
 
-  librarySpaces: Map<CustomableSpaceTheme, Space[]>
-  setLibrarySpaces: (librarySpacesFromApi: Map<CustomableSpaceTheme, Space[]>) => void
+  // librarySpaces: Map<CustomableTheme, Space[]>
+  // setLibrarySpaces: (librarySpacesFromApi: Map<CustomableTheme, Space[]>) => void
 }
 
 type NavigationState = {
@@ -26,9 +26,9 @@ type NavigationState = {
   setDashboardOption: (dashboardOption: DashboardOption) => void
 }
 
-type SpacePreviewState = {
-  selectedSpacePreview: Space | null
-  setSelectedSpacePreview: (selectedSpacePreview: Space | null) => void
+type PreviewCardState = {
+  selectedCardPreview: string | null
+  setSelectedCardPreview: (selectedCardPreview: string | null) => void
 
   idToDelete: string
   setIdToDelete: (idToDelete: string) => void
@@ -52,10 +52,10 @@ export const useDashboardStore = create<DashboardState>()(
       exploreSpaces: [],
       setExploreSpaces: (exploreSpaces: Space[]) => set(() => ({ exploreSpaces })),
 
-      librarySpaces: new Map(),
-      setLibrarySpaces: (librarySpaces: Map<CustomableSpaceTheme, Space[]>) => {
-        set(() => ({ librarySpaces }))
-      },
+      // librarySpaces: new Map(),
+      // setLibrarySpaces: (librarySpaces: Map<CustomableTheme, Space[]>) => {
+      //   set(() => ({ librarySpaces }))
+      // },
     }),
     {
       name: 'dashboard-storage',
@@ -70,10 +70,10 @@ export const useNavigationStore = create<NavigationState>((set) => {
   }
 })
 
-export const useSpacePreviewStore = create<SpacePreviewState>((set) => {
+export const useSpacePreviewStore = create<PreviewCardState>((set) => {
   return {
-    selectedSpacePreview: null,
-    setSelectedSpacePreview: (selectedSpacePreview: Space | null) => set(() => ({ selectedSpacePreview })),
+    selectedCardPreview: null,
+    setSelectedCardPreview: (selectedCardPreview: string | null) => set(() => ({ selectedCardPreview })),
 
     idToDelete: '',
     setIdToDelete: (idToDelete: string) => set(() => ({ idToDelete })),
