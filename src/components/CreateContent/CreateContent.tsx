@@ -69,8 +69,10 @@ export const CreateContent = ({ stepperRef, onThemeChange }: CreateContentProps)
             theme: isCustom ? false : theme,
           })
           .then((res) => {
-            console.log(res.data)
-            navigate(`/${res.data.code}`)
+            const createdSpace = res.data as Space
+
+            if (createdSpace.theme) navigate(`/${createdSpace.code}`)
+            else navigate(`/files/${createdSpace.code}`)
           })
       },
       (errors) => {
