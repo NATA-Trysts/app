@@ -64,7 +64,7 @@ export const SpacePreviewCard = ({ space, imageUrl, title, subtitle }: SpacePrev
   }
 
   const handleEditSpaceClick = () => {
-    navigate(`/files/${space.code}`)
+    navigate(`/files/${space._id}`)
   }
 
   const handleCopyUrlClick = () => {
