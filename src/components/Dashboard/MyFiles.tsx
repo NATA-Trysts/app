@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
-import { SpacePreviewCard } from '@/components/SpacePreviewCard'
-import { useDashboardStore } from '@/stores'
+import { SpacePreviewCard } from '@/components/PreviewCard'
 
 import { useDashboard } from './hooks/useDashboard'
 
@@ -19,18 +18,18 @@ const List = styled.div`
 `
 
 export const MyFiles = () => {
-  const [spaces] = useDashboardStore((state) => [state.mySpaces])
+  const { librarySpaces } = useDashboard()
 
   const { calculateTimeAgo } = useDashboard()
 
   return (
     <MyFilesContainer>
       <List>
-        {spaces.map((item) => (
+        {librarySpaces.get('custom')?.map((item) => (
           <SpacePreviewCard
             key={item._id}
             imageUrl={item.thumbnail}
-            item={item}
+            space={item}
             subtitle={`Edited ${calculateTimeAgo(item.latestEdited)}`}
             title={item.name}
           />
