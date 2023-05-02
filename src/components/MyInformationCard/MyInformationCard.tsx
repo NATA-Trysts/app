@@ -1,4 +1,5 @@
-import React, { FC } from 'react'
+import Avatar from 'boring-avatars'
+import { FC } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
@@ -36,14 +37,7 @@ const Wrapper = styled.button`
   }
 `
 
-const MyAvatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-`
-
 type MyInformationCardProps = {
-  avatar: string
   name: string
   handler: string
   maxNameCharacter?: number
@@ -53,14 +47,14 @@ type MyInformationCardProps = {
 export const MyInformationCard: FC<MyInformationCardProps> = ({
   name,
   handler,
-  avatar,
   maxHandlerCharacter = 10,
   maxNameCharacter = 12,
 }) => {
   return (
     <Container>
       <Wrapper>
-        <MyAvatar alt={`${name} avatar`} loading="lazy" src={avatar} />
+        <Avatar name={name} size={40} variant="beam" />
+
         <NameContainer>
           <Text size="medium" weight="normal">
             {truncateText(name, maxNameCharacter)}
