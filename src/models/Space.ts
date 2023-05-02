@@ -20,4 +20,6 @@ export type Space = {
   code: string
   password: string
   hmsRoomId: string
+  models: any[]
+  backgroundMusic: string
 }

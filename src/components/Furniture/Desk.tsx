@@ -140,7 +140,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 
   return (
     <group {...props} dispose={null}>
-      <group position={[0, 0.97, 0]} scale={0.01}>
+      <group position={[0, 2.5, 0]} scale={0.025}>
         <group position={[34.6, 24.66, 137.29]} scale={0.19}>
           <mesh
             castShadow

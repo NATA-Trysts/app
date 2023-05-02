@@ -31,7 +31,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 
   return (
     <group {...props} dispose={null}>
-      <group position={[0, 0.64, 0]} scale={0.01}>
+      <group position={[0, 1.4, 0]} scale={0.023}>
         <group position={[4.48, 1.34, 0]} rotation={[Math.PI, 0, Math.PI]}>
           <mesh
             castShadow

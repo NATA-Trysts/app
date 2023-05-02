@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 
 import { CustomableContainer } from '@/components/Commons'
@@ -96,11 +96,32 @@ const LeftSideWrapper = styled.div`
 const VirtualSpace = () => {
   const customColor = useAppStore((state) => state.customColor)
   const [selectedUltility] = useVirtualSpaceStore((state) => [state.selectedUltility])
-  const [spaceTheme] = useVirtualSpaceStore((state) => [state.spaceTheme])
+  const [spaceTheme, spaceName] = useVirtualSpaceStore((state) => [state.spaceTheme, state.spaceName])
+
+  const [spaceBackgroundMusic, isPlayingMusic] = useVirtualSpaceStore((state) => [
+    state.spaceBackgroundMusic,
+    state.isPlayingMusic,
+  ])
+  const audio = useMemo(() => new Audio(), [])
 
   useEffect(() => {
-    document.title = 'Trysts | Summer Open Call'
-  }, [])
+    document.title = `Trysts | ${spaceName}`
+
+    return () => {
+      document.title = 'Trysts'
+    }
+  }, [spaceName])
+
+  useEffect(() => {
+    if (isPlayingMusic && spaceBackgroundMusic) {
+      audio.src = spaceBackgroundMusic
+      audio.loop = true
+      audio.play()
+    } else {
+      audio.pause()
+      audio.src = ''
+    }
+  }, [audio, isPlayingMusic, spaceBackgroundMusic])
 
   return (
     <VirtualSpaceLoading>

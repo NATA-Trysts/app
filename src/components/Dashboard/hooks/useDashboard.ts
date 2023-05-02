@@ -11,7 +11,7 @@ const useDashboard = () => {
   }
 
   const sortRecentSpace = (spaces: Space[]) => {
-    const recentSpaces = take(orderBy(spaces, ['timeStamp'], ['desc']), 4)
+    const recentSpaces = take(orderBy(spaces, ['latestEdited'], ['desc']), 4)
 
     return recentSpaces
   }

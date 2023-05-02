@@ -26,9 +26,9 @@ export function Model(props: JSX.IntrinsicElements['group']) {
         receiveShadow
         geometry={nodes.chair.geometry}
         material={materials.Material_5}
-        position={[0, 0.58, 0]}
+        position={[0, 1.5, 0]}
         rotation={[Math.PI, 0, Math.PI]}
-        scale={0.01}
+        scale={0.025}
       />
     </group>
   )

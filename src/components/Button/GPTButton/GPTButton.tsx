@@ -119,12 +119,13 @@ const PLACEHOLDERS = [
 const GPTButton = () => {
   const [prompt, setPrompt] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const addModel = useBuilderStore((state) => state.addModel)
+  const [addModel, setIsInputFocus] = useBuilderStore((state) => [state.addModel, state.setIsInputFocus])
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const source = axios.CancelToken.source()
-    const url = 'http://0.0.0.0:8000/generate'
+    const url = 'http://127.0.0.1:8000/generate'
+    // const url = 'http://0.0.0.0:8000/generate'
     const data = { prompt }
 
     try {
@@ -134,14 +135,14 @@ const GPTButton = () => {
       const generatedModel = convertCustomFormatedResponseToObject(response.data.completion.choices[0].text)
 
       addModel({
-        uuid: uuidv4(),
+        uuid: generatedModel.uuid || uuidv4(),
         name: generatedModel.name,
-        id: generatedModel.id,
         position: { x: 0, y: 0, z: 0 },
         rotation: { x: 0, y: 0, z: 0 },
         color: generatedModel.color,
         roughness: 1,
         metalness: 0,
+        type: generatedModel.type,
       })
 
       setLoading(false)
@@ -198,7 +199,9 @@ const GPTButton = () => {
                 },
               }}
               type="text"
+              onBlur={() => setIsInputFocus(false)}
               onChange={(e) => setPrompt(e.target.value)}
+              onFocus={() => setIsInputFocus(true)}
             />
             <PromptSubmitButton
               animate={{
@@ -219,6 +222,11 @@ const GPTButton = () => {
           </PromptContainer>
         </GPTInteractionContainer>
       }
+      handleOpenChange={(isOpen) => {
+        if (!isOpen) {
+          setIsInputFocus(false)
+        }
+      }}
       side="right"
       sideOffset={8}
     >

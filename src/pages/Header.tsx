@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { ReactComponent as LeftUpIcon } from '@/assets/icons/left-up.svg'
@@ -58,6 +59,7 @@ const CustomOption = styled(Option)<{ textColor: string }>`
 export const Header = () => {
   const [isEditAvatar, spaceName] = useVirtualSpaceStore((state) => [state.isEditAvatar, state.spaceName])
   const color = useAppStore((state) => state.customColor)
+  const { spaceId } = useParams<{ spaceId: string }>()
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
 
@@ -128,7 +130,7 @@ export const Header = () => {
           <FullLogo />
         </div>
       </Popover>
-      <VirtualSpaceNameCard name={spaceName} spaceId="123" />
+      <VirtualSpaceNameCard name={spaceName} spaceId={spaceId} />
     </Container>
   )
 }

@@ -8,7 +8,7 @@ export const Ground = () => {
     <group ref={groundRef} name="ground" position={[0, -0.5, 0]}>
       <mesh>
         <boxGeometry args={[100, 1, 100]} />
-        <meshBasicMaterial color="yellow" />
+        <meshBasicMaterial color="pink" />
       </mesh>
     </group>
   )

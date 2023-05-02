@@ -8,7 +8,7 @@ import { useKeyPressEvent } from 'react-use'
 import {
   Group,
   Object3D,
-  // Quaternion,
+  Quaternion,
   // Vector3
   Texture,
   Vector3,
@@ -25,6 +25,8 @@ import { Vid } from './Other'
 // const pV = new Vector3(1, -2, 2)
 // const pQ = new Quaternion()
 // const pP = new Vector3(0, -2, 0)
+
+const targetQuaternion = new Quaternion()
 
 type MainMemberProps = {
   target?: Object3D | null
@@ -114,13 +116,15 @@ export const MainMember = ({ target }: MainMemberProps) => {
     }
   }
 
-  const handleStateChange = (character: RapierRigidBody) => {
+  const handleStateChange = (rigidBody: RapierRigidBody, character: Group) => {
     if (characterControlState === 'static' && characterControlType === 'fixed' && target) {
-      lP.current.set(character.translation().x, character.translation().y, character.translation().z)
-      character.setTranslation({ x: target.position.x, y: character.translation().y, z: target.position.z }, true)
+      lP.current.set(rigidBody.translation().x, rigidBody.translation().y, rigidBody.translation().z)
+      rigidBody.setTranslation({ x: target.position.x, y: rigidBody.translation().y, z: target.position.z }, true)
       setBasePositionY(-1.5)
+      targetQuaternion.setFromEuler(target.rotation)
+      character.rotation.setFromQuaternion(targetQuaternion)
     } else {
-      character.setTranslation({ x: lP.current.x, y: lP.current.y, z: lP.current.z }, true)
+      rigidBody.setTranslation({ x: lP.current.x, y: lP.current.y, z: lP.current.z }, true)
       setBasePositionY(-2)
     }
   }

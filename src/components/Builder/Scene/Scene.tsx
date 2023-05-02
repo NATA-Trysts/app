@@ -52,7 +52,12 @@ export const Scene = () => {
 
   return (
     <Container>
-      <Canvas dpr={[0.5, 0.5]}>
+      <Canvas
+        camera={{
+          position: [0, 10, 20],
+        }}
+        dpr={[0.5, 0.5]}
+      >
         <Control />
         {/* <Perf /> */}
         <Stats />

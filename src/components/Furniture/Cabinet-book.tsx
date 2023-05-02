@@ -47,7 +47,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 
   return (
     <group {...props} dispose={null}>
-      <group position={[0, 1.11, 0]} scale={0.01}>
+      <group position={[0, 3, 0]} scale={0.028}>
         <group position={[-12.25, -4.79, -33.48]} scale={0.14}>
           <group position={[6.89, 10.69, 22.42]}>
             <mesh

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDebounce } from 'react-use'
 import styled from 'styled-components'
 
@@ -24,9 +24,14 @@ const Container = styled.div`
   user-select: none;
 `
 
-export const BuilderToolbar = () => {
+type BuilderToolbarProps = {
+  spaceCode: string
+}
+
+export const BuilderToolbar = ({ spaceCode }: BuilderToolbarProps) => {
   const [spaceInformation, models] = useBuilderStore((state) => [state.spaceInformation, state.models])
   const { fileId } = useParams()
+  const navigate = useNavigate()
   const axiosPrivate = useAxiosPrivate()
 
   const handleSave = () => {
@@ -35,6 +40,8 @@ export const BuilderToolbar = () => {
         name: spaceInformation.name,
         password: spaceInformation.isProtected ? spaceInformation.password : '',
         models: models,
+        thumbnail: spaceInformation.thumbnail,
+        backgroundMusic: spaceInformation.backgroundMusic,
       },
     })
   }
@@ -46,6 +53,8 @@ export const BuilderToolbar = () => {
           name: spaceInformation.name,
           password: spaceInformation.isProtected ? spaceInformation.password : '',
           models: models,
+          thumbnail: spaceInformation.thumbnail,
+          backgroundMusic: spaceInformation.backgroundMusic,
         },
       })
     },
@@ -64,7 +73,11 @@ export const BuilderToolbar = () => {
         <ToolbarItem>
           <ZoomTool />
         </ToolbarItem>
-        <ToolbarItem>
+        <ToolbarItem
+          onClick={() => {
+            navigate(`/${spaceCode}`)
+          }}
+        >
           <WithTooltip content="Host space" id="host-space">
             <Play />
           </WithTooltip>

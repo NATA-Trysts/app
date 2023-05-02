@@ -11,9 +11,14 @@ const Description = styled.div`
   height: 64px;
   color: #ababab;
 
-  // TEMPORARY
-  overflow-y: scroll;
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 `
 
 type ItemDescriptionProps = {

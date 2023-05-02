@@ -42,7 +42,7 @@ export const KeyboardMapping = ({ setIsModalOpen }: KeyboardMappingProps) => {
       <Name size="small" weight="lighter">
         Keyboard mapping
       </Name>
-      <MappingButton onClick={() => setIsModalOpen(true)}>Change key</MappingButton>
+      <MappingButton onClick={() => setIsModalOpen(true)}>View Shortcut</MappingButton>
     </Container>
   )
 }

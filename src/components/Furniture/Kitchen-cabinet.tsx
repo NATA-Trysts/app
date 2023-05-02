@@ -72,7 +72,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 
   return (
     <group {...props} dispose={null}>
-      <group position={[0, 0.7, 0]} scale={0.01}>
+      <group position={[0, 2, 0]} scale={0.025}>
         <group position={[73.78, 0, -151.09]}>
           <group position={[-88.89, 45.19, -3.96]} scale={0.93}>
             <group position={[0, 3.27, 0]} rotation={[0, 1.57, 0]} scale={0.21}>

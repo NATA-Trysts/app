@@ -58,18 +58,50 @@ type Category = {
   isActive: boolean
 }
 
+// export type CategoryType = 'chair' | 'desk' | 'decoration' | 'layout' | 'cabinet' | 'plant' | 'bath'
+
 export const BuilderTab = () => {
   const [categories, setCategories] = useState<Category[]>([
+    {
+      id: 4,
+      icon: <SmileFaceIcon />,
+      name: 'layout',
+      isActive: true,
+    },
     {
       id: 1,
       icon: <AllIcon />,
       name: 'chair', // temp
-      isActive: true,
+      isActive: false,
     },
     {
       id: 2,
       icon: <SmileFaceIcon />,
-      name: 'desk', // temp
+      name: 'desk',
+      isActive: false,
+    },
+    {
+      id: 3,
+      icon: <SmileFaceIcon />,
+      name: 'decoration',
+      isActive: false,
+    },
+    {
+      id: 5,
+      icon: <SmileFaceIcon />,
+      name: 'cabinet',
+      isActive: false,
+    },
+    {
+      id: 6,
+      icon: <SmileFaceIcon />,
+      name: 'plant',
+      isActive: false,
+    },
+    {
+      id: 7,
+      icon: <SmileFaceIcon />,
+      name: 'bath',
       isActive: false,
     },
   ])

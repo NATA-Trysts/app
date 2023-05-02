@@ -23,7 +23,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 
   return (
     <group {...props} dispose={null}>
-      <group position={[0, 0.53, 0]} scale={0.01}>
+      <group position={[0, 1.2, 0]} scale={0.025}>
         <mesh
           castShadow
           receiveShadow

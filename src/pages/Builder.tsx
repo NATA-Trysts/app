@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -19,6 +19,7 @@ const Builder = () => {
   const [setSpaceInformation, setModels] = useBuilderStore((state) => [state.setSpaceInformation, state.setModels])
   const { fileId } = useParams()
   const axiosPrivate = useAxiosPrivate()
+  const [spaceCode, setSpaceCode] = useState('')
 
   useEffect(() => {
     let ignore = false
@@ -29,21 +30,21 @@ const Builder = () => {
         if (ignore) return
         const spaceData = res.data
 
-        document.title = `🔨 ${spaceData.name} | Trysts`
+        document.title = `Trysts | ${spaceData.name}`
 
         setSpaceInformation({
           name: spaceData.name,
           password: spaceData.password,
           isProtected: spaceData.password !== '',
+          thumbnail: spaceData.thumbnail,
+          backgroundMusic: spaceData.backgroundMusic,
         })
-        setModels([...spaceData.models])
+        setSpaceCode(spaceData.code)
+        setModels(spaceData.models ? [...spaceData.models] : [])
       })
       .catch((err) => {
         console.error(err)
       })
-
-    // setSpaceInformation(space)
-    // setModels(models as SpaceModel[])
 
     return () => {
       ignore = true
@@ -55,7 +56,7 @@ const Builder = () => {
       <BuilderSettings />
       <BuilderScene />
       <BuilderPanel />
-      <BuilderToolbar />
+      <BuilderToolbar spaceCode={spaceCode} />
       <NotificationStack />
     </BuilderPage>
   )

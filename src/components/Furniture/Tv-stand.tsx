@@ -42,7 +42,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 
   return (
     <group {...props} dispose={null}>
-      <group position={[0, 0.25, 0]} scale={0.01}>
+      <group position={[0, 0.8, 0]} scale={0.02}>
         <mesh
           castShadow
           receiveShadow
@@ -52,7 +52,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
         />
         <mesh castShadow receiveShadow geometry={nodes.Merged_Geometry011.geometry} material={materials.Material_0} />
       </group>
-      <group position={[0, 1.21, 0]} scale={0.01}>
+      <group position={[0, 3, 0]} scale={0.02}>
         <mesh
           castShadow
           receiveShadow

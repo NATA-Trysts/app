@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import axios from '@/api/axios'
@@ -109,6 +109,8 @@ export const LoginCodeInput = () => {
   const [email, fullHash] = useLoginStore((state) => [state.email, state.fullHash])
   const setStep = useStepStore((state) => state.setStep)
   const [user, setUser] = useMemberStore((state) => [state.user, state.setUser])
+  const navigate = useNavigate()
+  const { setAuth } = useAuth()
 
   const handleCancel = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -140,32 +142,6 @@ export const LoginCodeInput = () => {
     })
 
     setDirectLinks(newDirectLinks)
-  }
-
-  // TESTING PURPOSE
-  const location = useLocation()
-  const navigate = useNavigate()
-  const from = location.state?.from.pathname || '/dashboard'
-  const { setAuth } = useAuth()
-
-  const ok = (e: { preventDefault: () => void }) => {
-    e.preventDefault()
-    // pretent that user is authenticated
-    const userTemp = {
-      username: 'sonha',
-      email: '@gmail',
-      _id: '123',
-      handler: '123',
-    }
-    const roles = [1000]
-    const accessToken = '123'
-
-    setAuth({ roles, accessToken })
-    setUser({
-      ...userTemp,
-      ...user,
-    })
-    navigate(from, { replace: true })
   }
 
   useEffect(() => {
@@ -250,11 +226,6 @@ export const LoginCodeInput = () => {
           <CancelButton onClick={(e: React.SyntheticEvent<HTMLButtonElement>) => handleCancel(e)}>
             <Text size="medium" weight="normal">
               {checkStatus === 'failed' ? 'Resend' : 'Cancel'}
-            </Text>
-          </CancelButton>
-          <CancelButton onClick={ok}>
-            <Text size="medium" weight="normal">
-              Ok
             </Text>
           </CancelButton>
         </CompletedSection>

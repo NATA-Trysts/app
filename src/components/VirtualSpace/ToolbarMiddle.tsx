@@ -7,7 +7,7 @@ import {
   useHMSStore,
 } from '@100mslive/react-sdk'
 import { motion } from 'framer-motion'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as ArrowUp } from '@/assets/icons/arrow-up.svg'
@@ -49,7 +49,6 @@ const OpeningNotification = styled.div`
 `
 
 export const ToolbarMiddle = () => {
-  const videoRef = useRef<HTMLVideoElement>(null)
   const [isEditAvatar, isHostWhiteBoardOpen] = useVirtualSpaceStore((state) => [
     state.isEditAvatar,
     state.isHostWhiteBoardOpen,
@@ -67,6 +66,8 @@ export const ToolbarMiddle = () => {
   const videoEnabled = useHMSStore(selectIsLocalVideoEnabled)
   const presenter = useHMSStore(selectPeerScreenSharing)
   const screenShareVideoTrack = useHMSStore(selectScreenShareByPeerID(presenter ? presenter.id : ''))
+
+  console.log('PRESENTER', presenter, screenShareVideoTrack)
 
   const [openIframe] = useIframeDialog()
 
@@ -132,6 +133,12 @@ export const ToolbarMiddle = () => {
     }
   }
 
+  const onPressZToOpenShareScreen = (e: KeyboardEvent) => {
+    if (e.key === 'z') {
+      openShareScreen()
+    }
+  }
+
   useEffect(() => {
     if (isHostWhiteBoardOpen) {
       if (!isHost) window.addEventListener('keypress', onPressZToOpenWhiteBoard)
@@ -143,26 +150,39 @@ export const ToolbarMiddle = () => {
   }, [roomInstance, isHostWhiteBoardOpen, mainMember])
 
   useEffect(() => {
-    if (screenShareVideoTrack) {
-      hmsActions.attachVideo(screenShareVideoTrack.id, videoRef.current!)
+    if (presenter) {
+      if (!isHost) window.addEventListener('keypress', onPressZToOpenShareScreen)
+    } else {
+      closeShareScreen()
+      window.removeEventListener('keypress', onPressZToOpenShareScreen)
     }
-  }, [screenShareVideoTrack])
+
+    return () => window.removeEventListener('keypress', onPressZToOpenShareScreen)
+  }, [presenter, isOpenShareScreen, mainMember])
+
+  // useEffect(() => {
+  //   if (screenShareVideoTrack && videoRef.current) {
+  //     hmsActions.attachVideo(screenShareVideoTrack.id, videoRef.current)
+  //   }
+  // }, [screenShareVideoTrack])
 
   return (
     <>
       {!isHost && isHostWhiteBoardOpen && (
         <OpeningNotification>
-          <span>
-            The host is opening a white board, press <b>Z</b> to join
-          </span>
+          <span>The host is opening a white board, press to join</span>
         </OpeningNotification>
       )}
       {!!presenter && !isHost && (
         <OpeningNotification>
-          <span>The host is sharing screen, join now</span>
+          <span>
+            The host is sharing screen, press <b>Z</b> to join
+          </span>
         </OpeningNotification>
       )}
-      {presenter && isOpenShareScreen && <ScreenShare ref={videoRef} close={closeShareScreen}></ScreenShare>}
+      {presenter && isOpenShareScreen && (
+        <ScreenShare close={closeShareScreen} trackId={screenShareVideoTrack.id}></ScreenShare>
+      )}
 
       <AnimatedToolbarContainer
         layout

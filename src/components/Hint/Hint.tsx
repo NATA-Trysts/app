@@ -26,9 +26,15 @@ const Key = styled.span`
   border-radius: 4px;
   background: #fff;
   color: #000;
+  text-transform: uppercase;
 `
 
-export const Hint = () => {
+type HintProps = {
+  actionKey?: string
+  action?: string
+}
+
+export const Hint = ({ actionKey = 'z', action = 'sit' }: HintProps) => {
   const interactable = useVirtualSpaceStore((state) => state.interactable)
 
   return (
@@ -56,7 +62,7 @@ export const Hint = () => {
           delay: interactable ? 0.2 : 0,
         }}
       >
-        Press <Key>Z</Key> to sit
+        Press <Key>{actionKey}</Key> to {action}
       </Text>
     </Container>
   )
