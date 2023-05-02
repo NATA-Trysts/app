@@ -34,11 +34,12 @@ const Condition = styled(motion.div)`
 `
 
 const OpeningNotification = styled.div`
-  transform: translateY(-72px);
+  position: absolute;
+  bottom: 72px;
   width: 310px;
   height: 40px;
   border-radius: 16px;
-  background-color: #2d0634;
+  background-color: var(--color-5);
   display: flex;
   align-items: center;
   justify-content: center;
