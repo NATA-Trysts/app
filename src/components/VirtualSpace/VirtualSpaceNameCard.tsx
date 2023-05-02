@@ -28,7 +28,7 @@ const SpaceName = styled.div`
 
 type VirtualSpaceNameCardProps = {
   name: string
-  spaceId: string
+  spaceId?: string
   maxNameLength?: number
 }
 
@@ -50,7 +50,7 @@ export const VirtualSpaceNameCard: FC<VirtualSpaceNameCardProps> = ({ spaceId, n
         content={`${isCopy ? 'Copied!' : 'Copy'}`}
         delayShow={0}
         id="copy"
-        onClick={() => copy(`https://app.abc.io/space/${spaceId}`)}
+        onClick={() => copy(`https://app.trysts.io/${spaceId}`)} // TODO: check when go to production
         onMouseEnter={() => setIsCopy(false)}
       >
         <Copy />

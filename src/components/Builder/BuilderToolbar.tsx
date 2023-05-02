@@ -40,6 +40,8 @@ export const BuilderToolbar = ({ spaceCode }: BuilderToolbarProps) => {
         name: spaceInformation.name,
         password: spaceInformation.isProtected ? spaceInformation.password : '',
         models: models,
+        thumbnail: spaceInformation.thumbnail,
+        backgroundMusic: spaceInformation.backgroundMusic,
       },
     })
   }
@@ -51,6 +53,8 @@ export const BuilderToolbar = ({ spaceCode }: BuilderToolbarProps) => {
           name: spaceInformation.name,
           password: spaceInformation.isProtected ? spaceInformation.password : '',
           models: models,
+          thumbnail: spaceInformation.thumbnail,
+          backgroundMusic: spaceInformation.backgroundMusic,
         },
       })
     },

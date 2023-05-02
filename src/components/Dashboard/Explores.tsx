@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
-import { SpacePreviewCard } from '@/components/SpacePreviewCard'
+import { SpacePreviewCard } from '@/components/PreviewCard'
 import { useDashboardStore } from '@/stores'
 
 import { useDashboard } from './hooks/useDashboard'
@@ -39,7 +39,7 @@ export const Explores = () => {
             <SpacePreviewCard
               key={item._id}
               imageUrl={item.thumbnail}
-              item={item}
+              space={item}
               subtitle={`Edited ${calculateTimeAgo(item.latestEdited)}`}
               title={item.name}
             />

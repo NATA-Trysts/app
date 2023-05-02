@@ -7,19 +7,17 @@ import {
   useHMSStore,
 } from '@100mslive/react-sdk'
 import { motion } from 'framer-motion'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as ArrowUp } from '@/assets/icons/arrow-up.svg'
 import { ReactComponent as Camera } from '@/assets/icons/camera.svg'
 import { ReactComponent as CameraOff } from '@/assets/icons/camera-off.svg'
-import { ReactComponent as Emoji } from '@/assets/icons/emoji.svg'
 import { ReactComponent as Micro } from '@/assets/icons/mic.svg'
 import { ReactComponent as MicroOff } from '@/assets/icons/mic-off.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
 import { ReactComponent as Writing } from '@/assets/icons/writing.svg'
 import { NameBox, RandomAvatar } from '@/components/EditCharacter'
-import { EmojiContent } from '@/components/EmojiContent'
 import { ListAudio, ListCamera } from '@/components/ListDevice'
 import { Popover } from '@/components/Popover'
 import { AnimatedToolbarContainer, ToolbarItem, WithTooltip } from '@/components/Toolbar'
@@ -49,14 +47,10 @@ const OpeningNotification = styled.div`
 `
 
 export const ToolbarMiddle = () => {
-  const videoRef = useRef<HTMLVideoElement>(null)
   const [isEditAvatar, isHostWhiteBoardOpen] = useVirtualSpaceStore((state) => [
     state.isEditAvatar,
     state.isHostWhiteBoardOpen,
   ])
-  const addOtherMembers = useMemberStore((state) => state.addOtherMembers)
-  const removeOtherMembers = useMemberStore((state) => state.removeOtherMembers)
-  const otherMembers = useMemberStore((state) => state.otherMembers)
   const mainMember = useMemberStore((state) => state.mainMember)
   const isHost = mainMember?.isHost
   const roomInstance = useNetworkStore((state) => state.roomInstance)
@@ -72,7 +66,6 @@ export const ToolbarMiddle = () => {
 
   const [isOpenCameraSetting, setIsOpenCameraSetting] = useState(false)
   const [isOpenMicSetting, setIsOpenMicSetting] = useState(false)
-  const [isOpenEmoji, setIsOpenEmoji] = useState(false)
   const [isOpenShareScreen, setIsOpenShareScreen] = useState(false)
 
   const toggleAudio = async () => await hmsActions.setLocalAudioEnabled(!audioEnabled)
@@ -89,10 +82,6 @@ export const ToolbarMiddle = () => {
       console.error(error)
     }
   }
-
-  const updatedOtherMemberIds = useMemo(() => {
-    return Object.keys(otherMembers)
-  }, [otherMembers])
 
   const openWhiteBoard = () => {
     if (isHost) {
@@ -132,6 +121,12 @@ export const ToolbarMiddle = () => {
     }
   }
 
+  const onPressZToOpenShareScreen = (e: KeyboardEvent) => {
+    if (e.key === 'z') {
+      openShareScreen()
+    }
+  }
+
   useEffect(() => {
     if (isHostWhiteBoardOpen) {
       if (!isHost) window.addEventListener('keypress', onPressZToOpenWhiteBoard)
@@ -143,26 +138,39 @@ export const ToolbarMiddle = () => {
   }, [roomInstance, isHostWhiteBoardOpen, mainMember])
 
   useEffect(() => {
-    if (screenShareVideoTrack) {
-      hmsActions.attachVideo(screenShareVideoTrack.id, videoRef.current!)
+    if (presenter) {
+      if (!isHost) window.addEventListener('keypress', onPressZToOpenShareScreen)
+    } else {
+      closeShareScreen()
+      window.removeEventListener('keypress', onPressZToOpenShareScreen)
     }
-  }, [screenShareVideoTrack])
+
+    return () => window.removeEventListener('keypress', onPressZToOpenShareScreen)
+  }, [presenter, isOpenShareScreen, mainMember])
+
+  // useEffect(() => {
+  //   if (screenShareVideoTrack && videoRef.current) {
+  //     hmsActions.attachVideo(screenShareVideoTrack.id, videoRef.current)
+  //   }
+  // }, [screenShareVideoTrack])
 
   return (
     <>
       {!isHost && isHostWhiteBoardOpen && (
         <OpeningNotification>
-          <span>
-            The host is opening a white board, press <b>Z</b> to join
-          </span>
+          <span>The host is opening a white board, press to join</span>
         </OpeningNotification>
       )}
       {!!presenter && !isHost && (
         <OpeningNotification>
-          <span>The host is sharing screen, join now</span>
+          <span>
+            The host is sharing screen, press <b>Z</b> to join
+          </span>
         </OpeningNotification>
       )}
-      {presenter && isOpenShareScreen && <ScreenShare ref={videoRef} close={closeShareScreen}></ScreenShare>}
+      {presenter && isOpenShareScreen && (
+        <ScreenShare close={closeShareScreen} trackId={screenShareVideoTrack.id}></ScreenShare>
+      )}
 
       <AnimatedToolbarContainer
         layout
@@ -241,67 +249,6 @@ export const ToolbarMiddle = () => {
             </>
           </Condition>
         )}
-        <ToolbarItem>
-          <Popover
-            align="center"
-            content={<EmojiContent setIsPopoverOpen={setIsOpenEmoji} />}
-            // handleClickTrigger={() => setIsOpenEmoji(!isOpenEmoji)} // ISSUE: does not close
-            handleInteractOutside={() => setIsOpenEmoji(false)}
-            isPopoverOpen={isOpenEmoji}
-            side="top"
-            sideOffset={10}
-          >
-            <div>
-              <WithTooltip
-                content="Emoji"
-                id="emoji"
-                onClick={() => {
-                  addOtherMembers(Math.random().toString(), {
-                    id: Math.random().toString(),
-                    peerId: Math.random().toString(),
-                    position: {
-                      x: 0,
-                      y: 0,
-                      z: 0,
-                    },
-                    quaternion: {
-                      x: 0,
-                      y: 0,
-                      z: 0,
-                      w: 0,
-                    },
-                    action: 'idle.000',
-                  })
-                }}
-              >
-                <Emoji />
-              </WithTooltip>
-            </div>
-          </Popover>
-        </ToolbarItem>
-        <ToolbarItem>
-          <Popover
-            align="center"
-            content={<EmojiContent setIsPopoverOpen={setIsOpenEmoji} />}
-            // handleClickTrigger={() => setIsOpenEmoji(!isOpenEmoji)} // ISSUE: does not close
-            handleInteractOutside={() => setIsOpenEmoji(false)}
-            isPopoverOpen={isOpenEmoji}
-            side="top"
-            sideOffset={10}
-          >
-            <div>
-              <WithTooltip
-                content="Emoji"
-                id="emoji"
-                onClick={() => {
-                  removeOtherMembers(updatedOtherMemberIds[Math.floor(Math.random() * updatedOtherMemberIds.length)])
-                }}
-              >
-                <Emoji />
-              </WithTooltip>
-            </div>
-          </Popover>
-        </ToolbarItem>
       </AnimatedToolbarContainer>
       <NameBox isEdit={isEditAvatar} />
       <RandomAvatar isEdit={isEditAvatar} />

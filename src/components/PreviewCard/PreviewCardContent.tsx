@@ -78,25 +78,21 @@ const CardBodyText = styled.div`
 type PreviewCardContentProps = {
   isActive: boolean
   isHovered: boolean
-  spaceAuthorId: string
-  spaceId: string
-  spaceCode: string
   title: string
   subtitle: string
   imageUrl: string
+  options?: CardOptions[]
   onClickThreeDots: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
 export const PreviewCardContent = ({
   isActive,
   isHovered,
-  spaceAuthorId,
-  spaceId,
-  spaceCode,
   title,
   subtitle,
   imageUrl,
   onClickThreeDots,
+  options,
 }: PreviewCardContentProps) => {
   const [isDisplayed, setIsDisplayed] = useState(false)
   const isExpanded = useDashboardStore((state) => state.isExpanded)
@@ -128,12 +124,7 @@ export const PreviewCardContent = ({
             {subtitle}
           </Text>
         </CardBodyText>
-        <CardOptions
-          spaceAuthorId={spaceAuthorId}
-          spaceCode={spaceCode}
-          spaceId={spaceId}
-          onClickThreeDots={onClickThreeDots}
-        />
+        <CardOptions options={options} onClickThreeDots={onClickThreeDots} />
       </CardBody>
     </CardContentContainer>
   )

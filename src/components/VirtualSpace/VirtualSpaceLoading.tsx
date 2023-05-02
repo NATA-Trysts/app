@@ -1,11 +1,11 @@
-// @ts-check
-
 import { selectIsConnectedToRoom, selectLocalPeerID, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
 import axios, { AxiosResponse, CancelTokenSource } from 'axios'
 import { Client, Room } from 'colyseus.js'
+import { animate, motion } from 'framer-motion'
 import { omit } from 'lodash-es'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import styled from 'styled-components'
 
 import axiosConfigured from '@/api/axios'
 import { useAuth, useAxiosPrivate } from '@/hooks'
@@ -18,8 +18,46 @@ import {
   useNetworkStore,
   User,
   useVirtualSpaceStore,
-  // useVirtualSpaceStore,
 } from '@/stores'
+
+const Container = styled(motion.div)<{ zIndex: number }>`
+  width: 100vw;
+  height: 100vh;
+  background: #090118;
+  position: absolute;
+  top: 0;
+  /* z-index: ${(props) => props.zIndex}; */
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  user-select: none;
+  overflow: hidden;
+  pointer-events: none;
+`
+
+const Counter = styled(motion.span)`
+  font-size: 200px;
+  color: white;
+  font-weight: 600;
+  font-family: var(--font-family);
+`
+
+const Text = styled(motion.span)`
+  color: #afacac;
+  font-size: 20px;
+  font-weight: 500;
+`
+
+const Wrapper = styled.div`
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
 
 type VirtualSpaceLoadingProps = {
   children: ReactNode
@@ -37,7 +75,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const setUser = useMemberStore((state) => state.setUser)
   const localPeerId = useHMSStore(selectLocalPeerID)
 
-  const [isPrepare, setIsPrepare] = useState(true)
+  const [isPrepare, setIsPrepare] = useState(false)
   const [prepareStatus, setPrepareStatus] = useState('prepare process')
   const [prepareError, setPrepareError] = useState('')
   const [password, setPassword] = useState('')
@@ -58,6 +96,9 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const [roomId, setRoomId] = useState('')
   const isHost = useRef(false)
   const [localUser, setLocalUser] = useState<User>()
+
+  const counterRef = useRef<HTMLSpanElement>(null)
+  const [counterValue, setCounterValue] = useState({ min: 0, max: 0 })
 
   useEffect(() => {
     const cancelTokenSource: CancelTokenSource | null = axios.CancelToken.source()
@@ -118,9 +159,8 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
           }
         }
 
-        // setRoomId('642c5157adb93485420bfec8')
-
         setPrepareState('info-loaded')
+        setCounterValue({ min: counterValue.max, max: 30 })
       } catch (error) {
         console.error(error)
         setPrepareError('Prepare Failed')
@@ -133,7 +173,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   useEffect(() => {
     // Join HMS
     const joinHms = async () => {
-      setPrepareStatus('Joining HMS')
+      setPrepareStatus('Preparing the best video call experience')
 
       const hmsRequest = await axios.post(import.meta.env.VITE_HMS_ENDPOINT, {
         // eslint-disable-next-line camelcase
@@ -149,8 +189,10 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
       try {
         await hmsActions.join(hmsConfig)
         setPrepareState('hms.joined')
+
+        setCounterValue({ min: counterValue.max, max: 50 })
       } catch (error) {
-        setPrepareError('Join HMS Failed')
+        setPrepareError("Seem like video call got error. We're fixing")
       }
     }
 
@@ -169,7 +211,8 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
     const joinMultiplayer = async () => {
       const multiplayerUser = omit(localUser, '_id')
 
-      setPrepareStatus('Joining Multiplayer')
+      setPrepareStatus('Get ready! Joining Virtual Space')
+
       try {
         room = await client.joinById(spaceId ?? 'trysts', {
           peerId: localPeerId,
@@ -196,28 +239,41 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
               },
             })
           } catch (error: any) {
-            setPrepareError('Create Multiplayer Failed')
+            setPrepareError('We cannot let you in, the Virtual Space is under-maintenance')
             throw Error('Create room failed!', error)
           }
         } else {
-          setPrepareError('Joining Multiplayer Failed')
+          setPrepareError('We cannot let you in, the Virtual Space is under-maintenance')
+
           throw Error('Join room failed!', error)
         }
       } finally {
         setIsPrepare(false)
       }
 
-      room && setRoomInstance(room)
+      if (room) {
+        setRoomInstance(room)
+        setCounterValue({ min: counterValue.max, max: 100 })
+      }
     }
 
-    if (isConnectedToRoom && localPeerId && localUser && prepareState === 'hms.joined') {
-      joinMultiplayer()
-    }
+    if (isConnectedToRoom && localPeerId && localUser && prepareState === 'hms.joined') joinMultiplayer()
 
     window.onunload = () => {
       room?.leave()
     }
   }, [prepareState, localUser])
+
+  useEffect(() => {
+    animate(counterValue.min, counterValue.max, {
+      duration: 2,
+      ease: 'easeIn',
+      onUpdate: (latest) => {
+        if (counterRef.current) counterRef.current.innerText = latest.toFixed(0).toString()
+        if (latest === 100) setIsPrepare(true)
+      },
+    })
+  }, [counterValue])
 
   const handleVerifyPassword = async () => {
     try {
@@ -236,22 +292,55 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
 
   return (
     <>
-      {prepareState === 'need-verify' && (
-        <div>
-          <h1>Need Verify</h1>
-          <input
-            type="text"
-            value={password}
-            onChange={(e: any) => {
-              setPassword(e.target.value)
+      <Container
+        animate={{
+          opacity: !isPrepare ? 1 : 0,
+        }}
+        transition={{
+          delay: 1,
+        }}
+        zIndex={!isPrepare ? 10 : -1}
+      >
+        {prepareState === 'need-verify' && (
+          <div>
+            <h1>Need Verify</h1>
+            <input
+              type="text"
+              value={password}
+              onChange={(e: any) => {
+                setPassword(e.target.value)
+              }}
+            />
+            <button onClick={handleVerifyPassword}>Join</button>
+          </div>
+        )}
+
+        <Wrapper>
+          <Counter
+            ref={counterRef}
+            animate={{
+              y: !isPrepare ? 0 : 250,
+              opacity: !isPrepare ? 1 : 0,
             }}
-          />
-          <button onClick={handleVerifyPassword}>Join</button>
-        </div>
-      )}
-      {isPrepare && <span>{prepareStatus}</span>}
-      {prepareError && <span>{prepareError}</span>}
-      {!isPrepare && !prepareError && props.children}
+            transition={{
+              duration: 0.4,
+              delay: 0.5,
+            }}
+          >
+            00
+          </Counter>
+          {(!isPrepare || prepareError) && (
+            <Text
+              animate={{
+                y: !isPrepare ? 0 : 50,
+              }}
+            >
+              {prepareStatus} {prepareError}
+            </Text>
+          )}
+        </Wrapper>
+      </Container>
+      {props.children}
     </>
   )
 }

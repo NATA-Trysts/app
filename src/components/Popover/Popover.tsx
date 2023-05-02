@@ -8,6 +8,7 @@ type PopoverProps = {
   isPopoverOpen?: boolean
   handleInteractOutside?: () => void
   handleClickTrigger?: () => void
+  handleOpenChange?: (isOpen: boolean) => void
 } & PopoverContentProps
 
 const NoOutlineContent = styled(Content)`
@@ -16,7 +17,7 @@ const NoOutlineContent = styled(Content)`
 
 export const Popover: FC<PopoverProps> = (props) => {
   return (
-    <Root open={props.isPopoverOpen}>
+    <Root open={props.isPopoverOpen} onOpenChange={props.handleOpenChange}>
       <Trigger asChild onClick={props.handleClickTrigger}>
         {props.children}
       </Trigger>

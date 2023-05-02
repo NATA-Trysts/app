@@ -98,15 +98,19 @@ const FurnitureModel = (props: FurnitureModelProps) => {
 }
 
 export const Scene = () => {
-  const [spaceModels, setInteractable] = useVirtualSpaceStore((state) => [state.spaceModels, state.setInteractable])
+  const [spaceModels, quality, setInteractable] = useVirtualSpaceStore((state) => [
+    state.spaceModels,
+    state.quality,
+    state.setInteractable,
+  ])
   const [target, setTarget] = useState<Object3D | null>(null)
   const [targetCategory, setTargetCategory] = useState<string | null>(null)
 
   return (
     <Container>
       <MemberVideoLayout />
-      <Canvas dpr={[0.15, 0.15]}>
-        <Perf />
+      <Canvas dpr={quality === 'high' ? [1, 1] : [0.5, 0.5]}>
+        {/* <Perf /> */}
         <Suspense fallback={null}>
           <Environment preset="city" />
           <ambientLight intensity={0.7} />

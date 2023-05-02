@@ -1,4 +1,7 @@
+import { isEmpty } from 'lodash-es'
 import styled from 'styled-components'
+
+import { useMemberStore } from '@/stores'
 
 import { SingleMemberCard } from '../SingleMemberCard'
 
@@ -13,20 +16,26 @@ const MemberContainer = styled.div`
   gap: 8px;
 `
 
-const SAMPLE_MEMBER_DATA = {
-  handler: 'sonhaaa#1234',
-  avatarUri: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
-  name: 'Nguyen Son Ha',
-}
+const Warn = styled.span`
+  font-size: 14px;
+  color: var(--color-2);
+  text-align: center;
+  margin-top: 100px;
+`
 
 export const Members = () => {
+  const otherMembers = useMemberStore((state) => state.otherMembers)
+
   return (
     <MemberContainer>
-      {Array(20)
-        .fill(SAMPLE_MEMBER_DATA)
-        .map((member: typeof SAMPLE_MEMBER_DATA, index) => (
-          <SingleMemberCard key={index} avatar={member.avatarUri} handler={member.handler} name={member.name} />
-        ))}
+      {!isEmpty(otherMembers) ? (
+        Object.values(otherMembers).map((member) => (
+          <SingleMemberCard key={member.id} handler={member.handler} name={member.username} />
+        ))
+      ) : (
+        // eslint-disable-next-line react/no-unescaped-entities
+        <Warn>Only you in the space. Let's invite some</Warn>
+      )}
     </MemberContainer>
   )
 }

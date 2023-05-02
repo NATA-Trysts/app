@@ -41,6 +41,8 @@ type VirtualSpaceState = {
   setSpaceModels: (spaceModels: SpaceModelTemp[]) => void
   spaceTheme: SpaceTheme
   setSpaceTheme: (theme: SpaceTheme) => void
+  spaceBackgroundMusic: string
+  setSpaceBackgroundMusic: (spaceBackgroundMusic: string) => void
   selectedUltility: UltilityType
   setSelectedUltility: (selectedUltility: UltilityType) => void
   customColor: CustomColor
@@ -51,8 +53,8 @@ type VirtualSpaceState = {
   addMessage: (message: Message) => void
   quality: string
   setQuality: (quality: string) => void
-  backgroundMusic: boolean
-  setBackgroundMusic: (backgroundMusic: boolean) => void
+  isPlayingMusic: boolean
+  setIsPlayingMusic: (isPlayingMusic: boolean) => void
   videoLayout: VideoLayoutType
   setVideoLayout: (videoLayout: VideoLayoutType) => void
 
@@ -106,6 +108,9 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
   spaceTheme: false,
   setSpaceTheme: (spaceTheme) => set(() => ({ spaceTheme })),
 
+  spaceBackgroundMusic: '',
+  setSpaceBackgroundMusic: (spaceBackgroundMusic) => set(() => ({ spaceBackgroundMusic })),
+
   selectedUltility: null,
   setSelectedUltility: (selectedUltility) => set(() => ({ selectedUltility })),
 
@@ -121,8 +126,8 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
   quality: 'medium',
   setQuality: (quality: string) => set(() => ({ quality })),
 
-  backgroundMusic: true,
-  setBackgroundMusic: (backgroundMusic: boolean) => set(() => ({ backgroundMusic })),
+  isPlayingMusic: false,
+  setIsPlayingMusic: (isPlayingMusic: boolean) => set(() => ({ isPlayingMusic })),
 
   videoLayout: 'slide',
   setVideoLayout: (videoLayout: VideoLayoutType) => set(() => ({ videoLayout })),

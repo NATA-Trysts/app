@@ -90,7 +90,7 @@ export const MyInformationCard = () => {
           y: isEditAvatar ? 100 : 0,
         }}
       >
-        <InformationCard avatar={user.avatar.image} handler={user.handler} name={user.username} />
+        <InformationCard handler={user.handler} name={user.username} />
       </CustomInformationCard>
     </Popover>
   )

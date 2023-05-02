@@ -1,8 +1,10 @@
-import { useState } from 'react'
-import styled from 'styled-components'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import styled, { keyframes } from 'styled-components'
 
 import { Text } from '@/components/Commons'
 import { useNotification } from '@/hooks'
+import { useBuilderStore } from '@/stores'
 
 const Container = styled.div`
   width: 100%;
@@ -53,6 +55,7 @@ const MusicUploadContainer = styled.button`
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
+  position: relative;
   padding-left: 8px;
 
   &:hover {
@@ -83,8 +86,95 @@ const Name = styled(Text)`
   text-overflow: ellipsis;
 `
 
+const loading = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`
+
+const SpinnerContainer = styled.div`
+  & {
+    display: inline-block;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  & div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    margin: 4px;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    animation: ${loading} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+  }
+  & div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  & div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  & div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+`
+
+const Spinner = () => {
+  return (
+    <SpinnerContainer>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </SpinnerContainer>
+  )
+}
+
+const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+
+const extractFileName = (url: string | undefined) => {
+  try {
+    if (url) {
+      const startIndex = url.lastIndexOf('/') + 1
+      const endIndex = url.indexOf('.mp3') + 4
+      const fileName = url.substring(startIndex, endIndex)
+
+      return fileName
+    } else {
+      return ''
+    }
+  } catch (err) {
+    return ''
+  }
+}
+
 export const MusicUpload = () => {
-  const [music, setMusic] = useState<string | null>(null)
+  const [spaceInformation, setSpaceInformation] = useBuilderStore((state) => [
+    state.spaceInformation,
+    state.setSpaceInformation,
+  ])
+
+  const [isLoading, setIsLoading] = useState(false)
+  const [music, setMusic] = useState('')
+
+  useEffect(() => {
+    if (spaceInformation.backgroundMusic) {
+      const fileName = extractFileName(spaceInformation.backgroundMusic)
+
+      setMusic(fileName)
+    }
+  }, [spaceInformation.backgroundMusic])
 
   const handleClick = () => {}
 
@@ -97,7 +187,31 @@ export const MusicUpload = () => {
       if (file.size > 1024 * 1024 * 2) {
         addNotification('error', 'File size is too large')
       } else {
-        setMusic(file.name)
+        const url = `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`
+        const formData = new FormData()
+
+        setIsLoading(true)
+        formData.append('file', file)
+        formData.append('upload_preset', uploadPreset)
+        formData.append('public_id', `${file.name}-${Date.now()}`)
+        axios
+          .post(url, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) => {
+            setMusic(file.name)
+            setSpaceInformation({
+              ...spaceInformation,
+              backgroundMusic: res.data.secure_url,
+            })
+            setIsLoading(false)
+          })
+          .catch((err) => {
+            console.error(err)
+            setIsLoading(false)
+          })
       }
     }
   }
@@ -113,21 +227,27 @@ export const MusicUpload = () => {
         </SizeWarning>
       </TitleWrapper>
       <MusicUploadContainer>
-        <AudioInput accept="audio/*" multiple={false} name="file" title=" " type="file" onChange={handleChange} />
-        {music ? (
-          <Name size="small" weight="lighter">
-            {music}
-          </Name>
+        {isLoading ? (
+          <Spinner />
         ) : (
-          <Placeholder size="small" weight="lighter">
-            Upload your music
-          </Placeholder>
+          <>
+            <AudioInput accept="audio/*" multiple={false} name="file" title=" " type="file" onChange={handleChange} />
+            {music ? (
+              <Name size="small" weight="lighter">
+                {music}
+              </Name>
+            ) : (
+              <Placeholder size="small" weight="lighter">
+                Upload your music
+              </Placeholder>
+            )}
+            <UploadButton>
+              <Text size="small" weight="lighter">
+                Upload
+              </Text>
+            </UploadButton>
+          </>
         )}
-        <UploadButton>
-          <Text size="small" weight="lighter">
-            Upload
-          </Text>
-        </UploadButton>
       </MusicUploadContainer>
     </Container>
   )

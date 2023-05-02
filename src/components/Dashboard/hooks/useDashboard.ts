@@ -1,9 +1,19 @@
 import { orderBy, take } from 'lodash-es'
+import { useEffect, useState } from 'react'
 import * as timeago from 'timeago.js'
 
-import { CustomableSpaceTheme, Space } from '@/models/Space'
+import { CustomableTheme, Space } from '@/models/Space'
+import { useDashboardStore } from '@/stores'
 
 const useDashboard = () => {
+  const mySpaces = useDashboardStore((state) => state.mySpaces)
+
+  const [librarySpaces, setLibrarySpaces] = useState<Map<CustomableTheme, Space[]>>(new Map())
+
+  useEffect(() => {
+    setLibrarySpaces(convertSpacesToLibrarySpaces(mySpaces))
+  }, [mySpaces])
+
   const calculateTimeAgo = (timestamp: number) => {
     const timeAgo = timeago.format(timestamp)
 
@@ -11,15 +21,15 @@ const useDashboard = () => {
   }
 
   const sortRecentSpace = (spaces: Space[]) => {
-    const recentSpaces = take(orderBy(spaces, ['timeStamp'], ['desc']), 4)
+    const recentSpaces = take(orderBy(spaces, ['latestEdited'], ['desc']), 4)
 
     return recentSpaces
   }
 
-  const convertSpacesToLibrarySpaces = (spaces: Space[]): Map<CustomableSpaceTheme, Space[]> => {
-    const librarySpaces = new Map<CustomableSpaceTheme, Space[]>()
+  const convertSpacesToLibrarySpaces = (spaces: Space[]): Map<CustomableTheme, Space[]> => {
+    const librarySpaces = new Map<CustomableTheme, Space[]>()
 
-    const addSpaces = (theme: CustomableSpaceTheme, space: Space) => {
+    const addSpaces = (theme: CustomableTheme, space: Space) => {
       if (librarySpaces.has(theme)) {
         const spaces = librarySpaces.get(theme)
 
@@ -43,7 +53,7 @@ const useDashboard = () => {
     return librarySpaces
   }
 
-  return { calculateTimeAgo, convertSpacesToLibrarySpaces, sortRecentSpace }
+  return { calculateTimeAgo, sortRecentSpace, librarySpaces }
 }
 
 export { useDashboard }
