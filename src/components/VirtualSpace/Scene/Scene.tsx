@@ -57,6 +57,7 @@ import { OtherMember } from '../OtherMember'
 type FurnitureModelProps = {
   color?: string
   position: [number, number, number]
+  rotation: [number, number, number]
   children?: React.ReactNode
   setInteractable: (value: boolean) => void
   setTarget: (value: Object3D | null) => void
@@ -118,9 +119,10 @@ export const Scene = () => {
           <Physics gravity={[0, -9.82, 0]}>
             {spaceModels.map((model: any) => (
               <FurnitureModel
-                key={model.uuid}
+                key={model.id}
                 modelType={model.type}
                 position={[model.position.x, model.position.y - 2, model.position.z]}
+                rotation={[model.rotation.x, model.rotation.y, model.rotation.z]}
                 setInteractable={setInteractable}
                 setTarget={setTarget}
                 setTargetCategory={setTargetCategory}

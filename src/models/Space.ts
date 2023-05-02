@@ -30,4 +30,5 @@ export type Space = {
   password: string
   hmsRoomId: string
   models: any[]
+  backgroundMusic: string
 }
