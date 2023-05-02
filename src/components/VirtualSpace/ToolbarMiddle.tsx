@@ -291,6 +291,8 @@ export const ToolbarMiddle = () => {
                       w: 0,
                     },
                     action: 'idle.000',
+                    avatar: '',
+                    isHost: false,
                   })
                 }}
               >
