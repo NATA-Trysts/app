@@ -3,7 +3,7 @@ import axios, { AxiosResponse, CancelTokenSource } from 'axios'
 import { Client, Room } from 'colyseus.js'
 import { animate, motion } from 'framer-motion'
 import { omit } from 'lodash-es'
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import { FormEvent, ReactNode, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -57,6 +57,69 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`
+
+const PasswordContainer = styled(motion.form)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 240px;
+  height: 100px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  z-index: 12;
+`
+
+const PasswordInputContainer = styled.div`
+  width: 232px;
+  height: 47px;
+  background: #121316;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: auto;
+  z-index: 1;
+`
+
+const PasswordInputWrapper = styled.div`
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const PasswordInput = styled.input`
+  width: 100%;
+  height: 100%;
+  background: #212225;
+  border-radius: 8px;
+  outline-color: transparent;
+  border: none;
+  text-align: center;
+  font-family: var(--font-family);
+  font-weight: 600;
+  outline: none;
+  padding: 0 8px;
+`
+
+const PasswordSubmitButton = styled.button`
+  width: 80px;
+  height: 32px;
+  background: #121316;
+  border: none;
+  transition: background 0.3s ease;
+  cursor: pointer;
+  pointer-events: auto;
+  border-radius: 12px;
+
+  :hover {
+    background: #17181b;
+  }
 `
 
 type VirtualSpaceLoadingProps = {
@@ -153,13 +216,14 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
           isHost.current = space.author === user?._id
 
           if (password) {
+            setPrepareStatus('This Virtual Space require password!')
             setPrepareState('need-verify')
           } else {
             setPrepareState('info-loaded')
           }
         }
 
-        setPrepareState('info-loaded')
+        // setPrepareState('info-loaded')
         setCounterValue({ min: counterValue.max, max: 30 })
       } catch (error) {
         console.error(error)
@@ -181,7 +245,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
         // TODO: change based on role
         role: import.meta.env.VITE_HMS_ROLE_PARTICIPANT,
         // eslint-disable-next-line camelcase
-        user_id: 'hey_sh',
+        user_id: localUser?._id,
       })
 
       const hmsConfig = generateHMSConfig('Random UN', hmsRequest.data.token, { city: 'Da Nang' })
@@ -275,7 +339,9 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
     })
   }, [counterValue])
 
-  const handleVerifyPassword = async () => {
+  const handleVerifyPassword = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
     try {
       const result = await axiosConfigured.post(`/spaces/verify`, {
         code: spaceId,
@@ -286,6 +352,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
         setPrepareState('info-loaded')
       }
     } catch (error) {
+      setPrepareStatus("Wrong Password. Let's try again")
       console.error(error)
     }
   }
@@ -302,17 +369,37 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
         zIndex={!isPrepare ? 10 : -1}
       >
         {prepareState === 'need-verify' && (
-          <div>
-            <h1>Need Verify</h1>
-            <input
-              type="text"
-              value={password}
-              onChange={(e: any) => {
-                setPassword(e.target.value)
-              }}
-            />
-            <button onClick={handleVerifyPassword}>Join</button>
-          </div>
+          <PasswordContainer
+            animate={{
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+            }}
+            initial={{
+              opacity: 0,
+            }}
+            transition={{
+              opacity: {
+                duration: 0.15,
+                delay: 1.5,
+              },
+            }}
+            onSubmit={(e: FormEvent<HTMLFormElement>) => handleVerifyPassword(e)}
+          >
+            <PasswordInputContainer>
+              <PasswordInputWrapper>
+                <PasswordInput
+                  type="text"
+                  value={password}
+                  onChange={(e: any) => {
+                    setPassword(e.target.value)
+                  }}
+                />
+              </PasswordInputWrapper>
+            </PasswordInputContainer>
+            <PasswordSubmitButton type="button">Join</PasswordSubmitButton>
+          </PasswordContainer>
         )}
 
         <Wrapper>
@@ -340,6 +427,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
           )}
         </Wrapper>
       </Container>
+      {prepareState === ''}
       {props.children}
     </>
   )

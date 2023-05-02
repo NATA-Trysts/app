@@ -29,5 +29,5 @@ export type Space = {
   code: string
   password: string
   hmsRoomId: string
-  model: any[]
+  models: any[]
 }
