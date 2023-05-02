@@ -43,7 +43,8 @@ export type Vec3 = {
 export type MousePosition = Omit<Vec3, 'y'>
 
 export type SpaceModel = {
-  uuid: string // unique
+  uuid: string // use for render the models
+  id: string // use as key
   name: string
   position: ModifierValueType
   rotation: ModifierValueType
@@ -91,13 +92,13 @@ type BuilderState = {
   updateModelColor: (color: string) => void
   updateModelRoughness: (roughness: number) => void
   updateModelMetalness: (metalness: number) => void
-  deleteModel: (modelUuid: string) => void
+  deleteModel: (modelId: string) => void
 
   isEditing: boolean
   setIsEditing: (isEditing: boolean) => void
 
-  selectedModelUuid: string | null
-  setSelectedModelUuid: (selectedModelUuid: string | null) => void
+  selectedModelId: string | null
+  setSelectedModelId: (selectedModelId: string | null) => void
 
   isInputFocus: boolean
   setIsInputFocus: (isInputFocus: boolean) => void
@@ -170,39 +171,39 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
   models: [],
   setModels: (models: SpaceModel[]) => set(() => ({ models })),
   addModel: (newModel: SpaceModel) =>
-    set((state) => ({ models: [...state.models, newModel], selectedModelUuid: newModel.uuid })),
+    set((state) => ({ models: [...state.models, newModel], selectedModelId: newModel.id })),
   updateModel: (modelUpdate: SpaceModel) =>
     set((state) => ({
-      models: state.models.map((model) => (model.uuid === modelUpdate.uuid ? { ...model, ...modelUpdate } : model)),
+      models: state.models.map((model) => (model.id === modelUpdate.id ? { ...model, ...modelUpdate } : model)),
     })),
   updateModelByField: (property: string, field: string, value: number) =>
     set((state) => ({
       models: state.models.map((model) =>
-        model.uuid === state.selectedModelUuid
+        model.id === state.selectedModelId
           ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], [field]: value } }
           : model,
       ),
     })),
   updateModelColor: (color: string) =>
     set((state) => ({
-      models: state.models.map((model) => (model.uuid === state.selectedModelUuid ? { ...model, color } : model)),
+      models: state.models.map((model) => (model.id === state.selectedModelId ? { ...model, color } : model)),
     })),
   updateModelRoughness: (roughness: number) =>
     set((state) => ({
-      models: state.models.map((model) => (model.uuid === state.selectedModelUuid ? { ...model, roughness } : model)),
+      models: state.models.map((model) => (model.id === state.selectedModelId ? { ...model, roughness } : model)),
     })),
   updateModelMetalness: (metalness: number) =>
     set((state) => ({
-      models: state.models.map((model) => (model.uuid === state.selectedModelUuid ? { ...model, metalness } : model)),
+      models: state.models.map((model) => (model.id === state.selectedModelId ? { ...model, metalness } : model)),
     })),
-  deleteModel: (modelUuid: string) =>
-    set((state) => ({ models: state.models.filter((model) => model.uuid !== modelUuid), selectedModelUuid: null })),
+  deleteModel: (modelId: string) =>
+    set((state) => ({ models: state.models.filter((model) => model.id !== modelId), selectedModelId: null })),
 
   isEditing: false,
   setIsEditing: (isEdit) => set(() => ({ isEditing: isEdit })),
 
-  selectedModelUuid: null,
-  setSelectedModelUuid: (selectedModelUuid: string | null) => set(() => ({ selectedModelUuid })),
+  selectedModelId: null,
+  setSelectedModelId: (selectedModelId: string | null) => set(() => ({ selectedModelId })),
 
   isInputFocus: false,
   setIsInputFocus: (isInputFocus: boolean) => set(() => ({ isInputFocus })),

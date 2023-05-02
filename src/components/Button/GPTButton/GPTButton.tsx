@@ -136,6 +136,7 @@ const GPTButton = () => {
 
       addModel({
         uuid: generatedModel.uuid || uuidv4(),
+        id: Date.now().toString(),
         name: generatedModel.name,
         position: { x: 0, y: 0, z: 0 },
         rotation: { x: 0, y: 0, z: 0 },
@@ -222,7 +223,7 @@ const GPTButton = () => {
           </PromptContainer>
         </GPTInteractionContainer>
       }
-      handleOpenChange={(isOpen) => {
+      handleOpenChange={(isOpen: boolean) => {
         if (!isOpen) {
           setIsInputFocus(false)
         }

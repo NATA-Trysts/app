@@ -24,10 +24,10 @@ const BuilderSettingsContainer = styled.div`
 `
 
 export const BuilderSettings = () => {
-  const selectedModelUuid = useBuilderStore((state) => state.selectedModelUuid)
+  const selectedModelId = useBuilderStore((state) => state.selectedModelId)
 
   const components = useMemo(() => {
-    return selectedModelUuid ? (
+    return selectedModelId ? (
       <ObjectSection />
     ) : (
       <>
@@ -35,7 +35,7 @@ export const BuilderSettings = () => {
         <GlobalSection />
       </>
     )
-  }, [selectedModelUuid])
+  }, [selectedModelId])
 
   return <BuilderSettingsContainer>{components}</BuilderSettingsContainer>
 }

@@ -30,7 +30,7 @@ const Adjusting = styled.div`
 
 export const ObjectSection = () => {
   const { updateHistory } = useBuilder()
-  const selectedModelUuid = useBuilderStore((state) => state.selectedModelUuid)
+  const selectedModelId = useBuilderStore((state) => state.selectedModelId)
   const updateModelByField = useBuilderStore((state) => state.updateModelByField)
   const setIsInputFocus = useBuilderStore((state) => state.setIsInputFocus)
   const updateModelRoughness = useBuilderStore((state) => state.updateModelRoughness)
@@ -39,19 +39,19 @@ export const ObjectSection = () => {
   const filteredModel = useMemo(() => {
     let a: SpaceModel[] | null = null
 
-    if (selectedModelUuid) {
-      a = models.filter((model) => model.uuid === selectedModelUuid)
+    if (selectedModelId) {
+      a = models.filter((model) => model.id === selectedModelId)
     }
 
     return a ? a[0] : null
-  }, [selectedModelUuid, models])
+  }, [selectedModelId, models])
 
   const handleChange = (property: string, axis: string, value: number | string) => {
     filteredModel && updateModelByField(property, axis, value as number)
 
     updateHistory((models) => {
       models.map((model) =>
-        model.uuid === selectedModelUuid
+        model.id === selectedModelId
           ? { ...model, [property]: { ...model[property as 'position' | 'rotation'], [axis]: value } }
           : model,
       )

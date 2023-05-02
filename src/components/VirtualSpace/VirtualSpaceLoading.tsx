@@ -144,10 +144,11 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const [password, setPassword] = useState('')
   const { auth } = useAuth()
 
-  const [setSpaceName, setSpaceModels, setSpaceTheme] = useVirtualSpaceStore((state) => [
+  const [setSpaceName, setSpaceModels, setSpaceTheme, setSpaceBackgroundMusic] = useVirtualSpaceStore((state) => [
     state.setSpaceName,
     state.setSpaceModels,
     state.setSpaceTheme,
+    state.setSpaceBackgroundMusic,
   ])
   const [prepareState, setPrepareState] = useState<PrepareState>('')
 
@@ -211,6 +212,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
 
           setSpaceName(space.name)
           setSpaceModels(space.models || [])
+          setSpaceBackgroundMusic(space.backgroundMusic || '')
           setSpaceTheme(space.theme)
           setRoomId(space.hmsRoomId)
           isHost.current = space.author === user?._id
@@ -398,7 +400,9 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
                 />
               </PasswordInputWrapper>
             </PasswordInputContainer>
-            <PasswordSubmitButton type="button">Join</PasswordSubmitButton>
+            <PasswordSubmitButton type="submit" value="Join">
+              Join
+            </PasswordSubmitButton>
           </PasswordContainer>
         )}
 
