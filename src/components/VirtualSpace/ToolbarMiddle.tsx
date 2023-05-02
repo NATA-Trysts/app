@@ -6,6 +6,7 @@ import {
   useHMSActions,
   useHMSStore,
 } from '@100mslive/react-sdk'
+import { toggleSession } from '@react-three/xr'
 import { motion } from 'framer-motion'
 import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
@@ -17,6 +18,7 @@ import { ReactComponent as Emoji } from '@/assets/icons/emoji.svg'
 import { ReactComponent as Micro } from '@/assets/icons/mic.svg'
 import { ReactComponent as MicroOff } from '@/assets/icons/mic-off.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
+import { ReactComponent as VirtualGlasses } from '@/assets/icons/virtual-glasses.svg'
 import { ReactComponent as Writing } from '@/assets/icons/writing.svg'
 import { NameBox, RandomAvatar } from '@/components/EditCharacter'
 import { EmojiContent } from '@/components/EmojiContent'
@@ -48,6 +50,12 @@ const OpeningNotification = styled.div`
   font-size: 12px;
 `
 
+const ToolbarContainer = styled.div`
+  display: flex;
+  gap: 24px;
+  align-items: center;
+`
+
 export const ToolbarMiddle = () => {
   const [isEditAvatar, isHostWhiteBoardOpen] = useVirtualSpaceStore((state) => [
     state.isEditAvatar,
@@ -75,6 +83,7 @@ export const ToolbarMiddle = () => {
   const [isOpenMicSetting, setIsOpenMicSetting] = useState(false)
   const [isOpenEmoji, setIsOpenEmoji] = useState(false)
   const [isOpenShareScreen, setIsOpenShareScreen] = useState(false)
+  const [isEnteredVR, setIsEnteredVR] = useState(false)
 
   const toggleAudio = async () => await hmsActions.setLocalAudioEnabled(!audioEnabled)
 
@@ -139,6 +148,17 @@ export const ToolbarMiddle = () => {
     }
   }
 
+  const toggleVR = async () => {
+    const session = await toggleSession('immersive-vr')
+
+    console.log(session)
+    if (session) {
+      setIsEnteredVR(true)
+    } else {
+      setIsEnteredVR(false)
+    }
+  }
+
   useEffect(() => {
     if (isHostWhiteBoardOpen) {
       if (!isHost) window.addEventListener('keypress', onPressZToOpenWhiteBoard)
@@ -184,145 +204,153 @@ export const ToolbarMiddle = () => {
         <ScreenShare close={closeShareScreen} trackId={screenShareVideoTrack.id}></ScreenShare>
       )}
 
-      <AnimatedToolbarContainer
-        layout
-        transition={{
-          opacity: { ease: 'linear' },
-          layout: { duration: 0.3 },
-        }}
-      >
-        <ToolbarItem>
-          <WithTooltip content={audioEnabled ? 'Mute' : 'Unmute'} id="micro" onClick={toggleAudio}>
-            {audioEnabled ? <Micro /> : <MicroOff />}
-          </WithTooltip>
-          <Popover
-            align="center"
-            content={<ListAudio setIsPopoverOpen={setIsOpenMicSetting} />}
-            handleClickTrigger={() => setIsOpenMicSetting(!isOpenMicSetting)} // ISSUE: does not close
-            handleInteractOutside={() => setIsOpenMicSetting(false)}
-            isPopoverOpen={isOpenMicSetting}
-            side="top"
-            sideOffset={10}
-          >
-            <div>
-              <WithTooltip content="Mic setting" id="micro-setting">
-                <ArrowUp />
-              </WithTooltip>
-            </div>
-          </Popover>
-        </ToolbarItem>
-        <ToolbarItem>
-          <WithTooltip content={`${videoEnabled ? 'Off' : 'On'} camera`} id="camera" onClick={toggleVideo}>
-            {videoEnabled ? <Camera /> : <CameraOff />}
-          </WithTooltip>
-          <Popover
-            align="center"
-            content={<ListCamera setIsPopoverOpen={setIsOpenCameraSetting} />}
-            handleClickTrigger={() => setIsOpenCameraSetting(!isOpenCameraSetting)} // ISSUE: does not close
-            handleInteractOutside={() => setIsOpenCameraSetting(false)}
-            isPopoverOpen={isOpenCameraSetting}
-            side="top"
-            sideOffset={10}
-          >
-            <div>
-              <WithTooltip content="Camera setting" id="camera-setting">
-                <ArrowUp />
-              </WithTooltip>
-            </div>
-          </Popover>
-        </ToolbarItem>
-        {isHost && (
-          <Condition
-            layout
-            animate={{
-              opacity: isEditAvatar ? 0 : 1,
-              width: isEditAvatar ? 0 : '100%',
-            }}
-            initial={{
-              width: 0,
-              opacity: 0,
-            }}
-            transition={{
-              opacity: { ease: 'linear', duration: isEditAvatar ? 0.1 : 0.25 },
-              width: { duration: isEditAvatar ? 0.25 : 0.1 },
-            }}
-          >
-            <>
-              <ToolbarItem onClick={shareScreen}>
-                <WithTooltip content="Share screen" id="share-screen">
-                  <ShareScreen />
+      <ToolbarContainer>
+        <AnimatedToolbarContainer
+          layout
+          transition={{
+            opacity: { ease: 'linear' },
+            layout: { duration: 0.3 },
+          }}
+        >
+          <ToolbarItem>
+            <WithTooltip content={audioEnabled ? 'Mute' : 'Unmute'} id="micro" onClick={toggleAudio}>
+              {audioEnabled ? <Micro /> : <MicroOff />}
+            </WithTooltip>
+            <Popover
+              align="center"
+              content={<ListAudio setIsPopoverOpen={setIsOpenMicSetting} />}
+              handleClickTrigger={() => setIsOpenMicSetting(!isOpenMicSetting)} // ISSUE: does not close
+              handleInteractOutside={() => setIsOpenMicSetting(false)}
+              isPopoverOpen={isOpenMicSetting}
+              side="top"
+              sideOffset={10}
+            >
+              <div>
+                <WithTooltip content="Mic setting" id="micro-setting">
+                  <ArrowUp />
                 </WithTooltip>
-              </ToolbarItem>
-              <ToolbarItem>
-                <WithTooltip content="White Board" id="white-board" onClick={() => openWhiteBoard()}>
-                  <Writing />
+              </div>
+            </Popover>
+          </ToolbarItem>
+          <ToolbarItem>
+            <WithTooltip content={`${videoEnabled ? 'Off' : 'On'} camera`} id="camera" onClick={toggleVideo}>
+              {videoEnabled ? <Camera /> : <CameraOff />}
+            </WithTooltip>
+            <Popover
+              align="center"
+              content={<ListCamera setIsPopoverOpen={setIsOpenCameraSetting} />}
+              handleClickTrigger={() => setIsOpenCameraSetting(!isOpenCameraSetting)} // ISSUE: does not close
+              handleInteractOutside={() => setIsOpenCameraSetting(false)}
+              isPopoverOpen={isOpenCameraSetting}
+              side="top"
+              sideOffset={10}
+            >
+              <div>
+                <WithTooltip content="Camera setting" id="camera-setting">
+                  <ArrowUp />
                 </WithTooltip>
-              </ToolbarItem>
-            </>
-          </Condition>
-        )}
-        <ToolbarItem>
-          <Popover
-            align="center"
-            content={<EmojiContent setIsPopoverOpen={setIsOpenEmoji} />}
-            // handleClickTrigger={() => setIsOpenEmoji(!isOpenEmoji)} // ISSUE: does not close
-            handleInteractOutside={() => setIsOpenEmoji(false)}
-            isPopoverOpen={isOpenEmoji}
-            side="top"
-            sideOffset={10}
-          >
-            <div>
-              <WithTooltip
-                content="Emoji"
-                id="emoji"
-                onClick={() => {
-                  addOtherMembers(Math.random().toString(), {
-                    id: Math.random().toString(),
-                    peerId: Math.random().toString(),
-                    position: {
-                      x: 0,
-                      y: 0,
-                      z: 0,
-                    },
-                    quaternion: {
-                      x: 0,
-                      y: 0,
-                      z: 0,
-                      w: 0,
-                    },
-                    action: 'idle.000',
-                  })
-                }}
-              >
-                <Emoji />
-              </WithTooltip>
-            </div>
-          </Popover>
+              </div>
+            </Popover>
+          </ToolbarItem>
+          {isHost && (
+            <Condition
+              layout
+              animate={{
+                opacity: isEditAvatar ? 0 : 1,
+                width: isEditAvatar ? 0 : '100%',
+              }}
+              initial={{
+                width: 0,
+                opacity: 0,
+              }}
+              transition={{
+                opacity: { ease: 'linear', duration: isEditAvatar ? 0.1 : 0.25 },
+                width: { duration: isEditAvatar ? 0.25 : 0.1 },
+              }}
+            >
+              <>
+                <ToolbarItem onClick={shareScreen}>
+                  <WithTooltip content="Share screen" id="share-screen">
+                    <ShareScreen />
+                  </WithTooltip>
+                </ToolbarItem>
+                <ToolbarItem>
+                  <WithTooltip content="White Board" id="white-board" onClick={() => openWhiteBoard()}>
+                    <Writing />
+                  </WithTooltip>
+                </ToolbarItem>
+              </>
+            </Condition>
+          )}
+          <ToolbarItem>
+            <Popover
+              align="center"
+              content={<EmojiContent setIsPopoverOpen={setIsOpenEmoji} />}
+              // handleClickTrigger={() => setIsOpenEmoji(!isOpenEmoji)} // ISSUE: does not close
+              handleInteractOutside={() => setIsOpenEmoji(false)}
+              isPopoverOpen={isOpenEmoji}
+              side="top"
+              sideOffset={10}
+            >
+              <div>
+                <WithTooltip
+                  content="Emoji"
+                  id="emoji"
+                  onClick={() => {
+                    addOtherMembers(Math.random().toString(), {
+                      id: Math.random().toString(),
+                      peerId: Math.random().toString(),
+                      position: {
+                        x: 0,
+                        y: 0,
+                        z: 0,
+                      },
+                      quaternion: {
+                        x: 0,
+                        y: 0,
+                        z: 0,
+                        w: 0,
+                      },
+                      action: 'idle.000',
+                    })
+                  }}
+                >
+                  <Emoji />
+                </WithTooltip>
+              </div>
+            </Popover>
+          </ToolbarItem>
+          <ToolbarItem>
+            <Popover
+              align="center"
+              content={<EmojiContent setIsPopoverOpen={setIsOpenEmoji} />}
+              // handleClickTrigger={() => setIsOpenEmoji(!isOpenEmoji)} // ISSUE: does not close
+              handleInteractOutside={() => setIsOpenEmoji(false)}
+              isPopoverOpen={isOpenEmoji}
+              side="top"
+              sideOffset={10}
+            >
+              <div>
+                <WithTooltip
+                  content="Emoji"
+                  id="emoji"
+                  onClick={() => {
+                    removeOtherMembers(updatedOtherMemberIds[Math.floor(Math.random() * updatedOtherMemberIds.length)])
+                  }}
+                >
+                  <Emoji />
+                </WithTooltip>
+              </div>
+            </Popover>
+          </ToolbarItem>
+        </AnimatedToolbarContainer>
+        <ToolbarItem onClick={() => toggleVR()}>
+          <WithTooltip content={isEnteredVR ? 'Exit VR' : 'Enter VR'} id="toggle-vr">
+            <VirtualGlasses />
+          </WithTooltip>
         </ToolbarItem>
-        <ToolbarItem>
-          <Popover
-            align="center"
-            content={<EmojiContent setIsPopoverOpen={setIsOpenEmoji} />}
-            // handleClickTrigger={() => setIsOpenEmoji(!isOpenEmoji)} // ISSUE: does not close
-            handleInteractOutside={() => setIsOpenEmoji(false)}
-            isPopoverOpen={isOpenEmoji}
-            side="top"
-            sideOffset={10}
-          >
-            <div>
-              <WithTooltip
-                content="Emoji"
-                id="emoji"
-                onClick={() => {
-                  removeOtherMembers(updatedOtherMemberIds[Math.floor(Math.random() * updatedOtherMemberIds.length)])
-                }}
-              >
-                <Emoji />
-              </WithTooltip>
-            </div>
-          </Popover>
-        </ToolbarItem>
-      </AnimatedToolbarContainer>
+      </ToolbarContainer>
+
       <NameBox isEdit={isEditAvatar} />
       <RandomAvatar isEdit={isEditAvatar} />
     </>
