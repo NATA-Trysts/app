@@ -210,7 +210,7 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
           const password = space.password
 
           setSpaceName(space.name)
-          setSpaceModels(space.models)
+          setSpaceModels(space.models || [])
           setSpaceTheme(space.theme)
           setRoomId(space.hmsRoomId)
           isHost.current = space.author === user?._id
