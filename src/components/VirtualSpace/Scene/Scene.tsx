@@ -110,7 +110,7 @@ export const Scene = () => {
     <Container>
       <MemberVideoLayout />
       <Canvas dpr={quality === 'high' ? [1, 1] : [0.5, 0.5]}>
-        <Perf />
+        {/* <Perf /> */}
         <Suspense fallback={null}>
           <Environment preset="city" />
           <ambientLight intensity={0.7} />

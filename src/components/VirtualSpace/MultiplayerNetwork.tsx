@@ -58,6 +58,8 @@ export const MultiplayerNetwork = memo(() => {
               },
               action: member.action,
               isHost: member.isHost,
+              handler: member.user.handler,
+              username: member.user.username,
             })
           } else {
             console.log(member)
@@ -78,6 +80,8 @@ export const MultiplayerNetwork = memo(() => {
               action: member.action,
               isHost: member.isHost,
               avatar: member.user.avatar,
+              handler: member.user.handler,
+              username: member.user.username,
             })
           }
 

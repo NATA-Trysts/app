@@ -1,6 +1,6 @@
+import Avatar from 'boring-avatars'
 import styled from 'styled-components'
 
-import userImg from '@/assets/trysts.png'
 import { useGetMe } from '@/hooks'
 
 export type UserProfileProps = {
@@ -16,7 +16,7 @@ export const UserProfile = ({ ...props }: UserProfileProps) => {
         <UserName>{user?.username}</UserName>
         <UserTag>{user?.handler}</UserTag>
       </UserNameTag>
-      <ProfileImage src={userImg}></ProfileImage>
+      <Avatar name={user?.username} size={40} variant="beam" />
     </UserProfileContainer>
   )
 }

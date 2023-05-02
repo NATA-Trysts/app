@@ -1,4 +1,5 @@
-import React, { ComponentPropsWithoutRef, FC, forwardRef } from 'react'
+import Avatar from 'boring-avatars'
+import { ComponentPropsWithoutRef, FC, forwardRef } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
@@ -46,11 +47,6 @@ const AvatarContainer = styled.div`
   overflow: hidden;
 `
 
-const Avatar = styled.img`
-  width: 100%;
-  height: 100%;
-`
-
 const InformationContainer = styled.div`
   width: 80%;
   display: flex;
@@ -60,7 +56,6 @@ const InformationContainer = styled.div`
 `
 
 type MemberCardProps = {
-  avatar: string
   name: string
   handler: string
   maxNameCharacter?: number
@@ -68,22 +63,12 @@ type MemberCardProps = {
   onClick?: () => void
 } & ComponentPropsWithoutRef<'button'>
 
-// interface CustomComponentProps extends React.ComponentPropsWithoutRef<'div'> {
-//   onClick(): void;
-// }
-
-// const CustomComponent = React.forwardRef<HTMLDivElement, CustomComponentProps>(({onClick}, ref) => (
-//   <div ref={ref} onClick={onClick}>
-//     {props.children}
-//   </div>
-// ));
-
 export const MemberCard: FC<MemberCardProps> = forwardRef<HTMLButtonElement, MemberCardProps>(
-  ({ avatar, name, handler, onClick, maxNameCharacter = 20, maxHandlerCharacter = 20 }, ref) => {
+  ({ name, handler, onClick, maxNameCharacter = 20, maxHandlerCharacter = 20 }, ref) => {
     return (
       <Container ref={ref} onClick={onClick}>
         <AvatarContainer>
-          <Avatar src={avatar} />
+          <Avatar name={name} size={40} variant="beam" />
         </AvatarContainer>
         <InformationContainer>
           <Name size="medium" weight="normal">
