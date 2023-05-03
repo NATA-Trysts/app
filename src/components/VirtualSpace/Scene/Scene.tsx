@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Environment } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { Debug, Physics, RigidBody } from '@react-three/rapier'
-import { Perf } from 'r3f-perf'
+import { Physics, RigidBody } from '@react-three/rapier'
 import { Suspense, useState } from 'react'
 import { Object3D } from 'three'
 
@@ -111,7 +110,6 @@ export const Scene = () => {
     <Container>
       <MemberVideoLayout />
       <Canvas dpr={quality === 'high' ? [1, 1] : [0.35, 0.35]}>
-        {/* <Perf /> */}
         <Suspense fallback={null}>
           <Environment preset="city" />
           <ambientLight intensity={0.7} />
@@ -170,10 +168,9 @@ export const Scene = () => {
                 }
               </FurnitureModel>
             ))}
-            <Debug />
             <RigidBody position={[0, -2, 0]} rotation={[-Math.PI / 2, 0, 0]} type="fixed">
               <mesh castShadow receiveShadow>
-                <planeGeometry args={[100, 100]} />
+                <planeGeometry args={[1000, 1000]} />
                 <meshBasicMaterial color="pink" />
               </mesh>
             </RigidBody>
