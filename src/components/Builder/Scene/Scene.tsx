@@ -1,10 +1,7 @@
 // @ts-nocheck
-
-import { GizmoHelper, GizmoViewcube, GizmoViewport, OrbitControls, Stats } from '@react-three/drei'
+import { OrbitControls } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { EffectComposer, Outline, Selection } from '@react-three/postprocessing'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Perf } from 'r3f-perf'
 import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { GridHelper } from 'three'
@@ -59,23 +56,30 @@ export const Scene = () => {
         dpr={[0.5, 0.5]}
       >
         <Control />
-        {/* <Perf /> */}
-        <Stats />
 
         <group name="light">
           <ambientLight intensity={1} />
+          <directionalLight
+            castShadow
+            intensity={0.8}
+            name="Directional Light"
+            position={[274.61, 586.79, 630.88]}
+            shadow-camera-bottom={-1250}
+            shadow-camera-far={100000}
+            shadow-camera-left={-1250}
+            shadow-camera-near={-10000}
+            shadow-camera-right={1250}
+            shadow-camera-top={1250}
+            shadow-mapSize-height={1024}
+            shadow-mapSize-width={1024}
+          />
           <pointLight intensity={1} position={[0, 2, 0]} />
         </group>
 
-        {globalSettings.get('grid')?.selected && <gridHelper ref={gridHelperRef} position={[0, 0, 0]} />}
+        {globalSettings.get('grid')?.selected && (
+          <gridHelper ref={gridHelperRef} args={[1000, 1000]} position={[0, 0, 0]} />
+        )}
 
-        <GizmoHelper alignment="bottom-center" margin={[80, 80]} renderOrder={1}>
-          {(globalSettings.get('gizmo')?.selected as string) === 'port' ? (
-            <GizmoViewport axisColors={['#F97F8F', '#A0F8A9', '#91AEF8']} labelColor="black" />
-          ) : (
-            <GizmoViewcube />
-          )}
-        </GizmoHelper>
         <Selection>
           <EffectComposer autoClear={false} multisampling={8}>
             <Outline blur edgeStrength={100} visibleEdgeColor="white" width={700} />

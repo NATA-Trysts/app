@@ -235,7 +235,7 @@ const Furniture = (props: FurnitureProps) => {
         onPointerMove={pointerMove}
       >
         <mesh>
-          <boxGeometry args={[100, 1, 100]} />
+          <boxGeometry args={[1000, 1, 1000]} />
         </mesh>
       </group>
     </>

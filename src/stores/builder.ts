@@ -151,8 +151,7 @@ export const useBuilderStore = create<BuilderState>()((set) => ({
 
   globalSettings: new Map([
     ['wireframe', { values: [true, false], selected: false }],
-    ['grid', { values: [true, false], selected: true }],
-    ['gizmo', { values: ['cube', 'port'], selected: 'port' }],
+    ['grid', { values: [true, false], selected: false }],
   ]),
   setGlobalSettings: (globalSettings: GlobalSettingsType) => set(() => ({ globalSettings })),
   updateGlobalSettings: (key: string, value: boolean | string) =>
