@@ -151,9 +151,14 @@ export const ToolbarMiddle = () => {
   const toggleVR = async () => {
     const session = await toggleSession('immersive-vr')
 
-    console.log(session)
     if (session) {
       setIsEnteredVR(true)
+
+      const button = document.createElement('button')
+
+      button.innerText = 'Exit VR'
+      button.addEventListener('click', toggleVR)
+      document.body.appendChild(button)
     } else {
       setIsEnteredVR(false)
     }

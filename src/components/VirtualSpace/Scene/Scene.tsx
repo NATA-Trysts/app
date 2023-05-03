@@ -111,7 +111,7 @@ export const Scene = () => {
     <Container>
       <MemberVideoLayout />
       <Canvas dpr={quality === 'high' ? [1, 1] : [0.5, 0.5]}>
-        <XR frameRate={100}>
+        <XR>
           <Perf />
           <Suspense fallback={null}>
             <Environment preset="city" />
