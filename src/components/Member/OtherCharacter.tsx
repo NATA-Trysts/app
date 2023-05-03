@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import { Group } from 'three'
 import { GLTF, SkeletonUtils } from 'three-stdlib'
 
-import { CHARACTER_CONFIG_VALUE_MAPPING, JSDELIVR_URL } from '@/libs/constants'
+import { CHARACTER_CONFIG_VALUE_MAPPING } from '@/libs/constants'
 import { SubcategoryActiveItem } from '@/stores'
 
 //#region
@@ -102,7 +102,7 @@ export const OtherCharacter = ({
   ...props
 }: ModelProps) => {
   const group = useRef<Group>(null)
-  const { scene, materials, animations } = useGLTF(`${JSDELIVR_URL}/models-transform/character.glb`) as GLTFResult
+  const { scene, materials, animations } = useGLTF.preload(`/models/character-v4-transformed.glb`) as GLTFResult
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes } = useGraph(clone) as GLTFResult
   const { actions } = useAnimations<GLTFActions>(animations, group)
@@ -138,11 +138,11 @@ export const OtherCharacter = ({
             ))
           )}
 
-          <skinnedMesh geometry={nodes.Cube020.geometry} material={materials.head} skeleton={nodes.Cube020.skeleton} />
           <skinnedMesh
-            geometry={nodes.Cube020_1.geometry}
-            material={materials.ear}
-            skeleton={nodes.Cube020_1.skeleton}
+            geometry={nodes.head.geometry}
+            material={materials['skin 1']}
+            name="head"
+            skeleton={nodes.head.skeleton}
           />
 
           {/* HAIR PARTS */}
@@ -200,4 +200,4 @@ export const OtherCharacter = ({
   )
 }
 
-useGLTF.preload(`${JSDELIVR_URL}/models-transform/character.glb`)
+useGLTF.preload(`/models/character-v4-transformed.glb`)

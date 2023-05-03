@@ -133,17 +133,286 @@ const CHARACTER_CONFIG_VALUE_MAPPING: ValueMapping<string> = {
   'skin.001.001.002': '#120ead',
   'skin.001.001.003': '#6e106a',
   'skin.001.001.004': '#d09789',
+  // HAIR
   'hair.001.001.001': 'hair001001001',
-  'hair.001.001.002': 'hair001002001',
+  'hair.001.001.002': 'hair001001002',
+  'hair.001.001.003': 'hair001001003',
+  'hair.001.001.004': 'hair001001004',
+  'hair.001.001.005': 'hair001001005',
+  'hair.001.001.006': 'hair001001006',
+  'hair.001.001.007': 'hair001001007',
+  'hair.001.001.008': 'hair001001008',
+  'hair.001.002.002': 'hair001002002',
+  'hair.001.002.003': 'hair001002003',
+  'hair.001.002.004': 'hair001002004',
+  'hair.001.002.001': 'hair001002001',
+  // UPPER
   'upper.001.001.001': 'upper001001001',
-  'upper.002.001.001': 'upper001001002',
-  'upper.002.002.001': 'upper002001001',
-  'upper.002.002.002': 'upper002001001',
+  'upper.001.001.002': 'upper001001002',
+  'upper.001.001.003': 'upper001001003',
+  'upper.001.001.004': 'upper001001004',
+  'upper.001.001.005': 'upper001001005',
+  'upper.001.001.006': 'upper001001006',
+  'upper.001.002.001': 'upper001002001',
+  'upper.001.002.002': 'upper001002002',
+  'upper.001.002.003': 'upper001002003',
+  'upper.001.002.004': 'upper001002004',
+  'upper.001.002.005': 'upper001002005',
+  'upper.001.002.006': 'upper001002006',
+  'upper.002.001.001': 'upper002001001',
+  'upper.002.001.002': 'upper002001002',
+  'upper.002.001.003': 'upper002001003',
+  'upper.002.001.004': 'upper002001004',
+  'upper.002.001.005': 'upper002001005',
+  'upper.002.001.006': 'upper002001006',
+  'upper.002.001.007': 'upper002001007',
+  'upper.002.001.008': 'upper002001008',
+  // LOWER
   'lower.001.001.001': 'lower001001001',
+  'lower.001.001.002': 'lower001001002',
+  'lower.001.001.003': 'lower001001003',
+  'lower.001.001.004': 'lower001001004',
   'lower.001.002.001': 'lower001002001',
+  'lower.001.002.002': 'lower001002002',
+  'lower.001.002.003': 'lower001002003',
+  'lower.001.002.004': 'lower001002004',
+  'lower.001.002.005': 'lower001002005',
+  'lower.001.002.006': 'lower001002006',
+  'lower.001.002.007': 'lower001002007',
+  'lower.001.002.008': 'lower001002008',
+  'lower.001.002.009': 'lower001002009',
+  'lower.001.002.010': 'lower001002010',
+  'lower.001.002.011': 'lower001002011',
+  'lower.001.002.012': 'lower001002012',
+  'lower.001.002.013': 'lower001002013',
+  'lower.001.002.014': 'lower001002014',
+  'lower.001.002.015': 'lower001002015',
+  'lower.001.003.001': 'lower001003001',
+  'lower.001.003.002': 'lower001003002',
+  'lower.001.003.003': 'lower001003003',
+  'lower.001.003.004': 'lower001003004',
+  'lower.001.003.005': 'lower001003005',
+  'lower.001.003.006': 'lower001003006',
+  'lower.001.003.007': 'lower001003007',
+  'lower.001.003.008': 'lower001003008',
+  'lower.001.003.009': 'lower001003009',
+  'lower.001.003.010': 'lower001003010',
+  'lower.001.003.011': 'lower001003011',
+  // SHOE
   'shoe.001.001.001': 'shoe001001001',
+  'shoe.001.001.002': 'shoe001001002',
+  'shoe.001.001.003': 'shoe001001003',
+  'shoe.001.001.004': 'shoe001001004',
+  'shoe.001.001.005': 'shoe001001005',
+  'shoe.001.001.006': 'shoe001001006',
+  'shoe.001.001.007': 'shoe001001007',
+  'shoe.001.001.008': 'shoe001001008',
+  'shoe.001.001.009': 'shoe001001009',
+  'shoe.001.001.010': 'shoe001001010',
+  'shoe.001.002.001': 'shoe001002001',
+  'shoe.001.002.002': 'shoe001002002',
+  'shoe.001.002.003': 'shoe001002003',
+  'shoe.001.002.004': 'shoe001002004',
+  // ACCESSORY
   'accessory.001.001.001': 'accessory001001001',
-  'accessory.001.001.002': 'accessory001002001',
+  'accessory.001.001.002': 'accessory001001002',
+  'accessory.001.001.003': 'accessory001001003',
+  'accessory.001.001.004': 'accessory001001004',
+  'accessory.001.001.005': 'accessory001001005',
+  'accessory.001.002.001': 'accessory001002001',
+  'accessory.001.002.002': 'accessory001002002',
+  'accessory.001.002.003': 'accessory001002003',
+  'accessory.001.002.004': 'accessory001002004',
+  'accessory.001.002.005': 'accessory001002005',
+  'accessory.001.003.001': 'accessory001003001',
+  'accessory.001.003.002': 'accessory001003002',
+  'accessory.001.003.003': 'accessory001003003',
+  'accessory.001.003.004': 'accessory001003004',
+  'accessory.001.003.005': 'accessory001003005',
+}
+
+const MATERIAL_MAPPING = {
+  'accessory.001.001.002': 'Material.016',
+
+  'accessory.001.001.005': 'Material.017',
+
+  'accessory.001.001.001': 'Material',
+
+  'accessory.001.001.003': 'Material.003',
+
+  'accessory.001.001.004': 'Material.015',
+
+  'accessory.001.002.004': 'Material.027',
+
+  'accessory.001.002.005': 'Material.028',
+
+  'accessory.001.002.001': 'Material.024',
+
+  'accessory.001.002.003': 'Material.026',
+
+  'accessory.001.002.002': 'Material.025',
+
+  'accessory.001.003.003': 'Material.044',
+
+  'accessory.001.003.001': 'Material.042',
+
+  'accessory.001.003.004': 'Material.045',
+
+  'accessory.001.003.002': 'Material.043',
+
+  'hair.001.001.002': 'Material.034',
+
+  'hair.001.001.001': 'hair',
+
+  'hair.001.001.003': 'Material.035',
+
+  'hair.001.001.004': 'Material.036',
+
+  'accessory.001.003.005': 'Material.046',
+
+  'hair.001.001.005': 'Material.037',
+
+  'hair.001.001.007': 'Material.039',
+
+  'hair.001.001.006': 'Material.038',
+
+  'hair.001.002.002': 'Material.048',
+
+  'hair.001.001.008': 'Material.040',
+
+  'hair.001.002.004': 'Material.047',
+
+  'hair.001.002.003': 'Material.049',
+
+  'lower.001.001.001': 'Material.051',
+
+  'hair.001.002.001': 'Material.050',
+
+  'lower.001.002.002': 'Material.055',
+
+  'lower.001.001.003': 'Material.053',
+
+  'lower.001.001.002': 'Material.052',
+
+  'lower.001.001.004': 'Material.053',
+
+  'lower.001.002.001': 'Material.054',
+
+  'lower.001.002.003': 'Material.056',
+
+  'lower.001.002.004': 'Material.057',
+
+  'lower.001.002.006': 'Material.059',
+
+  'lower.001.002.007': 'Material.077',
+
+  'lower.001.002.008': 'Material.078',
+
+  'lower.001.002.011': 'Material.081',
+
+  'lower.001.002.005': 'Material.058',
+
+  'lower.001.002.010': 'Material.080',
+
+  'lower.001.002.012': 'Material.082',
+
+  'lower.001.002.013': 'Material.083',
+
+  'lower.001.002.015': 'Material.085',
+
+  'lower.001.002.009': 'Material.079',
+
+  'lower.001.002.014': 'Material.084',
+
+  'lower.001.003.004': 'Material.060',
+
+  'lower.001.003.001': 'Material.020',
+
+  'lower.001.003.002': 'Material.022',
+
+  'lower.001.003.005': 'Material.060',
+
+  'lower.001.003.006': 'Material.061',
+
+  'lower.001.003.008': 'Material.063',
+
+  'lower.001.003.003': 'Material.029',
+
+  'lower.001.003.007': 'Material.062',
+
+  'shoe.001.001.002': 'Material.072',
+
+  'shoe.001.001.006': 'Material.071',
+
+  'lower.001.003.010': 'Material.065',
+
+  'lower.001.003.009': 'Material.064',
+
+  'lower.001.003.011': 'Material.066',
+
+  'shoe.001.001.010': 'Material.076',
+
+  'shoe.001.001.001': 'Material.067',
+
+  'shoe.001.001.004': 'Material.069',
+
+  'shoe.001.001.005': 'Material.070',
+
+  'shoe.001.001.003': 'Material.068',
+
+  'shoe.001.002.004': 'Material.033',
+
+  'shoe.001.001.008': 'Material.074',
+
+  'shoe.001.001.009': 'Material.075',
+
+  'shoe.001.001.007': 'Material.073',
+
+  'shoe.001.002.002': 'Material.005',
+
+  'shoe.001.002.003': 'Material.032',
+
+  'shoe.001.002.001': 'Material.004',
+
+  'upper.001.001.002': 'Material.086',
+
+  'upper.001.001.003': 'Material.088',
+
+  'upper.001.001.006': 'Material.091',
+
+  'upper.001.002.006': 'Material.011',
+
+  'upper.001.002.001': 'neon',
+
+  'upper.001.001.004': 'Material.089',
+
+  'upper.002.001.004': 'Material.094',
+
+  'upper.001.001.001': 'Material.087',
+
+  'upper.001.002.002': 'Material.010',
+
+  'upper.001.002.004': 'Material.014',
+
+  'upper.001.001.005': 'Material.090',
+
+  'upper.001.002.005': 'Material.012',
+
+  'upper.002.001.001': 'Material.092',
+
+  'upper.002.001.008': 'Material.009',
+
+  'upper.002.001.003': 'Material.093',
+
+  'upper.002.001.005': 'Material.006',
+
+  'upper.002.001.007': 'Material.008',
+
+  'upper.001.002.003': 'Material.013',
+
+  'upper.002.001.002': 'Material.093',
+
+  'upper.002.001.006': 'Material.007',
 }
 
 const ANIMATION_COUNT_MAPPING: ValueMapping<number> = {
@@ -493,6 +762,7 @@ export {
   INPUT_BORDER,
   INPUT_DROP_SHADOW,
   JSDELIVR_URL,
+  MATERIAL_MAPPING,
   MESSAGES,
   MODELS_DATA,
   NOTIFICATION_CLOSE_COLOR,
