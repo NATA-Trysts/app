@@ -224,7 +224,6 @@ const CHARACTER_CONFIG_VALUE_MAPPING: ValueMapping<string> = {
   'accessory.001.002.003': 'accessory001002003',
   'accessory.001.002.004': 'accessory001002004',
   'accessory.001.002.005': 'accessory001002005',
-  'accessory.001.002.006': 'accessory001002006',
   'accessory.001.003.001': 'accessory001003001',
   'accessory.001.003.002': 'accessory001003002',
   'accessory.001.003.003': 'accessory001003003',
