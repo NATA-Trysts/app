@@ -231,6 +231,190 @@ const CHARACTER_CONFIG_VALUE_MAPPING: ValueMapping<string> = {
   'accessory.001.003.005': 'accessory001003005',
 }
 
+const MATERIAL_MAPPING = {
+  'accessory.001.001.002': 'Material.016',
+
+  'accessory.001.001.005': 'Material.017',
+
+  'accessory.001.001.001': 'Material',
+
+  'accessory.001.001.003': 'Material.003',
+
+  'accessory.001.001.004': 'Material.015',
+
+  'accessory.001.002.004': 'Material.027',
+
+  'accessory.001.002.005': 'Material.028',
+
+  'accessory.001.002.001': 'Material.024',
+
+  'accessory.001.002.003': 'Material.026',
+
+  'accessory.001.002.002': 'Material.025',
+
+  'accessory.001.003.003': 'Material.044',
+
+  'accessory.001.003.001': 'Material.042',
+
+  'accessory.001.003.004': 'Material.045',
+
+  'accessory.001.003.002': 'Material.043',
+
+  'hair.001.001.002': 'Material.034',
+
+  'hair.001.001.001': 'hair',
+
+  'hair.001.001.003': 'Material.035',
+
+  'hair.001.001.004': 'Material.036',
+
+  'accessory.001.003.005': 'Material.046',
+
+  'hair.001.001.005': 'Material.037',
+
+  'hair.001.001.007': 'Material.039',
+
+  'hair.001.001.006': 'Material.038',
+
+  'hair.001.002.002': 'Material.048',
+
+  'hair.001.001.008': 'Material.040',
+
+  'hair.001.002.004': 'Material.047',
+
+  'hair.001.002.003': 'Material.049',
+
+  'lower.001.001.001': 'Material.051',
+
+  'hair.001.002.001': 'Material.050',
+
+  'lower.001.002.002': 'Material.055',
+
+  'lower.001.001.003': 'Material.053',
+
+  'lower.001.001.002': 'Material.052',
+
+  'lower.001.001.004': 'Material.053',
+
+  'lower.001.002.001': 'Material.054',
+
+  'lower.001.002.003': 'Material.056',
+
+  'lower.001.002.004': 'Material.057',
+
+  'lower.001.002.006': 'Material.059',
+
+  'lower.001.002.007': 'Material.077',
+
+  'lower.001.002.008': 'Material.078',
+
+  'lower.001.002.011': 'Material.081',
+
+  'lower.001.002.005': 'Material.058',
+
+  'lower.001.002.010': 'Material.080',
+
+  'lower.001.002.012': 'Material.082',
+
+  'lower.001.002.013': 'Material.083',
+
+  'lower.001.002.015': 'Material.085',
+
+  'lower.001.002.009': 'Material.079',
+
+  'lower.001.002.014': 'Material.084',
+
+  'lower.001.003.004': 'Material.060',
+
+  'lower.001.003.001': 'Material.020',
+
+  'lower.001.003.002': 'Material.022',
+
+  'lower.001.003.005': 'Material.060',
+
+  'lower.001.003.006': 'Material.061',
+
+  'lower.001.003.008': 'Material.063',
+
+  'lower.001.003.003': 'Material.029',
+
+  'lower.001.003.007': 'Material.062',
+
+  'shoe.001.001.002': 'Material.072',
+
+  'shoe.001.001.006': 'Material.071',
+
+  'lower.001.003.010': 'Material.065',
+
+  'lower.001.003.009': 'Material.064',
+
+  'lower.001.003.011': 'Material.066',
+
+  'shoe.001.001.010': 'Material.076',
+
+  'shoe.001.001.001': 'Material.067',
+
+  'shoe.001.001.004': 'Material.069',
+
+  'shoe.001.001.005': 'Material.070',
+
+  'shoe.001.001.003': 'Material.068',
+
+  'shoe.001.002.004': 'Material.033',
+
+  'shoe.001.001.008': 'Material.074',
+
+  'shoe.001.001.009': 'Material.075',
+
+  'shoe.001.001.007': 'Material.073',
+
+  'shoe.001.002.002': 'Material.005',
+
+  'shoe.001.002.003': 'Material.032',
+
+  'shoe.001.002.001': 'Material.004',
+
+  'upper.001.001.002': 'Material.086',
+
+  'upper.001.001.003': 'Material.088',
+
+  'upper.001.001.006': 'Material.091',
+
+  'upper.001.002.006': 'Material.011',
+
+  'upper.001.002.001': 'neon',
+
+  'upper.001.001.004': 'Material.089',
+
+  'upper.002.001.004': 'Material.094',
+
+  'upper.001.001.001': 'Material.087',
+
+  'upper.001.002.002': 'Material.010',
+
+  'upper.001.002.004': 'Material.014',
+
+  'upper.001.001.005': 'Material.090',
+
+  'upper.001.002.005': 'Material.012',
+
+  'upper.002.001.001': 'Material.092',
+
+  'upper.002.001.008': 'Material.009',
+
+  'upper.002.001.003': 'Material.093',
+
+  'upper.002.001.005': 'Material.006',
+
+  'upper.002.001.007': 'Material.008',
+
+  'upper.001.002.003': 'Material.013',
+
+  'upper.002.001.002': 'Material.093',
+
+  'upper.002.001.006': 'Material.007',
+}
+
 const ANIMATION_COUNT_MAPPING: ValueMapping<number> = {
   angry: 1,
   bow: 1,
@@ -578,6 +762,7 @@ export {
   INPUT_BORDER,
   INPUT_DROP_SHADOW,
   JSDELIVR_URL,
+  MATERIAL_MAPPING,
   MESSAGES,
   MODELS_DATA,
   NOTIFICATION_CLOSE_COLOR,
