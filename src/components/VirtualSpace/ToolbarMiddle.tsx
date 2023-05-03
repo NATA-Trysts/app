@@ -156,10 +156,22 @@ export const ToolbarMiddle = () => {
 
       const button = document.createElement('button')
 
+      // TODO: It's not a good way to append element, need update
       button.innerText = 'Exit VR'
+      button.id = 'exit-vr-btn'
+
+      button.style.padding = '8px 16px'
+      button.style.border = 'none'
+      button.style.position = 'absolute'
+      button.style.bottom = '0'
+      button.style.zIndex = '999999'
+      button.style.left = '50%'
+      button.style.transform = 'translate(-50%, -24px)'
+      button.style.cursor = 'pointer'
       button.addEventListener('click', toggleVR)
       document.body.appendChild(button)
     } else {
+      document.body.removeChild(document.querySelector('#exit-vr-btn') as Node)
       setIsEnteredVR(false)
     }
   }
