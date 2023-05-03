@@ -7,8 +7,17 @@ import { dummyData } from './dummyData'
 
 const ContentContainer = styled.div`
   width: 100%;
-  height: fit-content;
+  height: 620px;
   margin: 16px 0;
+
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 
   > div {
     opacity: 1;
