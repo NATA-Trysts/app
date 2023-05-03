@@ -25,6 +25,7 @@ const Generator = styled.button`
   background: linear-gradient(88.23deg, #2e74d4 0%, #7988d6 100%);
   color: #fff;
   transition: scale 0.25s ease;
+  cursor: pointer;
 
   :active {
     scale: 0.95;
@@ -125,7 +126,6 @@ const GPTButton = () => {
     e.preventDefault()
     const source = axios.CancelToken.source()
     const url = 'http://127.0.0.1:8000/generate'
-    // const url = 'http://0.0.0.0:8000/generate'
     const data = { prompt }
 
     try {
@@ -164,11 +164,7 @@ const GPTButton = () => {
       content={
         <GPTInteractionContainer>
           <IllustrationWrapper>
-            <Illustration
-              alt="GPT illustration"
-              loading="lazy"
-              src="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
-            />
+            <Illustration alt="GPT illustration" loading="lazy" src="/gpt-illu.png" />
           </IllustrationWrapper>
           <DescriptionContainer>
             {loading ? (
