@@ -61,7 +61,12 @@ export const ToolbarRight = () => {
         </WithTooltip>
       </CustomToolbarItem>
       <CustomToolbarItem>
-        <WithTooltip content="Leave" customHoverColor="#FC677B" id="leave">
+        <WithTooltip
+          content="Leave"
+          customHoverColor="#FC677B"
+          id="leave"
+          onClick={() => window.location.replace('https://www.trysts.io')}
+        >
           <Logout />
         </WithTooltip>
       </CustomToolbarItem>
