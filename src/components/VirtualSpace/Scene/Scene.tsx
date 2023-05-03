@@ -67,9 +67,9 @@ type FurnitureModelProps = {
 const FurnitureModel = (props: FurnitureModelProps) => {
   return (
     <RigidBody
-      // sensor
       type="fixed"
       {...props}
+      colliders="trimesh"
       onCollisionEnter={({ target }) => {
         props.setInteractable(true)
 
@@ -109,7 +109,7 @@ export const Scene = () => {
   return (
     <Container>
       <MemberVideoLayout />
-      <Canvas dpr={quality === 'high' ? [1, 1] : [0.5, 0.5]}>
+      <Canvas dpr={quality === 'high' ? [1, 1] : [0.35, 0.35]}>
         {/* <Perf /> */}
         <Suspense fallback={null}>
           <Environment preset="city" />
