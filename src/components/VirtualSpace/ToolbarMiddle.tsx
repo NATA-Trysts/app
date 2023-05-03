@@ -6,6 +6,7 @@ import {
   useHMSActions,
   useHMSStore,
 } from '@100mslive/react-sdk'
+import { toggleSession } from '@react-three/xr'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
@@ -16,6 +17,7 @@ import { ReactComponent as CameraOff } from '@/assets/icons/camera-off.svg'
 import { ReactComponent as Micro } from '@/assets/icons/mic.svg'
 import { ReactComponent as MicroOff } from '@/assets/icons/mic-off.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
+import { ReactComponent as VirtualGlasses } from '@/assets/icons/virtual-glasses.svg'
 import { ReactComponent as Writing } from '@/assets/icons/writing.svg'
 import { NameBox, RandomAvatar } from '@/components/EditCharacter'
 import { ListAudio, ListCamera } from '@/components/ListDevice'
@@ -68,6 +70,7 @@ export const ToolbarMiddle = () => {
   const [isOpenCameraSetting, setIsOpenCameraSetting] = useState(false)
   const [isOpenMicSetting, setIsOpenMicSetting] = useState(false)
   const [isOpenShareScreen, setIsOpenShareScreen] = useState(false)
+  const [isEnteredVR, setIsEnteredVR] = useState(false)
 
   const toggleAudio = async () => await hmsActions.setLocalAudioEnabled(!audioEnabled)
 
@@ -125,6 +128,34 @@ export const ToolbarMiddle = () => {
   const onPressZToOpenShareScreen = (e: KeyboardEvent) => {
     if (e.key === 'z') {
       openShareScreen()
+    }
+  }
+
+  const toggleVR = async () => {
+    const session = await toggleSession('immersive-vr')
+
+    if (session) {
+      setIsEnteredVR(true)
+
+      const button = document.createElement('button')
+
+      // TODO: It's not a good way to append element, need update
+      button.innerText = 'Exit VR'
+      button.id = 'exit-vr-btn'
+
+      button.style.padding = '8px 16px'
+      button.style.border = 'none'
+      button.style.position = 'absolute'
+      button.style.bottom = '0'
+      button.style.zIndex = '999999'
+      button.style.left = '50%'
+      button.style.transform = 'translate(-50%, -24px)'
+      button.style.cursor = 'pointer'
+      button.addEventListener('click', toggleVR)
+      document.body.appendChild(button)
+    } else {
+      document.body.removeChild(document.querySelector('#exit-vr-btn') as Node)
+      setIsEnteredVR(false)
     }
   }
 
@@ -250,6 +281,11 @@ export const ToolbarMiddle = () => {
             </>
           </Condition>
         )}
+        <ToolbarItem onClick={() => toggleVR()}>
+          <WithTooltip content={isEnteredVR ? 'Exit VR' : 'Enter VR'} id="toggle-vr">
+            <VirtualGlasses />
+          </WithTooltip>
+        </ToolbarItem>
       </AnimatedToolbarContainer>
       <NameBox isEdit={isEditAvatar} />
       <RandomAvatar isEdit={isEditAvatar} />
