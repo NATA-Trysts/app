@@ -20,9 +20,7 @@ const useDashboard = () => {
     return timeAgo
   }
 
-  const sortRecentSpace = (spaces: Space[] | undefined) => {
-    if (!spaces) return []
-
+  const sortRecentSpace = (spaces: Space[]) => {
     const recentSpaces = take(orderBy(spaces, ['latestEdited'], ['desc']), 4)
 
     return recentSpaces
