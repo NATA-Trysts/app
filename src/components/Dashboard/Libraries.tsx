@@ -31,6 +31,7 @@ type ToogleTheme = BuiltInTheme | 'all'
 type ToogleThemeOptions = {
   [key in ToogleTheme]: string
 }
+type ImageTheme = 'city' | 'forest' | 'home' | 'kidsplayground'
 
 // export const Libraries = () => {
 //   const [librarySpaces] = useDashboardStore((state) => [state.librarySpaces])
@@ -88,6 +89,20 @@ type ToogleThemeOptions = {
 //   )
 // }
 
+// const imageList:  = {
+//   city: '/theme-city.webp',
+//   forest: '/theme-forest.webp',
+//   home: '/theme-home.webp',
+//   kidsplayground: '/theme-kid.webp',
+// }
+
+const imageList: { [key in ImageTheme]: string } = {
+  city: '/theme-city.webp',
+  forest: '/theme-forest.webp',
+  home: '/theme-home.webp',
+  kidsplayground: '/theme-kid.webp',
+}
+
 export const Libraries = () => {
   const [selectedTheme, setSelectedTheme] = useState<ToogleTheme>('all')
 
@@ -120,7 +135,7 @@ export const Libraries = () => {
               <ThemePreviewCard
                 key={`theme-${key}`}
                 id={`theme-${key}`}
-                imageUrl={'https://hips.hearstapps.com/hmg-prod/images/womanyellingcat-1573233850.jpg'}
+                imageUrl={imageList[key as ImageTheme]}
                 subtitle={`${themeOptions[key as ToogleTheme]} Theme`}
                 theme={key}
                 title={key}

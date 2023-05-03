@@ -39,12 +39,12 @@ const listLayout = [
   {
     id: 1,
     type: 'above-head' as VideoLayoutType,
-    img: '/video-layout-1.png',
+    img: '/video-layout-1.webp',
   },
   {
     id: 2,
     type: 'slide' as VideoLayoutType,
-    img: 'video-layout-2.png',
+    img: 'video-layout-2.webp',
   },
 ] as const
 
