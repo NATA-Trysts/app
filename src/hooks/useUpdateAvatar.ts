@@ -27,15 +27,21 @@ const useUpdateAvatar = () => {
       image: 'https://i.pinimg.com/originals/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg',
     }
 
+    const newUser = {
+      ...user,
+      username: user.username,
+      handler: user.handler,
+      avatar: newAvatar,
+    }
+
     axiosPrivate
       .put(`/users/${me?._id}`, {
         avatar: newAvatar,
+        username: user.username,
+        handler: user.handler,
       })
       .then(() => {
-        setUser({
-          ...user,
-          avatar: newAvatar,
-        })
+        setUser(newUser)
         setIsEditAvatar(false)
         setIsUpdatingAvatar(false)
       })

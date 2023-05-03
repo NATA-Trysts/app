@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import { ReactComponent as AudioOff } from '@/assets/icons/video-mic-off.svg'
 import { ReactComponent as AudioOn } from '@/assets/icons/video-mic-on.svg'
+import { truncateText } from '@/libs'
 import { NearestMember } from '@/stores'
 
 const Video = styled.video`
@@ -84,7 +85,7 @@ export const MemberVideoCard = ({ member }: { member: NearestMember }) => {
       }}
     >
       <Video ref={videoRef} autoPlay muted playsInline />
-      <MemberName>{member.id}</MemberName>
+      <MemberName>{truncateText(member.username, 10)}</MemberName>
       <MemberIcon>{isAudioOn ? <AudioOn height={10} width={10} /> : <AudioOff height={10} width={10} />}</MemberIcon>
     </MemberVideo>
   )

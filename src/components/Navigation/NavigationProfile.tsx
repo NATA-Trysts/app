@@ -1,5 +1,6 @@
 import { Loader, OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
+import Avatar from 'boring-avatars'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
@@ -32,13 +33,6 @@ const ProfileCharacterCanvas = styled(Canvas)`
   background-color: #191a1d;
 `
 
-// for collapse mode
-const ProfileAvatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-`
-
 export const NavigationProfile = () => {
   const isExpanded = useDashboardStore((state) => state.isExpanded)
   const [isDisplayed, setIsDisplayed] = useState(false)
@@ -60,11 +54,7 @@ export const NavigationProfile = () => {
           <>
             {isDisplayed ? (
               <>
-                <MyInformationCard
-                  avatar={'https://i.pinimg.com/originals/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg'}
-                  handler={me.handler}
-                  name={me.username}
-                />
+                <MyInformationCard handler={me.handler} name={me.username} />
                 <ProfileCharacter>
                   <Loader />
                   <ProfileCharacterCanvas>
@@ -85,7 +75,7 @@ export const NavigationProfile = () => {
                 </ProfileCharacter>
               </>
             ) : (
-              <ProfileAvatar src={'https://i.pinimg.com/originals/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg'} />
+              <Avatar name="trysts" size={40} variant="beam" />
             )}
           </>
         )}

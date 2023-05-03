@@ -20,6 +20,8 @@ export type Member = {
   action: string
   isHost?: boolean
   avatar: string
+  handler: string
+  username: string
 }
 
 export type ModelMaterial = {

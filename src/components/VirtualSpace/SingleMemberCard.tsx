@@ -25,7 +25,6 @@ const Gap = styled.div`
 type SingleMemberCardProps = {
   name: string
   handler: string
-  avatar: string
 }
 
 const CustomOption = styled(Option)<{ hoverBackground?: string; textColor: string }>`
@@ -40,7 +39,7 @@ const CustomOption = styled(Option)<{ hoverBackground?: string; textColor: strin
   }
 `
 
-export const SingleMemberCard: FC<SingleMemberCardProps> = ({ name, handler, avatar }) => {
+export const SingleMemberCard: FC<SingleMemberCardProps> = ({ name, handler }) => {
   const color = useAppStore((state) => state.customColor)
 
   return (
@@ -63,7 +62,7 @@ export const SingleMemberCard: FC<SingleMemberCardProps> = ({ name, handler, ava
       side="left"
       sideOffset={20}
     >
-      <MemberCard avatar={avatar} handler={handler} name={name} />
+      <MemberCard handler={handler} name={name} />
     </Popover>
   )
 }

@@ -119,9 +119,11 @@ export const MainMember = ({ target }: MainMemberProps) => {
   const handleStateChange = (rigidBody: RapierRigidBody, character: Group) => {
     if (characterControlState === 'static' && characterControlType === 'fixed' && target) {
       lP.current.set(rigidBody.translation().x, rigidBody.translation().y, rigidBody.translation().z)
-      rigidBody.setTranslation({ x: target.position.x, y: rigidBody.translation().y, z: target.position.z }, true)
+      rigidBody.setTranslation({ x: target.position.x + 1.5, y: rigidBody.translation().y, z: target.position.z }, true)
       setBasePositionY(-1.5)
       targetQuaternion.setFromEuler(target.rotation)
+
+      targetQuaternion.y += 2
       character.rotation.setFromQuaternion(targetQuaternion)
     } else {
       rigidBody.setTranslation({ x: lP.current.x, y: lP.current.y, z: lP.current.z }, true)

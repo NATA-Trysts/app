@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Environment } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { Debug, Physics, RigidBody } from '@react-three/rapier'
+import { Physics, RigidBody } from '@react-three/rapier'
 import { XR } from '@react-three/xr'
-import { Perf } from 'r3f-perf'
 import { Suspense, useState } from 'react'
 import { Object3D } from 'three'
 
@@ -58,6 +57,7 @@ import { OtherMember } from '../OtherMember'
 type FurnitureModelProps = {
   color?: string
   position: [number, number, number]
+  rotation: [number, number, number]
   children?: React.ReactNode
   setInteractable: (value: boolean) => void
   setTarget: (value: Object3D | null) => void
@@ -68,9 +68,9 @@ type FurnitureModelProps = {
 const FurnitureModel = (props: FurnitureModelProps) => {
   return (
     <RigidBody
-      // sensor
       type="fixed"
       {...props}
+      colliders="trimesh"
       onCollisionEnter={({ target }) => {
         props.setInteractable(true)
 
@@ -110,9 +110,8 @@ export const Scene = () => {
   return (
     <Container>
       <MemberVideoLayout />
-      <Canvas dpr={quality === 'high' ? [1, 1] : [0.5, 0.5]}>
+      <Canvas dpr={quality === 'high' ? [1, 1] : [0.35, 0.35]}>
         <XR>
-          <Perf />
           <Suspense fallback={null}>
             <Environment preset="city" />
             <ambientLight intensity={0.7} />
@@ -120,9 +119,10 @@ export const Scene = () => {
             <Physics gravity={[0, -9.82, 0]}>
               {spaceModels.map((model: any) => (
                 <FurnitureModel
-                  key={model.uuid}
+                  key={model.id}
                   modelType={model.type}
                   position={[model.position.x, model.position.y - 2, model.position.z]}
+                  rotation={[model.rotation.x, model.rotation.y, model.rotation.z]}
                   setInteractable={setInteractable}
                   setTarget={setTarget}
                   setTargetCategory={setTargetCategory}
@@ -170,10 +170,9 @@ export const Scene = () => {
                   }
                 </FurnitureModel>
               ))}
-              <Debug />
               <RigidBody position={[0, -2, 0]} rotation={[-Math.PI / 2, 0, 0]} type="fixed">
                 <mesh castShadow receiveShadow>
-                  <planeGeometry args={[100, 100]} />
+                  <planeGeometry args={[1000, 1000]} />
                   <meshBasicMaterial color="pink" />
                 </mesh>
               </RigidBody>

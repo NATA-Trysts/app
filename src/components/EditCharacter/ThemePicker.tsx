@@ -71,6 +71,11 @@ export const ThemePicker = ({ isEdit = false }: ThemePickerProps) => {
       animate={{
         x: isEdit ? 0 : 500,
       }}
+      transition={{
+        type: 'spring',
+        bounce: 0.3,
+        delay: isEdit ? 0.15 : 0,
+      }}
     >
       <Title size="medium" weight="normal">
         Theme

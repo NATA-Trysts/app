@@ -15,7 +15,7 @@ const RandomContainer = styled(motion.button)`
 
   position: absolute;
   bottom: 127px;
-  left: 49%;
+  left: 50%;
   pointer-events: auto;
   z-index: 0;
 
@@ -82,7 +82,20 @@ export const RandomAvatar = ({ isEdit = false }: RandomAvatarProps) => {
         y: isEdit ? 0 : 50,
         opacity: isEdit ? 1 : 0,
       }}
-      id="random-avatar"
+      initial={{
+        y: 50,
+        x: '-50%',
+      }}
+      transition={{
+        y: {
+          duration: 0.15,
+          delay: isEdit ? 0.2 : 0.05,
+        },
+        opacity: {
+          duration: 0.1,
+          delay: isEdit ? 0.2 : 0.05,
+        },
+      }}
       onClick={handleRandom}
     >
       <RandomIcon />

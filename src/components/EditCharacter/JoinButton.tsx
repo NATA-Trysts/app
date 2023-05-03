@@ -82,14 +82,29 @@ type JoinButtonProps = {
   onClick?: () => void
 }
 
+const joinButtonVariants = {
+  show: {
+    y: 0,
+    opacity: 1,
+  },
+  hide: {
+    y: -80,
+    opacity: 0,
+  },
+}
+
 export const JoinButton = ({ isEdit = false, ...otherProps }: JoinButtonProps) => {
   const [isUpdatingAvatar] = useEditCharacterStore((state) => [state.isUpdatingAvatar])
 
   return (
     <ButtonContainer
-      animate={{
-        x: isEdit ? 0 : 500,
+      animate={isEdit ? 'show' : 'hide'}
+      transition={{
+        type: 'spring',
+        bounce: 0.3,
+        delay: isEdit ? 0.5 : 0,
       }}
+      variants={joinButtonVariants}
       {...otherProps}
     >
       {isUpdatingAvatar ? (

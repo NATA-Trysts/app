@@ -8,20 +8,18 @@ import {
 } from '@100mslive/react-sdk'
 import { toggleSession } from '@react-three/xr'
 import { motion } from 'framer-motion'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as ArrowUp } from '@/assets/icons/arrow-up.svg'
 import { ReactComponent as Camera } from '@/assets/icons/camera.svg'
 import { ReactComponent as CameraOff } from '@/assets/icons/camera-off.svg'
-import { ReactComponent as Emoji } from '@/assets/icons/emoji.svg'
 import { ReactComponent as Micro } from '@/assets/icons/mic.svg'
 import { ReactComponent as MicroOff } from '@/assets/icons/mic-off.svg'
 import { ReactComponent as ShareScreen } from '@/assets/icons/share-screen.svg'
 import { ReactComponent as VirtualGlasses } from '@/assets/icons/virtual-glasses.svg'
 import { ReactComponent as Writing } from '@/assets/icons/writing.svg'
 import { NameBox, RandomAvatar } from '@/components/EditCharacter'
-import { EmojiContent } from '@/components/EmojiContent'
 import { ListAudio, ListCamera } from '@/components/ListDevice'
 import { Popover } from '@/components/Popover'
 import { AnimatedToolbarContainer, ToolbarItem, WithTooltip } from '@/components/Toolbar'
@@ -38,11 +36,12 @@ const Condition = styled(motion.div)`
 `
 
 const OpeningNotification = styled.div`
-  transform: translateY(-72px);
+  position: absolute;
+  bottom: 72px;
   width: 310px;
   height: 40px;
   border-radius: 16px;
-  background-color: #2d0634;
+  background-color: var(--color-5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,9 +54,6 @@ export const ToolbarMiddle = () => {
     state.isEditAvatar,
     state.isHostWhiteBoardOpen,
   ])
-  const addOtherMembers = useMemberStore((state) => state.addOtherMembers)
-  const removeOtherMembers = useMemberStore((state) => state.removeOtherMembers)
-  const otherMembers = useMemberStore((state) => state.otherMembers)
   const mainMember = useMemberStore((state) => state.mainMember)
   const isHost = mainMember?.isHost
   const roomInstance = useNetworkStore((state) => state.roomInstance)
@@ -69,13 +65,10 @@ export const ToolbarMiddle = () => {
   const presenter = useHMSStore(selectPeerScreenSharing)
   const screenShareVideoTrack = useHMSStore(selectScreenShareByPeerID(presenter ? presenter.id : ''))
 
-  console.log('PRESENTER', presenter, screenShareVideoTrack)
-
   const [openIframe] = useIframeDialog()
 
   const [isOpenCameraSetting, setIsOpenCameraSetting] = useState(false)
   const [isOpenMicSetting, setIsOpenMicSetting] = useState(false)
-  const [isOpenEmoji, setIsOpenEmoji] = useState(false)
   const [isOpenShareScreen, setIsOpenShareScreen] = useState(false)
   const [isEnteredVR, setIsEnteredVR] = useState(false)
 
@@ -93,10 +86,6 @@ export const ToolbarMiddle = () => {
       console.error(error)
     }
   }
-
-  const updatedOtherMemberIds = useMemo(() => {
-    return Object.keys(otherMembers)
-  }, [otherMembers])
 
   const openWhiteBoard = () => {
     if (isHost) {
@@ -292,74 +281,12 @@ export const ToolbarMiddle = () => {
             </>
           </Condition>
         )}
-        <ToolbarItem>
-          <Popover
-            align="center"
-            content={<EmojiContent setIsPopoverOpen={setIsOpenEmoji} />}
-            // handleClickTrigger={() => setIsOpenEmoji(!isOpenEmoji)} // ISSUE: does not close
-            handleInteractOutside={() => setIsOpenEmoji(false)}
-            isPopoverOpen={isOpenEmoji}
-            side="top"
-            sideOffset={10}
-          >
-            <div>
-              <WithTooltip
-                content="Emoji"
-                id="emoji"
-                onClick={() => {
-                  addOtherMembers(Math.random().toString(), {
-                    id: Math.random().toString(),
-                    peerId: Math.random().toString(),
-                    position: {
-                      x: 0,
-                      y: 0,
-                      z: 0,
-                    },
-                    quaternion: {
-                      x: 0,
-                      y: 0,
-                      z: 0,
-                      w: 0,
-                    },
-                    action: 'idle.000',
-                  })
-                }}
-              >
-                <Emoji />
-              </WithTooltip>
-            </div>
-          </Popover>
-        </ToolbarItem>
-        <ToolbarItem>
-          <Popover
-            align="center"
-            content={<EmojiContent setIsPopoverOpen={setIsOpenEmoji} />}
-            // handleClickTrigger={() => setIsOpenEmoji(!isOpenEmoji)} // ISSUE: does not close
-            handleInteractOutside={() => setIsOpenEmoji(false)}
-            isPopoverOpen={isOpenEmoji}
-            side="top"
-            sideOffset={10}
-          >
-            <div>
-              <WithTooltip
-                content="Emoji"
-                id="emoji"
-                onClick={() => {
-                  removeOtherMembers(updatedOtherMemberIds[Math.floor(Math.random() * updatedOtherMemberIds.length)])
-                }}
-              >
-                <Emoji />
-              </WithTooltip>
-            </div>
-          </Popover>
-        </ToolbarItem>
         <ToolbarItem onClick={() => toggleVR()}>
           <WithTooltip content={isEnteredVR ? 'Exit VR' : 'Enter VR'} id="toggle-vr">
             <VirtualGlasses />
           </WithTooltip>
         </ToolbarItem>
       </AnimatedToolbarContainer>
-
       <NameBox isEdit={isEditAvatar} />
       <RandomAvatar isEdit={isEditAvatar} />
     </>

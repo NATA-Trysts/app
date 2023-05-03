@@ -1,7 +1,8 @@
 import { AxiosResponse } from 'axios'
-import { ReactNode, RefObject, useCallback, useRef, useState } from 'react'
+import { ReactNode, RefObject, useCallback, useEffect, useRef, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { useSearchParam } from 'react-use'
 
 import { axiosPrivate } from '@/api/axios'
 import {
@@ -11,7 +12,7 @@ import {
   StepperController,
   StepperRef,
 } from '@/components/Commons/Stepper'
-import { Space, SpaceTheme } from '@/models/Space'
+import { CustomableTheme, isCustomableTheme, Space, SpaceTheme } from '@/models/Space'
 
 import { CreateSpaceTheme, SelectTheme, SpaceInfo } from '.'
 
@@ -36,13 +37,18 @@ export const CreateContent = ({ stepperRef, onThemeChange }: CreateContentProps)
   const [content, setContent] = useState<ReactNode>(null)
   const methods = useForm({ mode: 'onChange' })
   const navigate = useNavigate()
+  const theme = useSearchParam('theme') as CustomableTheme
 
   const handleCanNext = useCallback((canNext: boolean) => setStepperNext(canNext), [])
 
   const contentRef = useRef([
-    <SelectTheme key={'select-theme'} onCanNext={handleCanNext} onThemeSelected={onThemeChange} />,
+    <SelectTheme key={'select-theme'} defaultTheme={theme} onCanNext={handleCanNext} onThemeSelected={onThemeChange} />,
     <SpaceInfo key={'space-info'} onCanNext={handleCanNext} />,
   ])
+
+  useEffect(() => {
+    if (isCustomableTheme(theme)) stepperRef.current?.next()
+  }, [])
 
   const handleChange = useCallback((step: number) => {
     setContent(contentRef.current[step])
@@ -63,8 +69,10 @@ export const CreateContent = ({ stepperRef, onThemeChange }: CreateContentProps)
             theme: isCustom ? false : theme,
           })
           .then((res) => {
-            console.log(res.data)
-            navigate(`/${res.data.code}`)
+            const createdSpace = res.data as Space
+
+            if (createdSpace.theme) navigate(`/${createdSpace.code}`)
+            else navigate(`/files/${createdSpace.code}`)
           })
       },
       (errors) => {

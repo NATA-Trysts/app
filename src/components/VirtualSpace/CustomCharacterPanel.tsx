@@ -1,16 +1,16 @@
 import { AvatarPanel, BackButton, JoinButton, ThemePicker } from '@/components/EditCharacter'
-// import { useUpdateAvatar } from '@/hooks'
+import { useUpdateAvatar } from '@/hooks'
 import { MESSAGES } from '@/libs/constants'
 import { useEditCharacterStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
 export const CustomCharacterPanel = () => {
   const [isEditAvatar, setIsEditAvatar] = useVirtualSpaceStore((state) => [state.isEditAvatar, state.setIsEditAvatar])
-  // const { updateAvatar } = useUpdateAvatar()
+  const { updateAvatar } = useUpdateAvatar()
   const [categorySelectedItemIds] = useEditCharacterStore((state) => [state.categorySelectedItemIds])
   const roomInstance = useNetworkStore((state) => state.roomInstance)
 
   const join = () => {
-    // updateAvatar()
+    updateAvatar()
     const avatar = {
       skin: categorySelectedItemIds.get('skin'),
       hair: categorySelectedItemIds.get('hair'),
@@ -27,13 +27,9 @@ export const CustomCharacterPanel = () => {
     setIsEditAvatar(false)
   }
 
-  const back = () => {
-    setIsEditAvatar(false)
-  }
-
   return (
     <>
-      <BackButton isEdit={isEditAvatar} onClickBack={back} />
+      <BackButton isEdit={isEditAvatar} onClickBack={join} />
       <AvatarPanel isEdit={isEditAvatar} />
       <JoinButton isEdit={isEditAvatar} onClick={join} />
       <ThemePicker isEdit={isEditAvatar} />

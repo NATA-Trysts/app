@@ -40,6 +40,11 @@ export const AvatarPanel = ({ top = 96, left = 120, right = 0, bottom = 0, isEdi
       left={left}
       right={right}
       top={top}
+      transition={{
+        type: 'spring',
+        bounce: 0.3,
+        delay: isEdit ? 0.15 : 0,
+      }}
     >
       <Category />
       <Content />

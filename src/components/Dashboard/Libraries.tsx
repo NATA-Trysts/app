@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState } from 'react'
+import { omit, pick } from 'lodash'
+import { useState } from 'react'
 import styled from 'styled-components'
 
-import { SpacePreviewCard } from '@/components/SpacePreviewCard'
 import { SubCategoryToggle } from '@/components/SubcategoryToggle'
-import { CustomableSpaceTheme, Space } from '@/models/Space'
-import { useDashboardStore } from '@/stores'
+import { BuiltInTheme } from '@/models/Space'
+
+import { ThemePreviewCard } from '../PreviewCard'
 
 const LibrariesContainer = styled.div`
   width: 100%;
@@ -26,30 +27,84 @@ const List = styled.div`
   margin: 8px 0;
 `
 
-type ToogleTheme = CustomableSpaceTheme | 'all'
+type ToogleTheme = BuiltInTheme | 'all'
 type ToogleThemeOptions = {
   [key in ToogleTheme]: string
 }
+type ImageTheme = 'city' | 'forest' | 'home' | 'kidsplayground'
+
+// export const Libraries = () => {
+//   const [librarySpaces] = useDashboardStore((state) => [state.librarySpaces])
+
+//   const [selectedTheme, setSelectedTheme] = useState<ToogleTheme>('all')
+//   const [listLibrarySpaces, setListLibrarySpaces] = useState<Space[]>([])
+
+//   const handleChange = useCallback((data: any) => {
+//     setSelectedTheme(data)
+//   }, [])
+
+//   useEffect(() => {
+//     const myArray = Array.from(librarySpaces.values())
+
+//     if (selectedTheme === 'all') {
+//       setListLibrarySpaces(myArray.flat())
+//     } else {
+//       setListLibrarySpaces(librarySpaces.get(selectedTheme) || [])
+//     }
+//   }, [selectedTheme, librarySpaces])
+
+//   const themeOptions: ToogleThemeOptions = {
+//     all: 'All',
+//     city: 'City',
+//     forest: 'Forest',
+//     home: 'Home',
+//     kidsplayground: 'Kids Playground',
+//     custom: 'Custom',
+//   }
+
+//   return (
+//     <LibrariesContainer>
+//       <Wrapper>
+//         <SubCategoryToggle
+//           handleSelectedChange={handleChange}
+//           options={Object.keys(themeOptions).map((key) => ({
+//             value: key,
+//             display: themeOptions[key as ToogleTheme],
+//           }))}
+//           selected={selectedTheme}
+//         ></SubCategoryToggle>
+//         <List>
+//           {listLibrarySpaces.map((space) => (
+//             <SpacePreviewCard
+//               key={space._id}
+//               imageUrl={space.thumbnail}
+//               space={space}
+//               subtitle={`Created by ${(space.author as Author).username}`}
+//               title={space.name}
+//             />
+//           ))}
+//         </List>
+//       </Wrapper>
+//     </LibrariesContainer>
+//   )
+// }
+
+// const imageList:  = {
+//   city: '/theme-city.webp',
+//   forest: '/theme-forest.webp',
+//   home: '/theme-home.webp',
+//   kidsplayground: '/theme-kid.webp',
+// }
+
+const imageList: { [key in ImageTheme]: string } = {
+  city: '/theme-city.webp',
+  forest: '/theme-forest.webp',
+  home: '/theme-home.webp',
+  kidsplayground: '/theme-kid.webp',
+}
 
 export const Libraries = () => {
-  const [librarySpaces] = useDashboardStore((state) => [state.librarySpaces])
-
   const [selectedTheme, setSelectedTheme] = useState<ToogleTheme>('all')
-  const [listLibrarySpaces, setListLibrarySpaces] = useState<Space[]>([])
-
-  const handleChange = useCallback((data: any) => {
-    setSelectedTheme(data)
-  }, [])
-
-  useEffect(() => {
-    const myArray = Array.from(librarySpaces.values())
-
-    if (selectedTheme === 'all') {
-      setListLibrarySpaces(myArray.flat())
-    } else {
-      setListLibrarySpaces(librarySpaces.get(selectedTheme) || [])
-    }
-  }, [selectedTheme, librarySpaces])
 
   const themeOptions: ToogleThemeOptions = {
     all: 'All',
@@ -57,7 +112,10 @@ export const Libraries = () => {
     forest: 'Forest',
     home: 'Home',
     kidsplayground: 'Kids Playground',
-    custom: 'Custom',
+  }
+
+  const handleChange = (selected: any) => {
+    setSelectedTheme(selected)
   }
 
   return (
@@ -72,15 +130,18 @@ export const Libraries = () => {
           selected={selectedTheme}
         ></SubCategoryToggle>
         <List>
-          {listLibrarySpaces.map((item) => (
-            <SpacePreviewCard
-              key={item._id}
-              imageUrl={item.thumbnail}
-              item={item}
-              subtitle={`Created by ${(item.author as any).username}`}
-              title={item.name}
-            />
-          ))}
+          {Object.keys(selectedTheme === 'all' ? omit(themeOptions, 'all') : pick(themeOptions, selectedTheme)).map(
+            (key) => (
+              <ThemePreviewCard
+                key={`theme-${key}`}
+                id={`theme-${key}`}
+                imageUrl={imageList[key as ImageTheme]}
+                subtitle={`${themeOptions[key as ToogleTheme]} Theme`}
+                theme={key}
+                title={key}
+              />
+            ),
+          )}
         </List>
       </Wrapper>
     </LibrariesContainer>

@@ -7,41 +7,23 @@ import { BasicButton } from '@/components/Button'
 import { Text } from '@/components/Commons'
 import { ButtonContent } from '@/components/Commons/Button'
 import { MultiToggle, MultiToggleProps, MultiToggleRef, ToggleLabel } from '@/components/Commons/MultiToggle'
-import { CustomableSpaceTheme } from '@/models/Space'
+import { CustomableTheme } from '@/models/Space'
 
 import { CanNextCreateContentProps, CreateForm, CreateFormHeader } from '..'
 import { ThemeImage, ThemeImageCard } from './ThemeImageCard'
 
-export type CreateSpaceTheme = CustomableSpaceTheme
+export type CreateSpaceTheme = CustomableTheme
 
 type CreateSpaceThemes = {
   [key in CreateSpaceTheme]: ReactNode
 }
 
 const themes: CreateSpaceThemes = {
-  home: (
-    <ThemeImageCard
-      key={'home-image'}
-      name="Home"
-      src="https://31e58c129a.cbaul-cdnwnd.com/b10995abef9b7109e0c8dd76841104e4/200000058-2a47f2a481/0042.jpg?ph=31e58c129a"
-    ></ThemeImageCard>
-  ),
-  forest: (
-    <ThemeImageCard
-      key={'forest-image'}
-      name="Forest"
-      src="https://w0.peakpx.com/wallpaper/172/710/HD-wallpaper-anime-girl-purple-eyes-cyberpunk-anime-girl-anime-cyberpunk-artist-artwork-digital-art.jpg"
-    ></ThemeImageCard>
-  ),
-  city: (
-    <ThemeImageCard key={'city-image'} name="City" src="https://wallpaperaccess.com/full/1761194.jpg"></ThemeImageCard>
-  ),
+  home: <ThemeImageCard key={'home-image'} name="Home" src="/theme-home.webp"></ThemeImageCard>,
+  forest: <ThemeImageCard key={'forest-image'} name="Forest" src="/theme-forest.webp"></ThemeImageCard>,
+  city: <ThemeImageCard key={'city-image'} name="City" src="/theme-city.webp"></ThemeImageCard>,
   kidsplayground: (
-    <ThemeImageCard
-      key={'kidsplayground-image'}
-      name="Kids Playground"
-      src="https://i.pinimg.com/originals/fd/09/ef/fd09ef6514db7fb0798f1f0c362bcab0.jpg"
-    ></ThemeImageCard>
+    <ThemeImageCard key={'kidsplayground-image'} name="Kids Playground" src="/theme-kid.webp"></ThemeImageCard>
   ),
   custom: <ThemeImageCard key={'custom-image'} name="Custom" src={CustomImage}></ThemeImageCard>,
 }
@@ -71,15 +53,16 @@ const themeOptions: ThemeOptionType[] = [
 ]
 
 export type SelectThemeProps = CanNextCreateContentProps & {
+  defaultTheme?: CustomableTheme
   onThemeSelected?: (value: any) => void
 }
 
-export const SelectTheme = ({ onThemeSelected, onCanNext }: SelectThemeProps) => {
+export const SelectTheme = ({ onThemeSelected, onCanNext, defaultTheme }: SelectThemeProps) => {
   const { register, getValues, setValue } = useFormContext()
   const themeToggleRef = useRef<MultiToggleRef>(null)
   const [isCustom, setCustom] = useState(false)
 
-  register('theme')
+  register('theme', { value: defaultTheme })
 
   useEffect(() => {
     setCustom(getValues('theme') === 'custom')
