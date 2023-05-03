@@ -1,138 +1,3 @@
-const list = new Map([
-  [
-    'skin',
-    [
-      {
-        id: 'skin-001',
-        title: 'Skin Color',
-        values: [
-          {
-            id: 'skin.001.001',
-            thumbnail:
-              'https://htmlcolorcodes.com/assets/images/colors/light-blue-color-solid-background-1920x1080.png',
-          },
-          {
-            id: 'skin.001.002',
-            thumbnail: 'https://htmlcolorcodes.com/assets/images/colors/dark-red-color-solid-background-1920x1080.png',
-          },
-          {
-            id: 'skin.001.003',
-            thumbnail:
-              'https://htmlcolorcodes.com/assets/images/colors/powder-blue-color-solid-background-1920x1080.png',
-          },
-          {
-            id: 'skin.001.004',
-            thumbnail: 'https://htmlcolorcodes.com/assets/images/colors/brass-color-solid-background-1920x1080.png',
-          },
-        ],
-      },
-    ],
-  ],
-  [
-    'hair',
-    [
-      {
-        id: 'hair-001',
-        title: 'Hairstyles',
-        values: [
-          {
-            id: 'hair.001.001',
-            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 'hair.001.002',
-            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-        ],
-      },
-    ],
-  ],
-  [
-    'upper',
-    [
-      {
-        id: 'upper-001',
-        title: 'Shirt',
-        values: [
-          {
-            id: 'upper.001.001',
-            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-        ],
-      },
-      {
-        id: 'upper-002',
-        title: 'Jacket',
-        values: [
-          {
-            id: 'upper.002.001',
-            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-        ],
-      },
-    ],
-  ],
-  [
-    'lower',
-    [
-      {
-        id: 'lower-001',
-        title: 'Short',
-        values: [
-          {
-            id: 'lower.001.001',
-            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-        ],
-      },
-      {
-        id: 'lower-002',
-        title: 'Jean',
-        values: [
-          {
-            id: 'lower.002.001',
-            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-        ],
-      },
-    ],
-  ],
-  [
-    'shoe',
-    [
-      {
-        id: 'shoe-001',
-        title: 'Sneaker',
-        values: [
-          {
-            id: 'shoe.001.001',
-            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-        ],
-      },
-    ],
-  ],
-  [
-    'accessory',
-    [
-      {
-        id: 'accessory-001',
-        title: 'Hat',
-        values: [
-          {
-            id: 'accessory.001.001',
-            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-          {
-            id: 'accessory.001.002',
-            thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
-          },
-        ],
-      },
-    ],
-  ],
-])
-
 const dummyData = {
   skin: {
     subCategories: {
@@ -208,6 +73,86 @@ const dummyData = {
                   value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
                 },
               },
+              {
+                id: 'hair.001.001.003',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'hair.001.001.004',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'hair.001.001.005',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'hair.001.001.006',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'hair.001.001.007',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'hair.001.001.008',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'hair.001.002.002',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'hair.001.002.003',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'hair.001.002.004',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'hair.001.002.001',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
             ],
           },
         },
@@ -220,10 +165,103 @@ const dummyData = {
         title: 'In',
         list: {
           'upper.001.001': {
-            title: '',
+            title: 'T-Shirt',
             values: [
               {
                 id: 'upper.001.001.001',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.001.001.002',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.001.001.003',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.001.001.004',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.001.001.005',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.001.001.006',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+            ],
+          },
+          'upper.001.002': {
+            title: 'Shirt',
+            values: [
+              {
+                id: 'upper.001.002.001',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.001.002.002',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.001.002.003',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.001.002.004',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.001.002.005',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.001.002.006',
                 thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
                 material: {
                   type: 'texture',
@@ -248,13 +286,56 @@ const dummyData = {
                   value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
                 },
               },
-            ],
-          },
-          'upper.002.002': {
-            title: 'Bomber',
-            values: [
               {
-                id: 'upper.002.002.001',
+                id: 'upper.002.001.002',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.002.001.003',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.002.001.004',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.002.001.005',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.002.001.006',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.002.001.007',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'upper.002.001.008',
                 thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
                 material: {
                   type: 'texture',
@@ -283,6 +364,30 @@ const dummyData = {
                   value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
                 },
               },
+              {
+                id: 'lower.001.001.002',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.001.003',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.001.004',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
             ],
           },
           'lower.001.002': {
@@ -290,6 +395,211 @@ const dummyData = {
             values: [
               {
                 id: 'lower.001.002.001',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.002.002',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.002.003',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.002.004',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.002.005',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.002.006',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.002.007',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.002.008',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.002.009',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.002.010',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.002.011',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.002.012',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.002.013',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.002.014',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.002.015',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+            ],
+          },
+          'lower.001.003': {
+            title: 'Skirt',
+            values: [
+              {
+                id: 'lower.001.003.001',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.003.002',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.003.003',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.003.004',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.003.005',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.003.006',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.003.007',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.003.008',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.003.009',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.003.010',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'lower.001.003.011',
                 thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
                 material: {
                   type: 'texture',
@@ -308,10 +618,119 @@ const dummyData = {
         title: 'Sneakers',
         list: {
           'shoe.001.001': {
-            title: '',
+            title: 'Sneakers',
             values: [
               {
                 id: 'shoe.001.001.001',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'shoe.001.001.002',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'shoe.001.001.003',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'shoe.001.001.004',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'shoe.001.001.005',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'shoe.001.001.006',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'shoe.001.001.007',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'shoe.001.001.008',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'shoe.001.001.009',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'shoe.001.001.010',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+            ],
+          },
+          'shoe.001.002': {
+            title: 'Sandals',
+            values: [
+              {
+                id: 'shoe.001.002.001',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'shoe.001.002.002',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'shoe.001.002.003',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'shoe.001.002.004',
                 thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
                 material: {
                   type: 'texture',
@@ -342,6 +761,128 @@ const dummyData = {
               },
               {
                 id: 'accessory.001.001.002',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'accessory.001.001.003',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'accessory.001.001.004',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'accessory.001.001.005',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+            ],
+          },
+          'accessory.001.002': {
+            title: 'Hats',
+            values: [
+              {
+                id: 'accessory.001.002.001',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'accessory.001.002.002',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'accessory.001.002.003',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'accessory.001.002.004',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'accessory.001.002.005',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'accessory.001.002.006',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+            ],
+          },
+          'accessory.001.003': {
+            title: 'Headphones',
+            values: [
+              {
+                id: 'accessory.001.003.001',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'accessory.001.003.002',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'accessory.001.003.003',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'accessory.001.003.004',
+                thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
+                material: {
+                  type: 'texture',
+                  value: '{"color": "#ff00ff", "roughness": "0:, "metalness": "0"}',
+                },
+              },
+              {
+                id: 'accessory.001.003.005',
                 thumbnail: 'https://pbs.twimg.com/media/FD-Y3soVEAE9Sjj?format=jpg&name=900x900',
                 material: {
                   type: 'texture',
@@ -385,4 +926,4 @@ const dummyData = {
   },
 }
 
-export { dummyData, list }
+export { dummyData }
