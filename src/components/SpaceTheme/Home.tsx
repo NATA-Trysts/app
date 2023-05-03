@@ -3707,7 +3707,8 @@ export default function Home({ ...props }) {
             scale={[1, 1, 0.04]}
           />
         </group>
-        <group name="doors" position={[103.76, 92.72, -45.32]}>
+
+        {/* <group name="doors" position={[103.76, 92.72, -45.32]}>
           <group name="door-house-front" position={[-490.43, 0.53, 566.59]} scale={1}>
             <group name="Group 701" position={[72.48, -0.53, 6.75]} rotation={[-Math.PI, 0, -Math.PI]} scale={1}>
               <mesh
@@ -3959,7 +3960,7 @@ export default function Home({ ...props }) {
               scale={1}
             />
           </group>
-        </group>
+        </group> */}
         <group name="house" position={[-48.66, 90.63, -324.39]}>
           <mesh
             castShadow
