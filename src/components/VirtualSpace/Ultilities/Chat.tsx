@@ -8,7 +8,7 @@ import { useTitle } from '@/hooks/useTitle'
 import { truncateText } from '@/libs'
 import { MESSAGES } from '@/libs/constants'
 import { approximatelyEqual } from '@/libs/utils'
-import { useNetworkStore, useVirtualSpaceStore } from '@/stores'
+import { useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
 const ChatContainer = styled.div`
   width: 100%;
@@ -109,11 +109,12 @@ export const Chat = () => {
   const chatRef = useRef<HTMLDivElement>(null)
   const [scrollAtBottom, setScrollAtButton] = useState(true)
   const [newMessage, setNewMessage] = useState(false)
+  const mainMember = useMemberStore((state) => state.mainMember)
   const newMessageAmount = useRef(0)
 
   const dispatchMessage = (message: string) => {
     roomInstance?.send(MESSAGES.MEMBER.SEND_MESSAGE, {
-      name: roomInstance.sessionId,
+      name: mainMember?.username,
       avatar: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
       timestamp: Date.now(),
       content: message.trim(),
