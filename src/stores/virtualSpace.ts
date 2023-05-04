@@ -32,6 +32,9 @@ export type SpaceModelTemp = {
   scale: [number, number, number]
 }
 
+export type ViewScreenShareType = { peerId?: string; isOpenScreenShare: boolean }
+export type FurnitureScreenShare = { furnitureIframeId: string; screenSharePeerId: string }
+
 type VirtualSpaceState = {
   spaceId: string
   setSpaceId: (spaceId: string) => void
@@ -93,6 +96,14 @@ type VirtualSpaceState = {
 
   isJoiningMultiplayer: boolean
   setIsJoiningMultiplayer: (isJoiningMultiplayer: boolean) => void
+
+  screenShares: Map<string, FurnitureScreenShare>
+  addScreenShare: (screenShare: FurnitureScreenShare) => void
+  removeScreenShare: (furnitureIframeId: string) => void
+
+  viewScreenShare: ViewScreenShareType
+  openViewScreenShare: (peerId: string) => void
+  closeViewScreenShare: () => void
 }
 
 export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
@@ -195,4 +206,32 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
 
   isJoiningMultiplayer: true,
   setIsJoiningMultiplayer: (isJoiningMultiplayer: boolean) => set(() => ({ isJoiningMultiplayer })),
+
+  screenShares: new Map<string, FurnitureScreenShare>(),
+  addScreenShare: (screenShare) =>
+    set(
+      produce((state: VirtualSpaceState) => {
+        console.log('addScreenShare ', screenShare)
+
+        const r = state.screenShares.set(screenShare.furnitureIframeId, screenShare)
+
+        console.log('after add', r)
+      }),
+    ),
+  removeScreenShare: (furnitureIframeId) =>
+    set(
+      produce((state: VirtualSpaceState) => {
+        state.screenShares.delete(furnitureIframeId)
+      }),
+    ),
+
+  viewScreenShare: { isOpenScreenShare: false, peerId: undefined },
+  openViewScreenShare: (peerId) => set(() => ({ viewScreenShare: { isOpenScreenShare: true, peerId } })),
+  closeViewScreenShare: () =>
+    set(
+      produce((state: VirtualSpaceState) => {
+        if (state.viewScreenShare.isOpenScreenShare)
+          state.viewScreenShare = { isOpenScreenShare: false, peerId: undefined }
+      }),
+    ),
 }))

@@ -44,6 +44,7 @@ export type MousePosition = Omit<Vec3, 'y'>
 
 export type SpaceModel = {
   uuid: string // unique
+  iframeId?: string
   name: string
   position: ModifierValueType
   rotation: ModifierValueType

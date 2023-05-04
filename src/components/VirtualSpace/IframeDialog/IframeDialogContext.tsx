@@ -26,7 +26,11 @@ export const IframeDialogProvider = ({ children }: IframeDialogProps) => {
   const contentRef = useRef<ReactNode>()
   const onCloseRef = useRef<() => void>()
 
+  console.log('IFRAME', isOpen, contentRef)
+
   const open = useCallback((content: ReactNode, options?: OpenIframeOptions) => {
+    console.log('iframe open')
+
     setOpen(true)
     contentRef.current = content
     onCloseRef.current = options?.onClose

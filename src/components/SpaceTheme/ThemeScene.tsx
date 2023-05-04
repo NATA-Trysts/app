@@ -32,8 +32,8 @@ export const ThemeScene = ({ theme }: { theme: BuiltInTheme }) => {
     <Container>
       <MemberVideoLayout />
       <Suspense fallback={null}>
-        <Canvas flat linear shadows dpr={[0.5, 0.5]}>
-          <Perf />
+        <Canvas flat linear shadows dpr={[1, 1]}>
+          {/* <Perf /> */}
 
           <Physics gravity={[0, -9.82, 0]}>
             <Debug />

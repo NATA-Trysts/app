@@ -1,9 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  selectLocalPeerID,
+  selectPeerScreenSharing,
+  selectScreenShareByPeerID,
+  useHMSActions,
+  useHMSStore,
+} from '@100mslive/react-sdk'
 import { Environment } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { Debug, Physics, RigidBody } from '@react-three/rapier'
+import { CollisionEnterHandler, CollisionExitHandler, Debug, Physics, RigidBody } from '@react-three/rapier'
 import { Perf } from 'r3f-perf'
-import { Suspense, useState } from 'react'
+import { Suspense, useCallback, useMemo, useState } from 'react'
+import { useNetworkState } from 'react-use'
 import { Object3D } from 'three'
 
 import {
@@ -48,53 +56,73 @@ import {
 } from '@/components/Furniture'
 import { Hint } from '@/components/Hint'
 import { MainMember } from '@/components/Member'
+import { useInteract } from '@/hooks'
 import { Container } from '@/layouts/common'
-import { useVirtualSpaceStore } from '@/stores'
+import { MESSAGES } from '@/libs/constants'
+import { hmsActions } from '@/libs/hms'
+import { SpaceModel, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
+import { useIframeDialog } from '../IframeDialog/IframeDialogContext'
 import { MemberVideoLayout } from '../MemberVideoLayout'
 import { OtherMember } from '../OtherMember'
+import { Poker } from '../Poker'
+import { ScreenShare } from '../ScreenShare'
+import { WhiteBoard } from '../WhiteBoard'
 
-type FurnitureModelProps = {
-  color?: string
-  position: [number, number, number]
-  children?: React.ReactNode
-  setInteractable: (value: boolean) => void
-  setTarget: (value: Object3D | null) => void
-  modelType: string
-  setTargetCategory: (value: string | null) => void
+type CollectionEnterDataType = {
+  newTarget: any
+  model: SpaceModel
 }
 
-const FurnitureModel = (props: FurnitureModelProps) => {
+type FurnitureModelProps = {
+  children?: React.ReactNode
+  color?: string
+  model: SpaceModel
+  position: [number, number, number]
+  onCollisionEnter?: (collectionEnterData: CollectionEnterDataType) => void
+  onCollisionExit?: () => void
+}
+
+const FurnitureModel = ({ onCollisionEnter, onCollisionExit, children, ...props }: FurnitureModelProps) => {
+  console.log(`FurnitureModel ${props.model.uuid} rerender`, children)
+
+  const hanleOnCollisionEnter: CollisionEnterHandler = ({ target }) => {
+    if (target) {
+      const position = (target.rigidBodyObject as Object3D).position
+      const rotation = (target.rigidBodyObject as Object3D).rotation
+
+      const newTarget: any = {
+        position: { x: position.x, y: position.y, z: position.z },
+        rotation: { x: rotation.x, y: rotation.y, z: rotation.z },
+      }
+
+      console.log(onCollisionEnter)
+
+      onCollisionEnter?.({ model: props.model, newTarget })
+    }
+  }
+
+  const hanleOnCollisionExit: CollisionExitHandler = (e) => {
+    onCollisionExit?.()
+  }
+
   return (
     <RigidBody
       // sensor
       type="fixed"
+      onCollisionEnter={hanleOnCollisionEnter}
+      onCollisionExit={hanleOnCollisionExit}
       {...props}
-      onCollisionEnter={({ target }) => {
-        props.setInteractable(true)
-
-        if (target) {
-          const position = (target.rigidBodyObject as Object3D).position
-          const rotation = (target.rigidBodyObject as Object3D).rotation
-
-          const newTarget: any = {
-            position: { x: position.x, y: position.y, z: position.z },
-            rotation: { x: rotation.x, y: rotation.y, z: rotation.z },
-          }
-
-          props.setTarget(newTarget)
-          props.setTargetCategory(props.modelType)
-        }
-      }}
-      onCollisionExit={(e) => {
-        props.setInteractable(false)
-        props.setTarget(null)
-        props.setTargetCategory(null)
-      }}
     >
-      {props.children}
+      {children}
     </RigidBody>
   )
+}
+
+export type InteractFuniture = {
+  action: (data: any) => void
+  hintKey: string
+  hintAction: string
 }
 
 export const Scene = () => {
@@ -105,6 +133,78 @@ export const Scene = () => {
   ])
   const [target, setTarget] = useState<Object3D | null>(null)
   const [targetCategory, setTargetCategory] = useState<string | null>(null)
+  const [interactFurniture, setInteractFurniture] = useState<InteractFuniture | null>(null)
+  const [openIframe] = useIframeDialog()
+  const roomInstance = useNetworkStore((state) => state.roomInstance)
+  const [screenShares, openViewScreenShare] = useVirtualSpaceStore((state) => [
+    state.screenShares,
+    state.openViewScreenShare,
+  ])
+  const hmsActions = useHMSActions()
+  const localPeerId = useHMSStore(selectLocalPeerID)
+  const { setInteract, clearInteract } = useInteract()
+
+  const openPoker = (iframeId: string) => {
+    openIframe(<Poker id={iframeId} />)
+  }
+
+  const openWhiteboard = (iframeId: string) => {
+    openIframe(<WhiteBoard id={`${roomInstance?.id}-${iframeId}`} />)
+  }
+
+  const dispatchOpenScreenShare = (iframeId: string) => {
+    console.log(roomInstance)
+
+    roomInstance?.send(MESSAGES.SCREENSHARE.OPEN, { furnitureIframeId: iframeId, screenSharePeerId: localPeerId })
+  }
+
+  const openScreenShare = (iframeId: string) => {
+    const screenshare = screenShares.get(iframeId)
+
+    console.log('join', iframeId, screenShares, screenshare)
+
+    if (screenshare) openViewScreenShare(screenshare.screenSharePeerId)
+    else console.log('roomInstance', roomInstance)
+
+    // await hmsActions.setScreenShareEnabled(true).then(() => {
+    //   dispatchOpenScreenShare(iframeId)
+    // })
+  }
+  const date = Date.now().toString()
+
+  console.log(date)
+
+  const interactFurnitures: { [key: string]: InteractFuniture | null } = {
+    'desk-d61cf1db-b68e-4e4e-9bbd-797962b63dbf': { action: openPoker, hintAction: 'play poker', hintKey: 'F' },
+    'decoration-b186a8a9-9e0e-483e-9779-18abfe477fa3': {
+      action: openWhiteboard,
+      hintAction: 'draw' + date,
+      hintKey: 'F',
+    },
+    'desk-58d0bc2c-871f-45ae-a73d-178c0ad41f31': {
+      action: openScreenShare,
+      hintAction: 'share screen',
+      hintKey: 'F',
+    },
+  }
+
+  const onFurnitureColliderEnter = (data: CollectionEnterDataType) => {
+    console.log(interactFurnitures)
+
+    setTarget(data.newTarget)
+    setTargetCategory(data.model.type)
+    setInteractable(true)
+    setInteractFurniture(interactFurnitures[data.model.uuid])
+    setInteract({ key: 'f', action: () => interactFurnitures[data.model.uuid]?.action(data.model.iframeId) })
+  }
+
+  const onFurnitureCollisionExit = () => {
+    setTarget(null)
+    setTargetCategory(null)
+    setInteractable(false)
+    setInteractFurniture(null)
+    clearInteract()
+  }
 
   return (
     <Container>
@@ -119,11 +219,10 @@ export const Scene = () => {
             {spaceModels.map((model: any) => (
               <FurnitureModel
                 key={model.uuid}
-                modelType={model.type}
+                model={model}
                 position={[model.position.x, model.position.y - 2, model.position.z]}
-                setInteractable={setInteractable}
-                setTarget={setTarget}
-                setTargetCategory={setTargetCategory}
+                onCollisionEnter={onFurnitureColliderEnter}
+                onCollisionExit={onFurnitureCollisionExit}
               >
                 {
                   {
@@ -168,7 +267,7 @@ export const Scene = () => {
                 }
               </FurnitureModel>
             ))}
-            <Debug />
+            {/* <Debug /> */}
             <RigidBody position={[0, -2, 0]} rotation={[-Math.PI / 2, 0, 0]} type="fixed">
               <mesh castShadow receiveShadow>
                 <planeGeometry args={[100, 100]} />
@@ -180,7 +279,7 @@ export const Scene = () => {
           </Physics>
         </Suspense>
       </Canvas>
-      <Hint action={targetCategory === 'chair' ? 'sit' : 'abc'} actionKey={targetCategory === 'chair' ? 'Z' : 'L'} />
+      <Hint action={interactFurniture?.hintAction} actionKey={interactFurniture?.hintKey} />
     </Container>
   )
 }
