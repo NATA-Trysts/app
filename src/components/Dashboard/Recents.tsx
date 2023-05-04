@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 import { Text } from '@/components/Commons'
 import { SpacePreviewCard } from '@/components/PreviewCard'
-import { useDashboardStore } from '@/stores'
 
 import { useDashboard } from './hooks/useDashboard'
 
@@ -26,11 +25,9 @@ const List = styled.div`
 `
 
 export const Recents = () => {
-  const [spaces] = useDashboardStore((state) => [state.mySpaces])
+  const { calculateTimeAgo, sortRecentSpace, librarySpaces } = useDashboard()
 
-  const { calculateTimeAgo, sortRecentSpace } = useDashboard()
-
-  const recentSpaces = sortRecentSpace(spaces).slice(0, 4)
+  const recentSpaces = sortRecentSpace(librarySpaces.get('custom')).slice(0, 4)
 
   return (
     <>

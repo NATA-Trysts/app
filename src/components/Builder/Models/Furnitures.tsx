@@ -63,8 +63,8 @@ const HIGHEST_Y = 1.5
 
 const Furniture = (props: FurnitureProps) => {
   const { updateHistory } = useBuilder()
-  const setSelectedModelUuid = useBuilderStore((state) => state.setSelectedModelUuid)
-  const selectedModelUuid = useBuilderStore((state) => state.selectedModelUuid)
+  const setSelectedModelId = useBuilderStore((state) => state.setSelectedModelId)
+  const selectedModelId = useBuilderStore((state) => state.selectedModelId)
   const setIsEditing = useBuilderStore((state) => state.setIsEditing)
   const updateModel = useBuilderStore((state) => state.updateModel)
 
@@ -78,7 +78,7 @@ const Furniture = (props: FurnitureProps) => {
   const pointerDown = useDoubleClickAndHold(
     () => {
       if (modelRef.current) {
-        setSelectedModelUuid(props.uuid)
+        setSelectedModelId(props.id)
       }
     },
     () => {
@@ -141,7 +141,7 @@ const Furniture = (props: FurnitureProps) => {
       }
 
       updateHistory((models) => {
-        return models.map((model) => (model.uuid === modelUpdate.uuid ? { ...model, ...modelUpdate } : model))
+        return models.map((model) => (model.id === modelUpdate.id ? { ...model, ...modelUpdate } : model))
       })
 
       isModelClicked.current = false
@@ -183,7 +183,7 @@ const Furniture = (props: FurnitureProps) => {
         onPointerOut={() => setHovered(false)}
         onPointerOver={() => setHovered(true)}
       >
-        <Select enabled={hovered || selectedModelUuid === props.uuid}>
+        <Select enabled={hovered || selectedModelId === props.id}>
           {
             {
               'desk-d61cf1db-b68e-4e4e-9bbd-797962b63dbf': <AccentTable />,
@@ -235,7 +235,7 @@ const Furniture = (props: FurnitureProps) => {
         onPointerMove={pointerMove}
       >
         <mesh>
-          <boxGeometry args={[100, 1, 100]} />
+          <boxGeometry args={[1000, 1, 1000]} />
         </mesh>
       </group>
     </>
@@ -249,9 +249,9 @@ export const Furnitures = () => {
     state.setModels,
     state.globalSettings,
   ])
-  const [selectedModelUuid, setSelectedModelUuid] = useBuilderStore((state) => [
-    state.selectedModelUuid,
-    state.setSelectedModelUuid,
+  const [selectedModelId, setSelectedModelId] = useBuilderStore((state) => [
+    state.selectedModelId,
+    state.setSelectedModelId,
   ])
   const isInputFocus = useBuilderStore((state) => state.isInputFocus)
 
@@ -259,16 +259,16 @@ export const Furnitures = () => {
   const [isRedo] = useKeyboardJs('ctrl + y')
 
   useKeyPressEvent('Backspace', () => {
-    if (!isInputFocus && selectedModelUuid) {
-      deleteModelBuilder(selectedModelUuid)
+    if (!isInputFocus && selectedModelId) {
+      deleteModelBuilder(selectedModelId)
     }
   })
   useKeyPressEvent('Delete', () => {
-    if (!isInputFocus && selectedModelUuid) {
-      deleteModelBuilder(selectedModelUuid)
+    if (!isInputFocus && selectedModelId) {
+      deleteModelBuilder(selectedModelId)
     }
   })
-  useKeyPressEvent('Escape', () => !isInputFocus && setSelectedModelUuid(null))
+  useKeyPressEvent('Escape', () => !isInputFocus && setSelectedModelId(null))
 
   useEffect(() => {
     const history = JSON.parse(sessionStorage.getItem('history') as string)
@@ -282,7 +282,7 @@ export const Furnitures = () => {
 
         const previousModels = history[historyIndex]
 
-        setSelectedModelUuid(null)
+        setSelectedModelId(null)
         setModels(previousModels)
 
         sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex))
@@ -297,13 +297,13 @@ export const Furnitures = () => {
 
         const next = history[historyIndex]
 
-        setSelectedModelUuid(null)
+        setSelectedModelId(null)
         setModels(next)
 
         sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex))
       }
     }
-  }, [isUndo, isRedo, setModels, setSelectedModelUuid])
+  }, [isUndo, isRedo, setModels, setSelectedModelId])
 
   useEffect(() => {
     sessionStorage.setItem('history', JSON.stringify([models]))
@@ -317,7 +317,7 @@ export const Furnitures = () => {
           <Furniture
             key={index}
             color={model.color}
-            id={model.uuid}
+            id={model.id}
             metalness={model.metalness}
             name={model.name}
             position={{

@@ -52,18 +52,21 @@ const useBuilder = () => {
     sessionStorage.setItem('historyIndex', JSON.stringify(historyIndex + 1))
   }
 
-  const deleteModelBuilder = (uuid: string) => {
-    deleteModel(uuid)
+  const deleteModelBuilder = (id: string) => {
+    deleteModel(id)
     updateHistory((models) => {
-      return models.filter((model) => model.uuid !== uuid)
+      return models.filter((model) => model.id !== id)
     })
   }
 
   const clickSubCategory = async (item: SubCategoryItem) => {
     updateSelectedSubCategoryItems(item.category, item)
 
+    const now = Date.now().toString()
+
     addModel({
       uuid: item.uuid,
+      id: now,
       name: item.name,
       position: { x: 0, y: 0, z: 0 },
       rotation: { x: 0, y: 0, z: 0 },
@@ -78,6 +81,7 @@ const useBuilder = () => {
       return [
         ...models,
         {
+          id: now,
           uuid: item.uuid,
           name: item.name,
           position: { x: 0, y: 0, z: 0 },

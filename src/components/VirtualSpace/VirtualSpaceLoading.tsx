@@ -126,8 +126,9 @@ type VirtualSpaceLoadingProps = {
   children: ReactNode
 }
 
-const MULTIPLAYER_SERVICE_ENDPOINT = import.meta.env.VITE_MULTIPLAYER_SERVICE_ENDPOINT
-const WORLD_NAME = import.meta.env.VITE_WORLD_NAME
+const MULTIPLAYER_SERVICE_ENDPOINT = 'wss://multiplayer.trysts.io'
+// const MULTIPLAYER_SERVICE_ENDPOINT = 'ws://localhost:2567'
+const WORLD_NAME = 'trysts'
 
 type PrepareState = 'info-loaded' | 'need-verify' | 'hms.joined' | 'multiplayer.joined' | ''
 
@@ -144,10 +145,11 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
   const [password, setPassword] = useState('')
   const { auth } = useAuth()
 
-  const [setSpaceName, setSpaceModels, setSpaceTheme] = useVirtualSpaceStore((state) => [
+  const [setSpaceName, setSpaceModels, setSpaceTheme, setSpaceBackgroundMusic] = useVirtualSpaceStore((state) => [
     state.setSpaceName,
     state.setSpaceModels,
     state.setSpaceTheme,
+    state.setSpaceBackgroundMusic,
   ])
   const [prepareState, setPrepareState] = useState<PrepareState>('')
 
@@ -210,7 +212,8 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
           const password = space.password
 
           setSpaceName(space.name)
-          setSpaceModels(space.models)
+          setSpaceModels(space.models || [])
+          setSpaceBackgroundMusic(space.backgroundMusic || '')
           setSpaceTheme(space.theme)
           setRoomId(space.hmsRoomId)
           isHost.current = space.author === user?._id
@@ -239,11 +242,11 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
     const joinHms = async () => {
       setPrepareStatus('Preparing the best video call experience')
 
-      const hmsRequest = await axios.post(import.meta.env.VITE_HMS_ENDPOINT, {
+      const hmsRequest = await axios.post('https://prod-in2.100ms.live/hmsapi/trystsvoice.app.100ms.live/api/token', {
         // eslint-disable-next-line camelcase
         room_id: roomId,
         // TODO: change based on role
-        role: import.meta.env.VITE_HMS_ROLE_PARTICIPANT,
+        role: 'guest',
         // eslint-disable-next-line camelcase
         user_id: localUser?._id,
       })
@@ -398,7 +401,9 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
                 />
               </PasswordInputWrapper>
             </PasswordInputContainer>
-            <PasswordSubmitButton type="button">Join</PasswordSubmitButton>
+            <PasswordSubmitButton type="submit" value="Join">
+              Join
+            </PasswordSubmitButton>
           </PasswordContainer>
         )}
 

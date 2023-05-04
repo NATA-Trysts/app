@@ -137,17 +137,286 @@ const CHARACTER_CONFIG_VALUE_MAPPING: ValueMapping<string> = {
   'skin.001.001.002': '#120ead',
   'skin.001.001.003': '#6e106a',
   'skin.001.001.004': '#d09789',
+  // HAIR
   'hair.001.001.001': 'hair001001001',
-  'hair.001.001.002': 'hair001002001',
+  'hair.001.001.002': 'hair001001002',
+  'hair.001.001.003': 'hair001001003',
+  'hair.001.001.004': 'hair001001004',
+  'hair.001.001.005': 'hair001001005',
+  'hair.001.001.006': 'hair001001006',
+  'hair.001.001.007': 'hair001001007',
+  'hair.001.001.008': 'hair001001008',
+  'hair.001.002.002': 'hair001002002',
+  'hair.001.002.003': 'hair001002003',
+  'hair.001.002.004': 'hair001002004',
+  'hair.001.002.001': 'hair001002001',
+  // UPPER
   'upper.001.001.001': 'upper001001001',
-  'upper.002.001.001': 'upper001001002',
-  'upper.002.002.001': 'upper002001001',
-  'upper.002.002.002': 'upper002001001',
+  'upper.001.001.002': 'upper001001002',
+  'upper.001.001.003': 'upper001001003',
+  'upper.001.001.004': 'upper001001004',
+  'upper.001.001.005': 'upper001001005',
+  'upper.001.001.006': 'upper001001006',
+  'upper.001.002.001': 'upper001002001',
+  'upper.001.002.002': 'upper001002002',
+  'upper.001.002.003': 'upper001002003',
+  'upper.001.002.004': 'upper001002004',
+  'upper.001.002.005': 'upper001002005',
+  'upper.001.002.006': 'upper001002006',
+  'upper.002.001.001': 'upper002001001',
+  'upper.002.001.002': 'upper002001002',
+  'upper.002.001.003': 'upper002001003',
+  'upper.002.001.004': 'upper002001004',
+  'upper.002.001.005': 'upper002001005',
+  'upper.002.001.006': 'upper002001006',
+  'upper.002.001.007': 'upper002001007',
+  'upper.002.001.008': 'upper002001008',
+  // LOWER
   'lower.001.001.001': 'lower001001001',
+  'lower.001.001.002': 'lower001001002',
+  'lower.001.001.003': 'lower001001003',
+  'lower.001.001.004': 'lower001001004',
   'lower.001.002.001': 'lower001002001',
+  'lower.001.002.002': 'lower001002002',
+  'lower.001.002.003': 'lower001002003',
+  'lower.001.002.004': 'lower001002004',
+  'lower.001.002.005': 'lower001002005',
+  'lower.001.002.006': 'lower001002006',
+  'lower.001.002.007': 'lower001002007',
+  'lower.001.002.008': 'lower001002008',
+  'lower.001.002.009': 'lower001002009',
+  'lower.001.002.010': 'lower001002010',
+  'lower.001.002.011': 'lower001002011',
+  'lower.001.002.012': 'lower001002012',
+  'lower.001.002.013': 'lower001002013',
+  'lower.001.002.014': 'lower001002014',
+  'lower.001.002.015': 'lower001002015',
+  'lower.001.003.001': 'lower001003001',
+  'lower.001.003.002': 'lower001003002',
+  'lower.001.003.003': 'lower001003003',
+  'lower.001.003.004': 'lower001003004',
+  'lower.001.003.005': 'lower001003005',
+  'lower.001.003.006': 'lower001003006',
+  'lower.001.003.007': 'lower001003007',
+  'lower.001.003.008': 'lower001003008',
+  'lower.001.003.009': 'lower001003009',
+  'lower.001.003.010': 'lower001003010',
+  'lower.001.003.011': 'lower001003011',
+  // SHOE
   'shoe.001.001.001': 'shoe001001001',
+  'shoe.001.001.002': 'shoe001001002',
+  'shoe.001.001.003': 'shoe001001003',
+  'shoe.001.001.004': 'shoe001001004',
+  'shoe.001.001.005': 'shoe001001005',
+  'shoe.001.001.006': 'shoe001001006',
+  'shoe.001.001.007': 'shoe001001007',
+  'shoe.001.001.008': 'shoe001001008',
+  'shoe.001.001.009': 'shoe001001009',
+  'shoe.001.001.010': 'shoe001001010',
+  'shoe.001.002.001': 'shoe001002001',
+  'shoe.001.002.002': 'shoe001002002',
+  'shoe.001.002.003': 'shoe001002003',
+  'shoe.001.002.004': 'shoe001002004',
+  // ACCESSORY
   'accessory.001.001.001': 'accessory001001001',
-  'accessory.001.001.002': 'accessory001002001',
+  'accessory.001.001.002': 'accessory001001002',
+  'accessory.001.001.003': 'accessory001001003',
+  'accessory.001.001.004': 'accessory001001004',
+  'accessory.001.001.005': 'accessory001001005',
+  'accessory.001.002.001': 'accessory001002001',
+  'accessory.001.002.002': 'accessory001002002',
+  'accessory.001.002.003': 'accessory001002003',
+  'accessory.001.002.004': 'accessory001002004',
+  'accessory.001.002.005': 'accessory001002005',
+  'accessory.001.003.001': 'accessory001003001',
+  'accessory.001.003.002': 'accessory001003002',
+  'accessory.001.003.003': 'accessory001003003',
+  'accessory.001.003.004': 'accessory001003004',
+  'accessory.001.003.005': 'accessory001003005',
+}
+
+const MATERIAL_MAPPING = {
+  'accessory.001.001.002': 'Material.016',
+
+  'accessory.001.001.005': 'Material.017',
+
+  'accessory.001.001.001': 'Material',
+
+  'accessory.001.001.003': 'Material.003',
+
+  'accessory.001.001.004': 'Material.015',
+
+  'accessory.001.002.004': 'Material.027',
+
+  'accessory.001.002.005': 'Material.028',
+
+  'accessory.001.002.001': 'Material.024',
+
+  'accessory.001.002.003': 'Material.026',
+
+  'accessory.001.002.002': 'Material.025',
+
+  'accessory.001.003.003': 'Material.044',
+
+  'accessory.001.003.001': 'Material.042',
+
+  'accessory.001.003.004': 'Material.045',
+
+  'accessory.001.003.002': 'Material.043',
+
+  'hair.001.001.002': 'Material.034',
+
+  'hair.001.001.001': 'hair',
+
+  'hair.001.001.003': 'Material.035',
+
+  'hair.001.001.004': 'Material.036',
+
+  'accessory.001.003.005': 'Material.046',
+
+  'hair.001.001.005': 'Material.037',
+
+  'hair.001.001.007': 'Material.039',
+
+  'hair.001.001.006': 'Material.038',
+
+  'hair.001.002.002': 'Material.048',
+
+  'hair.001.001.008': 'Material.040',
+
+  'hair.001.002.004': 'Material.047',
+
+  'hair.001.002.003': 'Material.049',
+
+  'lower.001.001.001': 'Material.051',
+
+  'hair.001.002.001': 'Material.050',
+
+  'lower.001.002.002': 'Material.055',
+
+  'lower.001.001.003': 'Material.053',
+
+  'lower.001.001.002': 'Material.052',
+
+  'lower.001.001.004': 'Material.053',
+
+  'lower.001.002.001': 'Material.054',
+
+  'lower.001.002.003': 'Material.056',
+
+  'lower.001.002.004': 'Material.057',
+
+  'lower.001.002.006': 'Material.059',
+
+  'lower.001.002.007': 'Material.077',
+
+  'lower.001.002.008': 'Material.078',
+
+  'lower.001.002.011': 'Material.081',
+
+  'lower.001.002.005': 'Material.058',
+
+  'lower.001.002.010': 'Material.080',
+
+  'lower.001.002.012': 'Material.082',
+
+  'lower.001.002.013': 'Material.083',
+
+  'lower.001.002.015': 'Material.085',
+
+  'lower.001.002.009': 'Material.079',
+
+  'lower.001.002.014': 'Material.084',
+
+  'lower.001.003.004': 'Material.060',
+
+  'lower.001.003.001': 'Material.020',
+
+  'lower.001.003.002': 'Material.022',
+
+  'lower.001.003.005': 'Material.060',
+
+  'lower.001.003.006': 'Material.061',
+
+  'lower.001.003.008': 'Material.063',
+
+  'lower.001.003.003': 'Material.029',
+
+  'lower.001.003.007': 'Material.062',
+
+  'shoe.001.001.002': 'Material.072',
+
+  'shoe.001.001.006': 'Material.071',
+
+  'lower.001.003.010': 'Material.065',
+
+  'lower.001.003.009': 'Material.064',
+
+  'lower.001.003.011': 'Material.066',
+
+  'shoe.001.001.010': 'Material.076',
+
+  'shoe.001.001.001': 'Material.067',
+
+  'shoe.001.001.004': 'Material.069',
+
+  'shoe.001.001.005': 'Material.070',
+
+  'shoe.001.001.003': 'Material.068',
+
+  'shoe.001.002.004': 'Material.033',
+
+  'shoe.001.001.008': 'Material.074',
+
+  'shoe.001.001.009': 'Material.075',
+
+  'shoe.001.001.007': 'Material.073',
+
+  'shoe.001.002.002': 'Material.005',
+
+  'shoe.001.002.003': 'Material.032',
+
+  'shoe.001.002.001': 'Material.004',
+
+  'upper.001.001.002': 'Material.086',
+
+  'upper.001.001.003': 'Material.088',
+
+  'upper.001.001.006': 'Material.091',
+
+  'upper.001.002.006': 'Material.011',
+
+  'upper.001.002.001': 'neon',
+
+  'upper.001.001.004': 'Material.089',
+
+  'upper.002.001.004': 'Material.094',
+
+  'upper.001.001.001': 'Material.087',
+
+  'upper.001.002.002': 'Material.010',
+
+  'upper.001.002.004': 'Material.014',
+
+  'upper.001.001.005': 'Material.090',
+
+  'upper.001.002.005': 'Material.012',
+
+  'upper.002.001.001': 'Material.092',
+
+  'upper.002.001.008': 'Material.009',
+
+  'upper.002.001.003': 'Material.093',
+
+  'upper.002.001.005': 'Material.006',
+
+  'upper.002.001.007': 'Material.008',
+
+  'upper.001.002.003': 'Material.013',
+
+  'upper.002.001.002': 'Material.093',
+
+  'upper.002.001.006': 'Material.007',
 }
 
 const ANIMATION_COUNT_MAPPING: ValueMapping<number> = {
@@ -197,7 +466,7 @@ const MODELS_DATA = [
     category: 'desk',
     description:
       'Complete your room aesthetic with this stylish accent table. Its small footprint makes it ideal for tight spaces, while its sleek design and choice of materials complement any decor.',
-    thumbnail: '/public/thumbnail/accent-table.webp',
+    thumbnail: '/thumbnail/accent-table.webp',
   },
   {
     uuid: 'plant-10680d63-f2cf-4f30-ae45-3d309f4e4464',
@@ -205,7 +474,7 @@ const MODELS_DATA = [
     category: 'plant',
     description:
       'Bring the beauty of nature into your space with this stunning apple tree. Its colorful and delicious fruit also makes it a functional addition to any kitchen or dining area. ',
-    thumbnail: '/public/thumbnail/apple-tree.webp',
+    thumbnail: '/thumbnail/apple-tree.webp',
   },
   {
     uuid: 'decoration-b186a8a9-9e0e-483e-9779-18abfe477fa3',
@@ -213,7 +482,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'This art board is a great addition to any room. Its sleek design and choice of materials complement any decor.',
-    thumbnail: '/public/thumbnail/artboard.webp',
+    thumbnail: '/thumbnail/artboard.webp',
   },
   {
     uuid: 'bath-2c419d45-c99e-45d6-8554-f0dbcaf4a6cd',
@@ -221,7 +490,7 @@ const MODELS_DATA = [
     category: 'bath',
     description:
       'Transform your bathroom into a luxurious spa-like retreat with this elegant bath. Its sleek design and comfortable size make it perfect for relaxing after a long day.',
-    thumbnail: '/public/thumbnail/bath.webp',
+    thumbnail: '/thumbnail/bath.webp',
   },
   {
     uuid: 'bath-1c61a31c-4164-4cad-8ca5-73ac3168ad2d',
@@ -229,7 +498,7 @@ const MODELS_DATA = [
     category: 'bath',
     description:
       'Complete your bathroom aesthetic with this stylish rug. Its small footprint makes it ideal for tight spaces, while its sleek design and choice of materials complement any decor.',
-    thumbnail: '/public/thumbnail/bathroom-rug.webp',
+    thumbnail: '/thumbnail/bathroom-rug.webp',
   },
   {
     uuid: 'chair-868c1619-2cdf-4249-bb74-2c9309def2a2',
@@ -237,7 +506,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'Get cozy in style with this coffee-colored bean bag chair. With its versatile design and compact size, you can easily move it around to create the perfect spot for relaxation.',
-    thumbnail: '/public/thumbnail/bean-bag-chair-coffee.webp',
+    thumbnail: '/thumbnail/bean-bag-chair-coffee.webp',
   },
   {
     uuid: 'chair-908ea24b-1e9f-47b2-973b-a6c4128b3f7f',
@@ -245,7 +514,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'Add a fun and casual seating option to your space with this comfortable bean bag chair. Its soft and supportive filling conforms to your body, providing a cozy spot to relax or read a book.',
-    thumbnail: '/public/thumbnail/bean-bag-chair.webp',
+    thumbnail: '/thumbnail/bean-bag-chair.webp',
   },
   {
     uuid: 'cabinet-41223ee1-e7fd-48a0-ab74-677eae6a78b2',
@@ -253,7 +522,7 @@ const MODELS_DATA = [
     category: 'cabinet',
     description:
       'Maximize your bedroom storage and functionality with this sleek bed cabinet. Its modern design offers a sophisticated touch to your space, while its practical features provide ample storage for your bedroom essentials.',
-    thumbnail: '/public/thumbnail/bed-cabinet.webp',
+    thumbnail: '/thumbnail/bed-cabinet.webp',
   },
   {
     uuid: 'decoration-308b504b-d99a-4005-a265-503b2de768e5',
@@ -261,7 +530,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Add a touch of modern style to your space with this sleek bookshelf. Its versatile design and compact size make it perfect for displaying your favorite books, photos, and other decorative items.',
-    thumbnail: '/public/thumbnail/bookshelf.webp',
+    thumbnail: '/thumbnail/bookshelf.webp',
   },
   {
     uuid: 'decoration-4781c552-af73-4d69-bbab-33b21bfcb77a',
@@ -269,7 +538,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Create a dreamy and mesmerizing atmosphere in your space with this stunning bubble lamp. Its unique design features a cluster of glass orbs that emit a soft and diffused light, creating a soothing and calming ambiance.',
-    thumbnail: '/public/thumbnail/bubble-lamp.webp',
+    thumbnail: '/thumbnail/bubble-lamp.webp',
   },
   {
     uuid: 'cabinet-a99b7fbf-37f3-49a1-8657-d0bcc2997d98',
@@ -277,7 +546,7 @@ const MODELS_DATA = [
     category: 'cabinet',
     description:
       'Organize your bathroom in style with this sleek and practical bathroom cabinet. Its elegant design offers a sophisticated touch to your space, while its practical features provide ample storage for your bathroom essentials.',
-    thumbnail: '/public/thumbnail/cabinet-bathroom.webp',
+    thumbnail: '/thumbnail/cabinet-bathroom.webp',
   },
   {
     uuid: 'cabinet-29524f5b-0486-446e-a01f-181c4b7e5402',
@@ -285,7 +554,7 @@ const MODELS_DATA = [
     category: 'cabinet',
     description:
       '"Display your favorite books and decor items in style with this elegant book cabinet. Its modern design offers a sophisticated touch to your space, while its practical features provide ample storage for your book collection.',
-    thumbnail: '/public/thumbnail/cabinet-book.webp',
+    thumbnail: '/thumbnail/cabinet-book.webp',
   },
   {
     uuid: 'cabinet-28f52db2-46da-4bb1-86da-ef5d256099ff',
@@ -293,7 +562,7 @@ const MODELS_DATA = [
     category: 'cabinet',
     description:
       'Organize your space in style with this elegant cabinet. Its sleek and modern design offers a sophisticated touch to your space, while its practical features provide ample storage for your essentials.',
-    thumbnail: '/public/thumbnail/cabinet.webp',
+    thumbnail: '/thumbnail/cabinet.webp',
   },
   {
     uuid: 'decoration-26e29954-007d-408f-9243-86c518bfc035',
@@ -301,7 +570,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Add warmth and comfort to your space with this cozy and stylish carpet. Its plush texture provides a soft and comfortable surface to walk on, while its beautiful design adds a touch of elegance to your decor.',
-    thumbnail: '/public/thumbnail/carpet.webp',
+    thumbnail: '/thumbnail/carpet.webp',
   },
   {
     uuid: 'chair-bf76df41-9c51-4ae4-8d26-6a54e0e2265d',
@@ -309,7 +578,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'With modern design offers a sophisticated touch to your decor, while its comfortable seat provides a cozy and relaxing seating experience. Whether you use it in your living room, bedroom, or home office, this chair is the perfect addition to any space.',
-    thumbnail: '/public/thumbnail/chair.webp',
+    thumbnail: '/thumbnail/chair.webp',
   },
   {
     uuid: 'desk-68eccc2e-9d7b-4c66-972e-9aca69b76505',
@@ -317,7 +586,7 @@ const MODELS_DATA = [
     category: 'desk',
     description:
       'Add a touch of elegance to your space with this beautiful circle table. Its sleek and modern design offers a sophisticated touch to your decor, while its compact size makes it a practical addition to any room in your home.',
-    thumbnail: '/public/thumbnail/circle-table.webp',
+    thumbnail: '/thumbnail/circle-table.webp',
   },
   {
     uuid: 'desk-58d0bc2c-871f-45ae-a73d-178c0ad41f31',
@@ -325,7 +594,7 @@ const MODELS_DATA = [
     category: 'desk',
     description:
       'With multiple compartments and drawers of this desk, you can easily organize your items and keep them within reach. Its sturdy construction ensures that it can handle the weight of your computer and other items.',
-    thumbnail: '/public/thumbnail/desk.webp',
+    thumbnail: '/thumbnail/desk.webp',
   },
   {
     uuid: 'chair-5b879d1e-ca56-49e2-8af8-f348dc043f03',
@@ -333,7 +602,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'Elevate your dining experience with these beautiful and comfortable dining chairs. Their sleek and modern design offers a sophisticated touch to your decor, while their comfortable seats provide a cozy and relaxing dining experience.',
-    thumbnail: '/public/thumbnail/dinning-chair.webp',
+    thumbnail: '/thumbnail/dinning-chair.webp',
   },
   {
     uuid: 'desk-bb79046f-20c9-4eb3-b527-5470bfe8e967',
@@ -341,7 +610,7 @@ const MODELS_DATA = [
     category: 'desk',
     description:
       'Gather around this beautiful dining table and create memories that will last a lifetime. Its sleek and modern design offers a sophisticated touch to your decor, while its practical features provide ample space for your family and friends to enjoy a meal together.',
-    thumbnail: '/public/thumbnail/dinning-table.webp',
+    thumbnail: '/thumbnail/dinning-table.webp',
   },
   {
     uuid: 'decoration-1510441a-f8e8-444e-aea8-cc530a0fedb6',
@@ -349,7 +618,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'A furniture item commonly used in bedroom spaces. In space builders, a double bed is typically included as a foundational piece for designing a bedroom.',
-    thumbnail: '/public/thumbnail/double-bed.webp',
+    thumbnail: '/thumbnail/double-bed.webp',
   },
   {
     uuid: 'decoration-3e35cb45-7d05-474d-8529-663638698841',
@@ -357,7 +626,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Keep your space cool and comfortable with this sleek and modern fan. Its compact size makes it a practical addition to any room in your home, while its powerful and adjustable airflow ensures that you can customize the temperature to your liking.',
-    thumbnail: '/public/thumbnail/fan.webp',
+    thumbnail: '/thumbnail/fan.webp',
   },
   {
     uuid: 'cabinet-d6ad2e25-e3ef-407f-aeda-496c067b3762',
@@ -365,7 +634,7 @@ const MODELS_DATA = [
     category: 'cabinet',
     description:
       'Organize your kitchen in style with this sleek and practical kitchen cabinet. Its elegant design offers a sophisticated touch to your space, while its practical features provide ample storage for your kitchen essentials.',
-    thumbnail: '/public/thumbnail/kitchen-cabinet.webp',
+    thumbnail: '/thumbnail/kitchen-cabinet.webp',
   },
   {
     uuid: 'decoration-52dfe16a-b978-43bb-b90b-1981b8be5d6e',
@@ -373,7 +642,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Add a touch of comfort and style to your kitchen with this beautiful kitchen rug. Its soft and plush texture provides a cozy and inviting feel, while its practical features make it a great addition to any kitchen.',
-    thumbnail: '/public/thumbnail/kitchen-reg.webp',
+    thumbnail: '/thumbnail/kitchen-reg.webp',
   },
   {
     uuid: 'decoration-3fca352a-ef32-42af-ac04-fa045253c5d2',
@@ -381,7 +650,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Organize your kitchen and maximize your storage space with this beautiful kitchen shelf. Its sleek and modern design offers a sophisticated touch to your decor, while its practical features provide ample space for your kitchen essentials.',
-    thumbnail: '/public/thumbnail/kitchen-shelf.webp',
+    thumbnail: '/thumbnail/kitchen-shelf.webp',
   },
   {
     uuid: 'decoration-792e50e3-5999-4589-a9cc-e3a1a0a3b5c7',
@@ -389,7 +658,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Its lush green foliage provides a calming and refreshing feel, while its natural design offers a touch of elegance to your decor.',
-    thumbnail: '/public/thumbnail/leaf-plant.webp',
+    thumbnail: '/thumbnail/leaf-plant.webp',
   },
   {
     uuid: 'chair-312d6ba3-6e09-42c6-af59-6d4a7d9325d5',
@@ -397,7 +666,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'Upgrade your living room with this luxurious leather sofa. Its sleek and modern design offers a sophisticated touch to your decor, while its plush cushions provide ultimate comfort for you and your guests.',
-    thumbnail: '/public/thumbnail/leather-sofa.webp',
+    thumbnail: '/thumbnail/leather-sofa.webp',
   },
   {
     uuid: 'decoration-a956af13-de12-4bf7-8871-04db2b847402',
@@ -405,7 +674,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Add a touch of contemporary style to your space with this unique one-leg lamp. Its sleek and minimalist design offers a modern touch to your decor, while its practical features provide ample lighting for your space.',
-    thumbnail: '/public/thumbnail/one-leg-lamp.webp',
+    thumbnail: '/thumbnail/one-leg-lamp.webp',
   },
   {
     uuid: 'chair-73a25ea2-3079-4c49-9673-6675cfaa32a2',
@@ -413,7 +682,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'Bring the charm of a park to your outdoor space with this beautiful park bench. Its classic design offers a timeless touch to your decor, while its sturdy construction provides a durable and comfortable seating option.',
-    thumbnail: '/public/thumbnail/park-bench.webp',
+    thumbnail: '/thumbnail/park-bench.webp',
   },
   {
     uuid: 'decoration-d414bcda-2df6-48c3-9ba6-8017925e733f',
@@ -421,7 +690,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Add a touch of personality to your space with this stylish patterned rug. Its unique design offers a bold and vibrant touch to your decor, while its soft and comfortable texture provides a cozy and inviting feel to your space.',
-    thumbnail: '/public/thumbnail/pattern-rug.webp',
+    thumbnail: '/thumbnail/pattern-rug.webp',
   },
   {
     uuid: 'decoration-56fb707b-8b61-4feb-af13-f90544fc4a15',
@@ -429,7 +698,7 @@ const MODELS_DATA = [
     category: 'plant',
     description:
       'Bring the beauty of nature to your outdoor space with this stunning pear tree. Its low maintenance requirements ensure that it can thrive in a variety of climates, making it a practical addition to any garden or landscape.',
-    thumbnail: '/public/thumbnail/pear-tree.webp',
+    thumbnail: '/thumbnail/pear-tree.webp',
   },
   {
     uuid: 'decoration-628e56c5-095b-4e55-9989-d4a3696afec6',
@@ -437,7 +706,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Keep your food and beverages fresh and cool with this sleek and modern refrigerator. Its spacious interior provides ample storage space for your food and beverages, while its practical features ensure that it can handle the weight of your items.',
-    thumbnail: '/public/thumbnail/refrigerator.webp',
+    thumbnail: '/thumbnail/refrigerator.webp',
   },
   {
     uuid: 'chair-c266dcd6-0dfe-49a1-be25-cf5c9161ae52',
@@ -445,7 +714,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'Relax and unwind in this comfortable and stylish relax chair. Its sleek and modern design offers a sophisticated touch to your decor, while its plush cushions provide ultimate comfort for you and your guests.',
-    thumbnail: '/public/thumbnail/relax-chair.webp',
+    thumbnail: '/thumbnail/relax-chair.webp',
   },
   {
     uuid: 'decoration-4504276e-81f1-4882-97af-7b86d604c36d',
@@ -453,7 +722,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Bring the beauty of nature to your space with this adorable Shiba. Its soft and cuddly texture provides a cozy and inviting feel, while its playful design offers a touch of personality to your decor.',
-    thumbnail: '/public/thumbnail/shiba.webp',
+    thumbnail: '/thumbnail/shiba.webp',
   },
   {
     uuid: 'chair-0b9eb21c-5a3f-4e71-b914-e817cc5ecd0e',
@@ -461,7 +730,7 @@ const MODELS_DATA = [
     category: 'chair',
     description:
       'Upgrade your living room with this luxurious sofa. Its sleek and modern design offers a sophisticated touch to your decor, while its plush cushions provide ultimate comfort for you and your guests.',
-    thumbnail: '/public/thumbnail/sofa.webp',
+    thumbnail: '/thumbnail/sofa.webp',
   },
   {
     uuid: 'decoration-1776bb75-87b3-4cad-ac68-1105e4a4ceb3',
@@ -469,7 +738,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Elevate your space with this stylish triangle pattern rug. Its unique design offers a contemporary touch to your decor, while its soft and comfortable texture provides a cozy and inviting feel to your space.',
-    thumbnail: '/public/thumbnail/triangle-pattern-rug.webp',
+    thumbnail: '/thumbnail/triangle-pattern-rug.webp',
   },
   {
     uuid: 'decoration-fd9ee033-e41c-4210-8e6b-de57e90bf23a',
@@ -477,7 +746,7 @@ const MODELS_DATA = [
     category: 'decoration',
     description:
       'Upgrade your entertainment experience with this sleek and modern TV stand. Its clean lines and simple design offer a contemporary touch to your decor, while its sturdy construction provides a reliable and durable support for your TV and other media equipment.',
-    thumbnail: '/public/thumbnail/tv-stand.webp',
+    thumbnail: '/thumbnail/tv-stand.webp',
   },
   {
     uuid: 'layout-40eea2e9-124e-48d9-8397-5284a9e8e97f',
@@ -485,7 +754,7 @@ const MODELS_DATA = [
     category: 'layout',
     description:
       'Create a stylish and functional home with this customizable wall layout. Designed to help you easily build your virtual space, this layout features a variety of wall elements, including shelves, cabinets, and artwork, that can be arranged to suit your specific needs and preferences.',
-    thumbnail: '/public/thumbnail/wall-layout-home.webp',
+    thumbnail: '/thumbnail/wall-layout-home.webp',
   },
 ] as const
 
@@ -499,6 +768,7 @@ export {
   INPUT_BORDER,
   INPUT_DROP_SHADOW,
   JSDELIVR_URL,
+  MATERIAL_MAPPING,
   MESSAGES,
   MODELS_DATA,
   NOTIFICATION_CLOSE_COLOR,

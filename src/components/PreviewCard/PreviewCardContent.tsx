@@ -38,6 +38,10 @@ const CardContentContainer = styled.div<{ isActive: boolean; isDisplayed: boolea
       background-color: #191a1d;
     }
   }
+
+  span {
+    text-transform: capitalize;
+  }
 `
 
 const CardImageContainer = styled.div`

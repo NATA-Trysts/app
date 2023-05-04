@@ -50,7 +50,7 @@ export const ColorPicker = ({ modelColor, filteredModel }: ColorPickerProps) => 
     state.setIsInputFocus,
   ])
 
-  const selectedModelUuid = useBuilderStore((state) => state.selectedModelUuid)
+  const selectedModelId = useBuilderStore((state) => state.selectedModelId)
 
   const [color, setColor] = useState(modelColor || '#ff00ff')
   const [prevColor, setPrevColor] = useState(modelColor || '#ff00ff')
@@ -68,7 +68,7 @@ export const ColorPicker = ({ modelColor, filteredModel }: ColorPickerProps) => 
 
   const handleUp = () => {
     updateHistory((models) => {
-      return models.map((model) => (model.uuid === selectedModelUuid ? { ...model, color } : model))
+      return models.map((model) => (model.id === selectedModelId ? { ...model, color } : model))
     })
   }
 
@@ -86,7 +86,7 @@ export const ColorPicker = ({ modelColor, filteredModel }: ColorPickerProps) => 
 
       updateHistory((models) => {
         return models.map((model) =>
-          model.uuid === selectedModelUuid ? { ...model, color: formatHex(colorFromInput) } : model,
+          model.id === selectedModelId ? { ...model, color: formatHex(colorFromInput) } : model,
         )
       })
     } else {
@@ -107,7 +107,7 @@ export const ColorPicker = ({ modelColor, filteredModel }: ColorPickerProps) => 
 
         updateHistory((models) => {
           return models.map((model) =>
-            model.uuid === selectedModelUuid ? { ...model, color: formatHex(colorFromInput) } : model,
+            model.id === selectedModelId ? { ...model, color: formatHex(colorFromInput) } : model,
           )
         })
       } else {

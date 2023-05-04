@@ -37,6 +37,7 @@
     "@react-three/fiber": "^8.9.1",
     "@react-three/postprocessing": "^2.7.0",
     "@react-three/rapier": "^0.13.2",
+    "@react-three/xr": "^5.5.0",
     "@sonhaaa/3d-playground": "^0.0.23",
     "@splinetool/loader": "^0.9.307",
     "@splinetool/r3f-spline": "^1.0.1",

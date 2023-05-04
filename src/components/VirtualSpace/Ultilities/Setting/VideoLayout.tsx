@@ -15,7 +15,7 @@ const Name = styled(Text)`
 
 const LayoutOption = styled.div<{ isActive: boolean }>`
   width: 100%;
-  height: 124px;
+  height: 200px;
   border: 3px solid ${({ isActive }) => (isActive ? '#c771e1' : 'transparent')};
   border-radius: 5px;
   overflow: hidden;
@@ -39,12 +39,12 @@ const listLayout = [
   {
     id: 1,
     type: 'above-head' as VideoLayoutType,
-    img: 'https://a.pinatafarm.com/1092x612/d47afa3656/coughing-cat-dcbc3e50b235f7aa3793bfa07959fb7a-meme.jpeg',
+    img: '/video-layout-1.webp',
   },
   {
     id: 2,
     type: 'slide' as VideoLayoutType,
-    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvui8g67c6OlpRUVI8n_BKt0guaL0gMdCNQNzoRNKf&s',
+    img: 'video-layout-2.webp',
   },
 ] as const
 

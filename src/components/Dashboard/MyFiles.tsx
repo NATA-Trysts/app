@@ -22,6 +22,8 @@ export const MyFiles = () => {
 
   const { calculateTimeAgo } = useDashboard()
 
+  console.log(librarySpaces)
+
   return (
     <MyFilesContainer>
       <List>
