@@ -211,11 +211,7 @@ export const useVirtualSpaceStore = create<VirtualSpaceState>()((set) => ({
   addScreenShare: (screenShare) =>
     set(
       produce((state: VirtualSpaceState) => {
-        console.log('addScreenShare ', screenShare)
-
-        const r = state.screenShares.set(screenShare.furnitureIframeId, screenShare)
-
-        console.log('after add', r)
+        state.screenShares.set(screenShare.furnitureIframeId, screenShare)
       }),
     ),
   removeScreenShare: (furnitureIframeId) =>

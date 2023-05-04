@@ -1,17 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  selectLocalPeerID,
-  selectPeerScreenSharing,
-  selectScreenShareByPeerID,
-  useHMSActions,
-  useHMSStore,
-} from '@100mslive/react-sdk'
+import { selectLocalPeerID, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
 import { Environment } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { CollisionEnterHandler, CollisionExitHandler, Debug, Physics, RigidBody } from '@react-three/rapier'
-import { Perf } from 'r3f-perf'
-import { Suspense, useCallback, useMemo, useState } from 'react'
-import { useNetworkState } from 'react-use'
+import { CollisionEnterHandler, CollisionExitHandler, Physics, RigidBody } from '@react-three/rapier'
+import { Suspense, useState } from 'react'
 import { Object3D } from 'three'
 
 import {
@@ -59,14 +50,12 @@ import { MainMember } from '@/components/Member'
 import { useInteract } from '@/hooks'
 import { Container } from '@/layouts/common'
 import { MESSAGES } from '@/libs/constants'
-import { hmsActions } from '@/libs/hms'
 import { SpaceModel, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
 import { useIframeDialog } from '../IframeDialog/IframeDialogContext'
 import { MemberVideoLayout } from '../MemberVideoLayout'
 import { OtherMember } from '../OtherMember'
 import { Poker } from '../Poker'
-import { ScreenShare } from '../ScreenShare'
 import { WhiteBoard } from '../WhiteBoard'
 
 type CollectionEnterDataType = {
@@ -102,7 +91,7 @@ const FurnitureModel = ({ onCollisionEnter, onCollisionExit, children, ...props 
     }
   }
 
-  const hanleOnCollisionExit: CollisionExitHandler = (e) => {
+  const hanleOnCollisionExit: CollisionExitHandler = () => {
     onCollisionExit?.()
   }
 
@@ -132,7 +121,7 @@ export const Scene = () => {
     state.setInteractable,
   ])
   const [target, setTarget] = useState<Object3D | null>(null)
-  const [targetCategory, setTargetCategory] = useState<string | null>(null)
+  // const [targetCategory, setTargetCategory] = useState<string | null>(null)
   const [interactFurniture, setInteractFurniture] = useState<InteractFuniture | null>(null)
   const [openIframe] = useIframeDialog()
   const roomInstance = useNetworkStore((state) => state.roomInstance)
@@ -164,21 +153,17 @@ export const Scene = () => {
     console.log('join', iframeId, screenShares, screenshare)
 
     if (screenshare) openViewScreenShare(screenshare.screenSharePeerId)
-    else console.log('roomInstance', roomInstance)
-
-    // await hmsActions.setScreenShareEnabled(true).then(() => {
-    //   dispatchOpenScreenShare(iframeId)
-    // })
+    else
+      hmsActions.setScreenShareEnabled(true).then(() => {
+        dispatchOpenScreenShare(iframeId)
+      })
   }
-  const date = Date.now().toString()
-
-  console.log(date)
 
   const interactFurnitures: { [key: string]: InteractFuniture | null } = {
     'desk-d61cf1db-b68e-4e4e-9bbd-797962b63dbf': { action: openPoker, hintAction: 'play poker', hintKey: 'F' },
     'decoration-b186a8a9-9e0e-483e-9779-18abfe477fa3': {
       action: openWhiteboard,
-      hintAction: 'draw' + date,
+      hintAction: 'draw',
       hintKey: 'F',
     },
     'desk-58d0bc2c-871f-45ae-a73d-178c0ad41f31': {
@@ -192,7 +177,7 @@ export const Scene = () => {
     console.log(interactFurnitures)
 
     setTarget(data.newTarget)
-    setTargetCategory(data.model.type)
+    // setTargetCategory(data.model.type)
     setInteractable(true)
     setInteractFurniture(interactFurnitures[data.model.uuid])
     setInteract({ key: 'f', action: () => interactFurnitures[data.model.uuid]?.action(data.model.iframeId) })
@@ -200,7 +185,7 @@ export const Scene = () => {
 
   const onFurnitureCollisionExit = () => {
     setTarget(null)
-    setTargetCategory(null)
+    // setTargetCategory(null)
     setInteractable(false)
     setInteractFurniture(null)
     clearInteract()
