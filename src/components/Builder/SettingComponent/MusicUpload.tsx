@@ -140,8 +140,8 @@ const Spinner = () => {
   )
 }
 
-const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
-const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+const uploadPreset = 'trysts'
+const cloudName = 'dyarbccg4'
 
 const extractFileName = (url: string | undefined) => {
   try {

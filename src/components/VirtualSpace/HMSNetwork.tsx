@@ -8,16 +8,16 @@ export const HMSNetwork = () => {
   const setIsJoinedHMS = useNetworkStore((state) => state.setIsJoinedHMS)
 
   const join = async () => {
-    const response = await fetch(import.meta.env.VITE_HMS_ENDPOINT, {
+    const response = await fetch('https://prod-in2.100ms.live/hmsapi/trystsvoice.app.100ms.live/api/token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         // eslint-disable-next-line camelcase
-        room_id: import.meta.env.VITE_HMS_ROOM_ID,
+        room_id: '642c5157adb93485420bfec8',
         // TODO: change based on role
-        role: import.meta.env.VITE_HMS_ROLE_PARTICIPANT,
+        role: 'guest',
         // eslint-disable-next-line camelcase
         user_id: Date.now().toString(),
       }),

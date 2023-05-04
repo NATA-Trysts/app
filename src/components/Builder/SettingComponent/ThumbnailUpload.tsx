@@ -83,8 +83,8 @@ const ThumbnailImage = styled.img`
   object-fit: cover;
 `
 
-const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
-const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+const uploadPreset = 'trysts'
+const cloudName = 'dyarbccg4'
 
 const loading = keyframes`
   0% {
