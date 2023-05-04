@@ -6,7 +6,7 @@ import { ReactComponent as Logout } from '@/assets/icons/logout.svg'
 import { ReactComponent as People } from '@/assets/icons/people.svg'
 import { ReactComponent as Settingc } from '@/assets/icons/setting-c.svg'
 import { Text } from '@/components/Commons'
-import { AnimatedToolbarContainer, CustomToolbarItem, ToolbarItem, WithTooltip } from '@/components/Toolbar'
+import { AnimatedToolbarContainer, ToolbarItem, WithTooltip } from '@/components/Toolbar'
 import { useMemberStore, useVirtualSpaceStore } from '@/stores'
 
 export const ToolbarRight = () => {
@@ -37,7 +37,7 @@ export const ToolbarRight = () => {
           <Chat />
         </WithTooltip>
       </ToolbarItem>
-      <CustomToolbarItem>
+      <ToolbarItem>
         <WithTooltip
           active={selectedUltility === 'member'}
           content="Member"
@@ -49,8 +49,8 @@ export const ToolbarRight = () => {
             {memberLength}
           </Text>
         </WithTooltip>
-      </CustomToolbarItem>
-      <CustomToolbarItem>
+      </ToolbarItem>
+      <ToolbarItem>
         <WithTooltip
           active={selectedUltility === 'setting'}
           content="Setting"
@@ -59,8 +59,8 @@ export const ToolbarRight = () => {
         >
           <Settingc />
         </WithTooltip>
-      </CustomToolbarItem>
-      <CustomToolbarItem>
+      </ToolbarItem>
+      <ToolbarItem>
         <WithTooltip
           content="Leave"
           customHoverColor="#FC677B"
@@ -69,7 +69,7 @@ export const ToolbarRight = () => {
         >
           <Logout />
         </WithTooltip>
-      </CustomToolbarItem>
+      </ToolbarItem>
     </AnimatedToolbarContainer>
   )
 }

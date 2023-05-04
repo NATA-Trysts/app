@@ -1,3 +1,4 @@
+import Avatar from 'boring-avatars'
 import React, { FC } from 'react'
 import styled from 'styled-components'
 
@@ -22,11 +23,11 @@ const AvatarContainer = styled.div`
   display: flex;
 `
 
-const Avatar = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`
+// const Avatar = styled.img`
+//   width: 100%;
+//   height: 100%;
+//   object-fit: cover;
+// `
 
 const ContentContainer = styled.div`
   width: fit-content;
@@ -66,7 +67,7 @@ type ChatMessageProps = {
   isMine: boolean
 }
 
-export const ChatMessage: FC<ChatMessageProps> = ({ time, author, avatarUri, message, isMine }) => {
+export const ChatMessage: FC<ChatMessageProps> = ({ time, author, message, isMine }) => {
   return (
     <Container isMine={isMine}>
       {/* {isMine ? (
@@ -112,7 +113,8 @@ export const ChatMessage: FC<ChatMessageProps> = ({ time, author, avatarUri, mes
       )} */}
       <>
         <AvatarContainer>
-          <Avatar alt={`${author} avatar`} src={avatarUri} />
+          {/* <Avatar alt={`${author} avatar`} src={avatarUri} /> */}
+          <Avatar name={author} size={40} variant="beam" />
         </AvatarContainer>
         <ContentContainer>
           <Author size="medium" weight="normal">
