@@ -127,6 +127,7 @@ type VirtualSpaceLoadingProps = {
 }
 
 const MULTIPLAYER_SERVICE_ENDPOINT = 'wss://multiplayer.trysts.io'
+// const MULTIPLAYER_SERVICE_ENDPOINT = 'ws://localhost:2567'
 const WORLD_NAME = 'trysts'
 
 type PrepareState = 'info-loaded' | 'need-verify' | 'hms.joined' | 'multiplayer.joined' | ''

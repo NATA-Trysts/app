@@ -65,14 +65,14 @@ export const CreateContent = ({ stepperRef, onThemeChange }: CreateContentProps)
           .post<Space, AxiosResponse<Space>, CreateSpaceSubmitType>('/spaces', {
             name: data.name,
             password: data.password,
-            models: isCustom ? [] : undefined,
+            models: [],
             theme: isCustom ? false : theme,
           })
           .then((res) => {
             const createdSpace = res.data as Space
 
             if (createdSpace.theme) navigate(`/${createdSpace.code}`)
-            else navigate(`/files/${createdSpace.code}`)
+            else navigate(`/files/${createdSpace._id}`)
           })
       },
       (errors) => {

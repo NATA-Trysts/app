@@ -86,6 +86,10 @@ const MESSAGES = {
     JOIN: 'member-join-white-board',
     LEAVE: 'member-leave-white-board',
   },
+  SCREENSHARE: {
+    OPEN: 'open-screen-share',
+    CLOSE: 'close-screen-share',
+  },
 }
 
 const PLAN_BORDER = {
@@ -752,7 +756,9 @@ const MODELS_DATA = [
       'Create a stylish and functional home with this customizable wall layout. Designed to help you easily build your virtual space, this layout features a variety of wall elements, including shelves, cabinets, and artwork, that can be arranged to suit your specific needs and preferences.',
     thumbnail: '/thumbnail/wall-layout-home.webp',
   },
-]
+] as const
+
+export type ModelUUID = (typeof MODELS_DATA)[number]['uuid']
 
 export {
   ANIMATION_COUNT_MAPPING,

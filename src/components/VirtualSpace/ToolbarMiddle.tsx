@@ -1,11 +1,4 @@
-import {
-  selectIsLocalAudioEnabled,
-  selectIsLocalVideoEnabled,
-  selectPeerScreenSharing,
-  selectScreenShareByPeerID,
-  useHMSActions,
-  useHMSStore,
-} from '@100mslive/react-sdk'
+import { selectIsLocalAudioEnabled, selectIsLocalVideoEnabled, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
 import { toggleSession } from '@react-three/xr'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
@@ -23,11 +16,11 @@ import { NameBox, RandomAvatar } from '@/components/EditCharacter'
 import { ListAudio, ListCamera } from '@/components/ListDevice'
 import { Popover } from '@/components/Popover'
 import { AnimatedToolbarContainer, ToolbarItem, WithTooltip } from '@/components/Toolbar'
+import { useMember, useScreenShare } from '@/hooks'
 import { MESSAGES } from '@/libs/constants'
 import { useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
 import { useIframeDialog } from './IframeDialog/IframeDialogContext'
-import { ScreenShare } from './ScreenShare'
 import { WhiteBoard } from './WhiteBoard'
 
 const Condition = styled(motion.div)`
@@ -50,7 +43,7 @@ const OpeningNotification = styled.div`
 `
 
 export const ToolbarMiddle = () => {
-  const [isEditAvatar, isHostWhiteBoardOpen] = useVirtualSpaceStore((state) => [
+  const [isEditAvatar, isHostOpenWhiteBoard] = useVirtualSpaceStore((state) => [
     state.isEditAvatar,
     state.isHostWhiteBoardOpen,
   ])
@@ -58,18 +51,21 @@ export const ToolbarMiddle = () => {
   const isHost = mainMember?.isHost
   const roomInstance = useNetworkStore((state) => state.roomInstance)
   const roomId = roomInstance?.id
+  const { hostMember } = useMember()
+  const [openScreenShare] = useVirtualSpaceStore((state) => [state.openViewScreenShare])
 
   const hmsActions = useHMSActions()
   const audioEnabled = useHMSStore(selectIsLocalAudioEnabled)
   const videoEnabled = useHMSStore(selectIsLocalVideoEnabled)
-  const presenter = useHMSStore(selectPeerScreenSharing)
-  const screenShareVideoTrack = useHMSStore(selectScreenShareByPeerID(presenter ? presenter.id : ''))
+  const { isHostScreenSharing } = useScreenShare()
+  // const presenter = useHMSStore(selectPeerScreenSharing)
+  // const screenShareVideoTrack = useHMSStore(selectScreenShareByPeerID(presenter ? presenter.id : ''))
 
   const [openIframe] = useIframeDialog()
 
   const [isOpenCameraSetting, setIsOpenCameraSetting] = useState(false)
   const [isOpenMicSetting, setIsOpenMicSetting] = useState(false)
-  const [isOpenShareScreen, setIsOpenShareScreen] = useState(false)
+  // const [isOpenShareScreen, setIsOpenShareScreen] = useState(false)
   const [isEnteredVR, setIsEnteredVR] = useState(false)
 
   const toggleAudio = async () => await hmsActions.setLocalAudioEnabled(!audioEnabled)
@@ -81,7 +77,6 @@ export const ToolbarMiddle = () => {
       if (isHost) {
         await hmsActions.setScreenShareEnabled(true)
       }
-      openShareScreen()
     } catch (error) {
       console.error(error)
     }
@@ -109,15 +104,11 @@ export const ToolbarMiddle = () => {
     }
   }
 
-  const openShareScreen = () => {
-    setIsOpenShareScreen(true)
-  }
+  // const openPoker = () => {
+  //   openIframe(<Poker id={'53007769639138993570'} />, { onClose: closePoker })
+  // }
 
-  const closeShareScreen = () => {
-    setIsOpenShareScreen(false)
-
-    hmsActions.setScreenShareEnabled(false)
-  }
+  // const closePoker = () => {}
 
   const onPressZToOpenWhiteBoard = (e: KeyboardEvent) => {
     if (e.key === 'z') {
@@ -127,7 +118,7 @@ export const ToolbarMiddle = () => {
 
   const onPressZToOpenShareScreen = (e: KeyboardEvent) => {
     if (e.key === 'z') {
-      openShareScreen()
+      if (hostMember) openScreenShare(hostMember.peerId)
     }
   }
 
@@ -160,25 +151,22 @@ export const ToolbarMiddle = () => {
   }
 
   useEffect(() => {
-    if (isHostWhiteBoardOpen) {
-      if (!isHost) window.addEventListener('keypress', onPressZToOpenWhiteBoard)
-    } else {
-      window.removeEventListener('keypress', onPressZToOpenWhiteBoard)
+    if (!isHost) {
+      if (isHostOpenWhiteBoard) window.addEventListener('keypress', onPressZToOpenWhiteBoard)
+      else window.removeEventListener('keypress', onPressZToOpenWhiteBoard)
     }
 
     return () => window.removeEventListener('keypress', onPressZToOpenWhiteBoard)
-  }, [roomInstance, isHostWhiteBoardOpen, mainMember])
+  }, [roomInstance, isHostOpenWhiteBoard, mainMember])
 
   useEffect(() => {
-    if (presenter) {
-      if (!isHost) window.addEventListener('keypress', onPressZToOpenShareScreen)
-    } else {
-      closeShareScreen()
-      window.removeEventListener('keypress', onPressZToOpenShareScreen)
+    if (!isHost) {
+      if (isHostScreenSharing) window.addEventListener('keypress', onPressZToOpenShareScreen)
+      else window.removeEventListener('keypress', onPressZToOpenShareScreen)
     }
 
     return () => window.removeEventListener('keypress', onPressZToOpenShareScreen)
-  }, [presenter, isOpenShareScreen, mainMember])
+  }, [mainMember, isHostScreenSharing])
 
   // useEffect(() => {
   //   if (screenShareVideoTrack && videoRef.current) {
@@ -188,21 +176,23 @@ export const ToolbarMiddle = () => {
 
   return (
     <>
-      {!isHost && isHostWhiteBoardOpen && (
+      {!isHost && isHostOpenWhiteBoard && (
         <OpeningNotification>
-          <span>The host is opening a white board, press to join</span>
+          <span>
+            The host is opening a white board, press <b>Z</b> to join
+          </span>
         </OpeningNotification>
       )}
-      {!!presenter && !isHost && (
+      {!isHost && isHostScreenSharing && (
         <OpeningNotification>
           <span>
             The host is sharing screen, press <b>Z</b> to join
           </span>
         </OpeningNotification>
       )}
-      {presenter && isOpenShareScreen && (
+      {/* {presenter && isOpenShareScreen && (
         <ScreenShare close={closeShareScreen} trackId={screenShareVideoTrack.id}></ScreenShare>
-      )}
+      )} */}
 
       <AnimatedToolbarContainer
         layout
@@ -251,6 +241,11 @@ export const ToolbarMiddle = () => {
             </div>
           </Popover>
         </ToolbarItem>
+        {/* <ToolbarItem onClick={openPoker}>
+          <WithTooltip content="Start Poker" id="poker">
+            <Writing />
+          </WithTooltip>
+        </ToolbarItem> */}
         {isHost && (
           <Condition
             layout

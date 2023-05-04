@@ -11,6 +11,7 @@ import {
   MyInformationCard,
   MyVideo,
   Scene,
+  ScreenShareHandler,
   ToolbarMiddle,
   ToolbarRight,
   VirtualSpaceLoading,
@@ -130,10 +131,10 @@ const VirtualSpace = () => {
           <Container customColor={customColor}>
             <MultiplayerNetwork />
 
-            {spaceTheme ? <ThemeScene theme={spaceTheme} /> : <Scene />}
+            <IframeDialogProvider>
+              {spaceTheme ? <ThemeScene theme={spaceTheme} /> : <Scene />}
 
-            <OverlayContainer>
-              <IframeDialogProvider>
+              <OverlayContainer>
                 <Header />
                 <LeftSideContainer>
                   <LeftSideWrapper>
@@ -165,8 +166,9 @@ const VirtualSpace = () => {
                 </RightSideContainer>
 
                 <CustomCharacterPanel />
-              </IframeDialogProvider>
-            </OverlayContainer>
+              </OverlayContainer>
+              <ScreenShareHandler />
+            </IframeDialogProvider>
           </Container>
         </MultitabDetect>
       </CustomableContainer>

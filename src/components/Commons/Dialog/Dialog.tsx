@@ -14,7 +14,7 @@ import {
 import styled, { keyframes } from 'styled-components'
 
 import { ReactComponent as CrossIcon } from '@/assets/icons/cross.svg'
-import { useControllableState } from '@/hooks'
+import { useCallbackRef, useControllableState } from '@/hooks'
 
 type PointerDownOutsideEvent = CustomEvent<{
   originalEvent: PointerEvent
@@ -84,6 +84,7 @@ export const Dialog = forwardRef<DialogRef, DialogProps>(
       onChange: onOpenChange,
     })
     const closeReturn = useRef<any>(undefined)
+    const onDialogCloseRef = useCallbackRef(onDialogClose)
     // TODO remove this this for not using ref to set content
     const [content, setContent] = useState<ReactNode>()
 
@@ -99,9 +100,9 @@ export const Dialog = forwardRef<DialogRef, DialogProps>(
     useEffect(() => {
       if (!dialogOpen) {
         if (content) setContent(undefined)
-        onDialogClose?.(closeReturn)
+        onDialogCloseRef?.(closeReturn)
       }
-    }, [dialogOpen, onDialogClose])
+    }, [dialogOpen])
 
     const close = (data: any) => {
       closeReturn.current = data

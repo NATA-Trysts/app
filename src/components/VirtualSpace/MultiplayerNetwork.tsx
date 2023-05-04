@@ -2,7 +2,7 @@
 
 import { memo, useEffect } from 'react'
 
-import { Member, Message, useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
+import { FurnitureScreenShare, Member, Message, useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
 export const MultiplayerNetwork = memo(() => {
   const room = useNetworkStore((state) => state.roomInstance)
@@ -24,14 +24,23 @@ export const MultiplayerNetwork = memo(() => {
     state.updateAvatarOtherMember,
   ])
 
-  const [setHostWhiteBoardOpen, addWhiteBoard, removeWhiteBoard, addWhiteBoardMember, removeWhiteBoardMember] =
-    useVirtualSpaceStore((state) => [
-      state.setHostWhiteBoardOpen,
-      state.addWhiteBoard,
-      state.removeWhiteBoard,
-      state.addWhiteBoardMember,
-      state.removeWhiteBoardMember,
-    ])
+  const [
+    setHostWhiteBoardOpen,
+    addWhiteBoard,
+    removeWhiteBoard,
+    addWhiteBoardMember,
+    removeWhiteBoardMember,
+    addScreenShare,
+    removeScreenShare,
+  ] = useVirtualSpaceStore((state) => [
+    state.setHostWhiteBoardOpen,
+    state.addWhiteBoard,
+    state.removeWhiteBoard,
+    state.addWhiteBoardMember,
+    state.removeWhiteBoardMember,
+    state.addScreenShare,
+    state.removeScreenShare,
+  ])
 
   const [addMessage] = useVirtualSpaceStore((state) => [state.addMessage])
 
@@ -130,6 +139,14 @@ export const MultiplayerNetwork = memo(() => {
 
         room.state.whiteboards.onRemove = (_, whiteboardId) => {
           removeWhiteBoard(whiteboardId)
+        }
+
+        room.state.screenShares.onAdd = ({ furnitureIframeId, screenSharePeerId }: FurnitureScreenShare) => {
+          addScreenShare({ furnitureIframeId, screenSharePeerId })
+        }
+
+        room.state.screenShares.onRemove = (_, furnitureIframeId) => {
+          removeScreenShare(furnitureIframeId)
         }
 
         room.state.listen('isHostWhiteBoardOpen', (isOpen: boolean) => {

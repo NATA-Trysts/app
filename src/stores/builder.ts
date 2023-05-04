@@ -43,7 +43,8 @@ export type Vec3 = {
 export type MousePosition = Omit<Vec3, 'y'>
 
 export type SpaceModel = {
-  uuid: string // use for render the models
+  uuid: string // unique
+  iframeId?: string
   id: string // use as key
   name: string
   position: ModifierValueType

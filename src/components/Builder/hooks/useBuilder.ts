@@ -1,3 +1,6 @@
+import { usePoker } from '@/hooks'
+import { ModelUUID } from '@/libs/constants'
+import { generateRandomNumber } from '@/libs/utils'
 import { CategoryType, SpaceModel, SubCategoryItem, useBuilderStore } from '@/stores'
 
 const useBuilder = () => {
@@ -7,6 +10,7 @@ const useBuilder = () => {
   const addModel = useBuilderStore((state) => state.addModel)
   const deleteModel = useBuilderStore((state) => state.deleteModel)
   const models = useBuilderStore((state) => state.models)
+  const poker = usePoker()
   // mapping data from api to map object
   const mappingData = async (listFromApi: SubCategoryItem[]) => {
     const newSubCategoryItems = new Map<CategoryType, SubCategoryItem[]>()
@@ -55,7 +59,7 @@ const useBuilder = () => {
     })
   }
 
-  const clickSubCategory = (item: SubCategoryItem) => {
+  const clickSubCategory = async (item: SubCategoryItem) => {
     updateSelectedSubCategoryItems(item.category, item)
 
     const now = Date.now().toString()
@@ -70,6 +74,7 @@ const useBuilder = () => {
       roughness: 1,
       metalness: 0,
       type: item.category,
+      iframeId: await getIframeId(item.uuid as ModelUUID),
     })
 
     updateHistory((models) => {
@@ -105,6 +110,26 @@ const useBuilder = () => {
         display: value === true ? 'Yes' : value === false ? 'No' : value,
       }
     })
+  }
+
+  const getIframeId = async (uuid: ModelUUID): Promise<string | undefined> => {
+    let id: string | undefined = undefined
+
+    switch (uuid) {
+      case 'desk-d61cf1db-b68e-4e4e-9bbd-797962b63dbf':
+        id = await poker.createPoker()
+        break
+      case 'decoration-b186a8a9-9e0e-483e-9779-18abfe477fa3':
+        id = generateRandomNumber(8)
+        break
+      case 'desk-58d0bc2c-871f-45ae-a73d-178c0ad41f31':
+        id = generateRandomNumber(8)
+        break
+      default:
+        break
+    }
+
+    return id
   }
 
   return { clickSubCategory, convertValuesToOptions, deleteModelBuilder, updateHistory, mappingData, removeLeadingZero }

@@ -382,4 +382,4 @@ export const BaseCharacter = memo(
   },
 )
 
-useGLTF.preload(`/models/character-v4-transformed.glb`)
+useGLTF.preload(`/models/character-v4.glb`)
