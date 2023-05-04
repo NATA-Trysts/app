@@ -44,7 +44,7 @@ const Guard = () => {
         <Route element={<PersistLogin />}>
           <Route
             element={
-              <Suspense fallback={<span>loading</span>}>
+              <Suspense fallback={<span></span>}>
                 <HMSRoomProvider>
                   <MobileDetect>
                     <VirtualSpace />
@@ -59,7 +59,7 @@ const Guard = () => {
           <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
             <Route
               element={
-                <Suspense fallback={<span>loading</span>}>
+                <Suspense fallback={<span></span>}>
                   <MobileDetect>
                     <Create />
                   </MobileDetect>
@@ -71,7 +71,7 @@ const Guard = () => {
         </Route>
         <Route
           element={
-            <Suspense fallback={<span>loading</span>}>
+            <Suspense fallback={<span></span>}>
               <MobileDetect>
                 <Login />
               </MobileDetect>
@@ -93,7 +93,7 @@ const Guard = () => {
           </Route>
           <Route
             element={
-              <Suspense fallback={<span>loading</span>}>
+              <Suspense fallback={<span></span>}>
                 <Builder />
               </Suspense>
             }
@@ -103,7 +103,7 @@ const Guard = () => {
           <Route>
             <Route
               element={
-                <Suspense fallback={<span>loading</span>}>
+                <Suspense fallback={<span></span>}>
                   <Pricing />
                 </Suspense>
               }
@@ -114,7 +114,7 @@ const Guard = () => {
         <Route element={<PersistLogin />}>
           <Route
             element={
-              <Suspense fallback={<span>loading</span>}>
+              <Suspense fallback={<span></span>}>
                 <MobileDetect>
                   <MarketPlace />
                 </MobileDetect>

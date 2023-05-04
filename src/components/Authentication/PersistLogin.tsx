@@ -27,5 +27,5 @@ export const PersistLogin = () => {
     }
   }, [])
 
-  return <>{isLoading ? <span>Loading ... </span> : <Outlet />}</>
+  return <>{isLoading ? <span></span> : <Outlet />}</>
 }

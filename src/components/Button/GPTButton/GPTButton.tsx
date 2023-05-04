@@ -125,7 +125,8 @@ const GPTButton = () => {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const source = axios.CancelToken.source()
-    const url = 'http://127.0.0.1:8000/generate'
+    // const url = 'http://127.0.0.1:8000/generate'
+    const url = 'https://gpt.api.clasrum.fun/gpt/generate'
     const data = { prompt }
 
     try {
