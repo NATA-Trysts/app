@@ -126,8 +126,8 @@ type VirtualSpaceLoadingProps = {
   children: ReactNode
 }
 
-const MULTIPLAYER_SERVICE_ENDPOINT = import.meta.env.VITE_MULTIPLAYER_SERVICE_ENDPOINT
-const WORLD_NAME = import.meta.env.VITE_WORLD_NAME
+const MULTIPLAYER_SERVICE_ENDPOINT = 'wss://multiplayer.trysts.io'
+const WORLD_NAME = 'trysts'
 
 type PrepareState = 'info-loaded' | 'need-verify' | 'hms.joined' | 'multiplayer.joined' | ''
 
@@ -241,11 +241,11 @@ export const VirtualSpaceLoading = (props: VirtualSpaceLoadingProps) => {
     const joinHms = async () => {
       setPrepareStatus('Preparing the best video call experience')
 
-      const hmsRequest = await axios.post(import.meta.env.VITE_HMS_ENDPOINT, {
+      const hmsRequest = await axios.post('https://prod-in2.100ms.live/hmsapi/trystsvoice.app.100ms.live/api/token', {
         // eslint-disable-next-line camelcase
         room_id: roomId,
         // TODO: change based on role
-        role: import.meta.env.VITE_HMS_ROLE_PARTICIPANT,
+        role: 'guest',
         // eslint-disable-next-line camelcase
         user_id: localUser?._id,
       })

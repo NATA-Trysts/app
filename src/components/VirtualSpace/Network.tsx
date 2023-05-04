@@ -5,8 +5,8 @@ import { useEffect } from 'react'
 
 import { Member, Message, useMemberStore, useNetworkStore, useVirtualSpaceStore } from '@/stores'
 
-const MULTIPLAYER_SERVICE_ENDPOINT = import.meta.env.VITE_MULTIPLAYER_SERVICE_ENDPOINT
-const WORLD_NAME = import.meta.env.VITE_WORLD_NAME
+const MULTIPLAYER_SERVICE_ENDPOINT = 'wss://multiplayer.trysts.io'
+const WORLD_NAME = 'trysts'
 
 export const Network = (props: { spaceId: string | undefined }) => {
   const setRoomInstance = useNetworkStore((state) => state.setRoomInstance)
